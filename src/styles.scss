@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+$primary-color: #62C3B9;
+$secondary-color: #1f89ce;
+$default-color:#2399e5;
+$dark-color: #222222;
+$bg-gray-color: #f4f4f4;
+$text-gray-color: #b9b9b9;
+
+html, body {
+    height: 100%;
+}
+
+body { 
+    margin: 0;
+    font-family: var(--font-family);
+}
+
+.text-gray {
+    color: $text-gray-color;
+}

@@ -1,0 +1,28 @@
+<div class="row m-0 p-0">
+    <div class="logoMenu col-2">
+        <img routerLink="main" src="assets/logos/infocent_logo_positivo.svg" height="55px">
+    </div>
+    <div class="d-flex text-white menu col-10">
+
+        <div class="flex-grow-1">
+            <h3 class="mb-0">Sistema SPI</h3>
+            <span>Versión 7.0.1</span>
+        </div>
+        <div class="d-flex align-items-center mr-2">
+            Usuario: {{ user | uppercase }}
+        </div>
+        <div class="d-flex align-items-center flex-column separator">
+            <i class="pi pi-home"></i>
+            <button routerLink="main">Home</button> 
+        </div>
+        <div class="d-flex align-items-center flex-column separator">
+            <i class="pi pi-user"></i>
+            <button>Mi perfil</button> 
+        </div>
+        <div class="d-flex align-items-center flex-column separator">
+            <i class="pi pi-fw pi-power-off"></i>
+            <button (click)="closeSession()">Cerrar sesión </button> 
+        </div>
+
+    </div>
+</div>

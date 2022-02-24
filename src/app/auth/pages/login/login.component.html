@@ -1,0 +1,55 @@
+<div class="full-content">
+
+    <div class="flex align-items-center justify-content-center">
+        
+        <form [formGroup]="loginForm">
+            <div class="grid">
+                <div class="login">
+                    <div class="text-center">
+                        <img src="assets/logos/infocent_logo_positivo.svg">
+                        <p class="subtitle text-italic text-gray no-margin mb-5"><strong> SPI Portal </strong> Versión 7.0.1</p>
+                    </div>
+            
+                    <div *ngIf="msgError.length > 0">
+                        <p-messages [(value)]="msgError"></p-messages>
+                    </div>
+
+                    <div class="p-grid p-formgrid p-fluid">
+                        <div class="p-field mb-2">
+                            <label for="name"> Usuario </label>
+                            <input 
+                                pInputText
+                                id="name" 
+                                type="text"
+                                formControlName="name">
+                            <!-- <small id="username-help" class="p-invalid">El usuario es requerida.</small>  -->
+                        </div>
+                        <div class="p-field mb-2">
+                            <label for="password"> Clave </label>
+                            <input 
+                                pInputText
+                                id="password" 
+                                type="password" 
+                                formControlName="password"> 
+                            <!-- <small id="username-help" class="p-invalid">La clave es requerida.</small> -->
+                        </div>
+                    </div>
+
+                    <div class="p-field text-center mt-4 mb-8">
+                        <button 
+                            pButton
+                            type="submit"
+                            label="Ingresar"
+                            class="btn-primary"
+                            (click)="login()">
+                        </button>
+            
+                        <p><i>¿Olvidó su clave de acceso?</i></p>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>

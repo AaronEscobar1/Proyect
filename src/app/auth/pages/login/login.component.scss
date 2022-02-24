@@ -1,0 +1,40 @@
+@import "src/styles";
+
+.full-content {
+    height: 100%;
+    background-image: url("./../../../../assets/images/bg_login.jpg");
+}
+
+.full-content div {
+    height: 100%;
+}
+
+.login {
+    padding: 1em 4em 1rem 4rem;
+    border-radius: 0.2rem;
+    background-color: $bg-gray-color;
+}
+
+.subtitle {
+    font-size: 1.25em;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.btn-primary {
+    border-color: $primary-color;
+    background: $primary-color;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    border-color: $primary-color;
+    background: $primary-color;
+}
+
+@media (max-width: 400px) {
+    .card-login {
+        padding: 1rem;
+        width: 90%;
+    }
+}
