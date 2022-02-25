@@ -11,17 +11,18 @@
         <div class="d-flex align-items-center mr-2">
             Usuario: {{ user | uppercase }}
         </div>
-        <div class="d-flex align-items-center flex-column separator">
+        <div class="d-flex align-items-center flex-column separator"  routerLink="main">
             <i class="pi pi-home"></i>
-            <button routerLink="main">Home</button> 
+            <button>Home</button> 
         </div>
         <div class="d-flex align-items-center flex-column separator">
             <i class="pi pi-user"></i>
             <button>Mi perfil</button> 
         </div>
-        <div class="d-flex align-items-center flex-column separator">
+        <div class="d-flex align-items-center flex-column separator" 
+             (click)="closeSession()">
             <i class="pi pi-fw pi-power-off"></i>
-            <button (click)="closeSession()">Cerrar sesión </button> 
+            <button>Cerrar sesión </button> 
         </div>
 
     </div>
