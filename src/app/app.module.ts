@@ -9,11 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 // Components
 import { AppComponent } from './app.component';
 
-// Modules
-import { AuthModule } from './auth/auth.module';
-import { SharedModule } from './shared/shared.module';
-import { MainModuleModule } from './modules/main-module.module';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,12 +18,7 @@ import { MainModuleModule } from './modules/main-module.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ReactiveFormsModule,
-
-    // Modulos propios
-    AuthModule,
-    MainModuleModule,
-    SharedModule  
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuard
