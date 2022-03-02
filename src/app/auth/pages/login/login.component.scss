@@ -1,0 +1,28 @@
+@import "src/styles";
+
+.full-content {
+    height: 100%;
+    background-image: url("./../../../../assets/images/bg_login.jpg");
+}
+
+.full-content div {
+    height: 100%;
+}
+
+.btn-primary {
+    border-color: $primary-color;
+    background: $primary-color;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    border-color: $primary-color;
+    background: $primary-color;
+}
+
+@media (max-width: 400px) {
+    .card-login {
+        padding: 1rem;
+        width: 90%;
+    }
+}

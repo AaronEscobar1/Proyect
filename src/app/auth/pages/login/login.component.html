@@ -1,0 +1,53 @@
+<div class="full-content">
+
+    <div class="flex align-items-center justify-content-center">
+        
+        <form [formGroup]="loginForm">
+            <div class="grid">
+                <div class="surface-100 border-round pt-4 pb-8 pr-7 pl-7">
+                    <div class="text-center">
+                        <img src="assets/logos/infocent_logo_positivo.svg">
+                        <p class="text-xl font-italic text-500 mb-5"><strong> SPI Portal </strong> Versión 7.0.1</p>
+                    </div>
+            
+                    <div *ngIf="msgError.length > 0">
+                        <p-messages [(value)]="msgError"></p-messages>
+                    </div>
+
+                    <div class="p-grid p-formgrid p-fluid">
+                        <div class="p-field mb-2">
+                            <label for="name"> Usuario </label>
+                            <input 
+                                pInputText
+                                id="name" 
+                                type="text"
+                                formControlName="name">
+                        </div>
+                        <div class="p-field mb-2">
+                            <label for="password"> Clave </label>
+                            <input 
+                                pInputText
+                                id="password" 
+                                type="password" 
+                                formControlName="password"> 
+                        </div>
+                    </div>
+
+                    <div class="p-field text-center mt-4">
+                        <button 
+                            pButton
+                            type="submit"
+                            label="Ingresar"
+                            class="btn-primary"
+                            (click)="login()">
+                        </button>
+            
+                        <p class="mt-3">¿Olvidó su clave de acceso?</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
