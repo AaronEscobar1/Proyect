@@ -1,28 +1,15 @@
 @import "src/styles";
 
-.full-content {
-    height: 100%;
+.login-content {
     background-image: url("./../../../../assets/images/bg_login.jpg");
 }
 
-.full-content div {
-    height: 100%;
-}
-
-.btn-primary {
-    border-color: $primary-color;
-    background: $primary-color;
-    width: 100%;
-}
-
-.btn-primary:hover {
+.btn-infocent {
     border-color: $primary-color;
     background: $primary-color;
 }
 
-@media (max-width: 400px) {
-    .card-login {
-        padding: 1rem;
-        width: 90%;
-    }
+.btn-infocent:hover {
+    border-color: $primary-color;
+    background: $primary-color;
 }
