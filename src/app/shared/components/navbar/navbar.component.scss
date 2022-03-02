@@ -1,14 +1,5 @@
 @import "src/styles";
 
-.logoMenu {
-    background-color: $primary-color;
-}
-
-.menu {
-    background-color: rgb(83, 83, 83);
-    font-size: 14px;
-}
-
 .separator {
     padding: 1rem;
     border-left: 1px solid white;
@@ -17,10 +8,4 @@
 button {
     border: 0;
     background-color: transparent;
-    color: white;
-    font-size: 14px;
-}
-
-i {
-    cursor: pointer;
 }

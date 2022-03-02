@@ -7,7 +7,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 @NgModule({
   exports: [
@@ -18,6 +18,7 @@ import { MessageModule } from 'primeng/message';
     MessagesModule,
     MessageModule,
     MenubarModule,
+    PanelMenuModule
   ]
 })
 export class PrimeNgModule { }

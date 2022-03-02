@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MailHomeComponent } from './pages/mail-home/mail-home.component';
 
+// Modules
+import { SharedModule } from '../../shared/shared.module';
+
+// Components
+import { MailHomeComponent } from './pages/mail-home/mail-home.component';
 
 
 @NgModule({
@@ -9,7 +12,7 @@ import { MailHomeComponent } from './pages/mail-home/mail-home.component';
     MailHomeComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class MailModule { }

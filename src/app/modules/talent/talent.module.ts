@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TalentHomeComponent } from './pages/talent-home/talent-home.component';
 
+// Modules
+import { SharedModule } from '../../shared/shared.module';
+
+// Components
+import { TalentHomeComponent } from './pages/talent-home/talent-home.component';
 
 
 @NgModule({
@@ -9,7 +12,7 @@ import { TalentHomeComponent } from './pages/talent-home/talent-home.component';
     TalentHomeComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class TalentModule { }

@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ConfigHomeComponent } from './pages/config-home/config-home.component';
 
+// Modules
+import { SharedModule } from '../../shared/shared.module';
+
+// Components
+import { ConfigHomeComponent } from './pages/config-home/config-home.component';
 
 
 @NgModule({
@@ -9,7 +12,7 @@ import { ConfigHomeComponent } from './pages/config-home/config-home.component';
     ConfigHomeComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class ConfigurationModule { }

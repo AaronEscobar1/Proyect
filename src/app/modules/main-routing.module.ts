@@ -8,11 +8,15 @@ import { OrganizationHomeComponent } from './organization/pages/organization-hom
 import { SecurityHomeComponent } from './security/pages/security-home/security-home.component';
 import { TalentHomeComponent } from './talent/pages/talent-home/talent-home.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
     path: '', component: MainComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard],
     children: [
+      {
+        path: 'home', component: HomeComponent
+      },
       {
         path: 'config', component: ConfigHomeComponent
       },
@@ -29,12 +33,12 @@ const routes: Routes = [
         path: 'talent', component: TalentHomeComponent,
       },
       {
-        path: '**', redirectTo: ''
+        path: '**', redirectTo: 'home'
       }
     ]
   },
   {
-    path: '**', redirectTo: ''
+    path: '**', redirectTo: 'home'
   }
 ];
 
@@ -46,4 +50,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class AppRoutingModule { }
+export class MainRoutingModule { }

@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+// Modules
+import { SharedModule } from '../../shared/shared.module';
+
+// Components
 import { OrganizationHomeComponent } from './pages/organization-home/organization-home.component';
-
-
 
 @NgModule({
   declarations: [
     OrganizationHomeComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class OrganizationModule { }

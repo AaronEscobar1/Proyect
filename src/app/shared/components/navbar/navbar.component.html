@@ -1,28 +1,40 @@
 <div class="row m-0 p-0">
-    <div class="logoMenu col-2">
-        <img routerLink="main" src="assets/logos/infocent_logo_positivo.svg" height="55px">
+
+    <div class="d-flex align-items-center justify-content-center bg-primary-color col-2">
+        <img routerLink="main" class="cursor-pointer" src="assets/logos/infocent_logo_positivo.svg" height="55px">
     </div>
-    <div class="d-flex text-white menu col-10">
+
+    <div class="d-flex align-items-center col-10 text-300 surface-700 text-sm ">
 
         <div class="flex-grow-1">
             <h3 class="mb-0">Sistema SPI</h3>
             <span>Versión 7.0.1</span>
         </div>
-        <div class="d-flex align-items-center mr-2">
+        <div class="d-flex mr-2">
             Usuario: {{ user | uppercase }}
         </div>
         <div class="d-flex align-items-center flex-column separator"  routerLink="main">
-            <i class="pi pi-home"></i>
-            <button>Home</button> 
+            <i class="pi pi-home cursor-pointer"></i>
+            <button class="text-300">Home</button> 
         </div>
+
         <div class="d-flex align-items-center flex-column separator">
-            <i class="pi pi-user"></i>
-            <button>Mi perfil</button> 
+            <ng-container *ngIf="isModule; then context; else profile"></ng-container>
+
+            <ng-template #profile>
+                <i class="pi pi-user cursor-pointer"></i>
+                <button class="text-300">Mi perfil</button>
+            </ng-template>
+            
+            <ng-template #context>
+                <i class="pi pi-sort-alt cursor-pointer"></i>
+                <button class="text-300">Context</button>
+            </ng-template>
         </div>
         <div class="d-flex align-items-center flex-column separator" 
              (click)="closeSession()">
-            <i class="pi pi-fw pi-power-off"></i>
-            <button>Cerrar sesión </button> 
+            <i class="pi pi-sign-out cursor-pointer"></i>
+            <button class="text-300">Cerrar sesión </button> 
         </div>
 
     </div>

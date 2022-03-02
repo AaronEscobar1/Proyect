@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SecurityHomeComponent } from './pages/security-home/security-home.component';
 
+// Modules
+import { SharedModule } from '../../shared/shared.module';
+
+// Components
+import { SecurityHomeComponent } from './pages/security-home/security-home.component';
 
 
 @NgModule({
@@ -9,7 +12,7 @@ import { SecurityHomeComponent } from './pages/security-home/security-home.compo
     SecurityHomeComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class SecurityModule { }
