@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // modules
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+// Components
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CardMainComponent } from './components/card-main/card-main.component';
 import { NavbarVerticalComponent } from './components/navbar-vertical/navbar-vertical.component';
@@ -19,7 +22,8 @@ import { NavbarVerticalComponent } from './components/navbar-vertical/navbar-ver
     CommonModule,
     PrimeNgModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   exports: [
     CommonModule,

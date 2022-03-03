@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -10,25 +10,19 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  items      : MenuItem[]   = [];
+  @Input() titleBanner: string = 'Nomina Java';
+
   user       : string       = 'Alejandro';
   isModule   : boolean      = false;
+
+  // Icono de font awesome
+  faArrowRightLeft = faArrowRightArrowLeft;
 
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit(): void {
     this.validModule();
-    this.items = [
-      {
-          label: 'Inicio',
-          icon: 'pi pi-fw pi-file',
-      },
-      {
-          label: 'Mi perfil',
-          icon: 'pi pi-fw pi-pencil',
-      }
-    ];
   }
 
   validModule(): void {
