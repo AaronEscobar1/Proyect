@@ -1,3 +1,17 @@
-<app-navbar></app-navbar>
+<div class="layout-wrapper layout-static">
+    
+    <!-- BANNER -->
+    <app-topbar></app-topbar>
 
-<app-card-main [modulesCard]="modulesCard"></app-card-main>
+    <!-- Modulos -->
+    <div class="layout-main-container">
+        <div class="layout-main">
+            <app-card-main [modulesCard]="modulesCard"></app-card-main>
+        </div>
+        <app-footer></app-footer>
+    </div>
+    
+</div>
+
+
+

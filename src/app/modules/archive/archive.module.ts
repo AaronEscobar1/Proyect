@@ -5,11 +5,11 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 // Components
-import { ArchiveHomeComponent } from './pages/archive-home/archive-home.component';
+import { ArchiveComponent } from './archive.component';
 
 @NgModule({
   declarations: [
-    ArchiveHomeComponent
+    ArchiveComponent
   ],
   imports: [
     SharedModule

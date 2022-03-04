@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
 // Components
-import { TalentHomeComponent } from './pages/talent-home/talent-home.component';
+import { TalentComponent } from './talent.component';
 
 
 @NgModule({
   declarations: [
-    TalentHomeComponent
+    TalentComponent
   ],
   imports: [
     SharedModule

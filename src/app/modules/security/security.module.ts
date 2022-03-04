@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
 // Components
-import { SecurityHomeComponent } from './pages/security-home/security-home.component';
+import { SecurityComponent } from './security.component';
 
 
 @NgModule({
   declarations: [
-    SecurityHomeComponent
+    SecurityComponent
   ],
   imports: [
     SharedModule

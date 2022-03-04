@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
 // Components
-import { MailHomeComponent } from './pages/mail-home/mail-home.component';
+import { MailComponent } from './mail.component';
 
 
 @NgModule({
   declarations: [
-    MailHomeComponent
+    MailComponent
   ],
   imports: [
     SharedModule

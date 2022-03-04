@@ -1,11 +1,6 @@
 @import "src/styles";
 
-.full-content {
-    height: 100%;
-    background-color: $bg-gray-color;
-}
-
-.content-dinamic {
+.fondo {
     background-image: url("./../../../../../assets/images/fondo_module/talento.jpg");
     background-size: 100%;
     background-repeat: no-repeat;

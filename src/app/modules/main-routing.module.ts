@@ -3,12 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { MainComponent } from './main.component';
-import { ArchiveHomeComponent } from './archive/pages/archive-home/archive-home.component';
-import { MailHomeComponent } from './mail/pages/mail-home/mail-home.component';
-import { OrganizationHomeComponent } from './organization/pages/organization-home/organization-home.component';
-import { SecurityHomeComponent } from './security/pages/security-home/security-home.component';
-import { TalentHomeComponent } from './talent/pages/talent-home/talent-home.component';
-import { AuthGuard } from '../guards/auth.guard';
+import { ArchiveComponent } from './archive/archive.component';
+import { MailComponent } from './mail/mail.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { SecurityComponent } from './security/security.component';
+import { TalentComponent } from './talent/talent.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -19,7 +18,7 @@ const routes: Routes = [
         path: 'home', component: HomeComponent
       },
       {
-        path: 'archive', component: ArchiveHomeComponent
+        path: 'archive', component: ArchiveComponent
       },
       {
         path: 'config',
@@ -27,16 +26,16 @@ const routes: Routes = [
         loadChildren: () => import('./configuration/configuration.module').then( m => m.ConfigurationModule)
       },
       {
-        path: 'mail', component: MailHomeComponent,
+        path: 'mail', component: MailComponent,
       },
       {
-        path: 'organization', component: OrganizationHomeComponent,
+        path: 'organization', component: OrganizationComponent,
       },
       {
-        path: 'security', component: SecurityHomeComponent,
+        path: 'security', component: SecurityComponent,
       },
       {
-        path: 'talent', component: TalentHomeComponent,
+        path: 'talent', component: TalentComponent,
       },
       {
         path: '**', redirectTo: 'home'

@@ -1,0 +1,44 @@
+{
+    "data": [
+    {
+      "id": 1,
+      "name": "Primaria"
+    },
+    {
+      "id": 2,
+      "name": "Secundaria"
+    },
+    {
+      "id": 3,
+      "name": "Universitario"
+    },
+    {
+      "id": 4,
+      "name": "Post grado"
+    },
+    {
+      "id": 5,
+      "name": "Magister"
+    },
+    {
+      "id": 6,
+      "name": "Doctorado"
+    },
+    {
+      "id": 7,
+      "name": "Basica"
+    },
+    {
+      "id": 8,
+      "name": "Educación Superior"
+    },
+    {
+      "id": 9,
+      "name": "Preescolar"
+    },
+    {
+      "id": 10,
+      "name": "Otras"
+    }
+  ]
+}

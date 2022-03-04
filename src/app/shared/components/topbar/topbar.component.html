@@ -1,0 +1,52 @@
+<div class="layout-topbar">
+    <a class="layout-topbar-logo">
+        <img routerLink="/main" class="cursor-pointer" src="assets/logos/infocent_logo_fondo_oscuro.svg">
+    </a>
+    <!--  (click)="appMain.toggleMenu($event)" -->
+    <a class="p-link layout-menu-button layout-topbar-button" href="#">
+        <i class="pi pi-bars"></i>
+    </a>
+    <!-- (click)="appConfig.toggleTopMenu($event)" -->
+    <a class="p-link layout-topbar-menu-button layout-topbar-button" >
+        <i class="pi pi-ellipsis-v"></i>
+    </a>
+
+    <div class="layout-topbar-module text-300 ml-2">
+        <h3 class="mb-0">{{ titleBanner | titlecase }}</h3>
+        <span>Versión 11</span>
+    </div>
+    
+    <!-- [ngClass]="{'layout-topbar-menu-mobile-active': appConfig.topMenuActive}" -->
+    <div class="layout-topbar-menu text-300 text-sm" >
+        
+        <div class="layout-topbar-user d-flex align-items-center mr-2">
+            Usuario: {{ user | uppercase }}
+        </div>
+
+        <div class="d-flex align-items-center flex-column separator cursor-pointer" routerLink="/main">
+            <i class="pi pi-home"></i>
+            <span class="text-300">Inicio</span> 
+        </div>
+
+        <div class="d-flex align-items-center flex-column separator cursor-pointer">
+            <ng-container *ngIf="isModule; then context; else profile"></ng-container>
+
+            <ng-template #profile>
+                <i class="pi pi-user"></i>
+                <span class="text-300">Mi perfil</span>
+            </ng-template>
+            
+            <ng-template #context>
+                <i class="pi pi-sort-alt"></i>
+                <span class="text-300">Context</span>
+            </ng-template>
+        </div>
+
+        <div class="d-flex align-items-center flex-column separator cursor-pointer" 
+             (click)="closeSession()">
+            <i class="pi pi-sign-out"></i>
+            <span class="text-300">Cerrar sesión </span> 
+        </div>
+
+    </div>
+</div>

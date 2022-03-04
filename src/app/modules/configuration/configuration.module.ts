@@ -19,6 +19,9 @@ import { ConfigurationComponent } from './configuration.component';
   imports: [
     ConfigurationRoutingModule,
     SharedModule
+  ],
+  exports: [
+    ConfigurationComponent
   ]
 })
 export class ConfigurationModule { }

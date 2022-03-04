@@ -7,16 +7,20 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // Components
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { CardMainComponent } from './components/card-main/card-main.component';
-import { NavbarVerticalComponent } from './components/navbar-vertical/navbar-vertical.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { TopbarComponent } from './components/topbar/topbar.component';
 
 
 @NgModule({
   declarations: [
-    NavbarComponent,
     CardMainComponent,
-    NavbarVerticalComponent
+    FooterComponent,
+    MenuComponent,
+    NavbarComponent,
+    TopbarComponent
   ],
   imports: [
     CommonModule,
@@ -32,9 +36,11 @@ import { NavbarVerticalComponent } from './components/navbar-vertical/navbar-ver
     ReactiveFormsModule,
 
     // Components
-    NavbarComponent,
     CardMainComponent,
-    NavbarVerticalComponent
+    FooterComponent,
+    MenuComponent,
+    NavbarComponent,
+    TopbarComponent
   ],
 })
 export class SharedModule { }

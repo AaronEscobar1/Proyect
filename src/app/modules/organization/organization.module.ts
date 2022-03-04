@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
 // Components
-import { OrganizationHomeComponent } from './pages/organization-home/organization-home.component';
+import { OrganizationComponent } from './organization.component';
 
 @NgModule({
   declarations: [
-    OrganizationHomeComponent
+    OrganizationComponent
   ],
   imports: [
     SharedModule
