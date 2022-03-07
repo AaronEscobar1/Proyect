@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Helpers } from '../../shared/helpers/helpers';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../interfaces/user.interfaces';
+import { Observable } from 'rxjs';
 import { HttpService } from '../../shared/services/http/http.service';
 
 @Injectable({
@@ -9,15 +13,12 @@ export class AuthService {
 
   private KEY: string = 'auth';
 
-  constructor(private router: Router, private httpServices: HttpService) { }
+  constructor(private router: Router,
+              private http: HttpService,
+              private helpers: Helpers) { }
 
-  authenticateUser(user: string, password: any): boolean {
-    // Usuario cableado para hacer la conexion
-    const userLogin = { name: 'jramirez', password: '858915f1d2d425959fd4da867ba6b599' };
-    if (user === userLogin.name && password === userLogin.password) {
-      return true;
-    }
-    return false;
+  authenticateUser(user: User): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/auth/iniciarSesion'), user);
   }
 
   getToken(): string | undefined {
