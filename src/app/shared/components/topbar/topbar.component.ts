@@ -1,8 +1,7 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { ConfigurationComponent } from 'src/app/modules/configuration/configuration.component';
 
 @Component({
   selector: 'app-topbar',
@@ -19,7 +18,7 @@ import { ConfigurationComponent } from 'src/app/modules/configuration/configurat
 })
 export class TopbarComponent implements OnInit {
 
-  @Input() titleBanner: string = 'Nomina Java';
+  @Input() titleBanner: string = 'SPI portal';
 
   user       : string       = 'Alejandro';
   isModule   : boolean      = false;
