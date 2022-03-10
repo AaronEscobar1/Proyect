@@ -29,6 +29,7 @@ export class NivelesEducativosComponent implements OnInit {
   loading       : boolean           = false;
   columns       : any[]             = [];
   selectNivel!  : NivelesEducativos | null;
+  exportColumns!: any[];
 
   // Modales
   titleForm      : string = 'Agregar niveles educativos';
@@ -62,6 +63,7 @@ export class NivelesEducativosComponent implements OnInit {
       { name: 'XLS',  code: 'XLS'  }
     ];
     this.loadData();
+    this.exportColumns = this.columns.map(col => ({title: col.header, dataKey: col.field}));
   }
 
   loadData(): void {
@@ -170,6 +172,20 @@ export class NivelesEducativosComponent implements OnInit {
 
   resetForm(): void {
     this.formNiveles.reset();
+  }
+
+  exportPdf() {
+    console.log(this.exportColumns);
+    // const doc = new jsPDF();
+    // doc.text("hola word", 10, 10);
+    // doc.save("a4.pdf")
+    // import("jspdf").then(jsPDF => {
+    //     import("jspdf-autotable").then(x => {
+    //         const doc = new jsPDF.default(0,0);
+    //         doc.autoTable(this.exportColumns, this.niveles);
+    //         doc.save('niveles-educativos.pdf');
+    //     })
+    // })
   }
 
   /**

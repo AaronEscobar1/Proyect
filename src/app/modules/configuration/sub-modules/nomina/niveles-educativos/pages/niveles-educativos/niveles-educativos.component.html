@@ -10,26 +10,36 @@
             <div class="flex">
                 <button pButton class="btn-infocent mr-2" 
                         icon="pi pi-refresh"
+                        pTooltip="Refrescar tabla"
+                        tooltipPosition="bottom"
                         (click)="refresh()">
                 </button>
                 <button pButton class="btn-infocent mr-3" 
                         icon="pi pi-print"
+                        pTooltip="Imprimir nivel"
+                        tooltipPosition="bottom"
                         (click)="showModalPrintDialog()">
                 </button>
                 <div class="separator"></div>
                 <button pButton class="btn-infocent mr-2" 
                         icon="pi pi-plus" 
+                        pTooltip="Agregar nivel"
+                        tooltipPosition="bottom"
                         (click)="showModalAddDialog()">
                 </button>
                 <button pButton 
                         class="btn-infocent mr-2" 
                         icon="pi pi-pencil" 
+                        pTooltip="Editar nivel"
+                        tooltipPosition="bottom"
                         (click)="editSelectNivel()"
                         [disabled]="!selectNivel">
                 </button>
                 <button pButton 
                         class="btn-infocent mr-2" 
                         icon="pi pi-trash"
+                        pTooltip="Eliminar nivel"
+                        tooltipPosition="bottom"
                         (click)="deleteNivel()"
                         [disabled]="!selectNivel">
                 </button>
@@ -93,18 +103,18 @@
 
             <div class="field">
                 <label for="id">Código</label>
-                <input  type="text" 
-                        pInputText 
-                        id="id" 
+                <input  type="text"
+                        pInputText
+                        id="id"
                         placeholder="Ingrese el código"
                         required/>
             </div>
             
             <div class="field">
                 <label for="desniv">Descripción</label>
-                <input  type="text" 
-                        pInputText 
-                        id="desniv" 
+                <input  type="text"
+                        pInputText
+                        id="desniv"
                         placeholder="Ingrese la descripción"
                         required/>
             </div>
@@ -113,7 +123,7 @@
 
         <ng-template pTemplate="footer">
             <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="printNivelModal = false"></button>
-            <p-button icon="pi pi-check" (click)="printNivelModal=false" label="Imprimir" icon="pi pi-print" styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-check" (click)="exportPdf()" label="Imprimir" icon="pi pi-print" styleClass="p-button-text"></p-button>
         </ng-template>
 </p-dialog>
 
