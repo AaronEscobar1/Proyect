@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { ConfigurationComponent } from './configuration.component';
-import { ConfigHomeComponent } from './pages/config-home/config-home.component';
-import { NivelesEducativosComponent } from './pages/nomina/niveles-educativos/niveles-educativos.component';
+import { ConfigHomeComponent } from './sub-modules/config-home/config-home.component';
+import { NivelesEducativosComponent } from './sub-modules/nomina/niveles-educativos/pages/niveles-educativos/niveles-educativos.component';
 
 const routes: Routes = [
   {

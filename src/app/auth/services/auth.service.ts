@@ -21,9 +21,12 @@ export class AuthService {
     return this.http.post(this.helpers.getBasicEndPoint('/auth/iniciarSesion'), user);
   }
 
-  getToken(): string | undefined {
+  getToken(): string | null {
     const auth = this.getAuth();
-    return auth ? auth.token : undefined;
+    if (auth) {
+      return auth.token;
+    }
+    return null;
   }
 
   setToken(token: string): void {
@@ -35,16 +38,16 @@ export class AuthService {
   }
 
   getAuth(): any | null {
-    const auth = sessionStorage.getItem(this.KEY);
+    const auth = localStorage.getItem(this.KEY);
     return auth ? JSON.parse(auth) : null;
   }
 
   setAuth(data: any): void {
-    sessionStorage.setItem(this.KEY, JSON.stringify(data));
+    localStorage.setItem(this.KEY, JSON.stringify(data));
   }
 
   closeSession(): void {
-    sessionStorage.clear();
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
 

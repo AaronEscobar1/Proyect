@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLinkActive, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -10,7 +11,7 @@ export class ConfigurationComponent implements OnInit {
 
   menuItems: MenuItem[] = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
 
@@ -21,7 +22,7 @@ export class ConfigurationComponent implements OnInit {
           items: [
             {
                 label: 'Niveles educativos',
-                routerLink: 'niveles-educativos'
+                routerLink: ['/main/config/niveles-educativos'],
             },
           ]
         }
