@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helpers } from '../../helpers/helpers';
+import { ResponseBack } from '../../interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class HttpService {
    * @params endPoint: string
    * @return Observable<any>
    */
-  get(endPoint: string): Observable<any> {
+  get(endPoint: string): Observable<ResponseBack> {
     return this.http.get(endPoint);
   }
 
@@ -30,7 +31,7 @@ export class HttpService {
    * @params endPoint: string, params: any, contentType?: string
    * @return Observable<any>
    */
-  post(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON): Observable<any> {
+  post(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON): Observable<ResponseBack> {
     return this.http.post(endPoint, params, this.getHeaders(contentType));
   }
 
@@ -42,7 +43,7 @@ export class HttpService {
    * @params endPoint: string, params: any, contentType?: string
    * @return Observable<any>
    */
-   put(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON): Observable<any> {
+   put(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON): Observable<ResponseBack> {
     return this.http.put(endPoint, params, this.getHeaders(contentType));
   }
 
@@ -54,7 +55,7 @@ export class HttpService {
    * @params endPoint: string
    * @return Observable<any>
    */
-   delete(endPoint: string): Observable<any> {
+   delete(endPoint: string): Observable<ResponseBack> {
     return this.http.delete(endPoint);
   }
 

@@ -68,8 +68,8 @@ export class NivelesEducativosComponent implements OnInit {
 
   loadData(): void {
     this.loading = true;
-    this.nivelesServices.getNivelesAll().subscribe(data => {
-      this.niveles = data;
+    this.nivelesServices.getNivelesAll().subscribe(resp => {
+      this.niveles = resp.data;
       this.loading = false;
     });
   }
@@ -109,26 +109,28 @@ export class NivelesEducativosComponent implements OnInit {
     data.desniv.trim();
     if (this.isEdit) {
       this.nivelesServices.updateNivel(data)
-        .subscribe(() => {
+        .subscribe(resp => {
           this.closeModal();
           this.loadData();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Nivel educativo actualizado.', life: 3000});
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
         }, error => {
-          console.log(error);
           if(error.status == 401) {
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Error Unauthorized.', life: 3000});
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Error, no autorizado.', life: 3000});
+          } else {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.message, life: 3000});
           }
         });
     } else {
       this.nivelesServices.createNivel(data)
-        .subscribe(() => {
+        .subscribe(resp => {
           this.closeModal();
           this.loadData();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Nivel educativo creado.', life: 3000});
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
         },error => {
-          console.log(error);
           if(error.status == 401) {
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Error Unauthorized.', life: 3000});
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Error, no autorizado.', life: 3000});
+          } else { 
+            this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.message, life: 3000});
           }
         });
     }
@@ -156,13 +158,12 @@ export class NivelesEducativosComponent implements OnInit {
       acceptLabel: 'Si',
       accept: () => {
         this.nivelesServices.deleteNivel(id)
-          .subscribe((data) => {
-            console.log('Exito', data);
+          .subscribe((resp) => {
+            this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
           }, error => {
-            // TODO: Mejorar la respuesta en el backend 
-            if(error.status == 200) {
-              this.messageService.add({severity:'success', summary: 'Éxito', detail: 'Nivel educativo eliminado.', life: 3000});
-              this.loadData();
+            if (error.error.status == this.helpers.ERROR_MESSAGE) {
+              this.messageService.add({severity:'error', summary: 'Error', detail: error.error.message, life: 3000});
             }
           })
       }
@@ -176,16 +177,6 @@ export class NivelesEducativosComponent implements OnInit {
 
   exportPdf() {
     console.log(this.exportColumns);
-    // const doc = new jsPDF();
-    // doc.text("hola word", 10, 10);
-    // doc.save("a4.pdf")
-    // import("jspdf").then(jsPDF => {
-    //     import("jspdf-autotable").then(x => {
-    //         const doc = new jsPDF.default(0,0);
-    //         doc.autoTable(this.exportColumns, this.niveles);
-    //         doc.save('niveles-educativos.pdf');
-    //     })
-    // })
   }
 
   /**
@@ -247,7 +238,6 @@ export class NivelesEducativosComponent implements OnInit {
       if( !control.value ) { return null; }
       const duplicated = this.niveles.findIndex(nivel => nivel.desniv.trim().toLowerCase() === control.value.trim().toLowerCase());
       if (duplicated > -1) {
-        console.log('existe');
         return {'duplicated': true};
       }
       return null;
