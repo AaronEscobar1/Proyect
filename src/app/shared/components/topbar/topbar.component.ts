@@ -25,6 +25,9 @@ export class TopbarComponent implements OnInit {
   user!      : string;
   isModule   : boolean = false;
 
+  // MenuResponsive
+  topMenuActive!: boolean;
+
   // Icono de font awesome
   faArrowRightLeft = faArrowRightArrowLeft;
 
@@ -52,6 +55,11 @@ export class TopbarComponent implements OnInit {
 
   closeSession(): void {
     this.authService.closeSession();
+  }
+
+  openTopMenu(event: Event) {
+    this.topMenuActive = this.topMenuActive ? false : true;
+    event.preventDefault();
   }
 
 }

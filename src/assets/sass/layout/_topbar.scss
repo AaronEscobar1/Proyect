@@ -35,6 +35,7 @@
         }
     }
 
+    // Botones pequeños para el menu responsive
     .layout-topbar-button {
         display: inline-flex;
         justify-content: center;
@@ -69,6 +70,8 @@
         }
     }
 
+    
+    // Ocultar botones para el menu responsive
     .layout-topbar-menu-button {
         display: none;
 
@@ -77,14 +80,25 @@
         }
     }
 
+    // Menu topbar layout desktop
     .layout-topbar-menu {
         margin: 0 0 0 auto;
         padding: 0;
         list-style: none;
         display: flex;
+        color: var(--surface-300) !important;
 
-        .layout-topbar-button {
-            margin-left: 1rem;
+        .layout-topbar-user {
+            display: flex;
+            align-items: center;
+            margin: 1rem;
+        }
+
+        .layout-menu-item {
+            display: flex !important;
+            align-items: center !important;
+            flex-direction: column !important;
+            cursor: pointer;
         }
     }
 }
@@ -100,36 +114,48 @@
 @media (max-width: 991px) {
     .layout-topbar {
         justify-content: space-between;
-
+        
+        // Ocultar logo
         .layout-topbar-logo {
             display: none
         }
 
+        // Ocultar descripcion SPI portal
         .layout-topbar-module {
             display: none;
         }
 
+        // Posicionar los botones del menu
         .layout-menu-button {
             margin-left: 0;
             order: 1;
         }
 
+        // Posicionar los botones del menu
         .layout-topbar-menu-button {
             display: inline-flex;
             margin-left: 0;
             order: 2;
         }
 
+        // Linea blanca para separar las opciones del menu
+        .separator {
+            padding: 1rem !important;
+            border-left: 0px !important;
+        }
+
+        // Menu dinamico responsive
         .layout-topbar-menu {
             margin-left: 0;
             position: absolute;
             flex-direction: column;
-            background-color: var(--surface-800);
+            color: var(--surface-700) !important;
+            background-color: var(--surface-overlay);
             box-shadow: 0px 3px 5px rgba(0,0,0,.02), 0px 0px 2px rgba(0,0,0,.05), 0px 1px 4px rgba(0,0,0,.08);
             border-radius: 12px;
             padding: 1rem;
             right: 0rem;
-            top: 5rem;
+            top: 5.1rem;
             min-width: 15rem;
             display: none;
             -webkit-animation: scalein 0.15s linear;
@@ -139,10 +165,26 @@
                 display: block
             }
 
+            // Ocultar usuario en el menu responsive
             .layout-topbar-user {
-                display: none;
+                display: none !important;
             }
 
+            // Menu desplegado responsive 
+            .layout-menu-item {
+                display: block !important; //Probar tambien con block para verlo en linea
+
+                i {
+                    font-size: 1rem;
+                    margin-right: .5rem;
+                }
+
+                &:hover {
+                    color: var(--text-color);
+                    background-color: var(--surface-hover);
+                }
+            }
+            
             .layout-topbar-button {
                 margin-left: 0;
                 display: flex;
