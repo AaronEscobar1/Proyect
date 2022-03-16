@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
     this.user = this.loginForm.value;
     this.authServices.authenticateUser(this.user)
       .subscribe(
-        (data) => {
-          if (data.tokenDeAcceso) {
-            this.authServices.setAuth({token: data.tokenDeAcceso});
+        (resp) => {
+          if (resp.tokenDeAcceso) {
+            this.authServices.setAuth(resp);
             this.loginSuccess();
           }
         }, (error) => {

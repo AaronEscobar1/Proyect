@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Helpers } from '../../shared/helpers/helpers';
-import { HttpClient } from '@angular/common/http';
 import { User } from '../interfaces/user.interfaces';
 import { Observable } from 'rxjs';
 import { HttpService } from '../../shared/services/http/http.service';
+import { ResponseUser } from '../interfaces/response-user.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +17,16 @@ export class AuthService {
               private http: HttpService,
               private helpers: Helpers) { }
 
-  authenticateUser(user: User): Observable<any> {
+  authenticateUser(user: User): Observable<ResponseUser> {
     return this.http.post(this.helpers.getBasicEndPoint('/auth/iniciarSesion'), user);
   }
 
-  getToken(): string | null {
-    const auth = this.getAuth();
+  getToken(): string | undefined {
+    const auth: ResponseUser = this.getAuth();
     if (auth) {
-      return auth.token;
+      return auth.tokenDeAcceso;
     }
-    return null;
+    return undefined;
   }
 
   setToken(token: string): void {

@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { StorageService } from '../../services/storage/storage.service';
+import { ResponseUser } from '../../../auth/interfaces/response-user.interfaces';
 
 @Component({
   selector: 'app-topbar',
@@ -20,18 +22,25 @@ export class TopbarComponent implements OnInit {
 
   @Input() titleBanner: string = 'SPI portal';
 
-  user       : string       = 'Alejandro';
-  isModule   : boolean      = false;
+  user!      : string;
+  isModule   : boolean = false;
 
   // Icono de font awesome
   faArrowRightLeft = faArrowRightArrowLeft;
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private storageService: StorageService) { }
 
 
   ngOnInit(): void {
+    this.loadUserName();
     this.validModule();
+  }
+
+  loadUserName() {
+    const auth: ResponseUser = this.storageService.get('auth');
+    this.user = (auth.ssUsuario && auth.ssUsuario.id) ? auth.ssUsuario.id : '';
   }
 
   validModule(): void {
