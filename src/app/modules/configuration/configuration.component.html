@@ -9,7 +9,7 @@
     </div>
 
     <!-- Contenido dinamico -->
-    <div class="layout-main-container">
+    <div class="layout-main-container" [ngClass]="isPageHome ? 'fondo-img' : 'surface-50'">
         <div class="layout-main">
             <router-outlet></router-outlet>
         </div>

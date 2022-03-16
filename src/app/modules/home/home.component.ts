@@ -4,7 +4,11 @@ import { ModuleCard } from '../../shared/interfaces/modules-card.interfaces';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styles: [`
+    .layout-wrapper.layout-static .layout-main-container {
+      margin-left: 0%;
+    }
+  `]
 })
 export class HomeComponent implements OnInit {
 
