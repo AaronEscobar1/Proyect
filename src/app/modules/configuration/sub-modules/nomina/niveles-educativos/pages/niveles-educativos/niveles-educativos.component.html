@@ -122,8 +122,8 @@
         </ng-template>
 
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="printNivelModal = false"></button>
-            <p-button icon="pi pi-check" (click)="exportPdf()" label="Imprimir" icon="pi pi-print" styleClass="p-button-text"></p-button>
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printNivelModal = false"></button>
+            <p-button icon="pi pi-check" (click)="exportPdf()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
         </ng-template>
 </p-dialog>
 
@@ -193,7 +193,7 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-outlined" (click)="closeModal()"></button>
-            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button-outlined" (click)="saveNivel()"></button>
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="saveNivel()"></button>
         </ng-template>
 </p-dialog>
