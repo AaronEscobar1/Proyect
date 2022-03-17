@@ -45,8 +45,11 @@
                 </button>
             </div>
 
+            <!-- Cargar tabla tipo skeleton -->
+            <app-table-skeleton *ngIf="loading" [rowsNumber]="5" [columnsNumber]="3"></app-table-skeleton>
+
             <!-- Tabla -->
-            <div class="mt-3">
+            <div class="mt-3" *ngIf="!loading">
                 <p-table [value]="niveles"
                          selectionMode="single" [(selection)]="selectNivel"
                          [paginator]="true" [rows]="5" [loading]="loading"
