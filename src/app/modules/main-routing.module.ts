@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { MainComponent } from './main.component';
-import { ArchiveComponent } from './archive/archive.component';
 import { MailComponent } from './mail/mail.component';
 import { OrganizationComponent } from './organization/organization.component';
 import { SecurityComponent } from './security/security.component';
@@ -18,7 +17,9 @@ const routes: Routes = [
         path: 'home', component: HomeComponent
       },
       {
-        path: 'archive', component: ArchiveComponent
+        path: 'archive',
+        // LazyLoad
+        loadChildren: () => import('./archive/archive.module').then( m => m.ArchiveModule)
       },
       {
         path: 'config',
