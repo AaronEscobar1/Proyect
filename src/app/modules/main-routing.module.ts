@@ -40,7 +40,9 @@ const routes: Routes = [
         loadChildren: () => import('./security/security.module').then( m => m.SecurityModule)
       },
       {
-        path: 'talent', component: TalentComponent,
+        path: 'talent',
+        // LazyLoad
+        loadChildren: () => import('./talent/talent.module').then( m => m.TalentModule)
       },
       {
         path: '**', redirectTo: 'home'
