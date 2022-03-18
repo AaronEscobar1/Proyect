@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { MainComponent } from './main.component';
-import { MailComponent } from './mail/mail.component';
-import { OrganizationComponent } from './organization/organization.component';
 import { SecurityComponent } from './security/security.component';
 import { TalentComponent } from './talent/talent.component';
 import { HomeComponent } from './home/home.component';
@@ -32,7 +30,9 @@ const routes: Routes = [
         loadChildren: () => import('./mail/mail.module').then( m => m.MailModule)
       },
       {
-        path: 'organization', component: OrganizationComponent,
+        path: 'organization',
+        // LazyLoad
+        loadChildren: () => import('./organization/organization.module').then( m => m.OrganizationModule)
       },
       {
         path: 'security', component: SecurityComponent,
