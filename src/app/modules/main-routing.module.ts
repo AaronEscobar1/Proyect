@@ -27,7 +27,9 @@ const routes: Routes = [
         loadChildren: () => import('./configuration/configuration.module').then( m => m.ConfigurationModule)
       },
       {
-        path: 'mail', component: MailComponent,
+        path: 'mail',
+        // LazyLoad
+        loadChildren: () => import('./mail/mail.module').then( m => m.MailModule)
       },
       {
         path: 'organization', component: OrganizationComponent,
