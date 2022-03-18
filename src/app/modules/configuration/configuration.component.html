@@ -1,7 +1,7 @@
-<div class="layout-wrapper layout-static">
+<div class="layout-wrapper layout-static" [ngClass]="{'layout-mobile-sidebar-active': menuActiveMobile}">
     
     <!-- BANNER -->
-    <app-topbar [titleBanner]="'Configuración'"></app-topbar>
+    <app-topbar [titleBanner]="'Configuración'" (onToggleMenu)="toggleMenu($event)"></app-topbar>
     
     <!-- Menu lateral -->
     <div class="layout-sidebar">

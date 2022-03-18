@@ -2,12 +2,12 @@
     <a class="layout-topbar-logo">
         <img routerLink="/main" class="cursor-pointer" src="assets/logos/infocent_logo_fondo_oscuro.svg">
     </a>
-    <!--  (click)="appMain.toggleMenu($event)" -->
-    <a class="p-link layout-menu-button layout-topbar-button">
+
+    <a class="p-link layout-menu-button layout-topbar-button" (click)="toggleMenu($event)">
         <i class="pi pi-bars"></i>
     </a>
 
-    <a class="p-link layout-topbar-menu-button layout-topbar-button" (click)="openTopMenu($event)">
+    <a class="p-link layout-topbar-menu-button layout-topbar-button" (click)="toggeTopMenu($event)">
         <i class="pi pi-ellipsis-v"></i>
     </a>
 
