@@ -35,7 +35,9 @@ const routes: Routes = [
         loadChildren: () => import('./organization/organization.module').then( m => m.OrganizationModule)
       },
       {
-        path: 'security', component: SecurityComponent,
+        path: 'security',
+        // LazyLoad
+        loadChildren: () => import('./security/security.module').then( m => m.SecurityModule)
       },
       {
         path: 'talent', component: TalentComponent,
