@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConfigurationComponent } from './configuration.component';
 import { ConfigHomeComponent } from './sub-modules/config-home/config-home.component';
 import { NivelesEducativosComponent } from './sub-modules/nomina/niveles-educativos/pages/niveles-educativos/niveles-educativos.component';
+import { ProfesionesComponent } from './sub-modules/nomina/profesiones/pages/profesiones/profesiones.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,9 @@ const routes: Routes = [
       },
       {
         path: 'niveles-educativos', component: NivelesEducativosComponent
+      },
+      {
+        path: 'profesiones', component: ProfesionesComponent
       },
       {
         path: '**', redirectTo: ''

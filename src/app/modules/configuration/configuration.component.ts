@@ -42,8 +42,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 label: 'Niveles educativos',
                 routerLink: ['/main/config/niveles-educativos'],
             },
+            {
+              label: 'Profesiones',
+              routerLink: ['/main/config/profesiones'],
+            },
           ]
-        }
+        },
     ];
   }
   
