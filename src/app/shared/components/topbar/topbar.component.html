@@ -2,12 +2,12 @@
     <a class="layout-topbar-logo">
         <img routerLink="/main" class="cursor-pointer" src="assets/logos/infocent_logo_fondo_oscuro.svg">
     </a>
-    <!--  (click)="appMain.toggleMenu($event)" -->
-    <a class="p-link layout-menu-button layout-topbar-button" href="#">
+
+    <a class="p-link layout-menu-button layout-topbar-button" (click)="toggleMenu($event)">
         <i class="pi pi-bars"></i>
     </a>
-    <!-- (click)="appConfig.toggleTopMenu($event)" -->
-    <a class="p-link layout-topbar-menu-button layout-topbar-button" >
+
+    <a class="p-link layout-topbar-menu-button layout-topbar-button" (click)="toggeTopMenu($event)">
         <i class="pi pi-ellipsis-v"></i>
     </a>
 
@@ -16,36 +16,35 @@
         <span>Versión 11</span>
     </div>
     
-    <!-- [ngClass]="{'layout-topbar-menu-mobile-active': appConfig.topMenuActive}" -->
-    <div class="layout-topbar-menu text-300 text-sm" >
+    <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': topMenuActive}">
         
-        <div class="layout-topbar-user d-flex align-items-center mr-2">
-            Usuario: {{ user | uppercase }}
+        <div class="layout-topbar-user">
+            <span>Usuario: {{ user | uppercase }}</span> 
         </div>
 
-        <div class="d-flex align-items-center flex-column separator cursor-pointer" routerLink="/main">
+        <div class="layout-menu-item separator" routerLink="/main">
             <i class="pi pi-home"></i>
-            <span class="text-300">Inicio</span> 
+            <span>Inicio</span>
         </div>
 
-        <div class="d-flex align-items-center flex-column separator cursor-pointer">
+        <div class="layout-menu-item separator">
             <ng-container *ngIf="isModule; then context; else profile"></ng-container>
 
             <ng-template #profile>
                 <i class="pi pi-user"></i>
-                <span class="text-300">Mi perfil</span>
+                <span>Mi perfil</span>
             </ng-template>
             
             <ng-template #context>
                 <i class="pi pi-sort-alt"></i>
-                <span class="text-300">Context</span>
+                <span>Context</span>
             </ng-template>
         </div>
 
-        <div class="d-flex align-items-center flex-column separator cursor-pointer" 
+        <div class="layout-menu-item separator" 
              (click)="closeSession()">
             <i class="pi pi-sign-out"></i>
-            <span class="text-300">Cerrar sesión </span> 
+            <span>Cerrar sesión </span> 
         </div>
 
     </div>

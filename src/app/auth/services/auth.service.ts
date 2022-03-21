@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Helpers } from '../../shared/helpers/helpers';
+import { User } from '../interfaces/user.interfaces';
+import { Observable } from 'rxjs';
 import { HttpService } from '../../shared/services/http/http.service';
+import { ResponseUser } from '../interfaces/response-user.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +13,20 @@ export class AuthService {
 
   private KEY: string = 'auth';
 
-  constructor(private router: Router, private httpServices: HttpService) { }
+  constructor(private router: Router,
+              private http: HttpService,
+              private helpers: Helpers) { }
 
-  authenticateUser(user: string, password: any): boolean {
-    // Usuario cableado para hacer la conexion
-    const userLogin = { name: 'jramirez', password: '858915f1d2d425959fd4da867ba6b599' };
-    if (user === userLogin.name && password === userLogin.password) {
-      return true;
-    }
-    return false;
+  authenticateUser(user: User): Observable<ResponseUser> {
+    return this.http.post(this.helpers.getBasicEndPoint('/auth/iniciarSesion'), user);
   }
 
   getToken(): string | undefined {
-    const auth = this.getAuth();
-    return auth ? auth.token : undefined;
+    const auth: ResponseUser = this.getAuth();
+    if (auth) {
+      return auth.tokenDeAcceso;
+    }
+    return undefined;
   }
 
   setToken(token: string): void {
@@ -34,16 +38,16 @@ export class AuthService {
   }
 
   getAuth(): any | null {
-    const auth = sessionStorage.getItem(this.KEY);
+    const auth = localStorage.getItem(this.KEY);
     return auth ? JSON.parse(auth) : null;
   }
 
   setAuth(data: any): void {
-    sessionStorage.setItem(this.KEY, JSON.stringify(data));
+    localStorage.setItem(this.KEY, JSON.stringify(data));
   }
 
   closeSession(): void {
-    sessionStorage.clear();
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
 

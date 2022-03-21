@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { Message } from 'primeng/api';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,19 @@ export class Helpers {
     static APPLICATION_JSON = 'application/json';
     static APPLICATION_FORM_URLENCODED = 'application/x-www-form-urlencoded';
     static MULTIPART_FORM_DATA = 'multipart/form-data;';
+    SUCCESS_MESSAGE = 'success';
+    ERROR_MESSAGE = 'error';
+    FAIL_MESSAGE = 'fail';
+    BAD_CREDENTIALS = 'Bad credentials';
+    ERROR_GENERAL_MESSAGE = 'No hubo comunicación con el servidor.';
+
+    /**
+     * @brief Obtiene la url basica desde las environments
+     * @return string
+     */
+    getBasicEndPoint(path: string): string {
+        return `${environment.api}${path}`;
+    }
 
     /**
      * @brief Construye un mensaje de alerta

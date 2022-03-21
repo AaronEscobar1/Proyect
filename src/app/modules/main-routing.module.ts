@@ -3,9 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 import { MainComponent } from './main.component';
-import { ArchiveComponent } from './archive/archive.component';
-import { MailComponent } from './mail/mail.component';
-import { OrganizationComponent } from './organization/organization.component';
 import { SecurityComponent } from './security/security.component';
 import { TalentComponent } from './talent/talent.component';
 import { HomeComponent } from './home/home.component';
@@ -18,7 +15,9 @@ const routes: Routes = [
         path: 'home', component: HomeComponent
       },
       {
-        path: 'archive', component: ArchiveComponent
+        path: 'archive',
+        // LazyLoad
+        loadChildren: () => import('./archive/archive.module').then( m => m.ArchiveModule)
       },
       {
         path: 'config',
@@ -26,16 +25,24 @@ const routes: Routes = [
         loadChildren: () => import('./configuration/configuration.module').then( m => m.ConfigurationModule)
       },
       {
-        path: 'mail', component: MailComponent,
+        path: 'mail',
+        // LazyLoad
+        loadChildren: () => import('./mail/mail.module').then( m => m.MailModule)
       },
       {
-        path: 'organization', component: OrganizationComponent,
+        path: 'organization',
+        // LazyLoad
+        loadChildren: () => import('./organization/organization.module').then( m => m.OrganizationModule)
       },
       {
-        path: 'security', component: SecurityComponent,
+        path: 'security',
+        // LazyLoad
+        loadChildren: () => import('./security/security.module').then( m => m.SecurityModule)
       },
       {
-        path: 'talent', component: TalentComponent,
+        path: 'talent',
+        // LazyLoad
+        loadChildren: () => import('./talent/talent.module').then( m => m.TalentModule)
       },
       {
         path: '**', redirectTo: 'home'

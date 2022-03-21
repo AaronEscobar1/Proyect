@@ -10,7 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CardMainComponent } from './components/card-main/card-main.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { TableSkeletonComponent } from './components/table-skeleton/table-skeleton.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 
 
@@ -19,7 +19,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     CardMainComponent,
     FooterComponent,
     MenuComponent,
-    NavbarComponent,
+    TableSkeletonComponent,
     TopbarComponent
   ],
   imports: [
@@ -39,7 +39,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     CardMainComponent,
     FooterComponent,
     MenuComponent,
-    NavbarComponent,
+    TableSkeletonComponent,
     TopbarComponent
   ],
 })

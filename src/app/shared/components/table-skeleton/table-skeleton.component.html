@@ -1,0 +1,16 @@
+<div class="mt-3">
+
+    <!-- Header Table -->
+    <p-skeleton styleClass="mb-3" height="5rem"></p-skeleton>
+
+    <!-- Thead Tbody Table-->
+    <div class="grid" *ngFor='let row of rows'>
+        <div class="col" *ngFor="let column of columns">
+            <p-skeleton height="2.5rem"></p-skeleton>
+        </div>
+    </div>
+
+    <!-- Footer Table -->
+    <p-skeleton styleClass="mt-2" height="3rem"></p-skeleton>
+
+</div>

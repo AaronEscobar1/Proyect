@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Helpers } from '../../helpers/helpers';
 
 @Injectable({
@@ -18,12 +17,8 @@ export class HttpService {
    * @params endPoint: string
    * @return Observable<any>
    */
-  get(endPoint: string): Observable<any> | any {
-    try {
-      return this.http.get(endPoint);
-    } catch (e) {
-      console.log('ERROR SERVICE GET: ', e);
-    }
+  get(endPoint: string) {
+    return this.http.get(endPoint);
   }
 
   /**
@@ -34,12 +29,8 @@ export class HttpService {
    * @params endPoint: string, params: any, contentType?: string
    * @return Observable<any>
    */
-  post(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON): Observable<any> | any {
-    try{
-      return this.http.post(endPoint, params, this.getHeaders(contentType));
-    } catch (e) {
-      console.log('ERROR SERVICE POST: ', e);
-    }
+  post(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON) {
+    return this.http.post(endPoint, params, this.getHeaders(contentType));
   }
 
   /**
@@ -50,12 +41,8 @@ export class HttpService {
    * @params endPoint: string, params: any, contentType?: string
    * @return Observable<any>
    */
-   put(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON): Observable<any> | any {
-    try{
-      return this.http.put(endPoint, params, this.getHeaders(contentType));
-    } catch (e) {
-      console.log('ERROR SERVICE PUT: ', e);
-    }
+   put(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON) {
+    return this.http.put(endPoint, params, this.getHeaders(contentType));
   }
 
   /**
@@ -66,12 +53,8 @@ export class HttpService {
    * @params endPoint: string
    * @return Observable<any>
    */
-   delete(endPoint: string): Observable<any> | any {
-    try{
-      return this.http.delete(endPoint);
-    } catch (e){
-      console.log('ERROR SERVICE DELET: ', e);
-    }
+   delete(endPoint: string) {
+    return this.http.delete(endPoint);
   }
 
   /**
@@ -82,12 +65,10 @@ export class HttpService {
    * @params contentType: string
    * @return any
    */
-  private getHeaders(contentType: string) {
-    const header = {
+  getHeaders(contentType: string) {
+    const header = { 
       'Content-Type': contentType 
     };
-    console.log(header);
-    // header['Content-Type'] = contentType;
     return { headers: header };
   }
 }

@@ -1,0 +1,202 @@
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+        
+        <div class="header-card bg-gray-600 text-white p-2">Niveles educativos</div>
+        <div class="card">
+            
+            <div class="flex">
+                <button pButton class="btn-infocent mr-2" 
+                        icon="pi pi-refresh"
+                        pTooltip="Refrescar tabla"
+                        tooltipPosition="bottom"
+                        (click)="refresh()">
+                </button>
+                <button pButton class="btn-infocent mr-3" 
+                        icon="pi pi-print"
+                        pTooltip="Imprimir nivel"
+                        tooltipPosition="bottom"
+                        (click)="showModalPrintDialog()">
+                </button>
+                <div class="separator"></div>
+                <button pButton class="btn-infocent mr-2" 
+                        icon="pi pi-plus" 
+                        pTooltip="Agregar nivel"
+                        tooltipPosition="bottom"
+                        (click)="showModalAddDialog()">
+                </button>
+                <button pButton 
+                        class="btn-infocent mr-2" 
+                        icon="pi pi-pencil" 
+                        pTooltip="Editar nivel"
+                        tooltipPosition="bottom"
+                        (click)="editSelectNivel()"
+                        [disabled]="!selectNivel">
+                </button>
+                <button pButton 
+                        class="btn-infocent mr-2" 
+                        icon="pi pi-trash"
+                        pTooltip="Eliminar nivel"
+                        tooltipPosition="bottom"
+                        (click)="deleteNivel()"
+                        [disabled]="!selectNivel">
+                </button>
+            </div>
+
+            <!-- Cargar tabla tipo skeleton -->
+            <app-table-skeleton *ngIf="loading" [rowsNumber]="5" [columnsNumber]="3"></app-table-skeleton>
+
+            <!-- Tabla -->
+            <div class="mt-3" *ngIf="!loading">
+                <p-table [value]="niveles"
+                         selectionMode="single" [(selection)]="selectNivel"
+                         [paginator]="true" [rows]="5" [loading]="loading"
+                         [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
+                         [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} registros de {totalRecords} entradas." [rowsPerPageOptions]="[5,10,25,50]">
+                   
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                                {{ col.header }}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+                        </tr> 
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false">
+                                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                        <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '..'">
+                                    </ng-template>
+                                </p-columnFilter>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-nivel>
+                        <tr [pSelectableRow]="nivel">
+                            <td>{{nivel.codniv}}</td>
+                            <td>{{nivel.desniv | titlecase}}</td>
+                            <td>{{nivel.codley | uppercase}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+       
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal imprimir -->
+<p-dialog [(visible)]="printNivelModal" header="Imprimir niveles educativos" [modal]="true" [style]="{width: '40vw'}" class="p-fluid"
+        [draggable]="false" [resizable]="false">
+        
+        <ng-template pTemplate="content">
+
+            <div class="field">
+                <label for="status">Tipo *</label>
+                <p-dropdown [options]="typesFile" 
+                            placeholder="Seleccione un tipo" 
+                            optionLabel="name" 
+                            [showClear]="true">
+                </p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="id">Código</label>
+                <input  type="text"
+                        pInputText
+                        id="id"
+                        placeholder="Ingrese el código"
+                        required/>
+            </div>
+            
+            <div class="field">
+                <label for="desniv">Descripción</label>
+                <input  type="text"
+                        pInputText
+                        id="desniv"
+                        placeholder="Ingrese la descripción"
+                        required/>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printNivelModal = false"></button>
+            <p-button icon="pi pi-check" (click)="exportPdf()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
+        </ng-template>
+</p-dialog>
+
+<!-- Modal agregar -->
+<p-dialog [(visible)]="addNivelModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '40vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="formNiveles" autocomplete="off">
+
+                <div class="field">
+                    <label for="codniv">Código *</label>
+
+                    <input  type="text"
+                            id="codniv" 
+                            pInputText 
+                            formControlName="codniv"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codniv')">
+                        {{ codnivMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="desniv">Descripción *</label>
+                    <input  type="text" 
+                            id="desniv"
+                            pInputText 
+                            formControlName="desniv"
+                            placeholder="Ingrese la descripción"
+                            />
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('desniv')">
+                        {{ desnivMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="codley">Oficial</label>
+                    <input  type="text" 
+                            id="codley"
+                            pInputText 
+                            formControlName="codley"
+                            placeholder="Ingrese el código oficial"
+                            />
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codley')">
+                        El código oficial es de longitud máxima de 3 dígitos.
+                    </span>
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="saveNivel()"></button>
+        </ng-template>
+</p-dialog>

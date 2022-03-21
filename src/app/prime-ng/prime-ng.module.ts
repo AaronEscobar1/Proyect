@@ -13,8 +13,12 @@ import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SkeletonModule } from "primeng/skeleton";
+import { SpeedDialModule } from 'primeng/speeddial';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+
 
 @NgModule({
   exports: [
@@ -31,6 +35,9 @@ import { ToastModule } from 'primeng/toast';
     MessageModule,
     MenubarModule,
     PanelMenuModule,
+    ProgressSpinnerModule,
+    SkeletonModule,
+    SpeedDialModule,
     TableModule,
     ToastModule
   ]

@@ -5,6 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthModule } from './auth/auth.module';
+import { HttpInterceptorModule } from './interceptors/http-interceptor.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -16,7 +18,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AuthModule,
     BrowserAnimationsModule,
+    HttpInterceptorModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
