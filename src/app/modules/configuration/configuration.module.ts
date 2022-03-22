@@ -3,23 +3,23 @@ import { NgModule } from '@angular/core';
 // Modules
 import { SharedModule } from '../../shared/shared.module';
 import { ConfigurationRoutingModule } from './configuration-routing.module';
+import { ProfesionesModule } from './sub-modules/nomina/profesiones/profesiones.module';
 
 // Components
 import { ConfigHomeComponent } from './sub-modules/config-home/config-home.component';
 import { NivelesEducativosComponent } from './sub-modules/nomina/niveles-educativos/pages/niveles-educativos/niveles-educativos.component';
 import { ConfigurationComponent } from './configuration.component';
-import { ProfesionesComponent } from './sub-modules/nomina/profesiones/pages/profesiones/profesiones.component';
 
 
 @NgModule({
   declarations: [
     ConfigHomeComponent,
     NivelesEducativosComponent,
-    ConfigurationComponent,
-    ProfesionesComponent
+    ConfigurationComponent
   ],
   imports: [
     ConfigurationRoutingModule,
+    ProfesionesModule,
     SharedModule
   ],
   exports: [
