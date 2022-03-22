@@ -46,8 +46,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               label: 'Profesiones',
               routerLink: ['/main/config/profesiones'],
             },
+            {
+              label: 'Formas de pago',
+              routerLink: ['/main/config/formas-pago'],
+            },
           ]
-        },
+        }
     ];
   }
   

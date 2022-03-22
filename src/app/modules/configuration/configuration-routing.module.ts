@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 // Components
 import { ConfigurationComponent } from './configuration.component';
 import { ConfigHomeComponent } from './sub-modules/config-home/config-home.component';
-import { NivelesEducativosComponent } from './sub-modules/nomina/niveles-educativos/pages/niveles-educativos/niveles-educativos.component';
 
 const routes: Routes = [
   {
@@ -14,12 +13,19 @@ const routes: Routes = [
         path: '', component: ConfigHomeComponent
       },
       {
-        path: 'niveles-educativos', component: NivelesEducativosComponent
+        path: 'niveles-educativos',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/niveles-educativos/niveles-educactivos.module').then( m => m.NivelesEducactivosModule),
       },
       {
         path: 'profesiones',
         // LazyLoad
         loadChildren: () => import('./sub-modules/nomina/profesiones/profesiones.module').then( m => m.ProfesionesModule),
+      },
+      {
+        path: 'formas-pago',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/formas-pago/formas-pago.module').then( m => m.FormasPagoModule),
       },
       {
         path: '**', redirectTo: ''
