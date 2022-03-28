@@ -50,6 +50,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               label: 'Formas de pago',
               routerLink: ['/main/config/formas-pago'],
             },
+            {
+              label: 'Motivos de finiquito',
+              routerLink: ['/main/config/motivos-finiquito'],
+            },
           ]
         }
     ];

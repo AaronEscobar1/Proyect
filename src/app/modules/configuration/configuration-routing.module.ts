@@ -28,6 +28,11 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/formas-pago/formas-pago.module').then( m => m.FormasPagoModule),
       },
       {
+        path: 'motivos-finiquito',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/motivos-finiquito/motivos-finiquito.module').then( m => m.MotivosFiniquitoModule),
+      },
+      {
         path: '**', redirectTo: ''
       }
     ]
