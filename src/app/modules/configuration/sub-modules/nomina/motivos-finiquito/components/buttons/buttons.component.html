@@ -7,21 +7,21 @@
     </button>
     <button pButton class="btn-infocent mr-3" 
             icon="pi pi-print"
-            pTooltip="Imprimir profesión"
+            pTooltip="Imprimir motivo"
             tooltipPosition="bottom"
             (click)="openModalPrint()">
     </button>
     <div class="separator"></div>
     <button pButton class="btn-infocent mr-2" 
             icon="pi pi-plus" 
-            pTooltip="Agregar profesión"
+            pTooltip="Agregar motivo"
             tooltipPosition="bottom"
             (click)="openModalCreate()">
     </button>
     <button pButton 
             class="btn-infocent mr-2" 
             icon="pi pi-pencil" 
-            pTooltip="Editar profesión"
+            pTooltip="Editar motivo"
             tooltipPosition="bottom"
             (click)="editSelectRow()"
             [disabled]="!selectRow">
@@ -29,7 +29,7 @@
     <button pButton 
             class="btn-infocent mr-2" 
             icon="pi pi-trash"
-            pTooltip="Eliminar profesión"
+            pTooltip="Eliminar motivo"
             tooltipPosition="bottom"
             (click)="deleteRow()"
             [disabled]="!selectRow">
