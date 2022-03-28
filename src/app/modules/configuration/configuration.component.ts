@@ -39,8 +39,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
           icon: 'pi pi-book',
           items: [
             {
-                label: 'Niveles educativos',
-                routerLink: ['/main/config/niveles-educativos'],
+              label: 'Niveles educativos',
+              routerLink: ['/main/config/niveles-educativos'],
+            },
+            {
+              label: 'Profesiones',
+              routerLink: ['/main/config/profesiones'],
+            },
+            {
+              label: 'Formas de pago',
+              routerLink: ['/main/config/formas-pago'],
             },
           ]
         }

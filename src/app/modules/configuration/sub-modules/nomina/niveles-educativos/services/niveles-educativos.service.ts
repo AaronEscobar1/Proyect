@@ -18,8 +18,8 @@ export class NivelesEducativosService {
     return this.http.get(this.helpers.getBasicEndPoint('/nivelEducativo'));
   }
 
-  getNivelById(): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/nivelEducativo/1`));
+  getNivelById(id: string): Observable<ResponseBack> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/nivelEducativo/${id}`));
   }
   
   createNivel(nivel: NivelesEducativos): Observable<ResponseBack> {
