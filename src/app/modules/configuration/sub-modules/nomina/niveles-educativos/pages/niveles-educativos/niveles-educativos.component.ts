@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
-import { TypesFile } from '../../interfaces/typesFiles.interfaces';
+import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';

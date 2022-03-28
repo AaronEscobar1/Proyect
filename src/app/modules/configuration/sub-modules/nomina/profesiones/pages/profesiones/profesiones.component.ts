@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { TypesFile } from '../../../niveles-educativos/interfaces/typesFiles.interfaces';
+import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { Profession } from '../../interfaces/professions.interfaces';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';

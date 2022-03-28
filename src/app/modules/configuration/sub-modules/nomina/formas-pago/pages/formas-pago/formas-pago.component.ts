@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { TypesFile } from '../../../niveles-educativos/interfaces/typesFiles.interfaces';
+import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { FormasPagoService } from '../../services/formas-pago.service';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
