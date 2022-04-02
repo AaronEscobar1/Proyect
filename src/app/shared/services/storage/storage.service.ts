@@ -15,13 +15,9 @@ export class StorageService {
    * @params key: string
    * @return any
    */
-  get(key: string): any | null{
-    try {
-      const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) : null;
-    } catch (e){
-      console.log('ERROR GET-LOCALSTORE: ', e);
-    }
+  get(key: string): any | null {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
   }
 
   /**
@@ -32,11 +28,7 @@ export class StorageService {
    * @return null
    */
   set(key: string, data: any): void {
-    try {
-      localStorage.setItem(key, JSON.stringify(data));
-    } catch (e) {
-      console.log('ERROR SET-LOCALSTORE: ', e);
-    }
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
   /**
@@ -46,12 +38,8 @@ export class StorageService {
    *
    * @return null
    */
-   remove(key: string): void {
-    try {
-      localStorage.removeItem(key);
-    } catch (e) {
-      console.log('ERROR REMOVE-LOCALSTORE: ', e);
-    }
+  remove(key: string): void {
+    localStorage.removeItem(key);
   }
 
   /**
@@ -62,11 +50,7 @@ export class StorageService {
    * @return null
    */
   clear(): void {
-    try {
-      localStorage.clear();
-    } catch (e) {
-      console.log('ERROR CLEAR-LOCALSTORE: ', e);
-    }
+    localStorage.clear();
   }
 
 }
