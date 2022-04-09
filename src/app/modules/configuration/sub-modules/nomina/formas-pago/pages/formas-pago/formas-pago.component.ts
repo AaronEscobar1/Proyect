@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
-import { FormasPagoService } from '../../services/formas-pago.service';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
-import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
+import { FormasPagoService } from '../../services/formas-pago.service';
+import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
 import { ResponseBack } from '../../../../../../../shared/interfaces/response.interfaces';
+import { Helpers } from '../../../../../../../shared/helpers/helpers';
 
 @Component({
   selector: 'app-formas-pago',
@@ -27,15 +28,13 @@ export class FormasPagoComponent implements OnInit {
   // Banderas
   isEdit: boolean = false;
 
-  // Cargar table
-  loading : boolean = false;
-
   // Modales
   titleForm  : string = 'Agregar formas de pago';
   createModal: boolean = false;
   printModal : boolean = false;
 
   constructor(private formasPagoService: FormasPagoService,
+              private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private fb: FormBuilder,
@@ -66,7 +65,7 @@ export class FormasPagoComponent implements OnInit {
   }
 
   loadData() {
-    this.loading = true;
+    this.spinner.show();
      this.formasPagoService.getAll()
      .pipe(
         map((resp: ResponseBack) => resp.data),
@@ -82,7 +81,7 @@ export class FormasPagoComponent implements OnInit {
         }),
      ).subscribe(tpago => {
       this.formasPagos = tpago;
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 
@@ -120,25 +119,37 @@ export class FormasPagoComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    // Mandar el formulario completo y quitar espacios en blancos
+    // Obtener formulario
     let data: FormasPago = this.form.getRawValue();
+    // Eliminar espacios en blanco en su atributo
     data.despag.trim();
 
+    this.spinner.show();
+
     if(this.isEdit) {
+      // Editar
       this.formasPagoService.update(data)
         .subscribe( resp => {
           this.closeModal();
-          this.loadData();
+          this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        }, (error) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la forma de pago.', life: 3000});
         });
       return;
     } 
-
+    // Crear
     this.formasPagoService.create(data)
       .subscribe( resp => {
         this.closeModal();
-        this.loadData();
+        this.spinner.hide();
         this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+        this.loadData();
+      }, (error) => {
+        this.spinner.hide();
+        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la forma de pago.', life: 3000});
       });
   }
 
@@ -174,10 +185,15 @@ export class FormasPagoComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
+        this.spinner.show();
         this.formasPagoService.delete(formasPago.codpag)
           .subscribe( resp => {
+            this.spinner.hide();
             this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
             this.loadData();
+          }, (error) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la forma de pago.', life: 3000});
           });
       }
     });

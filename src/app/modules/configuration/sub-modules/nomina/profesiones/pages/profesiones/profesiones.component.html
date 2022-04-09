@@ -1,3 +1,7 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<!-- Mensajes de alertas para usuarios -->
 <p-toast></p-toast>
 <p-confirmDialog ></p-confirmDialog>
 
@@ -15,13 +19,8 @@
                          (onDeleteRow)="deleteRow($event)">
             </app-buttons>
 
-            <!-- Cargar tabla tipo skeleton -->
-            <app-table-skeleton *ngIf="loading" [rowsNumber]="5" [columnsNumber]="2"></app-table-skeleton>
-
             <!-- Componente table -->
-            <app-data-table *ngIf="!loading"
-                            [professions]="professions">
-            </app-data-table>
+            <app-data-table [professions]="professions"></app-data-table>
    
         </div>
 
