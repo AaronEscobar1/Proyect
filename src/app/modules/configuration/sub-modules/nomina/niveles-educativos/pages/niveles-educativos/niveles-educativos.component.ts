@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NivelesEducativosService } from '../../services/niveles-educativos.service';
-import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
-import { TypesFile } from '../../interfaces/typesFiles.interfaces';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NivelesEducativosService } from '../../services/niveles-educativos.service';
+import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
+import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 
 @Component({
   selector: 'app-niveles-educativos',
@@ -26,7 +27,6 @@ export class NivelesEducativosComponent implements OnInit {
   isEdit        : boolean = false;
 
   // Tabla
-  loading       : boolean           = false;
   columns       : any[]             = [];
   selectNivel!  : NivelesEducativos | null;
   exportColumns!: any[];
@@ -37,6 +37,7 @@ export class NivelesEducativosComponent implements OnInit {
   printNivelModal: boolean = false;
 
   constructor(private nivelesServices: NivelesEducativosService, 
+              private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private fb: FormBuilder,
@@ -67,10 +68,10 @@ export class NivelesEducativosComponent implements OnInit {
   }
 
   loadData(): void {
-    this.loading = true;
+    this.spinner.show();
     this.nivelesServices.getNivelesAll().subscribe(resp => {
       this.niveles = resp.data;
-      this.loading = false;
+        this.spinner.hide();
     });
   }
 
@@ -105,33 +106,36 @@ export class NivelesEducativosComponent implements OnInit {
       this.formNiveles.markAllAsTouched();
       return;
     }
+    // Obtener formulario
     let data = this.formNiveles.getRawValue();
+    // Eliminar espacios en blanco en su atributo
     data.desniv.trim();
+
+    this.spinner.show();
+
     if (this.isEdit) {
+      // Editar
       this.nivelesServices.updateNivel(data)
         .subscribe(resp => {
           this.closeModal();
-          this.loadData();
+          this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        }, error => {
-          if(error.status == 401) {
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Error, no autorizado.', life: 3000});
-          } else {
-            this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.message, life: 3000});
-          }
+          this.loadData();
+        }, (error) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el nivel educativo.', life: 3000});
         });
     } else {
+      // Crear
       this.nivelesServices.createNivel(data)
         .subscribe(resp => {
           this.closeModal();
-          this.loadData();
+          this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        },error => {
-          if(error.status == 401) {
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Error, no autorizado.', life: 3000});
-          } else { 
-            this.messageService.add({severity: 'error', summary: 'Error', detail: error.error.message, life: 3000});
-          }
+          this.loadData();
+        }, (error) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el nivel educativo.', life: 3000});
         });
     }
   }
@@ -157,14 +161,15 @@ export class NivelesEducativosComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
+        this.spinner.show();
         this.nivelesServices.deleteNivel(id)
           .subscribe((resp) => {
+            this.spinner.hide();
             this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
             this.loadData();
-          }, error => {
-            if (error.error.status == this.helpers.ERROR_MESSAGE) {
-              this.messageService.add({severity:'error', summary: 'Error', detail: error.error.message, life: 3000});
-            }
+          }, (error) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
           })
       }
     });

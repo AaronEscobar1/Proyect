@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authServices.getAuth()) {
+    const auth = this.authServices.getAuth();
+    if (auth) {
       this.loginSuccess();
     }
   }
@@ -38,26 +39,24 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.user = this.loginForm.value;
-    this.authServices.authenticateUser(this.user)
+    this.authServices.authenticateUser(this.loginForm.value)
       .subscribe(
         (resp) => {
           if (resp.tokenDeAcceso) {
             this.authServices.setAuth(resp);
             this.loginSuccess();
+          } else {
+            this.msgError = this.helpers.msgAlert('error', 'No se pudo hacer el login correctamente.');
           }
         }, (error) => {
-          if (error.error.mensaje === this.helpers.BAD_CREDENTIALS) {
-            this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
-          } else {
-            console.log(error);
-          }
+          this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
         }
       );
   }
 
-  loginSuccess(): void {
+  loginSuccess(): boolean {
     this.router.navigateByUrl('/main');
+    return true;
   }
 
 }

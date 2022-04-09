@@ -7,7 +7,7 @@ import { Helpers } from '../../helpers/helpers';
 })
 export class HttpService {
 
-  constructor(private http: HttpClient, private helpers: Helpers) { }
+  constructor(private http: HttpClient) { }
 
   /**
    * @name get by José Ramírez
@@ -41,7 +41,7 @@ export class HttpService {
    * @params endPoint: string, params: any, contentType?: string
    * @return Observable<any>
    */
-   put(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON) {
+  put(endPoint: string, params: any, contentType = Helpers.APPLICATION_JSON) {
     return this.http.put(endPoint, params, this.getHeaders(contentType));
   }
 
@@ -53,7 +53,7 @@ export class HttpService {
    * @params endPoint: string
    * @return Observable<any>
    */
-   delete(endPoint: string) {
+  delete(endPoint: string) {
     return this.http.delete(endPoint);
   }
 

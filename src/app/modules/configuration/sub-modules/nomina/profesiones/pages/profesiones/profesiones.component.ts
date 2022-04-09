@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { TypesFile } from '../../../niveles-educativos/interfaces/typesFiles.interfaces';
-import { Profession } from '../../interfaces/professions.interfaces';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ProfesionesService } from '../../services/profesiones.service';
+import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { Profession } from '../../interfaces/professions.interfaces';
+import { Helpers } from '../../../../../../../shared/helpers/helpers';
 
 @Component({
   selector: 'app-profesiones',
@@ -24,15 +25,13 @@ export class ProfesionesComponent implements OnInit {
   // Banderas
   isEdit: boolean = false;
 
-  // Cargar table
-  loading : boolean = false;
-
   // Modales
   titleForm  : string = 'Agregar profesiones';
   createModal: boolean = false;
   printModal : boolean = false;
 
   constructor(private profesionesService: ProfesionesService,
+              private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private fb: FormBuilder,
@@ -55,11 +54,11 @@ export class ProfesionesComponent implements OnInit {
     this.loadData();
   }
 
-  loadData(): void {
-    this.loading = true;
+  loadData() {
+    this.spinner.show();
     this.profesionesService.getAll().subscribe(res => {
       this.professions = res.data;
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 
@@ -97,25 +96,38 @@ export class ProfesionesComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    // Mandar el formulario completo y quitar espacios en blancos
+    // Obtener formulario
     let data: Profession = this.form.getRawValue();
+    // Eliminar espacios en blanco en su atributo
     data.desprf.trim();
 
+    this.spinner.show();
+
     if(this.isEdit) {
+      // Editar 
       this.profesionesService.update(data)
         .subscribe( resp => {
           this.closeModal();
-          this.loadData();
+          this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        }, (error) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar profesión.', life: 3000});
         });
       return;
-    } 
+    }
 
+    // Crear
     this.profesionesService.create(data)
       .subscribe( resp => {
         this.closeModal();
-        this.loadData();
+        this.spinner.hide();
         this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+        this.loadData();
+      }, (error) => {
+        this.spinner.hide();
+        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear profesión.', life: 3000});
       });
   }
 
@@ -140,7 +152,7 @@ export class ProfesionesComponent implements OnInit {
    * @param profesion row de la tabla
    * @returns void
    */
-  deleteRow(profesion: Profession): void {
+  deleteRow(profesion: Profession) {
     if (!profesion) {  
       this.helpers.openErrorAlert('No se encontro el id.')
       return; 
@@ -151,10 +163,15 @@ export class ProfesionesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
+        this.spinner.show();
         this.profesionesService.delete(profesion.codprf)
           .subscribe( resp => {
+            this.spinner.hide();
             this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
             this.loadData();
+          }, (error) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar profesión.', life: 3000});
           });
       }
     });
