@@ -5,6 +5,7 @@ import { Message } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Helpers } from '../../../shared/helpers/helpers';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(private authServices: AuthService,
               private formBuilder: FormBuilder,
               private router: Router,
+              private spinner: NgxSpinnerService,
               private helpers: Helpers) {
     this.loginForm = this.formBuilder.group({
       usernameOrEmail: ['', [ Validators.required ]],
@@ -39,16 +41,20 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.spinner.show();
     this.authServices.authenticateUser(this.loginForm.value)
       .subscribe(
         (resp) => {
           if (resp.tokenDeAcceso) {
             this.authServices.setAuth(resp);
+            this.spinner.hide();
             this.loginSuccess();
           } else {
+            this.spinner.hide();
             this.msgError = this.helpers.msgAlert('error', 'No se pudo hacer el login correctamente.');
           }
         }, (error) => {
+          this.spinner.hide();
           this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
         }
       );
