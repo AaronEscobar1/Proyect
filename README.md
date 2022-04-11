@@ -31,7 +31,7 @@ ___
 Either clone this repository or fork it on GitHub and clone your fork:
 
 ```
-git clone git@bitbucket.org:desarrollo08/semillanominajavav11-frontend.git
+git clone git@bitbucket.org:desarrollo08/nomina-v11-frontend.git
 ```
 
 ### Install node packages 
