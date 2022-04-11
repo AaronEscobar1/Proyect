@@ -31,7 +31,7 @@ ___
 Either clone this repository or fork it on GitHub and clone your fork:
 
 ```
-git clone git@bitbucket.org:desarrollo08/semillanominajavav11-frontend.git
+git clone git@bitbucket.org:desarrollo08/nomina-v11-frontend.git
 ```
 
 ### Install node packages 
@@ -74,6 +74,10 @@ Run `ng build --prod` to build the project. The build artifacts will be stored i
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Get statistics (coverage) of unit tests
+
+Run `npm run test` to view unit test statistics [Html Coverage](http://127.0.0.1:5500/coverage/NominaApp/index.html).
 
 ## Further help
 

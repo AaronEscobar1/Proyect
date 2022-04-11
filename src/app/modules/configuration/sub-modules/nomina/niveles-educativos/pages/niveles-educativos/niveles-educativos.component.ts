@@ -72,6 +72,9 @@ export class NivelesEducativosComponent implements OnInit {
     this.nivelesServices.getNivelesAll().subscribe(resp => {
       this.niveles = resp.data;
         this.spinner.hide();
+    }, (error) => {
+      this.spinner.hide();
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
     });
   }
 

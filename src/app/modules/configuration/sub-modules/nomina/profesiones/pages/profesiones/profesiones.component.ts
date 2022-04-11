@@ -59,6 +59,9 @@ export class ProfesionesComponent implements OnInit {
     this.profesionesService.getAll().subscribe(res => {
       this.professions = res.data;
       this.spinner.hide();
+    }, (error) => {
+      this.spinner.hide();
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
     });
   }
 

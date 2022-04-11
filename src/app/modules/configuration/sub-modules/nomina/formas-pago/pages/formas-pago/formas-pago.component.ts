@@ -82,6 +82,9 @@ export class FormasPagoComponent implements OnInit {
      ).subscribe(tpago => {
       this.formasPagos = tpago;
       this.spinner.hide();
+    }, (error) => {
+      this.spinner.hide();
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
     });
   }
 
