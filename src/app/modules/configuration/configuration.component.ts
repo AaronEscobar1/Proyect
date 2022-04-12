@@ -65,6 +65,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             {
               label: 'Centros médicos',
               routerLink: ['/main/config/centros-medicos'],
+            },
+            {
+              label: 'Clasificación oficial',
+              routerLink: ['/main/config/clasificacion-oficial'],
             }
           ]
         }
