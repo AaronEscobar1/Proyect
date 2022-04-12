@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ValorOficial } from '../../interfaces/valor-oficial.interfaces';
+import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
+import { ValoresOficialesService } from '../../services/valores-oficiales.service';
 
 @Component({
   selector: 'app-data-table',
@@ -7,9 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataTableComponent implements OnInit {
 
-  constructor() { }
+  @Input() valoresOficiales!: ValorOficial[];
+
+  // Table
+  columns: TableHead[] = [];
+
+  constructor(private valoresOficialesService: ValoresOficialesService) { }
 
   ngOnInit(): void {
+    this.columns = [
+      { field: 'tipevlo', header: 'Tipo' },
+      { field: 'datevlo', header: 'Fecha' },
+      { field: 'valor',   header: 'Valor' }
+    ];
+  }
+
+  onRowSelect(event: any): void {
+    this.valoresOficialesService.selectRow$.emit(event.data);
+  }
+
+  onRowUnselect(): void {
+    this.valoresOficialesService.selectRow$.emit(null);
   }
 
 }

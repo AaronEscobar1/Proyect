@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -10,6 +11,7 @@ import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { FieldsetModule } from 'primeng/fieldset';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
@@ -26,6 +28,7 @@ import { ToastModule } from 'primeng/toast';
 @NgModule({
   exports: [
     ButtonModule,
+    CalendarModule,
     CardModule,
     CheckboxModule,
     ContextMenuModule,
@@ -35,6 +38,7 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
+    InputNumberModule,
     FieldsetModule,
     MessagesModule,
     MessageModule,
