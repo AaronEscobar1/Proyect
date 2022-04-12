@@ -38,6 +38,11 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/procesos/procesos.module').then( m => m.ProcesosModule),
       },
       {
+        path: 'categories',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/categories/categories.module').then( m => m.CategoriesModule),
+      },
+      {
         path: '**', redirectTo: ''
       }
     ]

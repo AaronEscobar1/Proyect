@@ -58,6 +58,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               label: 'Procesos',
               routerLink: ['/main/config/procesos'],
             },
+            {
+              label: 'Categorias',
+              routerLink: ['/main/config/categories'],
+            },
           ]
         }
     ];
