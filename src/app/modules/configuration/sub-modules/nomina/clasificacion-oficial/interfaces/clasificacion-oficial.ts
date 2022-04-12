@@ -1,6 +1,6 @@
 import { OfficialClassification } from './clasificacion-oficial.interfaces';
 
-export const centroMedicoData: OfficialClassification[] = [
+export const officialClassificationData: OfficialClassification[] = [
     {
         codclao: '01',
         desclao: 'Clasificacion oficial 1',

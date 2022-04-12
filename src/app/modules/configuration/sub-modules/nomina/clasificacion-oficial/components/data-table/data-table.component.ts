@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { OfficialClassification } from '../../interfaces/clasificacion-oficial.interfaces';
+import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
+import { ClasificacionOficialService } from '../../services/clasificacion-oficial.service';
 
 @Component({
   selector: 'app-data-table',
@@ -7,9 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataTableComponent implements OnInit {
 
-  constructor() { }
+  @Input() officialClassification!: OfficialClassification[];
+
+  // Table
+  columns: TableHead[] = [];
+
+  constructor(private clasificacionOficialService: ClasificacionOficialService) { }
 
   ngOnInit(): void {
+    this.columns = [
+      { field: 'codclao',  header: 'Código' },
+      { field: 'desclao',  header: 'Descripción' },
+      { field: 'typeclao', header: 'Tipo' }
+    ];
+  }
+
+  onRowSelect(event: any): void {
+    this.clasificacionOficialService.selectRow$.emit(event.data);
+  }
+
+  onRowUnselect(): void {
+    this.clasificacionOficialService.selectRow$.emit(null);
   }
 
 }
