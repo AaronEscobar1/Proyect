@@ -43,6 +43,11 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/categories/categories.module').then( m => m.CategoriesModule),
       },
       {
+        path: 'centros-medicos',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/centros-medicos/centros-medicos.module').then( m => m.CentrosMedicosModule),
+      },
+      {
         path: '**', redirectTo: ''
       }
     ]
