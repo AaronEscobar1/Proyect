@@ -38,6 +38,31 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/procesos/procesos.module').then( m => m.ProcesosModule),
       },
       {
+        path: 'categories',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/categories/categories.module').then( m => m.CategoriesModule),
+      },
+      {
+        path: 'centros-medicos',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/centros-medicos/centros-medicos.module').then( m => m.CentrosMedicosModule),
+      },
+      {
+        path: 'clasificacion-oficial',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/clasificacion-oficial/clasificacion-oficial.module').then( m => m.ClasificacionOficialModule),
+      },
+      {
+        path: 'valor-oficial',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/valores-oficiales/valores-oficiales.module').then( m => m.ValoresOficialesModule),
+      },
+      {
+        path: 'sindicatos',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/sindicatos/sindicatos.module').then( m => m.SindicatosModule),
+      },
+      {
         path: '**', redirectTo: ''
       }
     ]

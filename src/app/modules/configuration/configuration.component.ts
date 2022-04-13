@@ -58,6 +58,26 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               label: 'Procesos',
               routerLink: ['/main/config/procesos'],
             },
+            {
+              label: 'Categorias',
+              routerLink: ['/main/config/categories'],
+            },
+            {
+              label: 'Centros médicos',
+              routerLink: ['/main/config/centros-medicos'],
+            },
+            {
+              label: 'Valores oficiales',
+              routerLink: ['/main/config/valor-oficial'],
+            },
+            {
+              label: 'Clasificación oficial',
+              routerLink: ['/main/config/clasificacion-oficial'],
+            },
+            {
+              label: 'Sindicatos',
+              routerLink: ['/main/config/sindicatos'],
+            }
           ]
         }
     ];

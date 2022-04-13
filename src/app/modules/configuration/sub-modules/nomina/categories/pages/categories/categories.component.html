@@ -1,0 +1,128 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Categorias</div>
+        <div class="card-table">
+            
+            <!-- Componente de botones -->
+            <app-buttons (onRefresh)="refresh()"
+                         (onOpenModalPrint)="openModalPrint()"
+                         (onOpenModalCreate)="openModalCreate()"
+                         (onEditRow)="editRow($event)"
+                         (onDeleteRow)="deleteRow($event)">
+            </app-buttons>
+
+            <!-- Componente table -->
+            <app-data-table [categories]="categories"></app-data-table>
+   
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal imprimir -->
+<p-dialog [(visible)]="printModal" header="Imprimir categorias" [modal]="true" [style]="{width: '40vw'}" class="p-fluid"
+        [draggable]="false" [resizable]="false">
+        
+        <ng-template pTemplate="content">
+
+            <div class="field">
+                <label for="status">Tipo *</label>
+                <p-dropdown [options]="typesFile" 
+                            appendTo="body"
+                            placeholder="Seleccione un tipo" 
+                            optionLabel="name" 
+                            [showClear]="true">
+                </p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="id">Código</label>
+                <input  type="text"
+                        pInputText
+                        id="id"
+                        placeholder="Ingrese el código"
+                        required/>
+            </div>
+            
+            <div class="field">
+                <label for="desniv">Descripción</label>
+                <input  type="text"
+                        pInputText
+                        id="desniv"
+                        placeholder="Ingrese la descripción"
+                        required/>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printModal = false"></button>
+            <p-button icon="pi pi-check" (click)="export()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
+        </ng-template>
+</p-dialog>
+
+
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '40vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="field">
+                    <label for="codcat">Código *</label>
+                    <input  type="text"
+                            id="codcat" 
+                            pInputText
+                            formControlName="codcat"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codcat')">
+                        {{ codcatMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="descat">Descripción *</label>
+                    <textarea id="descat" 
+                              pInputTextarea 
+                              formControlName="descat" 
+                              rows="1"
+                              placeholder="Ingrese la descripción">
+                    </textarea>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('descat')">
+                        {{ descatMsgError }}
+                    </span>
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
+        </ng-template>
+</p-dialog>
