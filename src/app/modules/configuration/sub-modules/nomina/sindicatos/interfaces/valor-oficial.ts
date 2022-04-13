@@ -10,7 +10,14 @@ export const sindicatosData: Sindicatos[] = [
         folio: '21',
         inspectoria: 'Local',
         pais: 'VEN',
-        entidadfed: 'CCS'
+        entidadfed: 'CCS',
+        desdir: 'Urbanización Antonio José de Sucre, bloque 1 de cútira',
+        ciudad: 'Caracas',
+        telefono1: '04125987433',
+        telefono2: '02125551177',
+        fax: '456844451654',
+        telex: '8888888881',
+        email: 'jose@gmail.com'
     },
     {
         codsin: '0002',

@@ -16,7 +16,8 @@ export interface Sindicatos {
     pais        : string;
     entidadfed  : string;
     ciudad?     : string;
-    telefono?   : string;
+    telefono1?  : string;
+    telefono2?  : string;
     fax?        : string;
     telex?      : string;
     email?      : string;    
