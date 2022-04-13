@@ -58,6 +58,11 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/valores-oficiales/valores-oficiales.module').then( m => m.ValoresOficialesModule),
       },
       {
+        path: 'sindicatos',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/sindicatos/sindicatos.module').then( m => m.SindicatosModule),
+      },
+      {
         path: '**', redirectTo: ''
       }
     ]

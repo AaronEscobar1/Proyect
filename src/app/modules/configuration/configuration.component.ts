@@ -73,6 +73,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             {
               label: 'Clasificación oficial',
               routerLink: ['/main/config/clasificacion-oficial'],
+            },
+            {
+              label: 'Sindicatos',
+              routerLink: ['/main/config/sindicatos'],
             }
           ]
         }
