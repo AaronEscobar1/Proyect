@@ -63,6 +63,24 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ___
 
+## Update npm dependencies
+
+This next command will check the registry to see if any (or some) of the installed packages are currently obsolete.
+
+```
+npm outdated
+```
+
+To update a specific dependency, run: `npm update <dependency>` o `npm update` to update all dependencies.
+
+Another way to upgrade: 
+
+npm-check-updates upgrades your package.json dependencies to the latest versions, ignoring specified versions.
+
+[Official documentation](https://www.npmjs.com/package/npm-check-updates)
+
+___
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
