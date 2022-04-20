@@ -1,8 +1,12 @@
 export interface MotivosFiniquito {
-    codmot: string;
-    desmot: string;
-    usrcre: string;
-    feccre: Date;
-    usract: string;
-    fecact: Date;
+    coddes: string;
+    desde1: string;
+    desde2: string;
+    impliq: number | boolean;
+    classo: string;
+}
+
+export interface ClasificacionMotivo {
+    tipoReporte: string;
+    codigoOficial: string;
 }

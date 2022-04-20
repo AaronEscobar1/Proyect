@@ -70,8 +70,8 @@ export class NivelesEducativosComponent implements OnInit {
   loadData(): void {
     this.spinner.show();
     this.nivelesServices.getNivelesAll().subscribe(resp => {
-      this.niveles = resp.data;
-        this.spinner.hide();
+      this.niveles = resp;
+      this.spinner.hide();
     }, (error) => {
       this.spinner.hide();
       this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});

@@ -68,7 +68,6 @@ export class FormasPagoComponent implements OnInit {
     this.spinner.show();
      this.formasPagoService.getAll()
      .pipe(
-        map((resp: ResponseBack) => resp.data),
         // Se agrega un valor atributo adicional "coninsString" para mostrarlo en la vista
         map((data: FormasPago[]) => {
           return data.map(tpago => {

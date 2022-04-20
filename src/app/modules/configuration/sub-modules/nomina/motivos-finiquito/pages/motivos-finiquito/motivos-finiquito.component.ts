@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
+import { ClasificacionMotivo, MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
 import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { motivosData } from '../../interfaces/motivos';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-motivos-finiquito',
@@ -19,8 +20,9 @@ export class MotivosFiniquitoComponent implements OnInit {
   form!: FormGroup;
 
   // Objetos
-  motivosFiniquito: MotivosFiniquito[] = [];
-  typesFile  : TypesFile[] = [];
+  motivosFiniquito    : MotivosFiniquito[] = [];
+  typesFile           : TypesFile[] = [];
+  classificationMotive: ClasificacionMotivo[] = [];
 
   // Banderas
   isEdit: boolean = false;
@@ -36,11 +38,15 @@ export class MotivosFiniquitoComponent implements OnInit {
   constructor(private motivosFiniquitoService: MotivosFiniquitoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
+              private spinner: NgxSpinnerService,
               private fb: FormBuilder,
               private helpers: Helpers) {
     this.form = this.fb.group({
-      codmot: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
-      desmot: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
+      coddes: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
+      desde1: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
+      desde2: ['', [ Validators.maxLength(30) ]],
+      impliq: [ false ],
+      classo: ['', [ Validators.required ]]
     });
   }
 
@@ -52,6 +58,11 @@ export class MotivosFiniquitoComponent implements OnInit {
       { name: 'RFT',  code: 'RFT'  },
       { name: 'HTML', code: 'HTML' },
       { name: 'XLS',  code: 'XLS'  }
+    ];
+    this.classificationMotive = [
+      { tipoReporte: 'IVSS: Tipo de trabajador-TIUNA',   codigoOficial: '1' },
+      { tipoReporte: 'MINTRA: Clase de ocupación',       codigoOficial: '2' },
+      { tipoReporte: 'IVSS: Condición trabajador-TIUNA', codigoOficial: '3' }
     ];
     this.loadData();
   }
@@ -77,7 +88,7 @@ export class MotivosFiniquitoComponent implements OnInit {
 
   openModalCreate(): void {
     if (!this.isEdit) {
-      this.form.controls['codmot'].enable();
+      this.form.controls['coddes'].enable();
     }
     this.titleForm = this.isEdit ? 'Editar motivos de finiquito' : 'Agregar motivos de finiquito';
     this.createModal = true;
@@ -98,29 +109,40 @@ export class MotivosFiniquitoComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    // Mandar el formulario completo y quitar espacios en blancos
+    // Obtener formulario
     let data: MotivosFiniquito = this.form.getRawValue();
-    data.desmot.trim();
+    // Transformar la data que viene del formulario
+    data.desde1.trim();
+    data.impliq = data.impliq ? 1 : 0;
+
+    this.spinner.show();
 
     if(this.isEdit) {
       // Editar
       console.log('Update', data);
-      this.motivosFiniquito[this.findIndexById(this.form.getRawValue().codmot)] = this.form.getRawValue();
+      this.motivosFiniquito[this.findIndexById(this.form.getRawValue().coddes)] = this.form.getRawValue();
       this.motivosFiniquito = [...this.motivosFiniquito];
       this.closeModal();
       return;
     }
 
     // Crear
-    console.log('Create', data);
-    this.motivosFiniquito.push(data);
-    this.closeModal();
+    this.motivosFiniquitoService.create(data)
+      .subscribe( resp => {
+        this.closeModal();
+        this.spinner.hide();
+        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+        this.loadData();
+      }, (error) => {
+        this.spinner.hide();
+        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el motivo de finiquito.', life: 3000});
+      });
   }
 
   findIndexById(id: string): number {
     let index = -1;
     for (let i = 0; i < this.motivosFiniquito.length; i++) {
-        if (this.motivosFiniquito[i].codmot === id) {
+        if (this.motivosFiniquito[i].coddes === id) {
             index = i;
             break;
         }
@@ -139,7 +161,8 @@ export class MotivosFiniquitoComponent implements OnInit {
       this.helpers.openErrorAlert('No se encontro el id.')
       return;
     }
-    this.form.controls['codmot'].disable();
+    this.form.controls['coddes'].disable();
+    motivosFiniquito.impliq = motivosFiniquito.impliq === 1 ? true : false; 
     this.form.reset(motivosFiniquito);
     this.openModalCreate();
   }
@@ -155,13 +178,13 @@ export class MotivosFiniquitoComponent implements OnInit {
         return; 
       }
       this.confirmationService.confirm({
-        message: `¿Estas seguro que quieres borrar el motivo de finiquito <b>${motivosFiniquito.desmot}</b>?`,
+        message: `¿Estas seguro que quieres borrar el motivo de finiquito <b>${motivosFiniquito.desde1}</b>?`,
         header: 'Confirmar',
         icon: 'pi pi-exclamation-triangle',
         acceptLabel: 'Si',
         accept: () => {
-          this.motivosFiniquito = this.motivosFiniquito.filter(val => val.codmot !== motivosFiniquito.codmot);
-          // this.motivosFiniquitoService.delete(motivosFiniquito.codmot)
+          this.motivosFiniquito = this.motivosFiniquito.filter(val => val.coddes !== motivosFiniquito.coddes);
+          // this.motivosFiniquitoService.delete(motivosFiniquito.coddes)
           //   .subscribe( resp => {
           //     this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
           //     // this.loadData();
@@ -170,9 +193,9 @@ export class MotivosFiniquitoComponent implements OnInit {
       });
     }
   
-    export() {
-  
-    }
+  export() {
+
+  }
 
   /**
    * VALIDACIONES DEL FORMULARIO REACTIVO
@@ -184,8 +207,8 @@ export class MotivosFiniquitoComponent implements OnInit {
   }
 
   // Mensajes de errores dinamicos
-  get codmotMsgError(): string {
-    const errors = this.form.get('codmot')?.errors;
+  get coddesMsgError(): string {
+    const errors = this.form.get('coddes')?.errors;
     if ( errors?.required ) {
       return 'El código es obligatorio.';
     } else if ( errors?.maxlength ) {
@@ -197,8 +220,8 @@ export class MotivosFiniquitoComponent implements OnInit {
   }
 
   // Mensajes de errores dinamicos
-  get desmotMsgError(): string {
-    const errors = this.form.get('desmot')?.errors;
+  get desde1MsgError(): string {
+    const errors = this.form.get('desde1')?.errors;
     if ( errors?.required ) {
       return 'La descripción es obligatoria.';
     } else if ( errors?.maxlength ) {
@@ -214,9 +237,9 @@ export class MotivosFiniquitoComponent implements OnInit {
    * @param control 
    * @returns ValidationErrors | null
    */
-   validatedId(control: AbstractControl): ValidationErrors | null {
+  validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-      const duplicated = this.motivosFiniquito.findIndex(mot => mot.codmot === control.value);
+      const duplicated = this.motivosFiniquito.findIndex(mot => mot.coddes === control.value);
       if (duplicated > -1) {
         return {'duplicated': true};
       }
@@ -232,8 +255,8 @@ export class MotivosFiniquitoComponent implements OnInit {
     if (this.isEdit) {
       if( !control.value && !this.form.getRawValue() && this.motivosFiniquito) { return null; }
       const duplicatedEdit = this.motivosFiniquito.findIndex(
-        mot => mot.desmot.trim().toLowerCase() === this.form.getRawValue().desmot.trim().toLowerCase() 
-                  && mot.codmot !== this.form.getRawValue().codmot
+        mot => mot.desde1.trim().toLowerCase() === this.form.getRawValue().desde1.trim().toLowerCase() 
+                  && mot.coddes !== this.form.getRawValue().coddes
       );
       if (duplicatedEdit > -1) {
         return {'duplicated': true};
@@ -241,7 +264,7 @@ export class MotivosFiniquitoComponent implements OnInit {
       return null;
     } else {
       if( !control.value ) { return null; }
-      const duplicated = this.motivosFiniquito.findIndex(mot => mot.desmot.trim().toLowerCase() === control.value.trim().toLowerCase());
+      const duplicated = this.motivosFiniquito.findIndex(mot => mot.desde1.trim().toLowerCase() === control.value.trim().toLowerCase());
       if (duplicated > -1) {
         return {'duplicated': true};
       }

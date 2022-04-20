@@ -57,7 +57,7 @@ export class ProfesionesComponent implements OnInit {
   loadData() {
     this.spinner.show();
     this.profesionesService.getAll().subscribe(res => {
-      this.professions = res.data;
+      this.professions = res;
       this.spinner.hide();
     }, (error) => {
       this.spinner.hide();
