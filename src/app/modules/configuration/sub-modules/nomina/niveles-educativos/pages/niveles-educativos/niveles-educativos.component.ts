@@ -69,12 +69,16 @@ export class NivelesEducativosComponent implements OnInit {
 
   loadData(): void {
     this.spinner.show();
-    this.nivelesServices.getNivelesAll().subscribe(resp => {
-      this.niveles = resp;
-      this.spinner.hide();
-    }, (error) => {
-      this.spinner.hide();
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+    this.nivelesServices.getNivelesAll()
+    .subscribe({
+      next: (resp) => {
+        this.niveles = resp;
+        this.spinner.hide();
+      },
+      error: (err) => {
+        this.spinner.hide();
+        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+      }
     });
   }
 
@@ -119,26 +123,32 @@ export class NivelesEducativosComponent implements OnInit {
     if (this.isEdit) {
       // Editar
       this.nivelesServices.updateNivel(data)
-        .subscribe(resp => {
-          this.closeModal();
-          this.spinner.hide();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.loadData();
-        }, (error) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el nivel educativo.', life: 3000});
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el nivel educativo.', life: 3000});
+          }
         });
     } else {
       // Crear
       this.nivelesServices.createNivel(data)
-        .subscribe(resp => {
-          this.closeModal();
-          this.spinner.hide();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.loadData();
-        }, (error) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el nivel educativo.', life: 3000});
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el nivel educativo.', life: 3000});
+          } 
         });
     }
   }
@@ -166,14 +176,17 @@ export class NivelesEducativosComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         this.nivelesServices.deleteNivel(id)
-          .subscribe((resp) => {
-            this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          }, (error) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
-          })
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
+            }
+          });
       }
     });
     this.selectNivel = null;

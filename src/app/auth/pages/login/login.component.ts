@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
     }
     this.spinner.show();
     this.authServices.authenticateUser(this.loginForm.value)
-      .subscribe(
-        (resp) => {
+      .subscribe({
+        next: (resp) => {
           if (resp.tokenDeAcceso) {
             this.authServices.setAuth(resp);
             this.spinner.hide();
@@ -53,11 +53,12 @@ export class LoginComponent implements OnInit {
             this.spinner.hide();
             this.msgError = this.helpers.msgAlert('error', 'No se pudo hacer el login correctamente.');
           }
-        }, (error) => {
+        },
+        error: (err) => {
           this.spinner.hide();
           this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
         }
-      );
+      });
   }
 
   loginSuccess(): boolean {

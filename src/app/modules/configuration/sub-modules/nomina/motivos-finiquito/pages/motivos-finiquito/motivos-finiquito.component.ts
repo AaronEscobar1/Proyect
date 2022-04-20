@@ -128,14 +128,17 @@ export class MotivosFiniquitoComponent implements OnInit {
 
     // Crear
     this.motivosFiniquitoService.create(data)
-      .subscribe( resp => {
-        this.closeModal();
-        this.spinner.hide();
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        this.loadData();
-      }, (error) => {
-        this.spinner.hide();
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el motivo de finiquito.', life: 3000});
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData(); 
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el motivo de finiquito.', life: 3000});
+        }
       });
   }
 
@@ -185,9 +188,15 @@ export class MotivosFiniquitoComponent implements OnInit {
         accept: () => {
           this.motivosFiniquito = this.motivosFiniquito.filter(val => val.coddes !== motivosFiniquito.coddes);
           // this.motivosFiniquitoService.delete(motivosFiniquito.coddes)
-          //   .subscribe( resp => {
-          //     this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          //     // this.loadData();
+          //   .subscribe({
+          //     next: (resp) => {
+          //       this.spinner.hide();
+          //       this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          //     },
+          //     error: (err) => {
+          //       this.spinner.hide();
+          //       this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el motivo finiquito', life: 3000});
+          //     }
           //   });
         }
       });
