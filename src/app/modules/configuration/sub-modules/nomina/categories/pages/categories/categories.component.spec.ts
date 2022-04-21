@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Routes } from '@angular/router';
 import { By } from '@angular/platform-browser';
@@ -15,8 +15,8 @@ describe('CategoriesComponent', () => {
 
   const routes: Routes = [{ path: '', children: [ { path: 'login', component: CategoriesComponent }, { path: '**', redirectTo: 'login' }]} ];
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach( waitForAsync  (() => {
+    TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes),
@@ -30,7 +30,7 @@ describe('CategoriesComponent', () => {
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
-  });
+  }));
 
   it('Crear componente de Categories correctamente', () => {
     const fixture = TestBed.createComponent(CategoriesComponent);
@@ -49,19 +49,6 @@ describe('CategoriesComponent', () => {
     expect(app.typesFile.length).toBeGreaterThanOrEqual(1);
     fixture.detectChanges();
   });
-
-  it('Validando Refrescar', async () => {
-    const fixture = TestBed.createComponent(CategoriesComponent);
-    const app = fixture.componentInstance;
-
-    // Simulamos el proceso de carga despues del boton 
-    app.refresh();
-    expect(app.categories.length).toBe(0);
-    await app.loadData();
-    fixture.detectChanges();
-    expect(app.categories.length).toBeGreaterThan(0);
-  
-  })
 
   it('Validando Refrescar', async () => {
     const fixture = TestBed.createComponent(CategoriesComponent);
@@ -108,13 +95,15 @@ describe('CategoriesComponent', () => {
     expect(app.printModal).toBeTrue();
     fixture.detectChanges();
 
-    // Simulamos el proceso de cerrar modales  
+    // Simulamos el proceso de cerrar modal print  
+    app.printModal = false;    
+    expect(app.printModal).toBeFalse();
     
-    // expect(app.printModal).toBeTrue();
-    // app.closeModal();
-    // fixture.detectChanges();
-    // console.log(app.printModal);
-    // expect(app.printModal).toBeFalse();  
+    expect(app.createModal).toBeFalse();
+    app.openModalCreate();
+    fixture.detectChanges();
+    expect(app.createModal).toBeTrue();
+    
   })
 
 });
