@@ -19,13 +19,8 @@
                          (onDeleteRow)="deleteRow($event)">
             </app-buttons>
 
-            <!-- Cargar tabla tipo skeleton -->
-            <app-table-skeleton *ngIf="loading" [rowsNumber]="5" [columnsNumber]="2"></app-table-skeleton>
-
             <!-- Componente table -->
-            <app-data-table *ngIf="!loading"
-                            [motivosFiniquito]="motivosFiniquito">
-            </app-data-table>
+            <app-data-table [motivosFiniquito]="motivosFiniquito"></app-data-table>
    
         </div>
 

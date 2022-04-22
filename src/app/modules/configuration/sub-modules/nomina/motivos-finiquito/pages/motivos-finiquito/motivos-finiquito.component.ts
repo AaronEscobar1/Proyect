@@ -5,7 +5,6 @@ import { ClasificacionMotivo, MotivosFiniquito } from '../../interfaces/motivos-
 import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
-import { motivosData } from '../../interfaces/motivos';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -26,9 +25,6 @@ export class MotivosFiniquitoComponent implements OnInit {
 
   // Banderas
   isEdit: boolean = false;
-
-  // Cargar table
-  loading : boolean = false;
 
   // Modales
   titleForm  : string = 'Agregar motivos de finiquito';
@@ -68,11 +64,18 @@ export class MotivosFiniquitoComponent implements OnInit {
   }
 
   loadData(): void {
-    this.loading = true;
-    setTimeout(() => {
-      this.motivosFiniquito = motivosData;
-      this.loading = false;
-    })
+    this.spinner.show();
+    this.motivosFiniquitoService.getAll()
+      .subscribe({
+        next: (res) => {
+          this.motivosFiniquito = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
@@ -113,16 +116,25 @@ export class MotivosFiniquitoComponent implements OnInit {
     let data: MotivosFiniquito = this.form.getRawValue();
     // Transformar la data que viene del formulario
     data.desde1.trim();
-    data.impliq = data.impliq ? 1 : 0;
+    data.impliq = data.impliq ? "1" : "0";
 
     this.spinner.show();
 
     if(this.isEdit) {
       // Editar
-      console.log('Update', data);
-      this.motivosFiniquito[this.findIndexById(this.form.getRawValue().coddes)] = this.form.getRawValue();
-      this.motivosFiniquito = [...this.motivosFiniquito];
-      this.closeModal();
+      this.motivosFiniquitoService.update(data)
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el motivo de finiquito.', life: 3000});
+          } 
+        });
       return;
     }
 
@@ -142,44 +154,27 @@ export class MotivosFiniquitoComponent implements OnInit {
       });
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.motivosFiniquito.length; i++) {
-        if (this.motivosFiniquito[i].coddes === id) {
-            index = i;
-            break;
-        }
-    }
-    return index;
-  } 
-
   /**
    * Carga la data en el formulario para editar
-   * @param profesion row de la tabla
+   * @param motivosFiniquito row de la tabla
    * @returns void
    */
   editRow(motivosFiniquito: MotivosFiniquito): void {
     this.isEdit = true;
-    if (!motivosFiniquito) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
     this.form.controls['coddes'].disable();
-    motivosFiniquito.impliq = motivosFiniquito.impliq === 1 ? true : false; 
+    // Seteamos los valores del row seleccionado al formulario
     this.form.reset(motivosFiniquito);
+    // Validamos si la propiedad impliq es = 1, si es = 1 le asignamos true para marcar el check
+    motivosFiniquito.impliq === "1" ? this.form.controls['impliq'].reset(true) : this.form.controls['impliq'].reset(false);
     this.openModalCreate();
   }
 
   /**
    * Elimina un registro
-   * @param profesion row de la tabla
+   * @param motivosFiniquito row de la tabla
    * @returns void
    */
     deleteRow(motivosFiniquito: MotivosFiniquito): void {
-      if (!motivosFiniquito) {  
-        this.helpers.openErrorAlert('No se encontro el id.')
-        return; 
-      }
       this.confirmationService.confirm({
         message: `¿Estas seguro que quieres borrar el motivo de finiquito <b>${motivosFiniquito.desde1}</b>?`,
         header: 'Confirmar',

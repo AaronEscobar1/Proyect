@@ -2,7 +2,7 @@ export interface MotivosFiniquito {
     coddes: string;
     desde1: string;
     desde2: string;
-    impliq: number | boolean;
+    impliq: any;
     classo: string;
 }
 
