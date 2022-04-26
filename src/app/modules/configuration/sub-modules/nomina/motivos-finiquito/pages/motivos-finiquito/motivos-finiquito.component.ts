@@ -181,18 +181,19 @@ export class MotivosFiniquitoComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         acceptLabel: 'Si',
         accept: () => {
-          this.motivosFiniquito = this.motivosFiniquito.filter(val => val.coddes !== motivosFiniquito.coddes);
-          // this.motivosFiniquitoService.delete(motivosFiniquito.coddes)
-          //   .subscribe({
-          //     next: (resp) => {
-          //       this.spinner.hide();
-          //       this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          //     },
-          //     error: (err) => {
-          //       this.spinner.hide();
-          //       this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el motivo finiquito', life: 3000});
-          //     }
-          //   });
+          this.spinner.show();
+          this.motivosFiniquitoService.delete(motivosFiniquito.coddes)
+            .subscribe({
+              next: (resp) => {
+                this.spinner.hide();
+                this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+                this.loadData();
+              },
+              error: (err) => {
+                this.spinner.hide();
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el motivo finiquito', life: 3000});
+              }
+            });
         }
       });
     }
