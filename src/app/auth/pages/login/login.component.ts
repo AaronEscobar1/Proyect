@@ -49,14 +49,16 @@ export class LoginComponent implements OnInit {
             this.authServices.setAuth(resp);
             this.spinner.hide();
             this.loginSuccess();
-          } else {
-            this.spinner.hide();
-            this.msgError = this.helpers.msgAlert('error', 'No se pudo hacer el login correctamente.');
           }
         },
         error: (err) => {
           this.spinner.hide();
-          this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
+          if (err.status === 401 || err.error.message == 'Bad credentials') {
+            this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
+          }
+          if (err.status === 500 || err.error.message == "Unknown.") {
+            this.msgError = this.helpers.msgAlert('error', 'No hubo conexión con el servidor.');
+          }          
         }
       });
   }
