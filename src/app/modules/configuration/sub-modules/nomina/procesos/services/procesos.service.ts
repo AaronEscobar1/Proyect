@@ -3,7 +3,6 @@ import { Procesos } from '../interfaces/procesos.interfaces';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,23 +15,23 @@ export class ProcesosService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<ResponseBack> {
+  getAll(): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint('/procesos'));
   }
 
-  getById(id: string): Observable<ResponseBack> {
+  getById(id: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/procesos/${id}`));
   }
 
-  create(procesos: Procesos): Observable<ResponseBack> {
+  create(procesos: Procesos): Observable<any> {
     return this.http.post(this.helpers.getBasicEndPoint('/procesos'), procesos);
   }
 
-  update(procesos: Procesos): Observable<ResponseBack> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/procesos/${procesos.codpro}`), procesos);
+  update(procesos: Procesos): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/procesos/${procesos.tippro}`), procesos);
   }
 
-  delete(id: string): Observable<ResponseBack> {
+  delete(id: number): Observable<any> {
     return this.http.delete(this.helpers.getBasicEndPoint(`/procesos/${id}`));
   }
 
