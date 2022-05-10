@@ -56,9 +56,9 @@ export class LoginComponent implements OnInit {
           if (err.status === 401 || err.error.message == 'Bad credentials') {
             this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
           }
-          if (err.status === 500 || err.error.message == "Unknown.") {
+          if (err.status === 500 || err.status === 0 || err.error.message == "Unknown.") {
             this.msgError = this.helpers.msgAlert('error', 'No hubo conexión con el servidor.');
-          }          
+          }
         }
       });
   }

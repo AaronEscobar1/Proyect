@@ -5,8 +5,6 @@ import { Categories } from '../../interfaces/categories.interfaces';
 import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { CategoriesService } from '../../services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
-import { categoriesData } from '../../interfaces/categories';
 
 @Component({
   selector: 'app-categories',
@@ -27,16 +25,15 @@ export class CategoriesComponent implements OnInit {
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar categorias';
+  titleForm  : string = 'Agregar categorías';
   createModal: boolean = false;
   printModal : boolean = false;
 
   constructor(private categoriesService: CategoriesService,
-              private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private fb: FormBuilder,
-              private helpers: Helpers) {
+              private spinner: NgxSpinnerService,
+              private fb: FormBuilder) {
     this.form = this.fb.group({
       codcat: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
       descat: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
@@ -57,10 +54,17 @@ export class CategoriesComponent implements OnInit {
 
   loadData() {
     this.spinner.show();
-    setTimeout(() => {
-      this.categories = categoriesData;
-      this.spinner.hide();
-    }, 500);
+    this.categoriesService.getAll()
+      .subscribe({
+        next: (res) => {
+          this.categories = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
@@ -78,7 +82,7 @@ export class CategoriesComponent implements OnInit {
     if (!this.isEdit) {
       this.form.controls['codcat'].enable();
     }
-    this.titleForm = this.isEdit ? 'Editar categoria' : 'Agregar categoria';
+    this.titleForm = this.isEdit ? 'Editar categoría' : 'Agregar categoría';
     this.createModal = true;
   }
   
@@ -93,12 +97,10 @@ export class CategoriesComponent implements OnInit {
    * @returns void
    */
   save(): void {
-    console.log('this.form.value > ', this.form.value);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-
     // Obtener formulario
     let data: Categories = this.form.getRawValue();
     // Eliminar espacios en blanco en su atributo
@@ -108,69 +110,75 @@ export class CategoriesComponent implements OnInit {
 
     if(this.isEdit) {
       // Editar
-      console.log('Update', data);
-      this.categories[this.findIndexById(this.form.getRawValue().codcat)] = this.form.getRawValue();
-      this.categories = [...this.categories];
-      this.spinner.hide();
-      this.closeModal();
+      this.categoriesService.update(data)
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la categoría.', life: 3000});
+          } 
+        });
       return;
     }
 
     // Crear
-    console.log('Create', data);
-    this.categories.push(data);
-    this.categories = [...this.categories];
-    this.spinner.hide();
-    this.closeModal();
-
+    this.categoriesService.create(data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la categoría.', life: 3000});
+        }
+      });
   }
   
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.categories.length; i++) {
-        if (this.categories[i].codcat === id) {
-            index = i;
-            break;
-        }
-    }
-    return index;
-  } 
-
   /**
    * Carga la data en el formulario para editar
-   * @param categories row de la tabla
+   * @param category row de la tabla
    * @returns void
    */
-  editRow(categories: Categories): void {
+  editRow(category: Categories): void {
     this.isEdit = true;
-    if (!categories) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
     this.form.controls['codcat'].disable();
-    this.form.reset(categories);
+    this.form.reset(category);
     this.openModalCreate();
   }
 
   /**
    * Elimina un registro
-   * @param categories row de la tabla
+   * @param category row de la tabla
    * @returns void
    */
-  deleteRow(categories: Categories): void {
-    if (!categories) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
+  deleteRow(category: Categories): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la categoria <b>${categories.descat}</b>?`,
+      message: `¿Estas seguro que quieres borrar la categoría <b>${category.descat}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-        this.categories = this.categories.filter(cat => cat.codcat !== categories.codcat);
-        this.spinner.hide();
+        this.categoriesService.delete(category.codcat)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la categoría', life: 3000});
+            }
+          });
       }
     });
   }

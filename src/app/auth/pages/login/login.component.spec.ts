@@ -155,13 +155,10 @@ describe('LoginComponen', () => {
 
     // Simular error en la petición hacia el backend
     const error = new ErrorEvent('', {
-      // error : new Error('Error'),
       message : 'Unknown.',
       lineno : 500,
       filename : ''
     });
-
-    console.log('sin conexion', error);
 
     // Invocar un suscribe desde la función
     const fakeBackend = httpTestingController.expectOne(URL);
