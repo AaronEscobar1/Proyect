@@ -43,21 +43,24 @@ export class LoginComponent implements OnInit {
     }
     this.spinner.show();
     this.authServices.authenticateUser(this.loginForm.value)
-      .subscribe(
-        (resp) => {
+      .subscribe({
+        next: (resp) => {
           if (resp.tokenDeAcceso) {
             this.authServices.setAuth(resp);
             this.spinner.hide();
             this.loginSuccess();
-          } else {
-            this.spinner.hide();
-            this.msgError = this.helpers.msgAlert('error', 'No se pudo hacer el login correctamente.');
           }
-        }, (error) => {
+        },
+        error: (err) => {
           this.spinner.hide();
-          this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
+          if (err.status === 401 || err.error.message == 'Bad credentials') {
+            this.msgError = this.helpers.msgAlert('error', 'Usuario o clave incorrecto.');
+          }
+          if (err.status === 500 || err.status === 0 || err.error.message == "Unknown.") {
+            this.msgError = this.helpers.msgAlert('error', 'No hubo conexión con el servidor.');
+          }
         }
-      );
+      });
   }
 
   loginSuccess(): boolean {

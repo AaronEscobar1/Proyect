@@ -23,13 +23,11 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-profesion>
-                <tr [pSelectableRow]="profesion">
-                    <td>{{ profesion.codpro }}</td>
-                    <td>{{ profesion.despro | titlecase }}</td>
-                    <td>{{ profesion.desadic | titlecase }}</td>
-                    <td>{{ profesion.codsec }}</td>
-                    <td>{{ profesion.dessec | titlecase }}</td>
+            <ng-template pTemplate="body" let-proceso>
+                <tr [pSelectableRow]="proceso">
+                    <td>{{ proceso.tippro }}</td>
+                    <td>{{ proceso.nompro | titlecase }}</td>
+                    <td>{{ proceso.nomadi | titlecase }}</td>
                 </tr>
             </ng-template>
 

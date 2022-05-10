@@ -2,27 +2,24 @@ import { MotivosFiniquito } from './motivos-finiquito.interfaces';
 
 export const motivosData: MotivosFiniquito[] = [
     {
-        codmot: '1',
-        desmot: 'prueba 1',
-        fecact: new Date(),
-        feccre: new Date(),
-        usract: '',
-        usrcre: ''
+        coddes: '1',
+        desde1: 'prueba 1',
+        desde2: 'prueba 1',
+        impliq: 0,
+        classo: '2'
     },
     {
-        codmot: '2',
-        desmot: 'prueba 2',
-        fecact: new Date(),
-        feccre: new Date(),
-        usract: '',
-        usrcre: ''
+        coddes: '2',
+        desde1: 'prueba 2',
+        desde2: 'prueba 2',
+        impliq: 1,
+        classo: '1'
     },
     {
-        codmot: '3',
-        desmot: 'prueba 3',
-        fecact: new Date(),
-        feccre: new Date(),
-        usract: '',
-        usrcre: ''
+        coddes: '3',
+        desde1: 'prueba 3',
+        desde2: 'prueba 3',
+        impliq: 1,
+        classo: '3'
     }
 ]; 

@@ -3,7 +3,6 @@ import { MotivosFiniquito } from '../interfaces/motivos-finiquito.interfaces';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,23 +15,23 @@ export class MotivosFiniquitoService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint('/motivo-finiquito'));
+  getAll(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/motivosfiniquito'));
   }
 
-  getById(id: string): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/motivo-finiquito/${id}`));
+  getById(id: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/motivosfiniquito/${id}`));
   }
 
-  create(motivoFiniquito: MotivosFiniquito): Observable<ResponseBack> {
-    return this.http.post(this.helpers.getBasicEndPoint('/motivo-finiquito'), motivoFiniquito);
+  create(motivoFiniquito: MotivosFiniquito): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/motivosfiniquito'), motivoFiniquito);
   }
 
-  update(motivoFiniquito: MotivosFiniquito): Observable<ResponseBack> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/motivo-finiquito/${motivoFiniquito.codmot}`), motivoFiniquito);
+  update(motivoFiniquito: MotivosFiniquito): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/motivosfiniquito/${motivoFiniquito.coddes}`), motivoFiniquito);
   }
 
-  delete(id: string): Observable<ResponseBack> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/motivo-finiquito/${id}`));
+  delete(id: string): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/motivosfiniquito/${id}`));
   }
 }

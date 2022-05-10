@@ -25,8 +25,10 @@
 
             <ng-template pTemplate="body" let-motivo>
                 <tr [pSelectableRow]="motivo">
-                    <td>{{ motivo.codmot }}</td>
-                    <td>{{ motivo.desmot | titlecase }}</td>
+                    <td>{{ motivo.coddes }}</td>
+                    <td>{{ motivo.desde1 | titlecase }}</td>
+                    <td>{{ motivo.desde2 | titlecase }}</td>
+                    <td>{{ (motivo.impliq === "1") ? 'Si' : 'No'}}</td>
                 </tr>
             </ng-template>
 
