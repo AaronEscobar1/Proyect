@@ -30,7 +30,7 @@ export class ButtonsComponent implements OnInit {
 
   refresh(): void {
     this.onRefresh.emit();
-  }
+  } 
 
   openModalPrint(): void {
     this.onOpenModalPrint.emit();

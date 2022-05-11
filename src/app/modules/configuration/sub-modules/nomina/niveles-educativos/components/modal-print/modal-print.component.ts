@@ -23,14 +23,10 @@ export class ModalPrintComponent implements OnInit {
 
   constructor(
     private nivelesServices: NivelesEducativosService, 
-    private spinner: NgxSpinnerService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private fb: FormBuilder,
-    private helpers: Helpers
   ) { 
     this.formPrint = this.fb.group({
-      codley: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1)]],
+      codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1)]],
       desniv: ['', [ Validators.required, Validators.maxLength(30)]],
       type: ['', [ Validators.maxLength(3) ]]
     });

@@ -26,9 +26,7 @@ export class ModalAddEditComponent implements OnInit {
       private nivelesServices: NivelesEducativosService, 
       private spinner: NgxSpinnerService,
       private messageService: MessageService,
-      private confirmationService: ConfirmationService,
       private fb: FormBuilder,
-      private helpers: Helpers
   ) { 
     this.formNiveles = this.fb.group({
       codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1), this.validatedId.bind(this) ]],
@@ -40,9 +38,8 @@ export class ModalAddEditComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  ngOnChanges(changes: SimpleChange) {
+  ngOnChanges() {
     if (this.isEdit == true) {
-      console.log(changes);
       this.formNiveles.controls['codniv'].disable();
       this.formNiveles.reset(this.nivelSelect); 
     }
@@ -141,15 +138,19 @@ export class ModalAddEditComponent implements OnInit {
 
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
     if (this.isEdit) {
-      if( !control.value && !this.formNiveles.getRawValue() && this.niveles) { return null; }
-      const duplicatedEdit = this.niveles.findIndex(
-        nivel => nivel.desniv.trim().toLowerCase() === this.formNiveles.getRawValue().desniv.trim().toLowerCase() 
-                  && nivel.codniv !== this.formNiveles.getRawValue().codniv
-      );
-      if (duplicatedEdit > -1) {
-        return {'duplicated': true};
+      if (this.niveles != undefined) {
+        if( !control.value && !this.formNiveles.getRawValue() && this.niveles) { return null; }
+        const duplicatedEdit = this.niveles.findIndex(
+          nivel => nivel.desniv.trim().toLowerCase() === this.formNiveles.getRawValue().desniv.trim().toLowerCase() 
+                    && nivel.codniv !== this.formNiveles.getRawValue().codniv 
+        );
+        if (duplicatedEdit > -1) {
+          return {'duplicated': true};
+        }
+        return null;
+      } else {
+        return null
       }
-      return null;
     } else {
       if( !control.value ) { return null; }
       const duplicated = this.niveles.findIndex(nivel => nivel.desniv.trim().toLowerCase() === control.value.trim().toLowerCase());
