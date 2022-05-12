@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { NivelesEducativos } from '../interfaces/niveles-educativos.interfaces';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -15,24 +14,24 @@ export class NivelesEducativosService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getNivelesAll(): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint('/nivelEducativo'));
+  getNivelesAll(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/niveleseducativos'));
   }
 
-  getNivelById(id: string): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/nivelEducativo/${id}`));
+  getNivelById(id: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/niveleseducativos/${id}`));
   }
   
-  createNivel(nivel: NivelesEducativos): Observable<ResponseBack> {
-    return this.http.post(this.helpers.getBasicEndPoint('/nivelEducativo'), nivel);
+  createNivel(nivel: NivelesEducativos): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/niveleseducativos'), nivel);
   }
 
-  updateNivel(nivel: NivelesEducativos): Observable<ResponseBack> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/nivelEducativo/${nivel.codniv}`), nivel);
+  updateNivel(nivel: NivelesEducativos): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/niveleseducativos/${nivel.codniv}`), nivel);
   }
 
-  deleteNivel(id: string): Observable<ResponseBack> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/nivelEducativo/${id}`));
+  deleteNivel(id: string): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/niveleseducativos/${id}`));
   }
 
 }

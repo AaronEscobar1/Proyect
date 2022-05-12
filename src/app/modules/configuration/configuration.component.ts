@@ -39,44 +39,49 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
           icon: 'pi pi-book',
           items: [
             {
-              label: 'Niveles educativos',
-              routerLink: ['/main/config/niveles-educativos'],
-            },
-            {
-              label: 'Profesiones',
-              routerLink: ['/main/config/profesiones'],
-            },
-            {
-              label: 'Formas de pago',
-              routerLink: ['/main/config/formas-pago'],
-            },
-            {
-              label: 'Motivos de finiquito',
-              routerLink: ['/main/config/motivos-finiquito'],
-            },
-            {
-              label: 'Procesos',
-              routerLink: ['/main/config/procesos'],
-            },
-            {
-              label: 'Categorias',
-              routerLink: ['/main/config/categories'],
-            },
-            {
-              label: 'Centros médicos',
-              routerLink: ['/main/config/centros-medicos'],
-            },
-            {
-              label: 'Valores oficiales',
-              routerLink: ['/main/config/valor-oficial'],
-            },
-            {
-              label: 'Clasificación oficial',
-              routerLink: ['/main/config/clasificacion-oficial'],
-            },
-            {
-              label: 'Sindicatos',
-              routerLink: ['/main/config/sindicatos'],
+              label: 'Básica',
+              items: [
+                {
+                  label: 'Niveles educativos',
+                  routerLink: ['/main/config/niveles-educativos'],
+                },
+                {
+                  label: 'Profesiones',
+                  routerLink: ['/main/config/profesiones'],
+                },
+                {
+                  label: 'Formas de pago',
+                  routerLink: ['/main/config/formas-pago'],
+                },
+                {
+                  label: 'Motivos de finiquito',
+                  routerLink: ['/main/config/motivos-finiquito'],
+                },
+                {
+                  label: 'Procesos',
+                  routerLink: ['/main/config/procesos'],
+                },
+                {
+                  label: 'Categorias',
+                  routerLink: ['/main/config/categories'],
+                },
+                {
+                  label: 'Centros médicos',
+                  routerLink: ['/main/config/centros-medicos'],
+                },
+                {
+                  label: 'Valores oficiales',
+                  routerLink: ['/main/config/valor-oficial'],
+                },
+                {
+                  label: 'Clasificación oficial',
+                  routerLink: ['/main/config/clasificacion-oficial'],
+                },
+                {
+                  label: 'Sindicatos',
+                  routerLink: ['/main/config/sindicatos'],
+                }
+              ]
             }
           ]
         }

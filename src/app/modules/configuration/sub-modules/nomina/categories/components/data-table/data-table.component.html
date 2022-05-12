@@ -23,10 +23,10 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-formasPago>
-                <tr [pSelectableRow]="formasPago">
-                    <td>{{ formasPago.codcat }}</td>
-                    <td>{{ formasPago.descat | titlecase }}</td>
+            <ng-template pTemplate="body" let-category>
+                <tr [pSelectableRow]="category">
+                    <td>{{ category.codcat }}</td>
+                    <td>{{ category.descat | titlecase }}</td>
                 </tr>
             </ng-template>
 

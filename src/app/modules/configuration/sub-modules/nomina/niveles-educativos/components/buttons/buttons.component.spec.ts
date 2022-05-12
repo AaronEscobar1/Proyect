@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { Routes } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
@@ -32,17 +33,13 @@ describe('ButtonsComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   })
-  it('Obtener Row Seleccionada ', () => {
+  it('edit Row Seleccionada ', () => {
     const fixture = TestBed.createComponent(ButtonsComponent);
     const app = fixture.componentInstance;
-    fixture.detectChanges();
+    
+    spyOn(app.onEditRow, 'emit').and.callThrough();
 
-    spyOn(service.selectRow$, 'emit').and.callThrough();
-
-    const nativeElement = fixture.nativeElement;
-    console.log(nativeElement);
-
-    const log = {
+    app.selectRow = {
       "originalEvent": {
           "isTrusted": true
       },
@@ -56,8 +53,67 @@ describe('ButtonsComponent', () => {
       },
       "type": "row"
     }
+    
+    const nativeElement = fixture.debugElement.nativeElement.querySelector('#edit');;
+    nativeElement.dispatchEvent(new Event('click'));    
+    
+    fixture.detectChanges();
+    
+    expect(app.onEditRow.emit).toHaveBeenCalledWith(app.selectRow);
+  });
+  it('delete Row Seleccionada ', () => {
+    const fixture = TestBed.createComponent(ButtonsComponent);
+    const app = fixture.componentInstance;
+    
+    spyOn(app.onDeleteRow, 'emit').and.callThrough();
 
-    expect(service.selectRow$.emit).toHaveBeenCalledWith(null);
-
+    app.selectRow = {
+      "originalEvent": {
+          "isTrusted": true
+      },
+      "data": {
+          "codmot": "1",
+          "desmot": "prueba 1",
+          "fecact": "2022-05-03T22:20:36.682Z",
+          "feccre": "2022-05-03T22:20:36.682Z",
+          "usract": "",
+          "usrcre": ""
+      },
+      "type": "row"
+    }
+    
+    const nativeElement = fixture.debugElement.nativeElement.querySelector('#delete');;
+    nativeElement.dispatchEvent(new Event('click'));    
+    
+    fixture.detectChanges();
+    
+    expect(app.onDeleteRow.emit).toHaveBeenCalledWith(app.selectRow);
+  });
+  it('refresh', () => {
+    const fixture = TestBed.createComponent(ButtonsComponent);
+    const app = fixture.componentInstance;
+    
+    spyOn(app.onRefresh, 'emit').and.callThrough();
+    
+    const nativeElement = fixture.debugElement.nativeElement.querySelector('#refresh');;
+    nativeElement.dispatchEvent(new Event('click'));    
+  });
+  it('print', () => {
+    const fixture = TestBed.createComponent(ButtonsComponent);
+    const app = fixture.componentInstance;
+    
+    spyOn(app.onRefresh, 'emit').and.callThrough();
+    
+    const nativeElement = fixture.debugElement.nativeElement.querySelector('#print');;
+    nativeElement.dispatchEvent(new Event('click'));    
+  });
+  it('add', () => {
+    const fixture = TestBed.createComponent(ButtonsComponent);
+    const app = fixture.componentInstance;
+    
+    spyOn(app.onRefresh, 'emit').and.callThrough();
+    
+    const nativeElement = fixture.debugElement.nativeElement.querySelector('#add');;
+    nativeElement.dispatchEvent(new Event('click'));    
   });
 });

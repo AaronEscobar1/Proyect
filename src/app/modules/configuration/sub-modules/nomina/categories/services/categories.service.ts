@@ -3,7 +3,6 @@ import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Categories } from '../interfaces/categories.interfaces';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +15,24 @@ export class CategoriesService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint('/categories'));
+  getAll(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/categorias'));
   }
 
-  getById(id: string): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/categories/${id}`));
+  getById(id: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/categorias/${id}`));
   }
 
-  create(categories: Categories): Observable<ResponseBack> {
-    return this.http.post(this.helpers.getBasicEndPoint('/categories'), categories);
+  create(categories: Categories): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/categorias'), categories);
   }
 
-  update(categories: Categories): Observable<ResponseBack> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/categories/${categories.codcat}`), categories);
+  update(categories: Categories): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/categorias/${categories.codcat}`), categories);
   }
 
-  delete(id: string): Observable<ResponseBack> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/categories/${id}`));
+  delete(id: string): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/categorias/${id}`));
   }
 
 }

@@ -49,8 +49,6 @@ describe('DataTableComponent', () => {
 
     spyOn(service.selectRow$, 'emit').and.callThrough();
 
-    const nativeElement = fixture.nativeElement;
-    console.log(nativeElement);
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
     const log = {
@@ -81,7 +79,6 @@ describe('DataTableComponent', () => {
     spyOn(service.selectRow$, 'emit').and.callThrough();
 
     const nativeElement = fixture.nativeElement;
-    console.log(nativeElement);
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
     app.onRowUnselect()

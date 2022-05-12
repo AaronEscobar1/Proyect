@@ -5,7 +5,7 @@ import { Procesos } from '../../interfaces/procesos.interfaces';
 import { TypesFile } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { ProcesosService } from '../../services/procesos.service';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
-import { procesosData } from '../../interfaces/procesos';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-procesos',
@@ -36,15 +36,15 @@ export class ProcesosComponent implements OnInit {
   constructor(private procesosService: ProcesosService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private fb: FormBuilder,
-              private helpers: Helpers) {
+              private spinner: NgxSpinnerService,
+              private fb: FormBuilder) {
     this.form = this.fb.group({
-      codpro:  ['', [ Validators.required, Validators.maxLength(2), this.validatedId.bind(this) ]],
-      despro:  ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
-      desadic: [''],
-      definitivo: [ false ],
-      codsec:  ['', [ Validators.required, Validators.maxLength(1) ]],
-      dessec:  ['', [ Validators.required, Validators.maxLength(30) ]],
+      tippro: ['', [ Validators.required, Validators.pattern('[0-9]{1,2}'), this.validatedId.bind(this) ]],
+      nompro: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
+      nomadi: [''],
+      nodefi: [ false ],
+      // codsec:  ['', [ Validators.required, Validators.maxLength(1) ]],
+      // dessec:  ['', [ Validators.required, Validators.maxLength(30) ]],
     });
   }
 
@@ -61,11 +61,18 @@ export class ProcesosComponent implements OnInit {
   }
 
   loadData(): void {
-    this.loading = true;
-    setTimeout(() => {
-      this.procesos = procesosData;
-      this.loading = false;
-    })
+    this.spinner.show();
+    this.procesosService.getAll()
+      .subscribe({
+        next: (res) => {
+          this.procesos = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
   
   refresh(): void {
@@ -81,7 +88,7 @@ export class ProcesosComponent implements OnInit {
 
   openModalCreate(): void {
     if (!this.isEdit) {
-      this.form.controls['codpro'].enable();
+      this.form.controls['tippro'].enable();
     }
     this.titleForm = this.isEdit ? 'Editar proceso' : 'Agregar proceso';
     this.createModal = true;
@@ -98,56 +105,65 @@ export class ProcesosComponent implements OnInit {
    * @returns void
    */
   save(): void {
-    console.log(this.form.value);
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    // Mandar el formulario completo y quitar espacios en blancos
+    // Obtener formulario
     let data: Procesos = this.form.getRawValue();
-    data.despro.trim();
+    // Transformar la data que viene del formulario
+    data.nompro.trim();
+    data.nodefi = data.nodefi ? "1" : "0";
+
+    this.spinner.show();
 
     if(this.isEdit) {
       // Editar
-      console.log('Update', data);
-      this.procesos[this.findIndexById(this.form.getRawValue().codpro)] = this.form.getRawValue();
-      this.procesos = [...this.procesos];
-      this.closeModal();
+      this.procesosService.update(data)
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el proceso.', life: 3000});
+          } 
+        });
       return;
     }
 
     // Crear
-    console.log('Create', data);
-    this.procesos.push(data);
-    this.closeModal();
+    this.procesosService.create(data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el proceso.', life: 3000});
+        }
+      });
 
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.procesos.length; i++) {
-        if (this.procesos[i].codpro === id) {
-            index = i;
-            break;
-        }
-    }
-    return index;
-  } 
-
   /**
    * Carga la data en el formulario para editar
-   * @param procesos row de la tabla
+   * @param proceso row de la tabla
    * @returns void
    */
-   editRow(procesos: Procesos): void {
+   editRow(proceso: Procesos): void {
     this.isEdit = true;
-    if (!procesos) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
-    this.form.controls['codpro'].disable();
-    this.form.reset(procesos);
+    this.form.controls['tippro'].disable();
+    // Seteamos los valores del row seleccionado al formulario
+    this.form.reset(proceso);
+    // Validamos si la propiedad nodefi es = 1, si es = 1 le asignamos true para marcar el check
+    proceso.nodefi === "1" ? this.form.controls['nodefi'].reset(true) : this.form.controls['nodefi'].reset(false);
     this.openModalCreate();
   }
 
@@ -156,18 +172,26 @@ export class ProcesosComponent implements OnInit {
    * @param procesos row de la tabla
    * @returns void
    */
-  deleteRow(procesos: Procesos): void {
-    if (!procesos) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
+  deleteRow(proceso: Procesos): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el proceso <b>${procesos.despro}</b>?`,
+      message: `¿Estas seguro que quieres borrar el proceso <b>${proceso.nompro}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
-        this.procesos = this.procesos.filter(proc => proc.codpro !== procesos.codpro);
+        this.spinner.show();
+        this.procesosService.delete(proceso.tippro)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el proceso', life: 3000});
+            }
+          });
       }
     });
   }
@@ -186,11 +210,11 @@ export class ProcesosComponent implements OnInit {
   }
   
   // Mensajes de errores dinamicos
-  get codproMsgError(): string {
-    const errors = this.form.get('codpro')?.errors;
+  get tipproMsgError(): string {
+    const errors = this.form.get('tippro')?.errors;
     if ( errors?.required ) {
       return 'El código es obligatorio.';
-    } else if ( errors?.maxlength ) {
+    } else if ( errors?.pattern ) {
       return 'El código es de longitud máximo de 2 dígitos.';
     } else if ( errors?.duplicated ) {
       return 'El código esta registrado.';
@@ -199,8 +223,8 @@ export class ProcesosComponent implements OnInit {
   }
   
   // Mensajes de errores dinamicos
-  get desproMsgError(): string {
-    const errors = this.form.get('despro')?.errors;
+  get nomproMsgError(): string {
+    const errors = this.form.get('nompro')?.errors;
     if ( errors?.required ) {
       return 'La descripción es obligatoria.';
     } else if ( errors?.maxlength ) {
@@ -212,7 +236,7 @@ export class ProcesosComponent implements OnInit {
   }
 
   // Mensajes de errores dinamicos
-  get desadicMsgError(): string {
+  get nomadiMsgError(): string {
     const errors = this.form.get('desadic')?.errors;
     if ( errors?.required ) {
       return 'La descripción adicional es obligatoria.';
@@ -224,28 +248,6 @@ export class ProcesosComponent implements OnInit {
     return '';
   }
 
-  // Mensajes de errores dinamicos
-  get codsecMsgError(): string {
-    const errors = this.form.get('codsec')?.errors;
-    if ( errors?.required ) {
-      return 'El código del subproceso es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'El código del subproceso es de longitud máxima de 1 dígito.';
-    }
-    return '';
-  }
-
-  // Mensajes de errores dinamicos
-  get dessecMsgError(): string {
-    const errors = this.form.get('dessec')?.errors;
-    if ( errors?.required ) {
-      return 'La descripción del subproceso es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'La descripción del subproceso es de longitud máxima de 30 dígitos.';
-    }
-    return '';
-  }
-
   /**
    * Validar id duplicado
    * @param control 
@@ -253,7 +255,7 @@ export class ProcesosComponent implements OnInit {
    */
   validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-      const duplicated = this.procesos.findIndex(proc => proc.codpro === control.value);
+      const duplicated = this.procesos.findIndex(proc => proc.tippro === control.value);
       if (duplicated > -1) {
         return {'duplicated': true};
       }
@@ -269,8 +271,8 @@ export class ProcesosComponent implements OnInit {
     if (this.isEdit) {
       if( !control.value && !this.form.getRawValue() && this.procesos) { return null; }
       const duplicatedEdit = this.procesos.findIndex(
-        proc => proc.despro.trim().toLowerCase() === this.form.getRawValue().despro.trim().toLowerCase() 
-                  && proc.codpro !== this.form.getRawValue().codpro
+        proc => proc.nompro.trim().toLowerCase() === this.form.getRawValue().nompro.trim().toLowerCase() 
+                  && proc.tippro !== this.form.getRawValue().tippro
       );
       if (duplicatedEdit > -1) {
         return {'duplicated': true};
@@ -278,7 +280,7 @@ export class ProcesosComponent implements OnInit {
       return null;
     } else {
       if( !control.value ) { return null; }
-      const duplicated = this.procesos.findIndex(proc => proc.despro.trim().toLowerCase() === control.value.trim().toLowerCase());
+      const duplicated = this.procesos.findIndex(proc => proc.nompro.trim().toLowerCase() === control.value.trim().toLowerCase());
       if (duplicated > -1) {
         return {'duplicated': true};
       }

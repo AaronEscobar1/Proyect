@@ -2,7 +2,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Profession } from '../interfaces/professions.interfaces';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
-import { ResponseBack } from 'src/app/shared/interfaces/response.interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,24 +15,24 @@ export class ProfesionesService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint('/profesion'));
+  getAll(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/profesiones'));
   }
 
-  getById(id: string): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/profesion/${id}`));
+  getById(id: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/profesiones/${id}`));
   }
 
-  create(profession: Profession): Observable<ResponseBack> {
-    return this.http.post(this.helpers.getBasicEndPoint('/profesion'), profession);
+  create(profession: Profession): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/profesiones'), profession);
   }
 
-  update(profession: Profession): Observable<ResponseBack> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/profesion/${profession.codprf}`), profession);
+  update(profession: Profession): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/profesiones/${profession.codprf}`), profession);
   }
 
-  delete(id: string): Observable<ResponseBack> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/profesion/${id}`));
+  delete(id: string): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/profesiones/${id}`));
   }
 
 }

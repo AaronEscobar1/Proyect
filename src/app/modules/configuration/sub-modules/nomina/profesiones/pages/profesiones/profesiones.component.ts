@@ -56,13 +56,17 @@ export class ProfesionesComponent implements OnInit {
 
   loadData() {
     this.spinner.show();
-    this.profesionesService.getAll().subscribe(res => {
-      this.professions = res.data;
-      this.spinner.hide();
-    }, (error) => {
-      this.spinner.hide();
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-    });
+    this.profesionesService.getAll()
+      .subscribe({
+        next: (res) => {
+          this.professions = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
@@ -109,28 +113,34 @@ export class ProfesionesComponent implements OnInit {
     if(this.isEdit) {
       // Editar 
       this.profesionesService.update(data)
-        .subscribe( resp => {
-          this.closeModal();
-          this.spinner.hide();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.loadData();
-        }, (error) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar profesión.', life: 3000});
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar profesión.', life: 3000});
+          } 
         });
       return;
     }
 
     // Crear
     this.profesionesService.create(data)
-      .subscribe( resp => {
-        this.closeModal();
-        this.spinner.hide();
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        this.loadData();
-      }, (error) => {
-        this.spinner.hide();
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear profesión.', life: 3000});
+      .subscribe({
+        next: resp => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear profesión.', life: 3000});
+        }
       });
   }
 
@@ -168,13 +178,16 @@ export class ProfesionesComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         this.profesionesService.delete(profesion.codprf)
-          .subscribe( resp => {
-            this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          }, (error) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar profesión.', life: 3000});
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar profesión.', life: 3000});
+            }
           });
       }
     });

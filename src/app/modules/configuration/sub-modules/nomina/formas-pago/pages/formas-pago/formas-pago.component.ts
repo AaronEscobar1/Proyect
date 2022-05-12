@@ -66,9 +66,8 @@ export class FormasPagoComponent implements OnInit {
 
   loadData() {
     this.spinner.show();
-     this.formasPagoService.getAll()
-     .pipe(
-        map((resp: ResponseBack) => resp.data),
+    this.formasPagoService.getAll()
+      .pipe(
         // Se agrega un valor atributo adicional "coninsString" para mostrarlo en la vista
         map((data: FormasPago[]) => {
           return data.map(tpago => {
@@ -79,13 +78,16 @@ export class FormasPagoComponent implements OnInit {
             return {...tpago, coninsString: tipoPago };
           });
         }),
-     ).subscribe(tpago => {
-      this.formasPagos = tpago;
-      this.spinner.hide();
-    }, (error) => {
-      this.spinner.hide();
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-    });
+      ).subscribe({
+        next: (tpago) => {
+          this.formasPagos = tpago;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
@@ -132,27 +134,33 @@ export class FormasPagoComponent implements OnInit {
     if(this.isEdit) {
       // Editar
       this.formasPagoService.update(data)
-        .subscribe( resp => {
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la forma de pago.', life: 3000});
+          }
+        });
+      return;
+    } 
+
+    this.formasPagoService.create(data)
+      .subscribe({
+        next: (resp) => {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
           this.loadData();
-        }, (error) => {
+        },
+        error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la forma de pago.', life: 3000});
-        });
-      return;
-    } 
-    // Crear
-    this.formasPagoService.create(data)
-      .subscribe( resp => {
-        this.closeModal();
-        this.spinner.hide();
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        this.loadData();
-      }, (error) => {
-        this.spinner.hide();
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la forma de pago.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la forma de pago.', life: 3000});
+        }
       });
   }
 
@@ -190,13 +198,16 @@ export class FormasPagoComponent implements OnInit {
       accept: () => {
         this.spinner.show();
         this.formasPagoService.delete(formasPago.codpag)
-          .subscribe( resp => {
-            this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          }, (error) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la forma de pago.', life: 3000});
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la forma de pago.', life: 3000});
+            }
           });
       }
     });

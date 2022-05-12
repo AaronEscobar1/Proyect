@@ -2,6 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Routes } from '@angular/router';
 import { By } from '@angular/platform-browser';
 
@@ -28,7 +29,8 @@ describe('LoginComponen', () => {
       ],
       declarations: [
         LoginComponent
-      ]
+      ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents();
     
     // Peticiones mock
@@ -99,42 +101,7 @@ describe('LoginComponen', () => {
     expect(fakeBackend.request.method).toBe('POST');
   });
 
-  it('Validar login cuando no llega un token', () => {
-    const fixture = TestBed.createComponent(LoginComponent);
-    const app = fixture.componentInstance;
-    fixture.detectChanges();
-
-    // Setear usuario al formulario
-    const usernameOrEmail = app.loginForm.controls['usernameOrEmail'];
-    usernameOrEmail.setValue('jramirez');
-    const password = app.loginForm.controls['password'];
-    password.setValue('jramirez1515');
-
-    // Simular click al boton ingresar
-    const btnElement = fixture.debugElement.query(By.css('button.btn-infocent'));
-    btnElement.nativeElement.click();
-
-    // validar que el formulario sea verdadero
-    expect(app.loginForm.valid).toBeTrue();
-
-    // Emitir un nuevo valor al suscribe pero sin token para controlar los errores en el método
-    const mockResult: any = {
-      tipoDeToken: "Bearer",
-      ssUsuario: {
-        id: "jramirez",
-        claveAcceso: "jramirez1515",
-      }
-    };
-
-    // Invocar un suscribe desde la función
-    const fakeBackend = httpTestingController.expectOne(URL);
-    // Emitir un suscribe en la petición al backend authenticateUser()
-    fakeBackend.flush(mockResult);
-    // Verificar si la petición se hizo correcta
-    expect(fakeBackend.request.method).toBe('POST');
-  });
-
-  it('Validar login con error', () => {
+  it('Validar login con error de credenciales, (error 401)', () => {
     const fixture = TestBed.createComponent(LoginComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
@@ -158,7 +125,40 @@ describe('LoginComponen', () => {
       message : 'Bad credentials',
       lineno : 500,
       filename : ''   
+    });
+
+    // Invocar un suscribe desde la función
+    const fakeBackend = httpTestingController.expectOne(URL);
+    // Emitir un suscribe en la petición al backend authenticateUser() con errores
+    fakeBackend.error(error);
+    // Verificar si la petición se hizo correcta
+    expect(fakeBackend.request.method).toBe('POST');
   });
+
+  it('Validar login sin conexión al servidor, (error 500)', () => {
+    const fixture = TestBed.createComponent(LoginComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    // Setear usuario al formulario con credenciales correctas
+    const usernameOrEmail = app.loginForm.controls['usernameOrEmail'];
+    usernameOrEmail.setValue('jramirez');
+    const password = app.loginForm.controls['password'];
+    password.setValue('123456');
+
+    // Simular click al boton ingresar
+    const btnElement = fixture.debugElement.query(By.css('button.btn-infocent'));
+    btnElement.nativeElement.click();
+
+    // Validar que el formulario sea verdadero
+    expect(app.loginForm.valid).toBeTrue();
+
+    // Simular error en la petición hacia el backend
+    const error = new ErrorEvent('', {
+      message : 'Unknown.',
+      lineno : 500,
+      filename : ''
+    });
 
     // Invocar un suscribe desde la función
     const fakeBackend = httpTestingController.expectOne(URL);
