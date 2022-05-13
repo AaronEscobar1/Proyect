@@ -1,9 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { CentroMedico } from '../interfaces/centro-medico.interfaces';
+import { CentrosMedicos } from '../interfaces/centro-medico.interfaces';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +10,29 @@ import { ResponseBack } from '../../../../../../shared/interfaces/response.inter
 export class CentrosMedicosService {
 
   // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<CentroMedico | null>();
+  public selectRow$ = new EventEmitter<CentrosMedicos | null>();
 
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint('/centro-medico'));
+  getAll(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/centrosmedicos'));
   }
 
-  getById(id: string): Observable<ResponseBack> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/centro-medico/${id}`));
+  getById(id: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/centrosmedicos/${id}`));
   }
 
-  create(centroMedico: CentroMedico): Observable<ResponseBack> {
-    return this.http.post(this.helpers.getBasicEndPoint('/centro-medico'), centroMedico);
+  create(centroMedico: CentrosMedicos): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/centrosmedicos'), centroMedico);
   }
 
-  update(centroMedico: CentroMedico): Observable<ResponseBack> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/centro-medico/${centroMedico.codcmd}`), centroMedico);
+  update(centroMedico: CentrosMedicos): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/centrosmedicos/${centroMedico.codmed}`), centroMedico);
   }
 
-  delete(id: string): Observable<ResponseBack> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/centro-medico/${id}`));
+  delete(id: string): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/centrosmedicos/${id}`));
   }
 
 }

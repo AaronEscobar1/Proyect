@@ -73,7 +73,7 @@
 
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '40vw'}"
+          class="p-fluid" [style]="{width: '60vw'}"
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -91,29 +91,29 @@
             <form [formGroup]="form" autocomplete="off">
 
                 <div class="field">
-                    <label for="codcmd">Código *</label>
+                    <label for="codmed">Código *</label>
                     <input  type="text"
-                            id="codcmd" 
+                            id="codmed" 
                             pInputText
-                            formControlName="codcmd"
+                            formControlName="codmed"
                             placeholder="Ingrese el código"/>
                     <span class="form-text text-danger"
-                          *ngIf="campoInvalid('codcmd')">
-                        {{ codcmdMsgError }}
+                          *ngIf="campoInvalid('codmed')">
+                        {{ codmedMsgError }}
                     </span>
                 </div>
                 
                 <div class="field">
-                    <label for="descmd">Descripción *</label>
-                    <textarea id="descmd" 
+                    <label for="desmed">Descripción *</label>
+                    <textarea id="desmed" 
                               pInputTextarea 
-                              formControlName="descmd" 
+                              formControlName="desmed" 
                               rows="1"
                               placeholder="Ingrese la descripción">
                     </textarea>
                     <span class="form-text text-danger"
-                          *ngIf="campoInvalid('descmd')">
-                        {{ descmdMsgError }}
+                          *ngIf="campoInvalid('desmed')">
+                        {{ desmedMsgError }}
                     </span>
                 </div>
 
@@ -122,7 +122,20 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
-            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
+            <button pButton 
+                    pRipple
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="p-button my-1"
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    class="p-button my-1" 
+                    (click)="save()">
+            </button>
         </ng-template>
 </p-dialog>
