@@ -1,4 +1,4 @@
-export interface CentroMedico {
-    codcmd: string;
-    descmd: string;
+export interface CentrosMedicos {
+    codmed: string;
+    desmed: string;
 }
