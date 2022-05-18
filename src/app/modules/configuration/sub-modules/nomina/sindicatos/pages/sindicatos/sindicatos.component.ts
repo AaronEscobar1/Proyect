@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Sindicatos } from '../../interfaces/sindicatos.interfaces';
 import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SindicatosService } from '../../services/sindicatos.service';
-import { sindicatosData } from '../../interfaces/valor-oficial';
 
 @Component({
   selector: 'app-sindicatos',
@@ -18,6 +16,7 @@ export class SindicatosComponent implements OnInit {
 
   // Formulario reactivo
   form!: FormGroup;
+  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
   // Objetos
   sindicatos: Sindicatos[] = [];
@@ -32,31 +31,32 @@ export class SindicatosComponent implements OnInit {
   printModal : boolean = false;
 
   constructor(private sindicatosService: SindicatosService,
-              private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private fb: FormBuilder,
-              private helpers: Helpers) {
+              private spinner: NgxSpinnerService,
+              private fb: FormBuilder) {
     this.form = this.fb.group({
-      codsin:  ['', [ Validators.required ]],
-      dessin:  ['', [ Validators.required ]],
+      codsin:  ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
+      dessin:  ['', [ Validators.required, Validators.maxLength(60), this.validatedDes.bind(this) ]],
       // Registro
-      datesin:   ['', [ Validators.required ]],
-      numbersin: ['', [ Validators.required ]],
-      tomosin:   ['', [ Validators.required ]],
-      folio:     ['', [ Validators.required ]],
+      registro:  [''],
+      nroreg:    ['', [ Validators.pattern('[0-9]{1,4}') ]],
+      ntomo:     ['', [ Validators.pattern('[0-9]{1,4}') ]],
+      nfolio:    ['', [ Validators.pattern('[0-9]{1,4}') ]],
       // Inspectoria
-      inspectoria: [''],
+      local:     ['0'],
       // Direccion
-      desdir:     [''],
-      pais:       [''],
-      entidadfed: [''],
-      ciudad:     [''],
-      telefono1:  [''],
-      telefono2:  [''],
-      fax:        [''],
-      telex:      [''],
-      email:      ['']
+      dirsi1:     [''],
+      paiCodpai:  [''],
+      pais:       [''], // No se debe incluir porque con el codigo de la entidad se trae la entidad
+      edoCodedo:  [''],
+      entidadfed: [''], // No se debe incluir porque con el codigo de la entidad se trae la entidad
+      cdadCodciu: ['', [ Validators.maxLength(30) ]],
+      tlfsi1:     [''],
+      tlfsi2:     [''],
+      faxsin:     [''],
+      tlxsin:     [''],
+      eMail:      ['', [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]]
     });
   }
 
@@ -74,11 +74,17 @@ export class SindicatosComponent implements OnInit {
 
   loadData() {
     this.spinner.show();
-    setTimeout(() => {
-      this.sindicatos = sindicatosData;
-      console.log(' > ', this.sindicatos );
-      this.spinner.hide();
-    }, 500);
+    this.sindicatosService.getAll()
+      .subscribe({
+        next: (resp) => {
+          this.sindicatos = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
@@ -98,11 +104,10 @@ export class SindicatosComponent implements OnInit {
   }
   
   closeModal() {
-    if(!this.isEdit) {
-      this.form.controls['codsin'].enable();
-    }
+    this.form.controls['codsin'].enable();
     this.isEdit = false;
     this.form.reset();
+    this.form.controls['local'].setValue(0);
     this.createModal = false;
   }
 
@@ -111,7 +116,6 @@ export class SindicatosComponent implements OnInit {
    * @returns void
    */
   save(): void {
-    console.log('this.form.value > ', this.form.getRawValue());
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -124,32 +128,37 @@ export class SindicatosComponent implements OnInit {
 
     if(this.isEdit) {
       // Editar
-      console.log('Update', data);
-      this.sindicatos[this.findIndexById(this.form.getRawValue().codsin)] = this.form.getRawValue();
-      this.sindicatos = [...this.sindicatos];
-      this.spinner.hide();
-      this.closeModal();
+      this.sindicatosService.update(data)
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el sindicato.', life: 3000});
+          } 
+        });
       return;
     }
 
     // Crear
-    console.log('Create', data);
-    this.sindicatos.push(data);
-    this.sindicatos = [...this.sindicatos];
-    this.spinner.hide();
-    this.closeModal();
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.sindicatos.length; i++) {
-        if (this.sindicatos[i].codsin === id) {
-            index = i;
-            break;
+    this.sindicatosService.create(data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el sindicato.', life: 3000});
         }
-    }
-    return index;
-  } 
+      });
+  }
 
   /**
    * Carga la data en el formulario para editar
@@ -158,34 +167,38 @@ export class SindicatosComponent implements OnInit {
    */
   editRow(sindicatos: Sindicatos): void {
     this.isEdit = true;
-    if (!sindicatos) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
     this.form.controls['codsin'].disable();
+    // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
+    sindicatos.registro = sindicatos.registro ? new Date(sindicatos.registro) : sindicatos.registro;
     this.form.reset(sindicatos);
     this.openModalCreate();
   }
 
   /**
    * Elimina un registro
-   * @param sindicatos row de la tabla
+   * @param sindicato row de la tabla
    * @returns void
    */
-  deleteRow(sindicatos: Sindicatos): void {
-    if (!sindicatos) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
+  deleteRow(sindicato: Sindicatos): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el sindicato <b>${sindicatos.dessin}</b>?`,
+      message: `¿Estas seguro que quieres borrar el sindicato <b>${sindicato.dessin}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-        this.sindicatos = this.sindicatos.filter(sin => sin.codsin !== sindicatos.codsin);
-        this.spinner.hide();
+        this.sindicatosService.delete(sindicato.codsin)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el sindicato', life: 3000});
+            }
+          });
       }
     });
   }
@@ -194,5 +207,90 @@ export class SindicatosComponent implements OnInit {
 
   }
 
+  /**
+   * VALIDACIONES DEL FORMULARIO REACTIVO
+   */
+  campoInvalid(campo: string): boolean | null {
+    return (this.form.controls[campo].errors) 
+            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
+              && this.form.invalid;
+  }
+
+  // Mensajes de errores dinamicos
+  get codsinMsgError(): string {
+    const errors = this.form.get('codsin')?.errors;
+    if ( errors?.required ) {
+      return 'El código es obligatorio.';
+    } else if ( errors?.maxlength ) {
+      return 'El código es de longitud máximo de 4 dígitos.';
+    } else if ( errors?.duplicated ) {
+      return 'El código esta registrado.';
+    }
+    return '';
+  }
+
+  // Mensajes de errores dinamicos
+  get dessinMsgError(): string {
+    const errors = this.form.get('dessin')?.errors;
+    if ( errors?.required ) {
+      return 'La descripción es obligatoria.';
+    } else if ( errors?.maxlength ) {
+      return 'La descripción es de longitud máxima de 60 dígitos.';
+    } else if ( errors?.duplicated ) {
+      return 'La descripción ya existe.';
+    }
+    return '';
+  }
+
+  // Mensajes de errores dinamicos
+  get eMailMsgError(): string {
+    const errors = this.form.get('eMail')?.errors;
+    if ( errors?.maxlength ) {
+      return 'El email es de longitud máxima de 30 dígitos.';
+    } else if ( errors?.pattern ) {
+      return 'El email no tiene un formato valido.';
+    }
+    return '';
+  }
+
+  /**
+   * Validar id duplicado
+   * @param control 
+   * @returns ValidationErrors | null
+   */
+  validatedId(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+      const duplicated = this.sindicatos.findIndex(sin => sin.codsin === control.value);
+      if (duplicated > -1) {
+        return {'duplicated': true};
+      }
+      return null;
+  }
+
+  /**
+   * Validar descripcion duplicado
+   * @param control 
+   * @returns ValidationErrors | null
+   */
+  validatedDes(control: AbstractControl): ValidationErrors | null {
+    if (this.isEdit) {
+      if( !control.value && !this.form.getRawValue() && this.sindicatos) { return null; }
+      const duplicatedEdit = this.sindicatos.findIndex(
+        sin => sin.dessin.trim().toLowerCase() === this.form.getRawValue().dessin.trim().toLowerCase() 
+                  && sin.codsin !== this.form.getRawValue().codsin
+      );
+      if (duplicatedEdit > -1) {
+        return {'duplicated': true};
+      }
+      return null;
+    } else {
+      if( !control.value ) { return null; }
+      const duplicated = this.sindicatos.findIndex(sin => sin.dessin.trim().toLowerCase() === control.value.trim().toLowerCase());
+      if (duplicated > -1) {
+        return {'duplicated': true};
+      }
+      return null;
+    }
+  }
 
 }
