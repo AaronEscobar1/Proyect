@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ClasificacionMotivo, MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
-import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -17,8 +14,7 @@ export class MotivosFiniquitoComponent implements OnInit {
 
   // Objetos
   motivosFiniquito    : MotivosFiniquito[] = [];
-  motivoFiniquito : any;
-  typesFile           : TypesFile[] = [];
+  motivoFiniquito!    : MotivosFiniquito | undefined;
   classificationMotive: ClasificacionMotivo[] = [];
 
   // Banderas
@@ -32,20 +28,10 @@ export class MotivosFiniquitoComponent implements OnInit {
   constructor(private motivosFiniquitoService: MotivosFiniquitoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService,
-              private fb: FormBuilder,
-              private helpers: Helpers) {
+              private spinner: NgxSpinnerService) {
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
     this.loadData();
   }
 

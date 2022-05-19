@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { Helpers } from 'src/app/shared/helpers/helpers';
+import { MessageService } from 'primeng/api';
 import { ClasificacionMotivo, MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
 
@@ -54,7 +53,6 @@ export class ModalAddEditComponent implements OnInit {
       this.form.controls['coddes'].disable();
       // Seteamos los valores del row seleccionado al formulario
       this.form.reset(this.motivoSelect);
-      console.log(this.motivoSelect);
       
       // Validamos si la propiedad impliq es = 1, si es = 1 le asignamos true para marcar el check
       this.motivoSelect.impliq === "1" ? this.form.controls['impliq'].reset(true) : this.form.controls['impliq'].reset(false);
@@ -67,7 +65,7 @@ export class ModalAddEditComponent implements OnInit {
    * Metodo para guardar y actualizar registros
    * @returns void
    */
-   save(): void {   
+  save(): void {
     if(this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -123,7 +121,7 @@ export class ModalAddEditComponent implements OnInit {
   /**
    * VALIDACIONES DEL FORMULARIO REACTIVO
    */
-   campoInvalid(campo: string) {
+  campoInvalid(campo: string) {
     return (this.form.controls[campo].errors) 
             && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
              && this.form.invalid;
@@ -176,19 +174,16 @@ export class ModalAddEditComponent implements OnInit {
    */
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
     if (this.isEdit) {
-      if (this.motivosFiniquito != undefined) {
         if( !control.value && !this.form.getRawValue() && this.motivosFiniquito) { return null; }
+        if( this.form.getRawValue().desde1 == null ) { return null; }
         const duplicatedEdit = this.motivosFiniquito.findIndex(
           mot => mot.desde1.trim().toLowerCase() === this.form.getRawValue().desde1.trim().toLowerCase() 
-                    && mot.coddes !== this.form.getRawValue().coddes
+                    && mot.coddes !== this.form.getRawValue().coddes 
         );
         if (duplicatedEdit > -1) {
           return {'duplicated': true};
         }
         return null;
-      } else {
-        return null
-      }
     } else {
       if( !control.value ) { return null; }
       const duplicated = this.motivosFiniquito.findIndex(mot => mot.desde1.trim().toLowerCase() === control.value.trim().toLowerCase());

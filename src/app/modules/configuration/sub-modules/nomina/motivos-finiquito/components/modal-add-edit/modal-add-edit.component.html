@@ -102,7 +102,20 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
-            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    class="p-button my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check"
+                    class="p-button my-1" 
+                    (click)="save()">
+            </button>
         </ng-template>
 </p-dialog>
