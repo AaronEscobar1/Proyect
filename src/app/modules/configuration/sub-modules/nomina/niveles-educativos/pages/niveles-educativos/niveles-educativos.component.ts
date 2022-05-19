@@ -40,16 +40,16 @@ export class NivelesEducativosComponent implements OnInit {
   loadData(){
     this.spinner.show();
     this.nivelesServices.getNivelesAll()
-    .subscribe({
-      next: (resp) => {
-        this.niveles = resp;
-        this.spinner.hide();
-      },
-      error: (err) => {
-        this.spinner.hide();
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-      }
-    });
+      .subscribe({
+        next: (res) => {
+          this.niveles = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   showModalPrintDialog(): void {
@@ -79,56 +79,7 @@ export class NivelesEducativosComponent implements OnInit {
     }, 200);
   }
 
-<<<<<<< HEAD
   editSelectNivel(niveles: NivelesEducativos) {
-=======
-  saveNivel(): void {
-    if (this.formNiveles.invalid) {
-      this.formNiveles.markAllAsTouched();
-      return;
-    }
-    // Obtener formulario
-    let data = this.formNiveles.getRawValue();
-    // Eliminar espacios en blanco en su atributo
-    data.desniv.trim();
-
-    this.spinner.show();
-
-    if (this.isEdit) {
-      // Editar
-      this.nivelesServices.updateNivel(data)
-        .subscribe({
-          next: (resp) => {
-            this.closeModal();
-            this.spinner.hide();
-            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          },
-          error: (err) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el nivel educativo.', life: 3000});
-          }
-        });
-    } else {
-      // Crear
-      this.nivelesServices.createNivel(data)
-        .subscribe({
-          next: (resp) => {
-            this.closeModal();
-            this.spinner.hide();
-            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          },
-          error: (err) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el nivel educativo.', life: 3000});
-          } 
-        });
-    }
-  }
-
-  editSelectNivel() {
->>>>>>> 1ac4290d0e9dbe7e0a788704fb02e524d66974a8
     this.isEdit = true;
     if (!niveles) { 
       this.helpers.openErrorAlert('No se encontro el id.')
@@ -137,7 +88,6 @@ export class NivelesEducativosComponent implements OnInit {
     this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
     this.nivel = niveles
     this.addNivelModal = true;
-    this.nivelesServices.selectRow$.emit(null);
   }
   
   /**
@@ -159,7 +109,6 @@ export class NivelesEducativosComponent implements OnInit {
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-<<<<<<< HEAD
         this.nivelesServices.deleteNivel(niveles.codniv)
           .subscribe((resp) => {
             this.spinner.hide();
@@ -171,20 +120,6 @@ export class NivelesEducativosComponent implements OnInit {
             this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
             return false
           })
-=======
-        this.nivelesServices.deleteNivel(id)
-          .subscribe({
-            next: (resp) => {
-              this.spinner.hide();
-              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.loadData();
-            },
-            error: (err) => {
-              this.spinner.hide();
-              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
-            }
-          });
->>>>>>> 1ac4290d0e9dbe7e0a788704fb02e524d66974a8
       }
     });
     this.nivelesServices.selectRow$.emit(null);

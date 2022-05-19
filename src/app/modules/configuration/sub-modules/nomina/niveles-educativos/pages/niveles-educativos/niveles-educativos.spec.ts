@@ -16,7 +16,7 @@ describe('NivelesEducativosComponent', () => {
 
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/nivelEducativo`;
+  const URL = `${environment.api}/niveleseducativos`;
 
   const routes: Routes = [{ path: '', children: [ { path: 'login', component: NivelesEducativosComponent }, { path: '**', redirectTo: 'login' }]} ];
 

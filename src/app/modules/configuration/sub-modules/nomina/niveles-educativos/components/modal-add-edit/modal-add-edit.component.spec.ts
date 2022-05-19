@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/nivelEducativo`;
+  const URL = `${environment.api}/niveleseducativos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
