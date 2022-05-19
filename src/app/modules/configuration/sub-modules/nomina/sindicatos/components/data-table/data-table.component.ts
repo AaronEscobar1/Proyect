@@ -21,12 +21,10 @@ export class DataTableComponent implements OnInit {
     this.columns = [
       { field: 'codsin',     header: 'Código'      },
       { field: 'dessin',     header: 'Descripción' },
-      { field: 'datesin',    header: 'Fecha'       },
-      { field: 'numbersin',  header: 'Número'      },
-      { field: 'tomosin',    header: 'Tomo'        },
-      { field: 'folio',      header: 'Folio'       },
-      { field: 'pais',       header: 'Pais'        },
-      { field: 'entidadfed', header: 'Entidad'     },
+      { field: 'registro',   header: 'Fecha'       },
+      { field: 'nroreg',     header: 'Número'      },
+      { field: 'ntomo',      header: 'Tomo'        },
+      { field: 'nfolio',     header: 'Folio'       }
     ];
   }
 

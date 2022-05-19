@@ -16,23 +16,23 @@ export class SindicatosService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<ResponseBack> {
+  getAll(): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint('/sindicatos'));
   }
 
-  getById(id: string): Observable<ResponseBack> {
+  getById(id: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/sindicatos/${id}`));
   }
 
-  create(sindicatos: Sindicatos): Observable<ResponseBack> {
+  create(sindicatos: Sindicatos): Observable<any> {
     return this.http.post(this.helpers.getBasicEndPoint('/sindicatos'), sindicatos);
   }
 
-  update(sindicatos: Sindicatos): Observable<ResponseBack> {
+  update(sindicatos: Sindicatos): Observable<any> {
     return this.http.put(this.helpers.getBasicEndPoint(`/sindicatos/${sindicatos.codsin}`), sindicatos);
   }
 
-  delete(id: string): Observable<ResponseBack> {
+  delete(id: string): Observable<any> {
     return this.http.delete(this.helpers.getBasicEndPoint(`/sindicatos/${id}`));
   }
 }

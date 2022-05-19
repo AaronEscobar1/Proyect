@@ -27,12 +27,10 @@
                 <tr [pSelectableRow]="sindicato">
                     <td>{{ sindicato.codsin }}</td>
                     <td>{{ sindicato.dessin | titlecase }}</td>
-                    <td>{{ sindicato.datesin | date: 'dd/MM/YYYY' }}</td>
-                    <td>{{ sindicato.numbersin }}</td>
-                    <td>{{ sindicato.tomosin }}</td>
-                    <td>{{ sindicato.folio }}</td>
-                    <td>{{ sindicato.pais }}</td>
-                    <td>{{ sindicato.entidadfed }}</td>
+                    <td>{{ sindicato.registro | date: 'dd/MM/YYYY' }}</td>
+                    <td>{{ sindicato.nroreg }}</td>
+                    <td>{{ sindicato.ntomo }}</td>
+                    <td>{{ sindicato.nfolio }}</td>
                 </tr>
             </ng-template>
 

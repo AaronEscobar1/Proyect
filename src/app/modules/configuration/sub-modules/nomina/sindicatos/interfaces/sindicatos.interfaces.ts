@@ -3,22 +3,24 @@ export interface Sindicatos {
     dessin      : string;
     
     // Registro
-    datesin     : Date;
-    numbersin   : string;
-    tomosin     : string;
-    folio       : string;
+    registro    : Date;
+    nroreg      : string;
+    ntomo       : string;
+    nfolio      : string;
 
     // Inspectoria
-    inspectoria : string;
+    local       : string;
 
     // Direccion
-    desdir?     : string;
+    dirsi1?     : string;
+    paiCodpai   : string;
     pais        : string;
+    edoCodedo   : string;
     entidadfed  : string;
-    ciudad?     : string;
-    telefono1?  : string;
-    telefono2?  : string;
-    fax?        : string;
-    telex?      : string;
-    email?      : string;    
+    cdadCodciu? : string;
+    tlfsi1?     : string;
+    tlfsi2?     : string;
+    faxsin?     : string;
+    tlxsin?     : string;
+    eMail?      : string;    
 }

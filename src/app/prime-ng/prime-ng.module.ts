@@ -11,6 +11,7 @@ import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FieldsetModule } from 'primeng/fieldset';
 import { MenubarModule } from 'primeng/menubar';
@@ -23,7 +24,6 @@ import { SkeletonModule } from "primeng/skeleton";
 import { SpeedDialModule } from 'primeng/speeddial';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-
 
 @NgModule({
   exports: [
@@ -38,6 +38,7 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
+    InputMaskModule,
     InputNumberModule,
     FieldsetModule,
     MessagesModule,
