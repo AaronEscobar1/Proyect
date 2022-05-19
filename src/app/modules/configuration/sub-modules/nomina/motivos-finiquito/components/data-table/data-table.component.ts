@@ -27,7 +27,10 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
+    console.log(event);
+    
     this.motivosFiniquitoService.selectRow$.emit(event.data);
+
   }
 
   onRowUnselect(): void {
