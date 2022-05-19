@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CentroMedico } from '../../interfaces/centro-medico.interfaces';
+import { CentrosMedicos } from '../../interfaces/centro-medico.interfaces';
 import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
 import { CentrosMedicosService } from '../../services/centros-medicos.service';
 
@@ -10,7 +10,7 @@ import { CentrosMedicosService } from '../../services/centros-medicos.service';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() centrosMedicos!: CentroMedico[];
+  @Input() centrosMedicos!: CentrosMedicos[];
 
   // Table
   columns: TableHead[] = [];
@@ -19,8 +19,8 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codcmd', header: 'Código' },
-      { field: 'descmd', header: 'Descripción' }
+      { field: 'codmed', header: 'Código' },
+      { field: 'desmed', header: 'Descripción' }
     ];
   }
 
