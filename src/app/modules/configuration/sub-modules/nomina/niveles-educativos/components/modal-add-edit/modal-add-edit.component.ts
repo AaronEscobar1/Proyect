@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChange } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { Helpers } from 'src/app/shared/helpers/helpers';
+import { MessageService } from 'primeng/api';
 import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 
@@ -22,12 +21,10 @@ export class ModalAddEditComponent implements OnInit {
 
   formNiveles!: FormGroup;
 
-  constructor(
-      private nivelesServices: NivelesEducativosService, 
-      private spinner: NgxSpinnerService,
-      private messageService: MessageService,
-      private fb: FormBuilder,
-  ) { 
+  constructor(private nivelesServices: NivelesEducativosService, 
+              private spinner: NgxSpinnerService,
+              private messageService: MessageService,
+              private fb: FormBuilder) { 
     this.formNiveles = this.fb.group({
       codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1), this.validatedId.bind(this) ]],
       desniv: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
@@ -60,30 +57,35 @@ export class ModalAddEditComponent implements OnInit {
     if (this.isEdit) {
       // Editar
       this.nivelesServices.updateNivel(data)
-      .subscribe(resp => {
-        this.closeModalAdd();
-        this.spinner.hide();
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        this.onLoadData.emit();
-      }, (error) => {
-        this.spinner.hide();
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el nivel educativo.', life: 3000});
-      });
-    } else {
-      // Crear
-      this.nivelesServices.createNivel(data)
-        .subscribe(resp => {
+      .subscribe({
+        next: (resp) => {
           this.closeModalAdd();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
           this.onLoadData.emit();
-        }, (error) => {
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el nivel educativo.', life: 3000});
+        }
+      });
+      return;
+    }
+
+    // Crear
+    this.nivelesServices.createNivel(data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModalAdd();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.onLoadData.emit();
+        },
+        error: (err) => {
           this.spinner.hide();
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el nivel educativo.', life: 3000});
-        });
-    }
-    this.formNiveles.reset();
-    this.nivelesServices.selectRow$.emit(null);
+        }
+      });
   }
 
   closeModalAdd(): void {
@@ -138,19 +140,16 @@ export class ModalAddEditComponent implements OnInit {
 
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
     if (this.isEdit) {
-      if (this.niveles != undefined) {
-        if( !control.value && !this.formNiveles.getRawValue() && this.niveles) { return null; }
+      if( !control.value && !this.formNiveles.getRawValue() && this.niveles) { return null; }
+        if( this.formNiveles.getRawValue().desniv == null) { return null };
         const duplicatedEdit = this.niveles.findIndex(
           nivel => nivel.desniv.trim().toLowerCase() === this.formNiveles.getRawValue().desniv.trim().toLowerCase() 
-                    && nivel.codniv !== this.formNiveles.getRawValue().codniv 
+                    && nivel.codniv !== this.formNiveles.getRawValue().codniv
         );
         if (duplicatedEdit > -1) {
           return {'duplicated': true};
         }
         return null;
-      } else {
-        return null
-      }
     } else {
       if( !control.value ) { return null; }
       const duplicated = this.niveles.findIndex(nivel => nivel.desniv.trim().toLowerCase() === control.value.trim().toLowerCase());

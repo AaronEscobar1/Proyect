@@ -14,12 +14,11 @@ import { Helpers } from '../../../../../../../shared/helpers/helpers';
 export class NivelesEducativosComponent implements OnInit {
 
   // Objetos
-  niveles     : NivelesEducativos[] = [];
-  nivel     : any;
-  // typesFile   : TypesFile[] = [];
+  niveles: NivelesEducativos[] = [];
+  nivel! : NivelesEducativos | undefined;
   
   // Banderas
-  isEdit        : boolean = false;
+  isEdit : boolean = false;
   
   // Modales
   titleForm      : string = 'Agregar niveles educativos';
@@ -27,10 +26,10 @@ export class NivelesEducativosComponent implements OnInit {
   printNivelModal: boolean = false;
   
   constructor(private nivelesServices: NivelesEducativosService, 
-    private spinner: NgxSpinnerService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private helpers: Helpers) {
+              private spinner: NgxSpinnerService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService,
+              private helpers: Helpers) {
   }
 
   ngOnInit(): void {
@@ -92,34 +91,31 @@ export class NivelesEducativosComponent implements OnInit {
   
   /**
    * Elimina un registro
-   * @param niveles row de la tabla
+   * @param nivel row de la tabla
    * @returns void
    */
- 
-  deleteNivel(niveles: NivelesEducativos) {
-    if (!niveles) {
-      this.helpers.openErrorAlert('No se encontro el id del nivel.')
-      return;
-    } 
-
+  deleteNivel(nivel: NivelesEducativos) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el nivel <b>${niveles?.desniv}</b>?`,
+      message: `¿Estas seguro que quieres borrar el nivel <b>${nivel?.desniv}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-        this.nivelesServices.deleteNivel(niveles.codniv)
-          .subscribe((resp) => {
-            this.spinner.hide();
-            this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-            return true
-          }, (error) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
-            return false
-          })
+        this.nivelesServices.deleteNivel(nivel.codniv)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+              return true;
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel educativo.', life: 3000});
+              return false
+            }
+          });
       }
     });
     this.nivelesServices.selectRow$.emit(null);
