@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { Helpers } from 'src/app/shared/helpers/helpers';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TypesFile } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 
 @Component({
@@ -13,19 +9,21 @@ import { NivelesEducativosService } from '../../services/niveles-educativos.serv
 })
 export class ModalPrintComponent implements OnInit {
 
-  @Input() niveles!: NivelesEducativos[];
+  // Ver modal
   @Input() printNivelModal!: boolean;
+
+  // Emisión de eventos (cerrar)
   @Output() onCloseModalPrint  = new EventEmitter();
 
-  formPrint!: FormGroup
+  // Formulario
+  form!: FormGroup
 
-  typesFile   : TypesFile[] = [];
+  // Objeto
+  typesFile: TypesFile[] = [];
 
-  constructor(
-    private nivelesServices: NivelesEducativosService, 
-    private fb: FormBuilder,
-  ) { 
-    this.formPrint = this.fb.group({
+  constructor(private nivelesServices: NivelesEducativosService, 
+              private fb: FormBuilder) { 
+    this.form = this.fb.group({
       codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1)]],
       desniv: ['', [ Validators.required, Validators.maxLength(30)]],
       type: ['', [ Validators.maxLength(3) ]]
@@ -45,17 +43,18 @@ export class ModalPrintComponent implements OnInit {
 
   exportPdf() {
     // Obtener formulario
-    let data = this.formPrint.getRawValue();
+    const data = this.form.getRawValue();
     console.log(data);
     this.nivelesServices.selectRow$.emit(null);
     this.resetForm();
   }
 
   resetForm(): void {
-    this.formPrint.reset();
+    this.form.reset();
   }
 
   closeModalPrint(): void {
+    this.form.reset();
     this.onCloseModalPrint.emit();
   }
 
@@ -63,31 +62,9 @@ export class ModalPrintComponent implements OnInit {
    * VALIDACIONES DEL FORMULARIO REACTIVO
    */
   campoInvalid( campo: string ) {
-    return (this.formPrint.controls[campo].errors) 
-            && (this.formPrint.controls[campo].touched || this.formPrint.controls[campo].dirty)
-             && this.formPrint.invalid;
-  }
-
-  // Mensajes de errores dinamicos
-  get codnivMsgError(): string {
-    const errors = this.formPrint.get('codniv')?.errors;
-    if ( errors?.required ) {
-      return 'El código es obligatorio.';
-    } else if ( errors?.pattern ) {
-      return 'El código es de longitud de 1 dígito.';
-    }
-    return '';
-  }
-
-  // Mensajes de errores dinamicos
-  get desnivMsgError(): string {
-    const errors = this.formPrint.get('desniv')?.errors;
-    if ( errors?.required ) {
-      return 'La descripción es obligatoria.';
-    } else if ( errors?.maxlength ) {
-      return 'La descripción es de longitud máxima de 30 dígitos.';
-    }
-    return '';
+    return (this.form.controls[campo].errors) 
+            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
+             && this.form.invalid;
   }
 
 }

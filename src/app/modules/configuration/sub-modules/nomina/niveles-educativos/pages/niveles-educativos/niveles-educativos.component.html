@@ -28,10 +28,9 @@
 </div>
 
 <!-- Modal Imprimir -->
-<app-modal-print 
-    [niveles]="niveles" 
+<app-modal-print
     [printNivelModal]="printNivelModal" 
-    (onCloseModalPrint)="closeModalPrintDialog()" >
+    (onCloseModalPrint)="closeModalPrintDialog()">
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
@@ -42,5 +41,5 @@
     [isEdit]="isEdit" 
     (onCloseModalAdd)="closeModal()" 
     (onLoadData)="loadData()"
-    [titleForm]="titleForm" >
+    [titleForm]="titleForm">
 </app-modal-add-edit>

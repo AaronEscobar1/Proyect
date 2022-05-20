@@ -11,21 +11,29 @@ import { NivelesEducativosService } from '../../services/niveles-educativos.serv
 })
 export class ModalAddEditComponent implements OnInit {
 
-  @Input() niveles!: NivelesEducativos[];
-  @Input() nivelSelect!: any;
+  // Objetos
+  @Input() niveles!    : NivelesEducativos[];
+  @Input() nivelSelect!: NivelesEducativos | undefined;
+
+  // Banderas
   @Input() addNivelModal!: boolean;
-  @Output() onCloseModalAdd  = new EventEmitter();
-  @Output() onLoadData  = new EventEmitter();
   @Input() isEdit: boolean = false;
+
+  // Titulo del modal
   @Input() titleForm!: string;
 
-  formNiveles!: FormGroup;
+  // Emisión de eventos (Cerrar modal, cargarData)
+  @Output() onCloseModalAdd  = new EventEmitter();
+  @Output() onLoadData  = new EventEmitter();
+
+  // Formulario
+  form!: FormGroup;
 
   constructor(private nivelesServices: NivelesEducativosService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) { 
-    this.formNiveles = this.fb.group({
+    this.form = this.fb.group({
       codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1), this.validatedId.bind(this) ]],
       desniv: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
       codley: ['', [ Validators.maxLength(3) ]]
@@ -36,19 +44,21 @@ export class ModalAddEditComponent implements OnInit {
   }
   
   ngOnChanges() {
-    if (this.isEdit == true) {
-      this.formNiveles.controls['codniv'].disable();
-      this.formNiveles.reset(this.nivelSelect); 
+    if (this.isEdit) {
+      this.form.controls['codniv'].disable();
+      this.form.reset(this.nivelSelect); 
+    } else {
+      this.form.controls['codniv'].enable();
     }
   }
 
   saveNivel(): void {
-    if (this.formNiveles.invalid) {
-      this.formNiveles.markAllAsTouched();
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
     // Obtener formulario
-    let data = this.formNiveles.getRawValue();
+    let data = this.form.getRawValue();
     // Eliminar espacios en blanco en su atributo
     data.desniv.trim();
     
@@ -90,7 +100,7 @@ export class ModalAddEditComponent implements OnInit {
 
   closeModalAdd(): void {
     this.onCloseModalAdd.emit();
-    this.formNiveles.reset();
+    this.form.reset();
     this.nivelesServices.selectRow$.emit(null);
   }
 
@@ -98,14 +108,14 @@ export class ModalAddEditComponent implements OnInit {
    * VALIDACIONES DEL FORMULARIO REACTIVO
    */
   campoInvalid( campo: string ) {
-    return (this.formNiveles.controls[campo].errors) 
-            && (this.formNiveles.controls[campo].touched || this.formNiveles.controls[campo].dirty)
-             && this.formNiveles.invalid;
+    return (this.form.controls[campo].errors) 
+            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
+             && this.form.invalid;
   }
 
   // Mensajes de errores dinamicos
   get codnivMsgError(): string {
-    const errors = this.formNiveles.get('codniv')?.errors;
+    const errors = this.form.get('codniv')?.errors;
     if ( errors?.required ) {
       return 'El código es obligatorio.';
     } else if ( errors?.pattern ) {
@@ -118,7 +128,7 @@ export class ModalAddEditComponent implements OnInit {
 
   // Mensajes de errores dinamicos
   get desnivMsgError(): string {
-    const errors = this.formNiveles.get('desniv')?.errors;
+    const errors = this.form.get('desniv')?.errors;
     if ( errors?.required ) {
       return 'La descripción es obligatoria.';
     } else if ( errors?.maxlength ) {
@@ -139,19 +149,18 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
-    if (this.isEdit) {
-      if( !control.value && !this.formNiveles.getRawValue() && this.niveles) { return null; }
-        if( this.formNiveles.getRawValue().desniv == null) { return null };
+    if ( this.isEdit ) {
+      if ( this.form.getRawValue().desniv == null ) { return null };
         const duplicatedEdit = this.niveles.findIndex(
-          nivel => nivel.desniv.trim().toLowerCase() === this.formNiveles.getRawValue().desniv.trim().toLowerCase() 
-                    && nivel.codniv !== this.formNiveles.getRawValue().codniv
+          nivel => nivel.desniv.trim().toLowerCase() === this.form.getRawValue().desniv.trim().toLowerCase() 
+                    && nivel.codniv !== this.form.getRawValue().codniv
         );
         if (duplicatedEdit > -1) {
           return {'duplicated': true};
         }
         return null;
     } else {
-      if( !control.value ) { return null; }
+      if ( !control.value ) { return null; }
       const duplicated = this.niveles.findIndex(nivel => nivel.desniv.trim().toLowerCase() === control.value.trim().toLowerCase());
       if (duplicated > -1) {
         return {'duplicated': true};

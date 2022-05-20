@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <form [formGroup]="formPrint">
+            <form [formGroup]="form">
 
                 <div class="field">
                     <label for="status">Tipo *</label>
@@ -27,22 +27,20 @@
     
                 <div class="field">
                     <label for="id">Código</label>
-                    <input  type="text"
+                    <input  id="id"
+                            type="text"
                             pInputText
-                            id="id"
-                            formControlName="codley"
-                            placeholder="Ingrese el código"
-                            required/>
+                            formControlName="codniv"
+                            placeholder="Ingrese el código"/>
                 </div>
                 
                 <div class="field">
                     <label for="desniv">Descripción</label>
-                    <input  type="text"
-                            pInputText
-                            id="desniv"
+                    <input  id="desniv"
+                            type="text"
+                            pInputText                            
                             formControlName="desniv"
-                            placeholder="Ingrese la descripción"
-                            required/>
+                            placeholder="Ingrese la descripción"/>
                 </div>
 
             </form>
@@ -50,7 +48,18 @@
         </ng-template>
 
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModalPrint()"></button>
-            <p-button icon="pi pi-check" (click)="exportPdf()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
+            <button pButton 
+                    pRipple
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="p-button my-1"
+                    (click)="closeModalPrint()">
+            </button>
+            <p-button icon="pi pi-check"
+                      (click)="exportPdf()"
+                      label="Imprimir"
+                      icon="pi pi-print"
+                      styleClass="p-button my-1">
+            </p-button>
         </ng-template>
 </p-dialog>

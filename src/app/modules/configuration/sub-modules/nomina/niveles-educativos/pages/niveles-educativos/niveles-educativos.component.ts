@@ -4,12 +4,11 @@ import { ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
 
 @Component({
   selector: 'app-niveles-educativos',
   templateUrl: './niveles-educativos.component.html',
-  providers: [MessageService, ConfirmationService]
+  providers: [ MessageService, ConfirmationService ]
 })
 export class NivelesEducativosComponent implements OnInit {
 
@@ -28,8 +27,7 @@ export class NivelesEducativosComponent implements OnInit {
   constructor(private nivelesServices: NivelesEducativosService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService,
-              private helpers: Helpers) {
+              private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -78,14 +76,10 @@ export class NivelesEducativosComponent implements OnInit {
     }, 200);
   }
 
-  editSelectNivel(niveles: NivelesEducativos) {
+  editSelectNivel(nivel: NivelesEducativos) {
     this.isEdit = true;
-    if (!niveles) { 
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
     this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
-    this.nivel = niveles
+    this.nivel = nivel;
     this.addNivelModal = true;
   }
   
