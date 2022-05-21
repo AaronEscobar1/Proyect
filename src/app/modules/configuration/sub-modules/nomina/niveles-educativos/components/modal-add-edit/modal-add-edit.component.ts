@@ -44,12 +44,12 @@ export class ModalAddEditComponent implements OnInit {
   }
   
   ngOnChanges() {
-    if (this.isEdit) {
-      this.form.controls['codniv'].disable();
-      this.form.reset(this.nivelSelect); 
-    } else {
+    if (!this.isEdit) {
       this.form.controls['codniv'].enable();
+      return;
     }
+    this.form.controls['codniv'].disable();
+    this.form.reset(this.nivelSelect); 
   }
 
   saveNivel(): void {
@@ -149,24 +149,25 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
-    if ( this.isEdit ) {
-      if ( this.form.getRawValue().desniv == null ) { return null };
-        const duplicatedEdit = this.niveles.findIndex(
-          nivel => nivel.desniv.trim().toLowerCase() === this.form.getRawValue().desniv.trim().toLowerCase() 
-                    && nivel.codniv !== this.form.getRawValue().codniv
-        );
-        if (duplicatedEdit > -1) {
-          return {'duplicated': true};
-        }
-        return null;
-    } else {
+    // Validaciones para crear
+    if ( !this.isEdit ) {
       if ( !control.value ) { return null; }
       const duplicated = this.niveles.findIndex(nivel => nivel.desniv.trim().toLowerCase() === control.value.trim().toLowerCase());
       if (duplicated > -1) {
         return {'duplicated': true};
       }
       return null;
+    } 
+    // Validaciones para editar 
+    if ( this.form.getRawValue().desniv == null ) { return null; }
+    const duplicatedEdit = this.niveles.findIndex(
+      nivel => nivel.desniv.trim().toLowerCase() === this.form.getRawValue().desniv.trim().toLowerCase() 
+                && nivel.codniv !== this.form.getRawValue().codniv
+    );
+    if (duplicatedEdit > -1) {
+      return {'duplicated': true};
     }
+    return null;
   }
 
 }

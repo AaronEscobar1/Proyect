@@ -28,9 +28,9 @@
 </div>
 
 <!-- Modal Imprimir -->
-<app-modal-print 
-    [motivosFiniquito]="motivosFiniquito" 
-    [printModal]="printModal" >
+<app-modal-print  
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
@@ -41,5 +41,5 @@
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 
     (onLoadData)="loadData()"
-    [titleForm]="titleForm" >
+    [titleForm]="titleForm">
 </app-modal-add-edit>

@@ -19,18 +19,15 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'coddes', header: 'Código' },
-      { field: 'desde1', header: 'Descripción' },
+      { field: 'coddes', header: 'Código'            },
+      { field: 'desde1', header: 'Descripción'       },
       { field: 'desde2', header: 'Descripción adic.' },
-      { field: 'impliq', header: 'Imprimir' }
+      { field: 'impliq', header: 'Imprimir'          }
     ];
   }
 
   onRowSelect(event: any): void {
-    console.log(event);
-    
     this.motivosFiniquitoService.selectRow$.emit(event.data);
-
   }
 
   onRowUnselect(): void {

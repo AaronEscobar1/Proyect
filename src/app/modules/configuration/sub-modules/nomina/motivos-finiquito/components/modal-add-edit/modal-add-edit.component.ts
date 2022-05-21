@@ -11,26 +11,31 @@ import { MotivosFiniquitoService } from '../../services/motivos-finiquito.servic
 })
 export class ModalAddEditComponent implements OnInit {
 
+  // Objetos Input()
   @Input() motivosFiniquito!: MotivosFiniquito[];
-  @Input() motivoSelect!: any;
+  @Input() motivoSelect!: MotivosFiniquito | undefined;
+
+  // Banderas
   @Input() createModal!: boolean;
+  @Input() isEdit: boolean = false;
+
+  // Titulo del modal
+  @Input() titleForm!: string;
+
+  // Emisión de eventos (cerrar modal, cargar data)
   @Output() onCloseModal  = new EventEmitter();
   @Output() onLoadData  = new EventEmitter();
-  @Input() isEdit: boolean = false;
-  @Input() titleForm!: string;
 
   // Formulario reactivo
   form!: FormGroup;
 
-  // Objetos 
+  // Objetos
   classificationMotive: ClasificacionMotivo[] = [];
 
-  constructor(
-      private motivosFiniquitoService: MotivosFiniquitoService, 
-      private spinner: NgxSpinnerService,
-      private messageService: MessageService,
-      private fb: FormBuilder,
-  ) { 
+  constructor(private motivosFiniquitoService: MotivosFiniquitoService, 
+              private spinner: NgxSpinnerService,
+              private messageService: MessageService,
+              private fb: FormBuilder) {
     this.form = this.fb.group({
       coddes: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
       desde1: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
@@ -49,16 +54,15 @@ export class ModalAddEditComponent implements OnInit {
   }
   
   ngOnChanges() {
-    if (this.isEdit == true) {
-      this.form.controls['coddes'].disable();
-      // Seteamos los valores del row seleccionado al formulario
-      this.form.reset(this.motivoSelect);
-      
-      // Validamos si la propiedad impliq es = 1, si es = 1 le asignamos true para marcar el check
-      this.motivoSelect.impliq === "1" ? this.form.controls['impliq'].reset(true) : this.form.controls['impliq'].reset(false);
-    } else {
+    if( !this.isEdit ) {
       this.form.controls['coddes'].enable();
+      return;
     }
+    this.form.controls['coddes'].disable();
+    // Seteamos los valores del row seleccionado al formulario
+    this.form.reset(this.motivoSelect);
+    // Validamos si la propiedad impliq es = 1, si es = 1 le asignamos true para marcar el check
+    this.motivoSelect!.impliq === "1" ? this.form.controls['impliq'].reset(true) : this.form.controls['impliq'].reset(false);
   }
 
   /**
@@ -173,25 +177,25 @@ export class ModalAddEditComponent implements OnInit {
    * @returns ValidationErrors | null
    */
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
-    if (this.isEdit) {
-        if( !control.value && !this.form.getRawValue() && this.motivosFiniquito) { return null; }
-        if( this.form.getRawValue().desde1 == null ) { return null; }
-        const duplicatedEdit = this.motivosFiniquito.findIndex(
-          mot => mot.desde1.trim().toLowerCase() === this.form.getRawValue().desde1.trim().toLowerCase() 
-                    && mot.coddes !== this.form.getRawValue().coddes 
-        );
-        if (duplicatedEdit > -1) {
-          return {'duplicated': true};
-        }
-        return null;
-    } else {
+    // Validaciones para crear
+    if( !this.isEdit ) {
       if( !control.value ) { return null; }
       const duplicated = this.motivosFiniquito.findIndex(mot => mot.desde1.trim().toLowerCase() === control.value.trim().toLowerCase());
       if (duplicated > -1) {
         return {'duplicated': true};
       }
       return null;
+    } 
+    // Validaciones para editar 
+    if( this.form.getRawValue().desde1 == null ) { return null; }
+    const duplicatedEdit = this.motivosFiniquito.findIndex(
+      mot => mot.desde1.trim().toLowerCase() === this.form.getRawValue().desde1.trim().toLowerCase() 
+                && mot.coddes !== this.form.getRawValue().coddes 
+    );
+    if (duplicatedEdit > -1) {
+      return {'duplicated': true};
     }
+    return null;
   }
 
 }

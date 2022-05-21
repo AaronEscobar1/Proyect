@@ -61,6 +61,10 @@ export class MotivosFiniquitoComponent implements OnInit {
     this.printModal = true;
   }
 
+  closeModalPrintDialog(): void {
+    this.printModal = false;
+  }
+
   openModalCreate(): void {
     if (!this.isEdit) {
     }
