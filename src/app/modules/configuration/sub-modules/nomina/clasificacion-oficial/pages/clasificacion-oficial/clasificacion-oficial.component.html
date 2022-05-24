@@ -92,39 +92,43 @@
             <form [formGroup]="form" autocomplete="off">
 
                 <div class="field">
-                    <label for="codclao">Código *</label>
+                    <label for="codofi">Código *</label>
                     <input  type="text"
-                            id="codclao" 
+                            id="codofi" 
                             pInputText
-                            formControlName="codclao"
+                            formControlName="codofi"
                             placeholder="Ingrese el código"/>
                     <span class="form-text text-danger"
-                          *ngIf="campoInvalid('codclao')">
-                        {{ codclaoMsgError }}
+                          *ngIf="campoInvalid('codofi')">
+                        {{ codofiMsgError }}
                     </span>
                 </div>
                 
                 <div class="field">
-                    <label for="desclao">Descripción *</label>
-                    <textarea id="desclao" 
+                    <label for="desofi">Descripción *</label>
+                    <textarea id="desofi" 
                               pInputTextarea 
-                              formControlName="desclao" 
+                              formControlName="desofi" 
                               rows="1"
                               placeholder="Ingrese la descripción">
                     </textarea>
                     <span class="form-text text-danger"
-                          *ngIf="campoInvalid('desclao')">
-                        {{ desclaoMsgError }}
+                          *ngIf="campoInvalid('desofi')">
+                        {{ desofiMsgError }}
                     </span>
                 </div>
 
                 <div class="field">
-                    <label for="typeclao">Tipo</label>
+                    <label for="tiprep">Tipo</label>
                     <input  type="text"
-                            id="typeclao" 
+                            id="tiprep" 
                             pInputText
-                            formControlName="typeclao"
+                            formControlName="tiprep"
                             placeholder="Ingrese el tipo"/>
+                    <span class="form-text text-danger" 
+                          *ngIf="campoInvalid('tiprep')">
+                          El tipo es de longitud máximo de 2 dígitos.
+                    </span>
                 </div>
 
             </form>
@@ -132,7 +136,20 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
-            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    class="p-button my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    class="p-button my-1" 
+                    (click)="save()">
+            </button>
         </ng-template>
 </p-dialog>
