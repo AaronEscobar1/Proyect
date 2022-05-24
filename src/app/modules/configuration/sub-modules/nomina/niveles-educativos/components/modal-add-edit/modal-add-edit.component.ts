@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 
@@ -32,7 +33,8 @@ export class ModalAddEditComponent implements OnInit {
   constructor(private nivelesServices: NivelesEducativosService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private fb: FormBuilder) { 
+              private fb: FormBuilder,
+              private selectRowService: SelectRowService) { 
     this.form = this.fb.group({
       codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1), this.validatedId.bind(this) ]],
       desniv: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
@@ -101,7 +103,7 @@ export class ModalAddEditComponent implements OnInit {
   closeModalAdd(): void {
     this.onCloseModalAdd.emit();
     this.form.reset();
-    this.nivelesServices.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 
   /**

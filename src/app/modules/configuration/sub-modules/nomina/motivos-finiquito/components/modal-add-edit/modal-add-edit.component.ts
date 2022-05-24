@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { ClasificacionMotivo, MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
 
@@ -35,7 +36,8 @@ export class ModalAddEditComponent implements OnInit {
   constructor(private motivosFiniquitoService: MotivosFiniquitoService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private selectRowService: SelectRowService) {
     this.form = this.fb.group({
       coddes: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
       desde1: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
@@ -119,7 +121,7 @@ export class ModalAddEditComponent implements OnInit {
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.motivosFiniquitoService.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 
   /**

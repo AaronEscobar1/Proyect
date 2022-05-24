@@ -1,10 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
-import { Routes } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NivelesEducativosService } from '../../services/niveles-educativos.service';
+import { NivelesEducativosService } from '../../../modules/configuration/sub-modules/nomina/niveles-educativos/services/niveles-educativos.service';
 
 import { ButtonsComponent } from './buttons.component';
 

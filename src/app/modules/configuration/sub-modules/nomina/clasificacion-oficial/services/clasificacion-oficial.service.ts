@@ -9,9 +9,6 @@ import { OfficialClassification } from '../interfaces/clasificacion-oficial.inte
 })
 export class ClasificacionOficialService {
 
-  // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<OfficialClassification | null>();
-
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 

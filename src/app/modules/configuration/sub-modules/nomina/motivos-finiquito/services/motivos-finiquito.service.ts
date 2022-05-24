@@ -9,9 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class MotivosFiniquitoService {
 
-  // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<MotivosFiniquito | null>();
-
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 

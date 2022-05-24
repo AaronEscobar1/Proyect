@@ -48,13 +48,13 @@ describe('ModalPrintComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    app.formPrint.setValue({
+    app.form.setValue({
       "codniv": '33',
       "desniv": '123456789123456789123456789123456789',
       "type": 'CCCC'
     })
 
-    expect(app.formPrint.valid).toEqual(false);    
+    expect(app.form.valid).toEqual(false);    
   })
 
   it('Comprobando el formulario. (caso valido)', async () => {
@@ -62,12 +62,12 @@ describe('ModalPrintComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    app.formPrint.setValue({
+    app.form.setValue({
       "codniv": '3',
       "desniv": '123456789123456789123456789',
       "type": 'CCC'
     })
 
-    expect(app.formPrint.valid).toEqual(true);    
+    expect(app.form.valid).toEqual(true);    
   })
 });

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
 import { Profession } from '../../interfaces/professions.interfaces';
 import { ProfesionesService } from '../../services/profesiones.service';
@@ -15,7 +16,7 @@ export class DataTableComponent implements OnInit {
   // Table
   columns: TableHead[] = [];
 
-  constructor(private profesionesService: ProfesionesService) { }
+  constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -25,11 +26,11 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.profesionesService.selectRow$.emit(event.data);
+    this.selectRowService.selectRow$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.profesionesService.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 
 }

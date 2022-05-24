@@ -1,17 +1,13 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Sindicatos } from '../interfaces/sindicatos.interfaces';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SindicatosService {
-
-  // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<Sindicatos | null>();
 
   constructor(private http: HttpService,
               private helpers: Helpers) { }
