@@ -13,10 +13,10 @@
 
             <!-- Componente de botones -->
             <app-buttons (onRefresh)="refresh()"
-                         (onOpenModalPrint)="showModalPrintDialog()"
-                         (onOpenModalCreate)="showModalAddDialog()"
-                         (onEditRow)="editSelectNivel($event)"
-                         (onDeleteRow)="deleteNivel($event)">
+                         (onOpenModalPrint)="openModalPrint()"
+                         (onOpenModalCreate)="openModalCreate()"
+                         (onEditRow)="editRow($event)"
+                         (onDeleteRow)="deleteRow($event)">
             </app-buttons>
 
             <!-- Componente table -->

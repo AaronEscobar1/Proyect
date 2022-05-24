@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Categories } from '../../interfaces/categories.interfaces';
 import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
-import { CategoriesService } from '../../services/categories.service';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-data-table',
@@ -15,7 +15,7 @@ export class DataTableComponent implements OnInit {
   // Table
   columns: TableHead[] = [];
 
-  constructor(private categoriesService: CategoriesService) { }
+  constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -25,11 +25,11 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.categoriesService.selectRow$.emit(event.data);
+    this.selectRowService.selectRow$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.categoriesService.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 
 }

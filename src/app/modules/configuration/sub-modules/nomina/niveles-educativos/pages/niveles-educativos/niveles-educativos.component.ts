@@ -4,6 +4,7 @@ import { ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-niveles-educativos',
@@ -27,7 +28,8 @@ export class NivelesEducativosComponent implements OnInit {
   constructor(private nivelesServices: NivelesEducativosService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService) {
+              private confirmationService: ConfirmationService,
+              private selectRowServices: SelectRowService) {
   }
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class NivelesEducativosComponent implements OnInit {
       });
   }
 
-  showModalPrintDialog(): void {
+  openModalPrint(): void {
     this.printNivelModal = true;
   }
 
@@ -57,7 +59,7 @@ export class NivelesEducativosComponent implements OnInit {
     this.printNivelModal = false;
   }
   
-  showModalAddDialog(): void {
+  openModalCreate(): void {
     this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
     this.isEdit = false;
     this.addNivelModal = true;
@@ -76,7 +78,7 @@ export class NivelesEducativosComponent implements OnInit {
     }, 200);
   }
 
-  editSelectNivel(nivel: NivelesEducativos) {
+  editRow(nivel: NivelesEducativos) {
     this.isEdit = true;
     this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
     this.nivel = nivel;
@@ -88,7 +90,7 @@ export class NivelesEducativosComponent implements OnInit {
    * @param nivel row de la tabla
    * @returns void
    */
-  deleteNivel(nivel: NivelesEducativos) {
+   deleteRow(nivel: NivelesEducativos) {
     this.confirmationService.confirm({
       message: `¿Estas seguro que quieres borrar el nivel <b>${nivel?.desniv}</b>?`,
       header: 'Confirmar',
@@ -112,7 +114,7 @@ export class NivelesEducativosComponent implements OnInit {
           });
       }
     });
-    this.nivelesServices.selectRow$.emit(null);
+    this.selectRowServices.selectRow$.emit(null);
   }
 
 }

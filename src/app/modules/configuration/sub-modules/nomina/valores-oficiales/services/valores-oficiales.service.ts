@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ValorOficial } from '../interfaces/valor-oficial.interfaces';
 import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 import { Observable } from 'rxjs';
@@ -9,9 +9,6 @@ import { Helpers } from '../../../../../../shared/helpers/helpers';
   providedIn: 'root'
 })
 export class ValoresOficialesService {
-
-  // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<ValorOficial | null>();
 
   constructor(private http: HttpService,
               private helpers: Helpers) { }

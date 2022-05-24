@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
 import { FormasPagoService } from '../../services/formas-pago.service';
 import { FormasPago } from '../../interfaces/formas-pago.interfaces';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-data-table',
@@ -15,7 +16,7 @@ export class DataTableComponent implements OnInit {
   // Table
   columns: TableHead[] = [];
 
-  constructor(private formasPagoService: FormasPagoService) { }
+  constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -26,11 +27,11 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.formasPagoService.selectRow$.emit(event.data);
+    this.selectRowService.selectRow$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.formasPagoService.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 
 }

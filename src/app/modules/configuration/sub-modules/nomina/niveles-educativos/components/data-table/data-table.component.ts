@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
-import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 
 @Component({
   selector: 'app-data-table',
@@ -13,7 +13,7 @@ export class DataTableComponent implements OnInit {
 
   columns       : any[]             = [];
 
-  constructor(private nivelesServices: NivelesEducativosService) { }
+  constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -24,10 +24,10 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {    
-    this.nivelesServices.selectRow$.emit(event.data);
+    this.selectRowService.selectRow$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.nivelesServices.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 }

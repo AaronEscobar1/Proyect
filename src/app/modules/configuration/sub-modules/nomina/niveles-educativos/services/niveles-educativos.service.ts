@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
@@ -8,8 +8,6 @@ import { NivelesEducativos } from '../interfaces/niveles-educativos.interfaces';
   providedIn: 'root'
 })
 export class NivelesEducativosService {
-
-  public selectRow$ = new EventEmitter<NivelesEducativos | null>();
 
   constructor(private http: HttpService,
               private helpers: Helpers) { }
