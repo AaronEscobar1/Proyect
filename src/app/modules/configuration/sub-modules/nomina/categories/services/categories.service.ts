@@ -9,9 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class CategoriesService {
 
-  // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<Categories | null>();
-
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 

@@ -3,10 +3,8 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { OfficialClassification } from '../../interfaces/clasificacion-oficial.interfaces';
 import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClasificacionOficialService } from '../../services/clasificacion-oficial.service';
-import { officialClassificationData } from '../../interfaces/clasificacion-oficial';
 
 @Component({
   selector: 'app-clasificacion-oficial',
@@ -35,12 +33,11 @@ export class ClasificacionOficialComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private fb: FormBuilder,
-              private helpers: Helpers) {
+              private fb: FormBuilder) {
     this.form = this.fb.group({
-      codclao: ['', [ Validators.required, Validators.maxLength(2), this.validatedId.bind(this) ]],
-      desclao: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
-      typeclao: ['', [ Validators.required, Validators.maxLength(30) ]]
+      codofi: ['', [ Validators.required, Validators.maxLength(2), this.validatedId.bind(this) ]],
+      desofi: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
+      tiprep: ['', [ Validators.required, Validators.maxLength(2) ]]
     });
   }
 
@@ -58,10 +55,17 @@ export class ClasificacionOficialComponent implements OnInit {
 
   loadData() {
     this.spinner.show();
-    setTimeout(() => {
-      this.officialClassification = officialClassificationData;
-      this.spinner.hide();
-    }, 500);
+    this.clasificacionOficialService.getAll()
+      .subscribe({
+        next: (resp) => {
+          this.officialClassification = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
@@ -77,7 +81,7 @@ export class ClasificacionOficialComponent implements OnInit {
 
   openModalCreate(): void {
     if (!this.isEdit) {
-      this.form.controls['codclao'].enable();
+      this.form.controls['codofi'].enable();
     }
     this.titleForm = this.isEdit ? 'Editar clasificación oficial' : 'Agregar clasificación oficial';
     this.createModal = true;
@@ -94,7 +98,6 @@ export class ClasificacionOficialComponent implements OnInit {
    * @returns void
    */
   save(): void {
-    console.log('this.form.value > ', this.form.value);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -103,38 +106,43 @@ export class ClasificacionOficialComponent implements OnInit {
     // Obtener formulario
     let data: OfficialClassification = this.form.getRawValue();
     // Eliminar espacios en blanco en su atributo
-    data.desclao.trim();
+    data.desofi.trim();
 
-    this.spinner.show();
+    // this.spinner.show();
 
     if(this.isEdit) {
       // Editar
-      console.log('Update', data);
-      this.officialClassification[this.findIndexById(this.form.getRawValue().codclao)] = this.form.getRawValue();
-      this.officialClassification = [...this.officialClassification];
-      this.spinner.hide();
-      this.closeModal();
+      this.clasificacionOficialService.update(data)
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.loadData();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la clasificación. ' + err.error.detail, life: 3000});
+          } 
+        });
       return;
     }
 
     // Crear
-    console.log('Create', data);
-    this.officialClassification.push(data);
-    this.officialClassification = [...this.officialClassification];
-    this.spinner.hide();
-    this.closeModal();
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.officialClassification.length; i++) {
-        if (this.officialClassification[i].codclao === id) {
-            index = i;
-            break;
+    this.clasificacionOficialService.create(data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.loadData();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la clasificación. ' + err.error.detail, life: 3000});
         }
-    }
-    return index;
-  } 
+      });
+  }
 
   /**
    * Carga la data en el formulario para editar
@@ -143,11 +151,7 @@ export class ClasificacionOficialComponent implements OnInit {
    */
   editRow(officialClassification: OfficialClassification): void {
     this.isEdit = true;
-    if (!officialClassification) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
-    this.form.controls['codclao'].disable();
+    this.form.controls['codofi'].disable();
     this.form.reset(officialClassification);
     this.openModalCreate();
   }
@@ -158,19 +162,25 @@ export class ClasificacionOficialComponent implements OnInit {
    * @returns void
    */
   deleteRow(officialClassification: OfficialClassification): void {
-    if (!officialClassification) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la clasificación oficial <b>${officialClassification.desclao}</b>?`,
+      message: `¿Estas seguro que quieres borrar la clasificación oficial <b>${officialClassification.desofi}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-        this.officialClassification = this.officialClassification.filter(val => val.codclao !== officialClassification.codclao);
-        this.spinner.hide();
+        this.clasificacionOficialService.delete(officialClassification.codofi, officialClassification.tiprep)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la clasificación' + err.error.detail, life: 3000});
+            }
+          });
       }
     });
   }
@@ -189,8 +199,8 @@ export class ClasificacionOficialComponent implements OnInit {
   }
   
   // Mensajes de errores dinamicos
-  get codclaoMsgError(): string {
-    const errors = this.form.get('codclao')?.errors;
+  get codofiMsgError(): string {
+    const errors = this.form.get('codofi')?.errors;
     if ( errors?.required ) {
       return 'El código es obligatorio.';
     } else if ( errors?.maxlength ) {
@@ -202,8 +212,8 @@ export class ClasificacionOficialComponent implements OnInit {
   }
   
   // Mensajes de errores dinamicos
-  get desclaoMsgError(): string {
-    const errors = this.form.get('desclao')?.errors;
+  get desofiMsgError(): string {
+    const errors = this.form.get('desofi')?.errors;
     if ( errors?.required ) {
       return 'La descripción es obligatoria.';
     } else if ( errors?.maxlength ) {
@@ -221,7 +231,7 @@ export class ClasificacionOficialComponent implements OnInit {
    */
   validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-      const duplicated = this.officialClassification.findIndex(val => val.codclao === control.value);
+      const duplicated = this.officialClassification.findIndex(val => val.codofi === control.value);
       if (duplicated > -1) {
         return {'duplicated': true};
       }
@@ -234,24 +244,26 @@ export class ClasificacionOficialComponent implements OnInit {
    * @returns ValidationErrors | null
    */
   validatedDesniv(control: AbstractControl): ValidationErrors | null {
-    if (this.isEdit) {
-      if( !control.value && !this.form.getRawValue() && this.officialClassification) { return null; }
+    // Validaciones para crear
+    if (!this.isEdit) {
+      if( !control.value ) { return null; }
+      const duplicated = this.officialClassification.findIndex(val => val.desofi.trim().toLowerCase() === control.value.trim().toLowerCase());
+      if (duplicated > -1) {
+        return {'duplicated': true};
+      }
+      return null;
+      
+    } 
+    // Validaciones para editar 
+    if ( this.form.getRawValue().desofi == null ) { return null; }
       const duplicatedEdit = this.officialClassification.findIndex(
-        val => val.desclao.trim().toLowerCase() === this.form.getRawValue().desclao.trim().toLowerCase() 
-                  && val.codclao !== this.form.getRawValue().codclao
+        val => val.desofi.trim().toLowerCase() === this.form.getRawValue().desofi.trim().toLowerCase() 
+                  && val.codofi !== this.form.getRawValue().codofi
       );
       if (duplicatedEdit > -1) {
         return {'duplicated': true};
       }
       return null;
-    } else {
-      if( !control.value ) { return null; }
-      const duplicated = this.officialClassification.findIndex(val => val.desclao.trim().toLowerCase() === control.value.trim().toLowerCase());
-      if (duplicated > -1) {
-        return {'duplicated': true};
-      }
-      return null;
-    }
   }
   
 }

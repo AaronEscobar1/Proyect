@@ -1,0 +1,84 @@
+<!-- Modal agregar -->
+
+<p-dialog [(visible)]="addNivelModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '40vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModalAdd()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="field">
+                    <label for="codniv">Código *</label>
+
+                    <input  type="text"
+                            id="codniv" 
+                            pInputText 
+                            formControlName="codniv"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codniv')">
+                        {{ codnivMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="desniv">Descripción *</label>
+                    <input  type="text" 
+                            id="desniv"
+                            pInputText 
+                            formControlName="desniv"
+                            placeholder="Ingrese la descripción"
+                            />
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('desniv')">
+                        {{ desnivMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="codley">Oficial</label>
+                    <input  type="text" 
+                            id="codley"
+                            pInputText 
+                            formControlName="codley"
+                            placeholder="Ingrese el código oficial"
+                            />
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codley')">
+                        El código oficial es de longitud máxima de 3 dígitos.
+                    </span>
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="p-button my-1"
+                    (click)="closeModalAdd()">
+            </button>
+            <button pButton 
+                    pRipple
+                    type="submit"
+                    label="Guardar"
+                    icon="pi pi-check"
+                    class="p-button my-1"
+                    (click)="saveNivel()">
+            </button>
+        </ng-template>
+</p-dialog>

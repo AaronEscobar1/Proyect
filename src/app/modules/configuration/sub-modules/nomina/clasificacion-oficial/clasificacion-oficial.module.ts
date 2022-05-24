@@ -6,14 +6,12 @@ import { SharedModule } from '../../../../../shared/shared.module';
 
 // Components
 import { ClasificacionOficialComponent } from './pages/clasificacion-oficial/clasificacion-oficial.component';
-import { ButtonsComponent } from './components/buttons/buttons.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 
 
 @NgModule({
   declarations: [
     ClasificacionOficialComponent,
-    ButtonsComponent,
     DataTableComponent
   ],
   imports: [

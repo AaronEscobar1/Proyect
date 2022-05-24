@@ -40,6 +40,11 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
+  // funcion de espera para simular
+  timeout(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   ngOnInit(): void {
     this.typesFile = [
       { name: 'PDF',  code: 'PDF'  },
@@ -52,7 +57,7 @@ export class CategoriesComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() {
+  async loadData() {
     this.spinner.show();
     this.categoriesService.getAll()
       .subscribe({

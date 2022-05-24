@@ -9,7 +9,6 @@ import { NivelesEducativos } from '../interfaces/niveles-educativos.interfaces';
 })
 export class NivelesEducativosService {
 
-
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 

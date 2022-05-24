@@ -1,11 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CategoriesService } from '../../services/categories.service';
+import { SelectRowService } from '../../services/select-row/select-row.service';
 
 @Component({
   selector: 'app-buttons',
   templateUrl: './buttons.component.html',
-  styles: []
 })
 export class ButtonsComponent implements OnInit {
 
@@ -21,17 +20,17 @@ export class ButtonsComponent implements OnInit {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor(private categoriesService: CategoriesService) {
+  constructor( private selectRowService: SelectRowService ) {
   }
   
   ngOnInit(): void {
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable
-    this.subscriber = this.categoriesService.selectRow$.subscribe( row => this.selectRow = row );
+    this.subscriber = this.selectRowService.selectRow$.subscribe( row => this.selectRow = row );
   }
 
   refresh(): void {
     this.onRefresh.emit();
-  }
+  } 
 
   openModalPrint(): void {
     this.onOpenModalPrint.emit();

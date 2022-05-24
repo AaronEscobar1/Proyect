@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpService } from '../../../../../../shared/services/http/http.service';
 import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
@@ -8,9 +8,6 @@ import { FormasPago } from '../interfaces/formas-pago.interfaces';
   providedIn: 'root'
 })
 export class FormasPagoService {
-
-  // Variable para obtener el row desde la tabla
-  public selectRow$ = new EventEmitter<FormasPago | null>();
 
   constructor(private http: HttpService,
               private helpers: Helpers) { }

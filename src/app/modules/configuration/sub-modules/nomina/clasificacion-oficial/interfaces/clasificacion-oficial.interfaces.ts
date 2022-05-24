@@ -1,5 +1,11 @@
 export interface OfficialClassification {
-    codclao: string;
-    desclao: string;
-    typeclao: string;
+    codofi: string;
+    desofi: string;
+    tiprep: string;
+    asCofiPk: asCofiPk;
+}
+
+export interface asCofiPk {
+    codofi: string;
+    tiprep: string;
 }

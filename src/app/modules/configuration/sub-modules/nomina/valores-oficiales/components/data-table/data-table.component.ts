@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ValorOficial } from '../../interfaces/valor-oficial.interfaces';
 import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
-import { ValoresOficialesService } from '../../services/valores-oficiales.service';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-data-table',
@@ -15,7 +15,7 @@ export class DataTableComponent implements OnInit {
   // Table
   columns: TableHead[] = [];
 
-  constructor(private valoresOficialesService: ValoresOficialesService) { }
+  constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -26,11 +26,11 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.valoresOficialesService.selectRow$.emit(event.data);
+    this.selectRowService.selectRow$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.valoresOficialesService.selectRow$.emit(null);
+    this.selectRowService.selectRow$.emit(null);
   }
 
 }
