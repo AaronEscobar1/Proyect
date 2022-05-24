@@ -49,13 +49,13 @@ describe('ModalAddEditComponent', () => {
     
     // Validamos los datos del formulario vacio
 
-    expect(app.formNiveles.value.codley).toEqual('')
-    expect(app.formNiveles.value.codniv).toEqual('')
-    expect(app.formNiveles.value.desniv).toEqual('')
+    expect(app.form.value.codley).toEqual('')
+    expect(app.form.value.codniv).toEqual('')
+    expect(app.form.value.desniv).toEqual('')
     
     // Validamos el requiere de los campos
     
-    expect(app.formNiveles.valid).toEqual(false)
+    expect(app.form.valid).toEqual(false)
 
     // validamos que no exista el nivelSelect
 
@@ -69,17 +69,34 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
+    app.niveles = [
+      {
+        "codniv": "3",
+        "desniv": "NuevoNivelEducativo",
+        "codley": "CCC"
+      },
+      {
+        "codniv": "1",
+        "desniv": "Primaria",
+        "codley": "CC"
+      },
+      {
+        "codniv": "2",
+        "desniv": "Secundaria",
+        "codley": "SES"
+      }
+    ];
     app.nivelSelect = {
-      "codley": '3',
+      "codniv": '3',
       "desniv": '123456789123456789123456789',
-      "type": 'CCC'
+      "codley": 'CCC'
     };
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion
-    expect(app.formNiveles.value.codley).toEqual(app.nivelSelect.codley)
-    expect(app.formNiveles.value.desniv).toEqual(app.nivelSelect.desniv)
-    expect(app.formNiveles.valid).toEqual(true)
+    expect(app.form.value.codley).toEqual(app.nivelSelect.codley)
+    expect(app.form.value.desniv).toEqual(app.nivelSelect.desniv)
+    expect(app.form.valid).toEqual(true)
   });
 
   it('Cerrando modal de Crear-Editar', () => {
@@ -88,10 +105,10 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Llamamos al close modal para resetear todo
     app.closeModalAdd()
-    expect(app.formNiveles.value.codley).toEqual(null)
-    expect(app.formNiveles.value.codniv).toEqual(null)
-    expect(app.formNiveles.value.desniv).toEqual(null)
-    expect(app.formNiveles.valid).toEqual(false)
+    expect(app.form.value.codley).toEqual(null)
+    expect(app.form.value.codniv).toEqual(null)
+    expect(app.form.value.desniv).toEqual(null)
+    expect(app.form.valid).toEqual(false)
     expect(app.nivelSelect).toEqual(undefined);
   });
 
@@ -127,8 +144,8 @@ describe('ModalAddEditComponent', () => {
 
     const resp = {"message":"Nivel Educativo creado."}
     // Guardamos los datos en el formulario y lo comprobamos
-    app.formNiveles.setValue(data)
-    expect(app.formNiveles.valid).toEqual(true)
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true)
 
     const response = service.createNivel(data).subscribe();
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
@@ -136,11 +153,6 @@ describe('ModalAddEditComponent', () => {
     expect(fakeBackend.request.method).toBe('POST');
     // Llamamos a la funcion de Guardado
     app.saveNivel()
-
-    // Reset hecho por la funcion
-    expect(app.formNiveles.value.codley).toEqual(null)
-    expect(app.formNiveles.value.codniv).toEqual(null)
-    expect(app.formNiveles.value.desniv).toEqual(null)
   }));
 
   it('Probando el Editado de Datos', inject([NivelesEducativosService], (service: NivelesEducativosService) => {
@@ -173,10 +185,10 @@ describe('ModalAddEditComponent', () => {
       "codley": "CCC"
     };
     // Guardamos los datos en el formulario y lo comprobamos
-    app.formNiveles.value.desniv = app.nivelSelect.desniv
-    app.formNiveles.value.codley = app.nivelSelect.codley 
+    app.form.value.desniv = app.nivelSelect.desniv
+    app.form.value.codley = app.nivelSelect.codley 
 
-    expect(app.formNiveles.valid).toEqual(false)
+    expect(app.form.valid).toEqual(false)
     // Llamamos a la funcion de Guardado
     app.saveNivel()
 
@@ -186,9 +198,9 @@ describe('ModalAddEditComponent', () => {
     expect(fakeBackend.request.method).toBe('PUT');
 
     // Reset hecho por la funcion
-    expect(app.formNiveles.value.codley).toEqual(app.nivelSelect.codley)
-    expect(app.formNiveles.value.codniv).toEqual('')
-    expect(app.formNiveles.value.desniv).toEqual(app.nivelSelect.desniv)
+    expect(app.form.value.codley).toEqual(app.nivelSelect.codley)
+    expect(app.form.value.codniv).toEqual('')
+    expect(app.form.value.desniv).toEqual(app.nivelSelect.desniv)
     
   }));
 });

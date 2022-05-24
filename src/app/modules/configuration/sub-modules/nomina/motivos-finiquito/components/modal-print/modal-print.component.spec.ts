@@ -48,7 +48,7 @@ describe('ModalPrintComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    app.formPrint.setValue({
+    app.form.setValue({
       "desde1": "motivo de finiquito",
       "desde2": "motivo de finiquito",
       "impliq": "1",
@@ -56,7 +56,7 @@ describe('ModalPrintComponent', () => {
       "coddes": "1"
   })
 
-    expect(app.formPrint.valid).toEqual(true);    
+    expect(app.form.valid).toEqual(true);    
   })
 
   it('Comprobando el formulario. (caso valido)', async () => {
@@ -64,7 +64,7 @@ describe('ModalPrintComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    app.formPrint.setValue({
+    app.form.setValue({
       "desde1": "motivo de finiquito new",
       "desde2": "motivo de finiquito new",
       "impliq": "4",
@@ -72,6 +72,6 @@ describe('ModalPrintComponent', () => {
       "coddes": "4"
     })
 
-    expect(app.formPrint.valid).toEqual(true);    
+    expect(app.form.valid).toEqual(true);    
   })
 });
