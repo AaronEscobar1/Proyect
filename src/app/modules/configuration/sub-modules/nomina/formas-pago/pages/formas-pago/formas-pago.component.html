@@ -36,9 +36,9 @@
             <div class="field">
                 <label for="status">Tipo *</label>
                 <p-dropdown [options]="typesFile" 
-                            placeholder="Seleccione un tipo" 
-                            optionLabel="name" 
-                            [showClear]="true">
+                            appendTo="body"
+                            [showClear]="true"
+                            placeholder="Seleccione un tipo">
                 </p-dropdown>
             </div>
 
@@ -47,8 +47,7 @@
                 <input  type="text"
                         pInputText
                         id="id"
-                        placeholder="Ingrese el código"
-                        required/>
+                        placeholder="Ingrese el código"/>
             </div>
             
             <div class="field">
@@ -56,8 +55,7 @@
                 <input  type="text"
                         pInputText
                         id="desniv"
-                        placeholder="Ingrese la descripción"
-                        required/>
+                        placeholder="Ingrese la descripción"/>
             </div>
 
         </ng-template>

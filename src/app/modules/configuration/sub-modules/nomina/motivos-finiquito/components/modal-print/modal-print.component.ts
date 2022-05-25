@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TypesFile } from 'src/app/shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
 
 @Component({
@@ -19,32 +19,22 @@ export class ModalPrintComponent implements OnInit {
   form!: FormGroup
 
   // Objeto
-  typesFile   : TypesFile[] = [];
+  typesFile: TypesFile[] = typesFileData;
 
   constructor(private motivosFiniquitoService: MotivosFiniquitoService, 
               private fb: FormBuilder) { 
     this.form = this.fb.group({
-      coddes: ['', [ Validators.required, Validators.maxLength(4) ]],
-      desde1: ['', [ Validators.required, Validators.maxLength(30) ]],
-      desde2: ['', [ Validators.maxLength(30) ]],
-      impliq: [ false ],
-      classo: ['', [ Validators.required ]]
+      type: [],
+      id: [''],
+      des: ['']
     });
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
   }
 
   export() {
-
+    console.log(this.form.value);
   }
 
   resetForm(): void {

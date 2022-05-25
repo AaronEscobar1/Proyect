@@ -66,8 +66,6 @@ export class MotivosFiniquitoComponent implements OnInit {
   }
 
   openModalCreate(): void {
-    if (!this.isEdit) {
-    }
     this.titleForm = this.isEdit ? 'Editar motivos de finiquito' : 'Agregar motivos de finiquito';
     this.createModal = true;
   }
@@ -85,7 +83,7 @@ export class MotivosFiniquitoComponent implements OnInit {
    */
   editRow(motivosFiniquito: MotivosFiniquito): void {
     this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
+    this.titleForm = this.isEdit ? 'Editar motivos de finiquito' : 'Agregar motivos de finiquito';
     this.motivoFiniquito = motivosFiniquito
     this.openModalCreate();
   }

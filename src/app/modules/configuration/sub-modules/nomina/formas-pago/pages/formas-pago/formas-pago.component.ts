@@ -4,9 +4,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 import { FormasPagoService } from '../../services/formas-pago.service';
-import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
-import { ResponseBack } from '../../../../../../../shared/interfaces/response.interfaces';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
 
 @Component({
@@ -22,7 +21,7 @@ export class FormasPagoComponent implements OnInit {
 
   // Objetos
   formasPagos: FormasPago[] = [];
-  typesFile  : TypesFile[] = [];
+  typesFile  : TypesFile[] = typesFileData;
   typesPagos : TypeFormasPago[] = [];
 
   // Banderas
@@ -52,14 +51,6 @@ export class FormasPagoComponent implements OnInit {
       {label: 'Deposito', value: '2'},
       {label: 'Cheque no continuo', value: '3'},
       {label: 'Cheque continuo', value: '4'}
-    ];
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
     ];
     this.loadData();
   }

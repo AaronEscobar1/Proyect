@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors }
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProfesionesService } from '../../services/profesiones.service';
-import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { Profession } from '../../interfaces/professions.interfaces';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
 
@@ -20,7 +20,7 @@ export class ProfesionesComponent implements OnInit {
 
   // Objetos
   professions: Profession[] = [];
-  typesFile  : TypesFile[] = [];
+  typesFile  : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -43,14 +43,6 @@ export class ProfesionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
     this.loadData();
   }
 

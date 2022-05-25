@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { OfficialClassification } from '../../interfaces/clasificacion-oficial.interfaces';
-import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClasificacionOficialService } from '../../services/clasificacion-oficial.service';
 
@@ -19,7 +19,7 @@ export class ClasificacionOficialComponent implements OnInit {
 
   // Objetos
   officialClassification: OfficialClassification[] = [];
-  typesFile             : TypesFile[] = [];
+  typesFile             : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -42,14 +42,6 @@ export class ClasificacionOficialComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
     this.loadData();
   }
 

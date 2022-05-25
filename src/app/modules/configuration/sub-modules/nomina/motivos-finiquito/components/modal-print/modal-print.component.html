@@ -20,9 +20,9 @@
                     <label for="status">Tipo *</label>
                     <p-dropdown [options]="typesFile" 
                                 appendTo="body"
-                                placeholder="Seleccione un tipo" 
-                                optionLabel="name" 
-                                [showClear]="true">
+                                formControlName="type"
+                                [showClear]="true"
+                                placeholder="Seleccione un tipo">
                     </p-dropdown>
                 </div>
 
@@ -31,14 +31,16 @@
                     <input  type="text"
                             pInputText
                             id="id"
+                            formControlName="id"
                             placeholder="Ingrese el código"/>
                 </div>
                 
                 <div class="field">
-                    <label for="desniv">Descripción</label>
+                    <label for="des">Descripción</label>
                     <input  type="text"
                             pInputText
-                            id="desniv"
+                            id="des"
+                            formControlName="des"
                             placeholder="Ingrese la descripción"/>
                 </div>
 
