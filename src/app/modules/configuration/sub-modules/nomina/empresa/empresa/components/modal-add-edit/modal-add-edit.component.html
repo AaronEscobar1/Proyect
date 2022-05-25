@@ -1,1 +1,180 @@
-<p>modal-add-edit works!</p>
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '70vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field md:col-3 sm:col-12">
+                        <label for="coddes">Código *</label>
+                        <input  type="text"
+                                id="coddes" 
+                                pInputText
+                                formControlName="codemp"
+                                placeholder="Ingrese el código"/>
+                    </div>
+
+                    <div class="field md:col-9 sm:col-12">
+                        <label for="desde1">Empresa *</label>
+                        <input  type="text" 
+                                id="desde1"
+                                pInputText
+                                formControlName="desemp" 
+                                placeholder="Ingrese la descripción"/>
+                    </div>
+
+                </div>
+
+                <hr *ngIf="isEdit">
+
+                <div class="formgrid grid" *ngIf="isEdit">
+
+                    <div class="col-6">
+
+                        <label class="text-lg font-medium mb-3">Funcionario</label>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right mt-2">
+                                <label for="nom">Nombre: </label>
+                            </div>
+                            <div class="field col-8">
+                                <input  type="text"
+                                        id="nom" 
+                                        pInputText
+                                        placeholder="Ingrese el nombre">
+                            </div>
+                        </div>
+                        
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right mt-2">
+                                <label>Nacionalidad: </label>
+                            </div>
+                            <div class="field-radiobutton col-8">
+                                <p-radioButton  inputId="natural" 
+                                                name="nacionalidad"
+                                                value="0" 
+                                                formControlName="nacionalidad">
+                                </p-radioButton>
+                                <label for="natural" class="mr-3">Natural</label>
+
+                                <p-radioButton  inputId="extranjero" 
+                                                name="nacionalidad"
+                                                value="1" 
+                                                formControlName="nacionalidad">
+                                </p-radioButton>
+                                <label for="extranjero">Extranjero</label>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right">
+                                <label for="tipide">Tipo de identificacion: </label>
+                            </div>
+                            <div class="field col-2">
+                                <input  type="text"
+                                        id="tipide" 
+                                        pInputText>
+                            </div>
+                            <div class="field col-6">
+                                <input  type="text"
+                                        pInputText>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right">
+                                <label for="cifun">Cédula del funcionario: </label>
+                            </div>
+                            <div class="field col-8">
+                                <input  type="text"
+                                        id="cifun" 
+                                        pInputText
+                                        placeholder="Ingrese el cédula">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <label class="text-lg font-medium mb-3">Contribuyente</label>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right mt-2">
+                                <label for="tipage">Tipo de agente: </label>
+                            </div>
+                            <div class="field col-2">
+                                <input  type="text"
+                                        id="tipage" 
+                                        pInputText>
+                            </div>
+                            <div class="field col-6">
+                                <input  type="text"
+                                        pInputText>
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right">
+                                <label for="nucont">Número del contribuyente: </label>
+                            </div>
+                            <div class="field col-8">
+                                <input  type="text"
+                                        id="nucont" 
+                                        pInputText
+                                        placeholder="Número del contribuyente">
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid">
+                            <div class="field col-4 text-right">
+                                <label for="otroda">Otros datos: </label>
+                            </div>
+                            <div class="field col-8">
+                                <input  type="text"
+                                        id="otroda" 
+                                        pInputText
+                                        placeholder="Ingrese otros datos">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    class="p-button my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check"
+                    class="p-button my-1" 
+                    (click)="save()">
+            </button>
+        </ng-template>
+</p-dialog>
