@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Empresa } from '../../interfaces/empresa.interfaces';
+import { dropdownType, Empresa, identificatioType, agentType } from '../../interfaces/empresa.interfaces';
 import { EmpresaService } from '../../services/empresa.service';
 
 @Component({
@@ -30,6 +30,10 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
+  // Objetos
+  identificatioType: dropdownType[] = identificatioType;
+  agentType        : dropdownType[] = agentType;
+
   constructor(private empresaService: EmpresaService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
@@ -38,8 +42,11 @@ export class ModalAddEditComponent implements OnInit {
     this.form = this.fb.group({
       codemp: ['', [ Validators.required, Validators.maxLength(4) ]],
       desemp: ['', [ Validators.required, Validators.maxLength(30) ]],
-      // Inspectoria
+      // Funcionario
       nacionalidad: ['0'],
+      tipIden: [''],
+      // Contribuyente
+      tipAgen: ['']
     });
   }
 
@@ -49,6 +56,7 @@ export class ModalAddEditComponent implements OnInit {
   ngOnChanges() {
     if( !this.isEdit ) {
       this.form.controls['codemp'].enable();
+      this.form.controls['desemp'].enable();
       return;
     }
     this.form.controls['codemp'].disable();

@@ -82,16 +82,24 @@
 
                         <div class="formgrid grid">
                             <div class="field col-4 text-right">
-                                <label for="tipide">Tipo de identificacion: </label>
+                                <label for="tipIden">Tipo de identificacion: </label>
                             </div>
                             <div class="field col-2">
-                                <input  type="text"
-                                        id="tipide" 
-                                        pInputText>
+                                <p-dropdown [options]="identificatioType" 
+                                            appendTo="body"
+                                            inputId="tipIden"
+                                            formControlName="tipIden"
+                                            placeholder=" - ">
+                                    <ng-template let-option pTemplate="item">
+                                        <span> {{ option.label }} </span>
+                                    </ng-template>
+                                </p-dropdown>
                             </div>
                             <div class="field col-6">
                                 <input  type="text"
-                                        pInputText>
+                                        pInputText
+                                        value="{{this.form.controls['tipIden'].value}}"
+                                        disabled>
                             </div>
                         </div>
 
@@ -115,16 +123,24 @@
 
                         <div class="formgrid grid">
                             <div class="field col-4 text-right mt-2">
-                                <label for="tipage">Tipo de agente: </label>
+                                <label for="tipAgen">Tipo de agente: </label>
                             </div>
                             <div class="field col-2">
-                                <input  type="text"
-                                        id="tipage" 
-                                        pInputText>
+                                <p-dropdown [options]="agentType" 
+                                            appendTo="body"
+                                            inputId="tipAgen"
+                                            formControlName="tipAgen"
+                                            placeholder=" - ">
+                                    <ng-template let-option pTemplate="item">
+                                        <span> {{ option.label }} </span>
+                                    </ng-template>
+                                </p-dropdown>
                             </div>
                             <div class="field col-6">
                                 <input  type="text"
-                                        pInputText>
+                                        pInputText
+                                        value="{{this.form.controls['tipAgen'].value}}"
+                                        disabled>
                             </div>
                         </div>
 
