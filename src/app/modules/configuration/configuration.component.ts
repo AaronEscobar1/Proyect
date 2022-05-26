@@ -89,6 +89,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Empresa',
                   routerLink: ['/main/config/empresa/empresa'],
+                },
+                {
+                  label: 'Tarifas de impuestos',
+                  routerLink: ['/main/config/empresa/empresa-consultar/tarifas']
                 }
               ]
             }
