@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TypesFile } from 'src/app/shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { NivelesEducativosService } from '../../services/niveles-educativos.service';
 
@@ -20,34 +20,25 @@ export class ModalPrintComponent implements OnInit {
   form!: FormGroup
 
   // Objeto
-  typesFile: TypesFile[] = [];
+  typesFile: TypesFile[] = typesFileData;
 
   constructor(private nivelesServices: NivelesEducativosService, 
               private fb: FormBuilder,
               private selectRowService: SelectRowService) { 
     this.form = this.fb.group({
-      codniv: ['', [ Validators.required, Validators.pattern('[1-9]'), Validators.maxLength(1)]],
-      desniv: ['', [ Validators.required, Validators.maxLength(30)]],
-      type: ['', [ Validators.maxLength(3) ]]
+      type: [],
+      id: [''],
+      des: ['']
     });
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
   }
 
   exportPdf() {
     // Obtener formulario
     const data = this.form.getRawValue();
     console.log(data);
-    this.selectRowService.selectRow$.emit(null);
     this.resetForm();
   }
 

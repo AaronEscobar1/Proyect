@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 import { Procesos } from '../../interfaces/procesos.interfaces';
-import { TypesFile } from 'src/app/shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { ProcesosService } from '../../services/procesos.service';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -20,7 +19,7 @@ export class ProcesosComponent implements OnInit {
 
   // Objetos
   procesos: Procesos[] = [];
-  typesFile  : TypesFile[] = [];
+  typesFile  : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -49,14 +48,6 @@ export class ProcesosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
     this.loadData();
   }
 

@@ -43,43 +43,52 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               items: [
                 {
                   label: 'Niveles educativos',
-                  routerLink: ['/main/config/niveles-educativos'],
+                  routerLink: ['/main/config/basica/niveles-educativos'],
                 },
                 {
                   label: 'Profesiones',
-                  routerLink: ['/main/config/profesiones'],
+                  routerLink: ['/main/config/basica/profesiones'],
                 },
                 {
                   label: 'Formas de pago',
-                  routerLink: ['/main/config/formas-pago'],
+                  routerLink: ['/main/config/basica/formas-pago'],
                 },
                 {
                   label: 'Motivos de finiquito',
-                  routerLink: ['/main/config/motivos-finiquito'],
+                  routerLink: ['/main/config/basica/motivos-finiquito'],
                 },
                 {
                   label: 'Procesos',
-                  routerLink: ['/main/config/procesos'],
+                  routerLink: ['/main/config/basica/procesos'],
                 },
                 {
                   label: 'Categorias',
-                  routerLink: ['/main/config/categories'],
+                  routerLink: ['/main/config/basica/categories'],
                 },
                 {
                   label: 'Centros médicos',
-                  routerLink: ['/main/config/centros-medicos'],
+                  routerLink: ['/main/config/basica/centros-medicos'],
                 },
                 {
                   label: 'Valores oficiales',
-                  routerLink: ['/main/config/valor-oficial'],
+                  routerLink: ['/main/config/basica/valor-oficial'],
                 },
                 {
                   label: 'Clasificación oficial',
-                  routerLink: ['/main/config/clasificacion-oficial'],
+                  routerLink: ['/main/config/basica/clasificacion-oficial'],
                 },
                 {
                   label: 'Sindicatos',
-                  routerLink: ['/main/config/sindicatos'],
+                  routerLink: ['/main/config/basica/sindicatos'],
+                }
+              ]
+            },
+            {
+              label: 'Empresa',
+              items: [
+                {
+                  label: 'Empresa',
+                  routerLink: ['/main/config/empresa/empresa'],
                 }
               ]
             }

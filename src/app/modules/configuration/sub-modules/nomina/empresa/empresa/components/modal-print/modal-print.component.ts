@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TypesFile } from 'src/app/shared/interfaces/typesFiles.interfaces';
+import { typesFileData } from '../../../../../../../../shared/interfaces/typesFiles.interfaces';
 
 @Component({
   selector: 'app-modal-print',
-  templateUrl: './modal-print.component.html',
+  templateUrl: './modal-print.component.html'
 })
 export class ModalPrintComponent implements OnInit {
 
@@ -16,17 +16,16 @@ export class ModalPrintComponent implements OnInit {
   @Output() onCloseModalPrint = new EventEmitter();
 
   // Formulario
-  form!: FormGroup
+  form!: FormGroup;
 
   // Objeto
   typesFile: TypesFile[] = typesFileData;
 
-  constructor(private motivosFiniquitoService: MotivosFiniquitoService, 
-              private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       type: [],
       id: [''],
-      des: ['']
+      desniv: ['']
     });
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Categories } from '../../interfaces/categories.interfaces';
-import { TypesFile } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { CategoriesService } from '../../services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -19,7 +19,7 @@ export class CategoriesComponent implements OnInit {
 
   // Objetos
   categories: Categories[] = [];
-  typesFile : TypesFile[] = [];
+  typesFile : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -46,14 +46,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.typesFile = [
-      { name: 'PDF',  code: 'PDF'  },
-      { name: 'CSV',  code: 'CSV'  },
-      { name: 'XML',  code: 'XML'  },
-      { name: 'RFT',  code: 'RFT'  },
-      { name: 'HTML', code: 'HTML' },
-      { name: 'XLS',  code: 'XLS'  }
-    ];
     this.loadData();
   }
 
