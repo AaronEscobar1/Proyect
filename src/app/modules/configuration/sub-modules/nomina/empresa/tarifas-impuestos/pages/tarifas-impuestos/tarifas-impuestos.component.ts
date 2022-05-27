@@ -87,7 +87,7 @@ export class TarifasImpuestosComponent implements OnInit {
    */
   deleteRow(tarifaImpuesto: TarifaImpuesto): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el motivo de finiquito <b>${tarifaImpuesto.destar}</b>?`,
+      message: `¿Estas seguro que quieres borrar la tarifa de impuesto <b>${tarifaImpuesto.destar}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
