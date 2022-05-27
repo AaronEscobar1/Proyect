@@ -21,7 +21,7 @@
                     <!--/************
                         /*  Basico  *
                         /************ -->
-                    <p-tabPanel header="Basico" >
+                    <p-tabPanel header="Básico" >
 
                         <div class="formgrid grid">
                             <div class="col-12 md:col-4">
@@ -275,7 +275,120 @@
                         /*************** -->
                     <p-tabPanel header="Dirección">
                         <ng-template pTemplate="content">
-                            Dirección
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="desdir">Descripción:</label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <textarea id="desdir" 
+                                              pInputTextarea 
+                                              rows="3"
+                                              placeholder="Ingrese la descripción">
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="pais">País: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <input  type="text"
+                                            id="pais" 
+                                            pInputText
+                                            placeholder="Código país"/>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text"
+                                            pInputText
+                                            [disabled]="true"
+                                            placeholder="País"/>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="entidadfed">Ent. federal: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <input  type="text"
+                                            id="entidadfed" 
+                                            pInputText
+                                            placeholder="Código entidad"/>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text" 
+                                            pInputText
+                                            [disabled]="true"
+                                            placeholder="Entidad federal"/>
+                                </div>
+                            </div>
+    
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="cdadCodciu">Ciudad: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="cdadCodciu" 
+                                            pInputText
+                                            placeholder="Ingrese ciudad"/>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="tlfsi">Teléfonos: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+    
+                                    <div>
+                                        <p-inputMask inputId="tlfsi"
+                                                     mask="9999-9999999"
+                                                     placeholder="Ej. 0212-1112233">
+                                        </p-inputMask>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="faxsin">Fax: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <p-inputMask inputId="faxsin"
+                                                 mask="9999-9999999"
+                                                 placeholder="Ej. 0212-1112233">
+                                    </p-inputMask>
+                                </div>
+                            </div>
+    
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="eMail">E-mail: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="eMail" 
+                                            pInputText
+                                            placeholder="Ingrese email"/>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codpos">Código postal:</label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="codpos" 
+                                            pInputText
+                                            placeholder="Ingrese código postal"/>
+                                </div>
+                            </div>
+
                         </ng-template>
                     </p-tabPanel>
 
