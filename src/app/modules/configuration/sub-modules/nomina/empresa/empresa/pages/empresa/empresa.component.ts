@@ -87,7 +87,7 @@ export class EmpresaComponent implements OnInit {
    */
   deleteRow(empresa: Empresa): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el motivo de finiquito <b>${empresa.desemp}</b>?`,
+      message: `¿Estas seguro que quieres borrar la empresa <b>${empresa.desemp}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',

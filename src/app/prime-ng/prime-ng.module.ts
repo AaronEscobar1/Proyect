@@ -23,6 +23,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from "primeng/skeleton";
 import { SpeedDialModule } from 'primeng/speeddial';
 import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 
 @NgModule({
@@ -50,6 +51,7 @@ import { ToastModule } from 'primeng/toast';
     SkeletonModule,
     SpeedDialModule,
     TableModule,
+    TabViewModule,
     ToastModule
   ]
 })

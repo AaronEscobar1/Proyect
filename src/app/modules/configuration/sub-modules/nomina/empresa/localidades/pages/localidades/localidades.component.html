@@ -1,0 +1,45 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Localidades</div>
+        <div class="card-table">
+            
+            <!-- Componente de botones -->
+            <app-buttons (onRefresh)="refresh()"
+                         (onOpenModalPrint)="openModalPrint()"
+                         (onOpenModalCreate)="openModalCreate()"
+                         (onEditRow)="editRow($event)"
+                         (onDeleteRow)="deleteRow($event)">
+            </app-buttons>
+
+            <!-- Componente table -->
+            <app-data-table [localidades]="localidades"></app-data-table>
+   
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Imprimir -->
+<app-modal-print  
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit 
+    [localidades]="localidades" 
+    [localidadSelect]="localidadSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="loadData()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>

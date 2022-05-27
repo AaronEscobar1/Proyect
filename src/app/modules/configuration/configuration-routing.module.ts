@@ -67,21 +67,9 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'empresa', children: [
-          {
-            path: 'empresa',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/empresa/empresa/empresa.module').then( m => m.EmpresaModule),
-          },
-          {
-            path: 'empresa-consultar/tarifas',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/empresa/tarifas-impuestos/tarifas-impuestos.module').then( m => m.TarifasImpuestosModule),
-          }
-        ]
-      },  
-      {
-        path: '**', redirectTo: ''
+        path: 'empresa',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/empresa/empresa.module').then( m => m.EmpresaModule)
       }
     ]
   },
