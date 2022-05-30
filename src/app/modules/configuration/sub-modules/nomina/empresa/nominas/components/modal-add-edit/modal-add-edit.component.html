@@ -1,0 +1,514 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '90vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+
+                    <div class="field col-3 md:col-3 text-right mt-2">
+                        <label for="codemp">Compañía:</label>
+                    </div>
+                    <div class="field col-3 md:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                pInputText
+                                formControlName="codemp"
+                                placeholder="Ingrese el código"/>
+                    </div>
+                
+                    <div class="field col-6 md:col-6">
+                        <input  id="desemp" 
+                                pInputText 
+                                formControlName="desemp"
+                                placeholder="Ingrese la compañía"/>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-3 md:col-3 text-right mt-2">
+                        <label for="nomina">Nómina:</label>
+                    </div>
+                    <div class="field col-3 md:col-2">
+                        <input  type="text"
+                                id="nomina" 
+                                pInputText
+                                formControlName="codnom"
+                                placeholder="Ingrese el código"/>
+                    </div>
+                
+                    <div class="field col-6 md:col-6">
+                        <input  type="text"
+                                id="nomdes" 
+                                pInputText
+                                formControlName="desnom"
+                                placeholder="Ingrese la compañía"/>
+                    </div>
+
+                </div>
+
+                <p-tabView>
+                    <!--/************
+                        /*  Basico  *
+                        /************ -->
+                    <p-tabPanel header="Básico" >
+
+                        <div class="formgrid grid mt-3">
+
+                            <div class="field col-4 md:col-2 lg:col-1 text-right mt-2">
+                                <label for="codbas">Código:</label>
+                            </div>
+                            <div class="field col-8 md:col-2 lg:col-2">
+                                <input  type="text"
+                                        id="codbas"
+                                        pInputText
+                                        placeholder="Ingrese código"/>
+                            </div>
+
+                            <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
+                                <label for="desbas">Descripción:</label>
+                            </div>
+                            <div class="field col-8 md:col-6 lg:col-7">
+                                <input  id="desbas" 
+                                        pInputText
+                                        placeholder="Ingrese la descripción"/>
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid">
+
+                            <div class="col-12 md:col-6">
+
+                                <p-divider align="center">
+                                    <label class="text-lg font-medium mb-3">Frecuencia</label>
+                                </p-divider>
+
+                                <div class="formgrid grid">
+
+                                    <div class="field col-4 md:col-2 text-right mt-2">
+                                        <label for="days">Días: </label>
+                                    </div>
+                                    <div class="field col-8 md:col-3">
+                                        <p-dropdown [options]="days" 
+                                                    appendTo="body"
+                                                    inputId="days">
+                                            <ng-template let-option pTemplate="item">
+                                                <span> {{ option.label }} </span>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+                                    
+                                    <div class="field col-12 md:col-7 flex justify-content-center align-items-center">
+                                        <div class="field-checkbox mt-2">
+                                            <p-checkbox inputId="nosueldo"
+                                                        name="nosueldo"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="nosueldo">No considerar en sueldo</label>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <p-divider align="center">
+                                    <label class="text-lg font-medium mb-3">Fechas topes</label>
+                                </p-divider>
+
+                                <div class="formgrid grid">
+
+                                    <div class="col-12 md:col-6">
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha1">01:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha1" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha2">02:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha2" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha3">03:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha3" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha4">04:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha4" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha5">05:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha5" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+                                        
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha6">06:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha6" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha7">07:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha7" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha8">08:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha8" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha9">09:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha9" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            <div class="field col-3 text-right mt-2">
+                                                <label for="fecha10">10:</label>
+                                            </div>
+                                            <div class="field col-9">
+                                                <p-calendar inputId="fecha10" 
+                                                            dateFormat="dd/mm/yy"
+                                                            placeholder="dd/mm/yyyy"
+                                                            appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+        
+                            <div class="col-12 md:col-6">
+                                
+                                <div class="grid">
+                                    <div class="field col-12 mt-8">
+                                        <div class="field-checkbox mt-3">
+                                            <p-checkbox inputId="aniocomercial"
+                                                        name="aniocomercial"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="aniocomercial">Año comercial 360 días</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="formgrid grid">
+
+                                    <div class="col-12 md:col-6">
+
+                                        <div class="field">
+                                            <label for="redondeo">Redondeo: </label>
+                                            <p-dropdown [options]="redondeo" 
+                                                        appendTo="body"
+                                                        inputId="days">
+                                                <ng-template let-option pTemplate="item">
+                                                    <span> {{ option.label }} </span>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="recibo">Recibo: </label>
+                                            <input  id="recibo" 
+                                                    pInputText
+                                                    placeholder="Ingrese el recibo"/>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+
+                                        <p-divider align="center">
+                                            <label class="text-lg font-medium mb-3">Guardería</label>
+                                        </p-divider>
+
+                                        <div class="formgrid grid">
+
+                                            <div class="field col-3 md:col-5 text-right mt-2">
+                                                <label for="salario">Salarios:</label>
+                                            </div>
+                                            <div class="field col-9 md:col-7">
+                                                <p-inputNumber  inputId="salario"
+                                                                [format]="false"
+                                                                [maxlength]="2"
+                                                                placeholder="Ingrese salarios">
+                                                </p-inputNumber>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            
+                                            <div class="field col-3 md:col-5 text-right mt-2">
+                                                <label for="tope">Tope:</label>
+                                            </div>
+                                            <div class="field col-9 md:col-7">
+                                                <p-inputNumber  inputId="tope"
+                                                                [format]="false"
+                                                                [maxlength]="25"
+                                                                placeholder="Ingrese tope">
+                                                </p-inputNumber>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="formgrid grid">
+                                            
+                                            <div class="field col-3 md:col-5 text-right mt-2">
+                                                <label for="factor">Factor:</label>
+                                            </div>
+                                            <div class="field col-9 md:col-7">
+                                                <p-inputNumber  inputId="factor"
+                                                                [format]="false"
+                                                                [maxlength]="22"
+                                                                placeholder="Ingrese factor">
+                                                </p-inputNumber>
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </p-tabPanel>
+
+                    <!--/****************
+                        /*  Miscelánea  *
+                        /**************** -->
+                    <p-tabPanel header="Miscelánea">
+
+                        <div class="formgrid grid mt-3">
+
+                            <div class="col-12 md:col-7">
+
+                                <p-divider align="center">
+                                    <label class="text-lg font-medium mb-3">Sencillo en fondo</label>
+                                </p-divider>
+
+                                <div class="field">
+                                    <label for="codasi">Asignación:</label>
+                                    <div class="grid">
+                                        <div class="col-4">
+                                            <p-inputNumber  inputId="codasi"
+                                                            [format]="false"
+                                                            [maxlength]="4">
+                                            </p-inputNumber>
+                                        </div>
+                                        <div class="col-8">
+                                            <input  type="text"
+                                                    pInputText
+                                                    disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                                <div class="field">
+                                    <label for="codded">Deducción:</label>
+                                    <div class="grid">
+                                        <div class="col-4">
+                                            <p-inputNumber  inputId="codded"
+                                                            [format]="false"
+                                                            [maxlength]="4">
+                                            </p-inputNumber>
+                                        </div>
+                                        <div class="col-8">
+                                            <input  type="text"
+                                                    pInputText
+                                                    disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="valor">Valor:</label>
+                                    <div class="grid">
+                                        <div class="col-12 md:col-6">
+                                            <p-inputNumber  inputId="valor"
+                                                            [format]="false"
+                                                            [maxlength]="7">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 md:col-5">
+                                
+                                <p-divider align="center">
+                                    <label class="text-lg font-medium mb-3">Vacación</label>
+                                </p-divider>
+
+                                <div class="formgrid grid">
+                                            
+                                    <div class="field col-5 md:col-5 text-right mt-2">
+                                        <label for="tope">Tipo de fecha:</label>
+                                    </div>
+                                    <div class="field col-7 md:col-4">
+                                        <p-inputNumber  inputId="tope"
+                                                        [format]="false"
+                                                        [maxlength]="2">
+                                        </p-inputNumber>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="formgrid grid">
+                                            
+                                    <div class="field col-5 text-right mt-2">
+                                        <label for="feccon">Fecha control:</label>
+                                    </div>
+                                    <div class="field col-7">
+                                        <p-calendar inputId="feccon" 
+                                                    dateFormat="dd/mm/yy"
+                                                    placeholder="dd/mm/yyyy"
+                                                    appendTo="body">
+                                        </p-calendar>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="formgrid grid">
+                                    <div class="field col-12 flex justify-content-end align-items-center">
+                                        <div class="field-checkbox mt-2">
+                                            <p-checkbox inputId="reghab"
+                                                        name="reghab"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="reghab">Registro hábil</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </p-tabPanel>  
+                    
+                </p-tabView>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    class="p-button my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check"
+                    class="p-button my-1" 
+                    (click)="save()">
+            </button>
+        </ng-template>
+</p-dialog>
