@@ -2,19 +2,27 @@ import { Nominas } from './nominas.interfaces';
 
 export const empresasData: Nominas[] = [
     {
-        codnom: '0001',
-        desnom: 'Preparametrizado' 
+        codemp: '0001',
+        desemp: 'Preparametrizado',
+        codnom: '0123',
+        desnom: 'Semanal - Obreros'
     },
     {
-        codnom: '0031',
-        desnom: 'Industria farmaceutica Nacional, C.A' 
+        codemp: '0031',
+        desemp: 'Industria farmaceutica Nacional, C.A',
+        codnom: '0223',
+        desnom: 'Nombre corto cont'
     },
     {
-        codnom: '0033',
-        desnom: 'Infocent LATAM' 
+        codemp: '0033',
+        desemp: 'Infocent LATAM',
+        codnom: '0555',
+        desnom: 'Auditoria C.A.'
     },
     {
-        codnom: '1000',
-        desnom: 'OUTSOURCING NOMINAS' 
+        codemp: '1000',
+        desemp: 'OUTSOURCING NOMINAS',
+        codnom: '05413',
+        desnom: 'Yodar C.A.'
     }
 ];
