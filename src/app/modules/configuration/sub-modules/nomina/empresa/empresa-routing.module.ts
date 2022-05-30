@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () => import('./localidades/localidades.module').then( m => m.LocalidadesModule),
   },
   {
+    path: 'nominas',
+    // LazyLoad
+    loadChildren: () => import('./nominas/nominas.module').then( m => m.NominasModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
