@@ -1,6 +1,6 @@
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '70vw'}"
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -19,7 +19,7 @@
 
                 <div class="formgrid grid">
                     
-                    <div class="field md:col-3 sm:col-12">
+                    <div class="field col-12 md:col-3">
                         <label for="coddes">Código *</label>
                         <input  type="text"
                                 id="coddes" 
@@ -28,7 +28,7 @@
                                 placeholder="Ingrese el código"/>
                     </div>
 
-                    <div class="field md:col-9 sm:col-12">
+                    <div class="field col-12 md:col-9">
                         <label for="desde1">Empresa *</label>
                         <input  type="text" 
                                 id="desde1"
@@ -43,7 +43,7 @@
 
                 <div class="formgrid grid" *ngIf="isEdit">
 
-                    <div class="col-6">
+                    <div class="col-12 md:col-6">
 
                         <label class="text-lg font-medium mb-3">Funcionario</label>
 
@@ -81,10 +81,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-4 text-right">
+                            <div class="field col-4 md:col-4 lg:col-4 text-right">
                                 <label for="tipIden">Tipo de identificacion: </label>
                             </div>
-                            <div class="field col-2">
+                            <div class="field col-2 md:col-3 lg:col-2">
                                 <p-dropdown [options]="identificatioType" 
                                             appendTo="body"
                                             inputId="tipIden"
@@ -95,7 +95,7 @@
                                     </ng-template>
                                 </p-dropdown>
                             </div>
-                            <div class="field col-6">
+                            <div class="field col-6 md:col-5 lg:col-6">
                                 <input  type="text"
                                         pInputText
                                         value="{{this.form.controls['tipIden'].value}}"
@@ -117,15 +117,15 @@
 
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-12 md:col-6">
 
                         <label class="text-lg font-medium mb-3">Contribuyente</label>
 
                         <div class="formgrid grid">
-                            <div class="field col-4 text-right mt-2">
+                            <div class="field col-4 md:col-4 lg:col-4 text-right mt-2">
                                 <label for="tipAgen">Tipo de agente: </label>
                             </div>
-                            <div class="field col-2">
+                            <div class="field col-2 md:col-3 lg:col-2">
                                 <p-dropdown [options]="agentType" 
                                             appendTo="body"
                                             inputId="tipAgen"
@@ -136,7 +136,7 @@
                                     </ng-template>
                                 </p-dropdown>
                             </div>
-                            <div class="field col-6">
+                            <div class="field col-6 md:col-5 lg:col-6">
                                 <input  type="text"
                                         pInputText
                                         value="{{this.form.controls['tipAgen'].value}}"
@@ -177,20 +177,22 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple 
-                    label="Cancelar" 
-                    icon="pi pi-times" 
-                    class="p-button my-1" 
-                    (click)="closeModal()">
-            </button>
-            <button pButton 
-                    pRipple 
-                    type="submit" 
-                    label="Guardar" 
-                    icon="pi pi-check"
-                    class="p-button my-1" 
-                    (click)="save()">
-            </button>
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-check"
+                        class="p-button my-1" 
+                        (click)="save()">
+                </button>
+            </div>
         </ng-template>
 </p-dialog>

@@ -1,6 +1,7 @@
 <!-- Modal imprimir -->
-<p-dialog [(visible)]="printModal" [modal]="true" [showHeader]="false" [style]="{width: '40vw'}" class="p-fluid"
-        [draggable]="false" [resizable]="false" [closable]="false">
+<p-dialog [(visible)]="printModal" [modal]="true" [showHeader]="false" [closable]="false"
+        class="p-fluid" [breakpoints]="{'960px': '60vw', '640px': '90vw'}" [style]="{width: '40vw'}"  
+        [draggable]="false" [resizable]="false" >
         
         <ng-template pTemplate="content">
 
@@ -49,18 +50,20 @@
         </ng-template>
 
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple
-                    label="Cancelar"
-                    icon="pi pi-times"
-                    class="p-button my-1"
-                    (click)="closeModalPrint()">
-            </button>
-            <p-button icon="pi pi-check" 
-                      (click)="export()"
-                      label="Imprimir"
-                      icon="pi pi-print"
-                      styleClass="p-button my-1">
-            </p-button>
+            <div class="mt-2">
+                <button pButton 
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModalPrint()">
+                </button>
+                <p-button icon="pi pi-check" 
+                            (click)="export()"
+                            label="Imprimir"
+                            icon="pi pi-print"
+                            styleClass="p-button my-1">
+                </p-button>
+            </div>
         </ng-template>
 </p-dialog>
