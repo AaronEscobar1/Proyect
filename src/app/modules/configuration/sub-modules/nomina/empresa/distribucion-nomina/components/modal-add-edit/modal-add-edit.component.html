@@ -20,21 +20,53 @@
                 <div class="formgrid grid">
                     
                     <div class="field col-12 md:col-3">
-                        <label for="codtar">Código *</label>
+                        <label for="codemp">Código *</label>
                         <input  type="text"
-                                id="codtar" 
+                                id="codemp" 
                                 pInputText
-                                formControlName="codtar"
+                                formControlName="codemp"
                                 placeholder="Ingrese el código"/>
                     </div>
 
                     <div class="field col-12 md:col-9">
-                        <label for="codtar">Empresa *</label>
+                        <label for="desemp">Empresa *</label>
                         <input  type="text" 
-                                id="codtar"
+                                id="desemp"
                                 pInputText
-                                formControlName="destar" 
+                                formControlName="desemp" 
                                 placeholder="Ingrese la descripción"/>
+                    </div>
+
+                </div>
+
+
+                <div class="formgrid grid" *ngIf="isEdit">
+                    
+                    <div class="field col-12 md:col-3">
+                        <label for="coddis">Código *</label>
+                        <input  type="text"
+                                id="coddis" 
+                                formControlName="coddis" 
+                                pInputText
+                                placeholder="Ingrese el código"/>
+                    </div>
+
+                    <div class="field col-12 md:col-5">
+                        <label for="desdis">Descripción *</label>
+                        <input  type="text" 
+                                id="desdis"
+                                pInputText
+                                formControlName="desdis" 
+                                placeholder="Ingrese la descripción"/>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <label for="ubidis">Ubicación *</label>
+                        <input  type="text" 
+                                id="ubidis"
+                                pInputText
+                                formControlName="ubidis" 
+                                placeholder="Ingrese la ubicación"/>
                     </div>
 
                 </div>
@@ -53,12 +85,12 @@
                         (click)="closeModal()">
                 </button>
                 <button pButton 
-                        pRipple 
-                        type="submit" 
-                        label="Guardar" 
-                        icon="pi pi-check"
-                        class="p-button my-1" 
-                        (click)="save()">
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check"
+                    class="p-button my-1" 
+                    (click)="save()">
                 </button>
             </div>
         </ng-template>
