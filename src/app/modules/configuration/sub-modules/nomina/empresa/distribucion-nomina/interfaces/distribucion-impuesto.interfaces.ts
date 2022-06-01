@@ -1,4 +1,7 @@
 export interface DistribucionNomina {
-    coddis: string;
-    desdis: string;
+    codemp: string;
+    desemp: string;
+    coddis?: string;
+    desdis?: string;
+    ubidis?: string;
 }

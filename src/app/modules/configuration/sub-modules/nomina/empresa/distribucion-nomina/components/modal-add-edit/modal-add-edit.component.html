@@ -1,1 +1,97 @@
-<p>modal-add-edit works!</p>
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-3">
+                        <label for="codemp">Código *</label>
+                        <input  type="text"
+                                id="codemp" 
+                                pInputText
+                                formControlName="codemp"
+                                placeholder="Ingrese el código"/>
+                    </div>
+
+                    <div class="field col-12 md:col-9">
+                        <label for="desemp">Empresa *</label>
+                        <input  type="text" 
+                                id="desemp"
+                                pInputText
+                                formControlName="desemp" 
+                                placeholder="Ingrese la descripción"/>
+                    </div>
+
+                </div>
+
+
+                <div class="formgrid grid" *ngIf="isEdit">
+                    
+                    <div class="field col-12 md:col-3">
+                        <label for="coddis">Código *</label>
+                        <input  type="text"
+                                id="coddis" 
+                                formControlName="coddis" 
+                                pInputText
+                                placeholder="Ingrese el código"/>
+                    </div>
+
+                    <div class="field col-12 md:col-5">
+                        <label for="desdis">Descripción *</label>
+                        <input  type="text" 
+                                id="desdis"
+                                pInputText
+                                formControlName="desdis" 
+                                placeholder="Ingrese la descripción"/>
+                    </div>
+
+                    <div class="field col-12 md:col-4">
+                        <label for="ubidis">Ubicación *</label>
+                        <input  type="text" 
+                                id="ubidis"
+                                pInputText
+                                formControlName="ubidis" 
+                                placeholder="Ingrese la ubicación"/>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check"
+                    class="p-button my-1" 
+                    (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

@@ -2,19 +2,19 @@ import { DistribucionNomina } from "./distribucion-impuesto.interfaces";
 
 export const DistribucionNominaData: DistribucionNomina[] = [
     {
-        coddis: '0001',
-        desdis: 'Preparametrizado' 
+        codemp: '0001',
+        desemp: 'Preparametrizado' 
     },
     {
-        coddis: '0031',
-        desdis: 'Industria farmaceutica Nacional, C.A' 
+        codemp: '0031',
+        desemp: 'Industria farmaceutica Nacional, C.A' 
     },
     {
-        coddis: '0033',
-        desdis: 'Infocent LATAM' 
+        codemp: '0033',
+        desemp: 'Infocent LATAM' 
     },
     {
-        coddis: '1000',
-        desdis: 'OUTSOURCING NOMINAS' 
+        codemp: '1000',
+        desemp: 'OUTSOURCING NOMINAS' 
     }
 ];''
