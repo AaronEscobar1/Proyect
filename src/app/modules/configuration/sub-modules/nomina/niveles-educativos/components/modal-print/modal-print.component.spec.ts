@@ -1,14 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Routes } from '@angular/router';
-import { By } from '@angular/platform-browser';
+import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
 
 // Servicios y componentes requeridos
-import { environment } from 'src/environments/environment';
 import { ModalPrintComponent } from './modal-print.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('ModalPrintComponent', () => {
 
@@ -49,12 +45,12 @@ describe('ModalPrintComponent', () => {
     fixture.detectChanges();
 
     app.form.setValue({
-      "codniv": '33',
-      "desniv": '123456789123456789123456789123456789',
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
       "type": 'CCCC'
     })
 
-    expect(app.form.valid).toEqual(false);    
+    expect(app.form.valid).toEqual(true);    
   })
 
   it('Comprobando el formulario. (caso valido)', async () => {
@@ -63,11 +59,83 @@ describe('ModalPrintComponent', () => {
     fixture.detectChanges();
 
     app.form.setValue({
-      "codniv": '3',
-      "desniv": '123456789123456789123456789',
-      "type": 'CCC'
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
     })
 
     expect(app.form.valid).toEqual(true);    
+  })
+
+  it('Exportando PDF', async () => {
+    const fixture = TestBed.createComponent(ModalPrintComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const data = {
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    }
+    const dataReset = {
+      "id": null,
+      "des": null,
+      "type": null
+    }
+
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true);    
+
+    app.exportPdf()
+
+    expect(app.form.getRawValue()).toEqual(dataReset);    
+  })
+
+  it('Reset Form PDF', async () => {
+    const fixture = TestBed.createComponent(ModalPrintComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const data = {
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    }
+    const dataReset = {
+      "id": null,
+      "des": null,
+      "type": null
+    }
+
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true);    
+
+    app.resetForm()
+
+    expect(app.form.getRawValue()).toEqual(dataReset);    
+  })
+
+  it('Cerrar modal desde componente', async () => {
+    const fixture = TestBed.createComponent(ModalPrintComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const data = {
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    }
+    const dataReset = {
+      "id": null,
+      "des": null,
+      "type": null
+    }
+
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true);    
+
+    app.closeModalPrint()
+
+    expect(app.form.getRawValue()).toEqual(dataReset);    
   })
 });
