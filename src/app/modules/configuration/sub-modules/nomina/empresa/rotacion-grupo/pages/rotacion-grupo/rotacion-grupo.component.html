@@ -8,7 +8,7 @@
 <div class="grid">
     <div class="col-12">
 
-        <div class="header-card bg-gray-600 text-white p-2">Grupos de trabajo</div>
+        <div class="header-card bg-gray-600 text-white p-2">Rotación de Grupos</div>
         <div class="card-table">
             
             <!-- Componente de botones -->
@@ -20,7 +20,7 @@
             </app-buttons>
 
             <!-- Componente table -->
-            <app-data-table [gruposTrabajo]="gruposTrabajo"></app-data-table>
+            <app-data-table [rotacionGrupos]="rotacionGrupos"></app-data-table>
    
         </div>
 
@@ -35,8 +35,8 @@
 
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit 
-    [gruposTrabajo]="gruposTrabajo" 
-    [grupoTrabajoSelect]="grupoTrabajoSelect"
+    [rotacionGrupos]="rotacionGrupos" 
+    [rotacionGrupoSelect]="rotacionGrupoSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 

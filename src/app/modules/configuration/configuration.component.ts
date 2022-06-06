@@ -107,8 +107,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   routerLink: ['/main/config/empresa/distribucion-nomina']
                 },
                 {
-                  label: 'Grupo de trabajo',
-                  routerLink: ['/main/config/empresa/grupo']
+                  label: 'Grupos de trabajo',
+                  routerLink: ['/main/config/empresa/grupos-trabajo']
+                },
+                {
+                  label: 'Rotación de grupos',
+                  routerLink: ['/main/config/empresa/grupos/rotacion']
                 }
               ]
             }
