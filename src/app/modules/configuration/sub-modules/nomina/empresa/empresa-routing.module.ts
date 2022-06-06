@@ -28,9 +28,14 @@ const routes: Routes = [
     loadChildren: () => import('./distribucion-nomina/distribucion-nomina.module').then( m => m.DistribucionNominaModule),
   },
   {
-    path: 'grupo',
+    path: 'grupos-trabajo',
     // LazyLoad
     loadChildren: () => import('./grupo-trabajo/grupo-trabajo.module').then( m => m.GrupoTrabajoModule),
+  },
+  {
+    path: 'grupos/rotacion',
+    // LazyLoad
+    loadChildren: () => import('./rotacion-grupo/rotacion-grupo.module').then( m => m.RotacionGrupoModule),
   },
   {
     path: '**', redirectTo: '/main/config'
