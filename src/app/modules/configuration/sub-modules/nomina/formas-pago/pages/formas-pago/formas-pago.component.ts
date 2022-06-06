@@ -92,6 +92,10 @@ export class FormasPagoComponent implements OnInit {
     this.printModal = true;
   }
 
+  closeModalPrintDialog(): void {
+    this.printModal = false;
+  }
+
   openModalCreate(): void {
     if (!this.isEdit) {
       this.form.controls['codpag'].enable();
@@ -202,10 +206,6 @@ export class FormasPagoComponent implements OnInit {
           });
       }
     });
-  }
-
-  export() {
-
   }
 
   /**
