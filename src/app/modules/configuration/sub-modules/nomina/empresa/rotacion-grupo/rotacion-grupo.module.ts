@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { ModalAddEditComponent } from './components/modal-add-edit/modal-add-edit.component';
 import { ModalPrintComponent } from './components/modal-print/modal-print.component';
+import { ModalRotacionComponent } from './components/modal-rotacion/modal-rotacion.component';
 import { RotacionGrupoComponent } from './pages/rotacion-grupo/rotacion-grupo.component';
 
 
@@ -16,6 +17,7 @@ import { RotacionGrupoComponent } from './pages/rotacion-grupo/rotacion-grupo.co
     DataTableComponent,
     ModalAddEditComponent,
     ModalPrintComponent,
+    ModalRotacionComponent,
     RotacionGrupoComponent
   ],
   imports: [

@@ -10,3 +10,13 @@
     background: $primary-color !important;
 }
 
+@media screen and (max-width: 375px) {
+    .p-button {
+        margin-bottom: .5rem;
+
+        &:not(.p-button-icon-only) {
+            display: flex;
+            width: 100%;
+        }
+    }
+}
