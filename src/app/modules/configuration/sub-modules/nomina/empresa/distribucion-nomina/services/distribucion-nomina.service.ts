@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
-import { DistribucionNomina } from '../interfaces/distribucion-impuesto.interfaces';
+import { EmpresaNomina } from '../interfaces/distribucion-impuesto.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +20,12 @@ export class DistribucionNominaService {
     return this.http.get(this.helpers.getBasicEndPoint(`/distribucionnomina/${id}`));
   }
 
-  create(distribucionNomina: DistribucionNomina): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/distribucionnomina'), distribucionNomina);
+  create(empresaNomina: EmpresaNomina): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint('/distribucionnomina'), empresaNomina);
   }
 
-  update(distribucionNomina: DistribucionNomina): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/distribucionnomina/${distribucionNomina.coddis}`), distribucionNomina);
+  update(empresaNomina: EmpresaNomina): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/distribucionnomina/${empresaNomina.codemp}`), empresaNomina);
   }
 
   delete(id: string): Observable<any> {

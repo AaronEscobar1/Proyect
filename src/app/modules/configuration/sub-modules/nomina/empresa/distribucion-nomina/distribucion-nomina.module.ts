@@ -6,6 +6,7 @@ import { DistribucionNominaRoutingModule } from './distribucion-nomina-routing.m
 
 // Components
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { DataTableEditComponent } from './components/modal-add-edit/data-table-edit/data-table-edit.component';
 import { DistribucionNominaComponent } from './pages/distribucion-nomina/distribucion-nomina.component';
 import { ModalAddEditComponent } from './components/modal-add-edit/modal-add-edit.component';
 import { ModalPrintComponent } from './components/modal-print/modal-print.component';
@@ -13,6 +14,7 @@ import { ModalPrintComponent } from './components/modal-print/modal-print.compon
 @NgModule({
   declarations: [
     DataTableComponent,
+    DataTableEditComponent,
     DistribucionNominaComponent,
     ModalAddEditComponent,
     ModalPrintComponent

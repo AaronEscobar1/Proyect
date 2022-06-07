@@ -19,8 +19,10 @@
 
                 <div class="formgrid grid">
                     
-                    <div class="field col-12 md:col-3">
-                        <label for="codemp">Código *</label>
+                    <div class="field col-3 md:col-2 md:col-offset-2 text-right mt-2">
+                        <label for="codemp">Compañia:</label>
+                    </div>
+                    <div class="field col-3 md:col-2">
                         <input  type="text"
                                 id="codemp" 
                                 pInputText
@@ -28,48 +30,19 @@
                                 placeholder="Ingrese el código"/>
                     </div>
 
-                    <div class="field col-12 md:col-9">
-                        <label for="desemp">Empresa *</label>
-                        <input  type="text" 
-                                id="desemp"
-                                pInputText
-                                formControlName="desemp" 
-                                placeholder="Ingrese la descripción"/>
+                    <div class="field col-6 md:col-4">
+                        <input  id="desemp" 
+                                pInputText 
+                                formControlName="desemp"
+                                placeholder="Ingrese la compañía"/>
                     </div>
 
                 </div>
 
-
-                <div class="formgrid grid" *ngIf="isEdit">
-                    
-                    <div class="field col-12 md:col-3">
-                        <label for="coddis">Código *</label>
-                        <input  type="text"
-                                id="coddis" 
-                                formControlName="coddis" 
-                                pInputText
-                                placeholder="Ingrese el código"/>
-                    </div>
-
-                    <div class="field col-12 md:col-5">
-                        <label for="desdis">Descripción *</label>
-                        <input  type="text" 
-                                id="desdis"
-                                pInputText
-                                formControlName="desdis" 
-                                placeholder="Ingrese la descripción"/>
-                    </div>
-
-                    <div class="field col-12 md:col-4">
-                        <label for="ubidis">Ubicación *</label>
-                        <input  type="text" 
-                                id="ubidis"
-                                pInputText
-                                formControlName="ubidis" 
-                                placeholder="Ingrese la ubicación"/>
-                    </div>
-
-                </div>
+                <!-- Datatable Edit -->
+                <app-data-table-edit *ngIf="isEdit" 
+                                     (onCloseModal)="closeModal()">
+                </app-data-table-edit>
 
             </form>
 

@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { EmpresaNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { DataTableEditComponent } from './data-table-edit/data-table-edit.component';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -13,8 +14,8 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 export class ModalAddEditComponent implements OnInit {
 
   // Objetos Input()
-  @Input() distribucionNominas!     : DistribucionNomina[];
-  @Input() distribucionNominaSelect!: DistribucionNomina | undefined;
+  @Input() distribucionNominas!     : EmpresaNomina[];
+  @Input() distribucionNominaSelect!: EmpresaNomina | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -24,8 +25,11 @@ export class ModalAddEditComponent implements OnInit {
   @Input() titleForm!: string;
 
   // Emisión de eventos (cerrar modal, cargar data)
-  @Output() onCloseModal  = new EventEmitter();
-  @Output() onLoadData  = new EventEmitter();
+  @Output() onCloseModal = new EventEmitter();
+  @Output() onLoadData   = new EventEmitter();
+
+  // Emision de evento componente padre a hijo
+  @ViewChild(DataTableEditComponent) dataTableEditComponent!: DataTableEditComponent;
 
   // Formulario reactivo
   form!: FormGroup;
@@ -37,10 +41,7 @@ export class ModalAddEditComponent implements OnInit {
               private selectRowService: SelectRowService) {
     this.form = this.fb.group({
       codemp: [''],
-      desemp: [''],
-      coddis: [''],
-      desdis: [''],
-      ubidis: ['']
+      desemp: ['']
     });
   }
 
@@ -64,43 +65,7 @@ export class ModalAddEditComponent implements OnInit {
    * @returns void
    */
   save(): void {
-    console.log('formulario', this.form.getRawValue());
-    if(this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-    // Obtener formulario
-    let data: DistribucionNomina = this.form.getRawValue();
-    // Transformar la data que viene del formulario
-    data.desemp.trim();
-
-    this.spinner.show();
-
-    if(this.isEdit) {
-      // Editar
-      console.log('editar', data);
-      this.distribucionNominas[this.findIndexById(this.form.getRawValue().coddis)] = this.form.getRawValue();
-      this.spinner.hide();
-      this.closeModal();
-      return;
-    }
-    
-    // Crear
-    console.log('crear', data);
-    this.distribucionNominas.push(data);
-    this.spinner.hide();
-    this.closeModal();
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.distribucionNominas.length; i++) {
-      if (this.distribucionNominas[i].coddis === id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
+    this.dataTableEditComponent.guardar();
   }
 
   closeModal(): void {
