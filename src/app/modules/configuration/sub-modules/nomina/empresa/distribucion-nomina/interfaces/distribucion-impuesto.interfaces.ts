@@ -1,7 +1,10 @@
-export interface DistribucionNomina {
+export interface EmpresaNomina {
     codemp: string;
     desemp: string;
-    coddis?: string;
-    desdis?: string;
-    ubidis?: string;
+}
+
+export interface DistribucionNominaEmpresa {
+    coddis: string;
+    desdis: string;
+    ubidis: string;
 }

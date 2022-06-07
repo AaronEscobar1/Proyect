@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DistribucionNominaData } from '../../interfaces/distribucion-impuesto-data';
-import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
+import { empresasData } from '../../interfaces/distribucion-impuesto-data';
+import { EmpresaNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { DistribucionNominaService } from '../../services/distribucion-nomina.se
 export class DistribucionNominaComponent implements OnInit {
 
   // Objetos
-  distribucionNominas      : DistribucionNomina[] = [];
-  distribucionNominaSelect!: DistribucionNomina | undefined;
+  distribucionNominas      : EmpresaNomina[] = [];
+  distribucionNominaSelect!: EmpresaNomina | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -37,7 +37,7 @@ export class DistribucionNominaComponent implements OnInit {
   loadData(): void {
     this.spinner.show();
     setTimeout(() => {
-      this.distribucionNominas = DistribucionNominaData;
+      this.distribucionNominas = empresasData;
       this.spinner.hide();
     }, 500);
   }
@@ -73,7 +73,7 @@ export class DistribucionNominaComponent implements OnInit {
      * @param distribucionNomina row de la tabla
      * @returns void
      */
-  editRow(distribucionNomina: DistribucionNomina): void {
+  editRow(distribucionNomina: EmpresaNomina): void {
     this.isEdit = true;
     this.titleForm = this.isEdit ? 'Editar distribución de nómina' : 'Agregar distribución de nómina';
     this.distribucionNominaSelect = distribucionNomina;
@@ -85,7 +85,7 @@ export class DistribucionNominaComponent implements OnInit {
    * @param distribucionNomina row de la tabla
    * @returns void
    */
-  deleteRow(distribucionNomina: DistribucionNomina): void {
+  deleteRow(distribucionNomina: EmpresaNomina): void {
     this.confirmationService.confirm({
       message: `¿Estas seguro que quieres borrar la distribución de nómina <b>${distribucionNomina.desemp}</b>?`,
       header: 'Confirmar',

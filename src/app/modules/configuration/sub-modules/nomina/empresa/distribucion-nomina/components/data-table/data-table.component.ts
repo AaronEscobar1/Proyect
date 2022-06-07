@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
+import { EmpresaNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -10,7 +10,7 @@ import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.inter
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() distribucionNominas!: DistribucionNomina[];
+  @Input() distribucionNominas!: EmpresaNomina[];
 
   // Table
   columns: TableHead[] = [];

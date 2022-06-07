@@ -1,6 +1,6 @@
-import { DistribucionNomina } from "./distribucion-impuesto.interfaces";
+import { DistribucionNominaEmpresa, EmpresaNomina } from './distribucion-impuesto.interfaces';
 
-export const DistribucionNominaData: DistribucionNomina[] = [
+export const empresasData: EmpresaNomina[] = [
     {
         codemp: '0001',
         desemp: 'Preparametrizado' 
@@ -17,4 +17,22 @@ export const DistribucionNominaData: DistribucionNomina[] = [
         codemp: '1000',
         desemp: 'OUTSOURCING NOMINAS' 
     }
-];''
+];
+
+export const distribucionNominaData: DistribucionNominaEmpresa[] = [
+    {
+        coddis: '1',
+        desdis: 'Prueba1',
+        ubidis: 'Caracas'
+    },
+    {
+        coddis: '2',
+        desdis: 'Prueba2',
+        ubidis: 'Valencia'
+    },
+    {
+        coddis: '3',
+        desdis: 'Prueba3',
+        ubidis: 'Miranda'
+    }
+]
