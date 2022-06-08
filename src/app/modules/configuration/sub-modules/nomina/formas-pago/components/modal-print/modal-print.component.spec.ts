@@ -1,12 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
+import { FormasPago } from '../../interfaces/formas-pago.interfaces';
 
 // Servicios y componentes requeridos
 import { ModalPrintComponent } from './modal-print.component';
 
-describe('ModalPrintComponent', () => {
+describe('ModalPrintComponent Motivos Finiquito', () => {
 
   let httpTestingController: HttpTestingController;
 
@@ -26,7 +26,7 @@ describe('ModalPrintComponent', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   }));
 
-  it('Crear componente de Niveles Educativos Print Component correctamente', () => {
+  it('Crear componente de Motivos Finiquito Print Component correctamente', () => {
     const fixture = TestBed.createComponent(ModalPrintComponent);
     const app = fixture.componentInstance; 
     expect(app).toBeTruthy();
@@ -86,9 +86,9 @@ describe('ModalPrintComponent', () => {
     app.form.setValue(data)
     expect(app.form.valid).toEqual(true);    
 
-    app.exportPdf()
+    app.export()
 
-    expect(app.form.getRawValue()).toEqual(dataReset);    
+    expect(app.form.getRawValue()).toEqual(data);    
   })
 
   it('Reset Form PDF', async () => {
@@ -107,7 +107,7 @@ describe('ModalPrintComponent', () => {
       "type": null
     }
 
-    app.form.setValue(data)
+    app.form.reset(data)
     expect(app.form.valid).toEqual(true);    
 
     app.resetForm()

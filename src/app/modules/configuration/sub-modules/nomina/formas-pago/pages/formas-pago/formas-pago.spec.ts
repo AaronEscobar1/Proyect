@@ -4,9 +4,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Servicios y componentes requeridos
 import { environment } from 'src/environments/environment';
-import { NivelesEducativosComponent } from './niveles-educativos.component';
-import { NivelesEducativos } from '../../interfaces/niveles-educativos.interfaces';
-import { NivelesEducativosService } from '../../services/niveles-educativos.service';
+import { FormasPagoComponent } from './formas-pago.component';
+import { FormasPago } from '../../interfaces/formas-pago.interfaces';
+import { FormasPagoService } from '../../services/formas-pago.service';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,9 +15,9 @@ describe('NivelesEducativosComponent', () => {
 
   let httpTestingController: HttpTestingController;
 
-  let services: NivelesEducativosService;
+  let services: FormasPagoService;
 
-  const URL = `${environment.api}/niveleseducativos`;
+  const URL = `${environment.api}/pagoformas`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -29,165 +29,162 @@ describe('NivelesEducativosComponent', () => {
         BrowserAnimationsModule
       ],
       declarations: [
-        NivelesEducativosComponent
+        FormasPagoComponent
       ]
     }).compileComponents();
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
 
-    services = TestBed.inject(NivelesEducativosService);
+    services = TestBed.inject(FormasPagoService);
 
   }));
 
   it('Crear componente de Niveles Educativos correctamente', () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it('Inicializar el componente', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
-    expect(app.niveles.length).toBe(0);
+    expect(app.formasPagos.length).toBe(0);
     app.loadData();
     fixture.detectChanges();
-    expect(app.niveles.length).toBeGreaterThanOrEqual(0);
+    expect(app.formasPagos.length).toBeGreaterThanOrEqual(0);
   });
 
   it('Validando Refrescar', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de carga despues del boton 
     app.refresh();
-    expect(app.niveles.length).toBe(0);
+    expect(app.formasPagos.length).toBe(0);
     app.loadData();
     fixture.detectChanges();
-    expect(app.niveles.length).toBeGreaterThanOrEqual(0);  
+    expect(app.formasPagos.length).toBeGreaterThanOrEqual(0);  
   })
 
   it('Abrir Modal de impresion', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de abrir el modal de impresion 
-    expect(app.printNivelModal).toBeFalse();
+    expect(app.printModal).toBeFalse();
     app.openModalPrint();
     fixture.detectChanges();
-    expect(app.printNivelModal).toBeTrue();  
+    expect(app.printModal).toBeTrue();  
   })
 
   it('Cerrar Modal de impresion', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de abrir el modal de impresion 
-    expect(app.printNivelModal).toBeFalse();
+    expect(app.printModal).toBeFalse();
     app.openModalPrint();
-    expect(app.printNivelModal).toBeTrue();
+    expect(app.printModal).toBeTrue();
     fixture.detectChanges();
     
     // Simulamos el proceso de cerrar modal de impresion  
-    expect(app.printNivelModal).toBeTrue();
+    expect(app.printModal).toBeTrue();
     app.closeModalPrintDialog();
-    expect(app.printNivelModal).toBeFalse();
+    expect(app.printModal).toBeFalse();
     
   })
 
   it('Abrir modal de Crear Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de abrir el modal de Creacion 
-    expect(app.addNivelModal).toBeFalse();
+    expect(app.createModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar niveles educativos');
-    expect(app.addNivelModal).toBeTrue();  
+    expect(app.titleForm).toBe('Agregar formas de pago');
+    expect(app.createModal).toBeTrue();  
   })
 
   it('Cerrar Modal de Crear Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
     
     // Simulamos el proceso de abrir el modal de Crear
-    expect(app.addNivelModal).toBeFalse();
+    expect(app.createModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar niveles educativos');
-    expect(app.addNivelModal).toBeTrue();
+    expect(app.titleForm).toBe('Agregar formas de pago');
+    expect(app.createModal).toBeTrue();
     fixture.detectChanges();
     
     // Simulamos el proceso de cerrar modal de Crear  
-    expect(app.addNivelModal).toBeTrue();    
+    expect(app.createModal).toBeTrue();    
     app.closeModal();
-    expect(app.addNivelModal).toBeFalse();  
+    expect(app.createModal).toBeFalse();  
   })
 
   it('Abrir modal de Editar Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     // seteamos data simulate
-    const data: NivelesEducativos = {
-      codley: "CC",
-      codniv: "3",
-      desniv: "hola 1",
-      usract: "USR",
-      usrcre: "USR"
+    const data: FormasPago = {
+      "despag": "EFECTIVO",
+      "conins": "1",
+      "codpag": "1"
     }
 
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.nivel).toBe(undefined);
+    expect(app.formaPago).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.nivel).toBe(data);
+    expect(app.formaPago).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar niveles educativos');
-    expect(app.addNivelModal).toBeTrue();  
+    expect(app.titleForm).toBe('Editar formas de pago');
+    expect(app.createModal).toBeTrue();  
   })
 
   it('Cerrar Modal de Editar Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
-    const data: NivelesEducativos = {
-      codley: "CC",
-      codniv: "3",
-      desniv: "hola 1",
-      usract: "USR",
-      usrcre: "USR"
+    const data: FormasPago = {
+      "despag": "EFECTIVO",
+      "conins": "1",
+      "codpag": "1"
     }
     
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.nivel).toBe(undefined);
+    expect(app.formaPago).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.nivel).toBe(data);
+    expect(app.formaPago).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar niveles educativos');
-    expect(app.addNivelModal).toBeTrue();  
+    expect(app.titleForm).toBe('Editar formas de pago');
+    expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion
     expect(app.isEdit).toBeTrue();
-    expect(app.nivel).toBe(data);
+    expect(app.formaPago).toBe(data);
     app.closeModal();
     fixture.detectChanges();
-    expect(app.nivel).toBe(undefined);
+    expect(app.formaPago).toBe(undefined);
     expect(app.isEdit).toBeFalse();
-    expect(app.addNivelModal).toBeFalse(); 
+    expect(app.createModal).toBeFalse(); 
   })
 
   it('Eliminar Niveles Educativos (caso fallido)', ()=>{
 
-    const data: NivelesEducativos = {
-      codley: "CC",
-      codniv: "99",
-      desniv: "hola 1",
+    const data: FormasPago = {
+      "despag": "EFECTIVO",
+      "conins": "1",
+      "codpag": "1"
     }
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     const error = new ErrorEvent('', {
@@ -208,7 +205,7 @@ describe('NivelesEducativosComponent', () => {
     acceptBtn.click();
     expect(accept).toHaveBeenCalled();
     
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codniv}`); 
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codpag}`); 
 
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('DELETE'); 
@@ -217,16 +214,17 @@ describe('NivelesEducativosComponent', () => {
 
   it('Eliminar Niveles Educativos (caso verdadero)', ()=>{
 
-    const data: NivelesEducativos = {
-      codley: "CC",
-      codniv: "3",
-      desniv: "hola 1",
+    const data: FormasPago = {
+      "despag": "EFECTIVO",
+      "conins": "1",
+      "codpag": "1"
     }
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     const resp = {
-      "message": "Nivel eliminado con éxito.",
+      "message": "Forma de pago eliminado con éxito.",
       "status": "success"
     }
 
@@ -241,7 +239,7 @@ describe('NivelesEducativosComponent', () => {
     acceptBtn.click();
     expect(accept).toHaveBeenCalled();
 
-    const fakeBackend = httpTestingController.match(`${URL}/${data.codniv}`);
+    const fakeBackend = httpTestingController.match(`${URL}/${data.codpag}`);
     fakeBackend[0].flush(resp);
     expect(fakeBackend[0].request.method).toBe('DELETE');
 
@@ -249,19 +247,20 @@ describe('NivelesEducativosComponent', () => {
 
   it('Load Data (Caso verdadero)', ()=>{
 
-    const data: NivelesEducativos = {
-      codley: "CC",
-      codniv: "3",
-      desniv: "hola 1",
+    const data: FormasPago = {
+      "despag": "EFECTIVO",
+      "conins": "1",
+      "codpag": "1"
     }
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     app.loadData()
 
-    const fakeBackend = httpTestingController.match(`${URL}`);
-    fakeBackend[0].flush(data);
-    expect(fakeBackend[0].request.method).toBe('GET');
+    const fakeBackend = httpTestingController.expectOne(`${URL}`);
+    fakeBackend.flush(data);
+    expect(fakeBackend.request.method).toBe('GET');
 
   })
 
@@ -274,7 +273,7 @@ describe('NivelesEducativosComponent', () => {
       message: "No message available",   
     });
     
-    const fixture = TestBed.createComponent(NivelesEducativosComponent);
+    const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
 
     app.loadData()

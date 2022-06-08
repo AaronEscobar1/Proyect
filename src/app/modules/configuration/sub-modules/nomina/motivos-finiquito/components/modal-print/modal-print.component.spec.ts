@@ -1,16 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Routes } from '@angular/router';
-import { By } from '@angular/platform-browser';
+import { MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
 
 // Servicios y componentes requeridos
-import { environment } from 'src/environments/environment';
 import { ModalPrintComponent } from './modal-print.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 
-describe('ModalPrintComponent', () => {
+describe('ModalPrintComponent Motivos Finiquito', () => {
 
   let httpTestingController: HttpTestingController;
 
@@ -30,7 +26,7 @@ describe('ModalPrintComponent', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   }));
 
-  it('Crear componente de Niveles Educativos Print Component correctamente', () => {
+  it('Crear componente de Motivos Finiquito Print Component correctamente', () => {
     const fixture = TestBed.createComponent(ModalPrintComponent);
     const app = fixture.componentInstance; 
     expect(app).toBeTruthy();
@@ -49,12 +45,10 @@ describe('ModalPrintComponent', () => {
     fixture.detectChanges();
 
     app.form.setValue({
-      "desde1": "motivo de finiquito",
-      "desde2": "motivo de finiquito",
-      "impliq": "1",
-      "classo": "1",
-      "coddes": "1"
-  })
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    })
 
     expect(app.form.valid).toEqual(true);    
   })
@@ -65,13 +59,83 @@ describe('ModalPrintComponent', () => {
     fixture.detectChanges();
 
     app.form.setValue({
-      "desde1": "motivo de finiquito new",
-      "desde2": "motivo de finiquito new",
-      "impliq": "4",
-      "classo": "4",
-      "coddes": "4"
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
     })
 
     expect(app.form.valid).toEqual(true);    
+  })
+
+  it('Exportando PDF', async () => {
+    const fixture = TestBed.createComponent(ModalPrintComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const data = {
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    }
+    const dataReset = {
+      "id": null,
+      "des": null,
+      "type": null
+    }
+
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true);    
+
+    app.export()
+
+    expect(app.form.getRawValue()).toEqual(data);    
+  })
+
+  it('Reset Form PDF', async () => {
+    const fixture = TestBed.createComponent(ModalPrintComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const data = {
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    }
+    const dataReset = {
+      "id": null,
+      "des": null,
+      "type": null
+    }
+
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true);    
+
+    app.resetForm()
+
+    expect(app.form.getRawValue()).toEqual(dataReset);    
+  })
+
+  it('Cerrar modal desde componente', async () => {
+    const fixture = TestBed.createComponent(ModalPrintComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    const data = {
+      "id": '33',
+      "des": '123456789123456789123456789123456789',
+      "type": 'CCCC'
+    }
+    const dataReset = {
+      "id": null,
+      "des": null,
+      "type": null
+    }
+
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true);    
+
+    app.closeModalPrint()
+
+    expect(app.form.getRawValue()).toEqual(dataReset);    
   })
 });

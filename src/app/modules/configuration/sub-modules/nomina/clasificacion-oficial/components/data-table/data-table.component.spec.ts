@@ -24,7 +24,7 @@ describe('DataTableComponent', () => {
     service = TestBed.inject(SelectRowService);
   }));
 
-  it('Crear componente de Niveles Educativos DataTable Component correctamente', () => {
+  it('Crear componente de Motivos Finiquito DataTable Component correctamente', () => {
     const fixture = TestBed.createComponent(DataTableComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();

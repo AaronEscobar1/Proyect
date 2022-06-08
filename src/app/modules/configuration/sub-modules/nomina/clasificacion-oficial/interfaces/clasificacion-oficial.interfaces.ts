@@ -2,7 +2,7 @@ export interface OfficialClassification {
     codofi: string;
     desofi: string;
     tiprep: string;
-    asCofiPk: asCofiPk;
+    asCofiPk?: asCofiPk;
 }
 
 export interface asCofiPk {

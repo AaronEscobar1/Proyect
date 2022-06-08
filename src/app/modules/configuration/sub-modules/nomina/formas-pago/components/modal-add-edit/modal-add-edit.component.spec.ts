@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/motivosfiniquito`;
+  const URL = `${environment.api}/pagoformas`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -48,11 +48,9 @@ describe('ModalAddEditComponent', () => {
     
     // Validamos los datos del formulario vacio
 
-    expect(app.form.value.desde1).toEqual('')
-    expect(app.form.value.desde2).toEqual('')
-    expect(app.form.value.impliq).toEqual(false)
-    expect(app.form.value.classo).toEqual('')
-    expect(app.form.value.coddes).toEqual('')
+    expect(app.form.value.despag).toEqual('')
+    expect(app.form.value.conins).toEqual('')
+    expect(app.form.value.codpag).toEqual('')
     
     // Validamos el requiere de los campos
     
@@ -60,7 +58,7 @@ describe('ModalAddEditComponent', () => {
 
     // validamos que no exista el nivelSelect
 
-    expect(app.motivoSelect).toEqual(undefined);
+    expect(app.formaPagoSelected).toEqual(undefined);
   
   });
   
@@ -70,30 +68,29 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
-    app.motivoSelect = {
-      "desde1": "motivo de finiquito",
-      "desde2": "motivo de finiquito",
-      "impliq": "1",
-      "classo": "1",
-      "coddes": "1"
+    app.formaPagoSelected = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion
-    expect(app.form.value.desde1).toEqual("motivo de finiquito")
-    expect(app.form.value.desde2).toEqual("motivo de finiquito")
-    expect(app.form.value.impliq).toEqual(true)
-    expect(app.form.value.classo).toEqual("1")
-    expect(app.form.value.coddes).toEqual(undefined)
+    expect(app.form.value.despag).toEqual("CHEQUE CONTINUO")
+    expect(app.form.value.conins).toEqual("4")
+    expect(app.form.value.codpag).toEqual(undefined)
     expect(app.form.valid).toEqual(true)
   });
 
@@ -103,30 +100,29 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
-    app.motivoSelect = {
-      "desde1": "motivo de finiquito",
-      "desde2": "motivo de finiquito",
-      "impliq": "0",
-      "classo": "1",
-      "coddes": "1"
+    app.formaPagoSelected = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion
-    expect(app.form.value.desde1).toEqual("motivo de finiquito")
-    expect(app.form.value.desde2).toEqual("motivo de finiquito")
-    expect(app.form.value.impliq).toEqual(false)
-    expect(app.form.value.classo).toEqual("1")
-    expect(app.form.value.coddes).toEqual(undefined)
+    expect(app.form.value.despag).toEqual("CHEQUE CONTINUO")
+    expect(app.form.value.conins).toEqual("4")
+    expect(app.form.value.codpag).toEqual(undefined)
     expect(app.form.valid).toEqual(true)
   });
 
@@ -137,12 +133,10 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Llamamos al close modal para resetear todo
     app.closeModal()
-    expect(app.form.value.desde1).toEqual(null)
-    expect(app.form.value.desde2).toEqual(null)
-    expect(app.form.value.impliq).toEqual(null)
-    expect(app.form.value.classo).toEqual(null)
-    expect(app.form.value.coddes).toEqual(null)
-    expect(app.motivoSelect).toEqual(undefined);
+    expect(app.form.value.despag).toEqual(null)
+    expect(app.form.value.conins).toEqual(null)
+    expect(app.form.value.codpag).toEqual(null)
+    expect(app.formaPagoSelected).toEqual(undefined);
   });
 
   it('Probando el Guardado de Datos (Caso Verdadero)', () => {
@@ -151,31 +145,32 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
 
     // datos del formulario
-    const data =  {
-      "desde1": "motivo de finiquito1",
-      "desde2": "motivo de finiquito1",
-      "impliq": false,
-      "classo": "2",
-      "coddes": "2"
+    const data = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
 
-    const resp = {"message":"Mitivo Finiquito creado."}
+    const resp = {"message":"Forma de pago creado."}
 
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.setValue(data)
     expect(app.form.valid).toEqual(true)
-    app.coddesMsgError
+    app.codpagMsgError
 
     // Llamamos a la funcion de Guardado
     app.save()
@@ -192,23 +187,24 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
 
     // datos del formulario
-    const data =  {
-      "desde1": "motivo de finiquito1",
-      "desde2": "motivo de finiquito1",
-      "impliq": "2",
-      "classo": "2",
-      "coddes": "2"
+    const data = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
 
     const error = new ErrorEvent('', {
@@ -237,46 +233,47 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
 
-    const resp = {"message":"Motivos Finiquito creado."}
+    const resp = {"message":"Forma de pago creado."}
 
     // datos del formulario
-    const data =  {
-      "desde1": "motivo de finiquito11",
-      "desde2": "motivo de finiquito11",
-      "impliq": "1",
-      "classo": "1",
-      "coddes": "1"
+    const data = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
+
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['coddes'].disable();
+    app.form.controls['codpag'].disable();
     app.form.reset(data)
     console.log(app.form.valid)
     expect(app.form.valid).toEqual(true)
-    app.desde1MsgError
+    app.despagMsgError
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.coddes}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codpag}`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('PUT');
 
     // Reset hecho por la funcion
-    expect(app.form.value.desde1).toEqual(null)
-    expect(app.form.value.desde2).toEqual(null)
-    expect(app.form.value.impliq).toEqual(null)
-    expect(app.form.value.classo).toEqual(null)
-    expect(app.form.value.coddes).toEqual(undefined)
+    expect(app.form.value.despag).toEqual(null)
+    expect(app.form.value.conins).toEqual(null)
+    expect(app.form.value.codpag).toEqual(undefined)
+    expect(app.formaPagoSelected).toEqual(undefined);
   });
 
   it('Probando el Editado de Datos (Caso Falso)', () => {
@@ -285,13 +282,16 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
 
@@ -303,32 +303,29 @@ describe('ModalAddEditComponent', () => {
     });
 
     // datos del formulario
-    const data =  {
-      "desde1": "motivo de finiquito11",
-      "desde2": "motivo de finiquito11",
-      "impliq": "1",
-      "classo": "1",
-      "coddes": "1"
+    const data = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
 
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['coddes'].disable();
+    app.form.controls['codpag'].disable();
     app.form.reset(data)
     expect(app.form.valid).toEqual(true)
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.coddes}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codpag}`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('PUT');
 
     // Reset hecho por la funcion
-    expect(app.form.value.desde1).toEqual(data.desde1)
-    expect(app.form.value.desde2).toEqual(data.desde2)
-    expect(app.form.value.impliq).toEqual(data.impliq)
-    expect(app.form.value.classo).toEqual(data.classo)
-    expect(app.form.value.coddes).toEqual(undefined)
+    expect(app.form.value.despag).toEqual(data.despag)
+    expect(app.form.value.conins).toEqual(data.conins)
+    expect(app.form.value.codpag).toEqual(undefined)
+    expect(app.formaPagoSelected).toEqual(undefined);
   });
 
   it('Validando el formulario (Caso Creado)', () => {
@@ -337,54 +334,63 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
 
     // datos del formulario
-    const data =  {
-      "desde1": "motivo de finiquito",
-      "desde2": "motivo de finiquito",
-      "impliq": "1",
-      "classo": "1",
-      "coddes": "1"
+    const data = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "4",
+      "codpag": "3"
     };
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['coddes'].setValue("1")
+    app.form.controls['codpag'].setValue("1")
     expect(app.form.valid).toEqual(false)
-    app.coddesMsgError
+    app.codpagMsgError
     
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['coddes'].setValue("01234")
+    app.form.controls['codpag'].setValue("01234")
     expect(app.form.valid).toEqual(false)
-    app.coddesMsgError
+    app.codpagMsgError
 
     // caso vacio
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['coddes'].setValue("")
+    app.form.controls['codpag'].setValue("")
     expect(app.form.valid).toEqual(false)
-    app.coddesMsgError
+    app.codpagMsgError
+
+    // caso vacio con descripcion duplicada
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.reset(data)
+    app.form.controls['codpag'].setValue("")
+    app.form.controls['despag'].setValue("DEPOSITO")
+    expect(app.form.valid).toEqual(false)
+    app.codpagMsgError
 
     // Reset hecho por la funcion
-    expect(app.form.value.desde1).toEqual(data.desde1)
-    expect(app.form.value.desde2).toEqual(data.desde2)
-    expect(app.form.value.impliq).toEqual(data.impliq)
-    expect(app.form.value.classo).toEqual(data.classo)
-    expect(app.form.value.coddes).toEqual('')
+    expect(app.form.value.despag).toEqual("DEPOSITO")
+    expect(app.form.value.conins).toEqual(data.conins)
+    expect(app.form.value.codpag).toEqual('')
 
-    app.campoInvalid('coddes');
+    app.campoInvalid('codpag');
+
+
   });
   it('Validando el formulario (Caso Editado)', () => {
     const fixture = TestBed.createComponent(ModalAddEditComponent);
@@ -392,69 +398,61 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.motivosFiniquito = [
+    app.formasPagos = [
       {
-        "desde1": "motivo de finiquito",
-        "desde2": "motivo de finiquito",
-        "impliq": "1",
-        "classo": "1",
-        "coddes": "1"
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
       },
       {
-        "desde1": "motivo de finiquito2",
-        "desde2": "motivo de finiquito2",
-        "impliq": "2",
-        "classo": "2",
-        "coddes": "2"
+          "despag": "DEPOSITO",
+          "conins": "2",
+          "codpag": "2"
       }
     ];
 
     // datos del formulario
-    const data =  {
-      "desde1": "motivo de finiquito2",
-      "desde2": "motivo de finiquito2",
-      "impliq": "0",
-      "classo": "1",
-      "coddes": "1"
+    const data = {
+      "despag": "CHEQUE CONTINUO",
+      "conins": "1",
+      "codpag": "1"
     };
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['coddes'].disable();
+    app.form.controls['codpag'].disable();
     app.form.reset(data)
-    app.form.controls['desde1'].setValue("motivo de finiquito2")
+    app.form.controls['despag'].setValue("DEPOSITO")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.desde1MsgError
+    app.despagMsgError
 
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['coddes'].disable();
+    app.form.controls['codpag'].disable();
     app.form.reset(data)
-    app.form.controls['desde1'].setValue("1234567891234567891234567891234")
+    app.form.controls['despag'].setValue("1234567891234567891234567891234")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.desde1MsgError
+    app.despagMsgError
 
     //Caso Vacio
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['coddes'].disable();
+    app.form.controls['codpag'].disable();
     app.form.reset(data)
-    app.form.controls['desde1'].setValue("")
+    app.form.controls['despag'].setValue("")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.desde1MsgError
+    app.despagMsgError
 
     app.save();
 
     // Reset hecho por la funcion
-    expect(app.form.value.desde1).toEqual('')
-    expect(app.form.value.desde2).toEqual(data.desde2)
-    expect(app.form.value.impliq).toEqual(data.impliq)
-    expect(app.form.value.classo).toEqual(data.classo)
+    expect(app.form.value.despag).toEqual('')
+    expect(app.form.value.conins).toEqual(data.conins)
     expect(app.form.value.coddes).toEqual(undefined)
 
-    app.campoInvalid('desde1');
+    app.campoInvalid('despag');
     
   });
 });
