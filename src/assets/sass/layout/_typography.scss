@@ -1,0 +1,14 @@
+hr {
+    border-top: solid var(--surface-border);
+    border-width: 1px 0 0 0;
+    margin: 1rem 0;
+}
+
+p {
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

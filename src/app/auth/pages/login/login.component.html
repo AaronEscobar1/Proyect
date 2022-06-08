@@ -1,0 +1,57 @@
+<!-- Spinner -->
+<app-spinner [loadingMessage]="''"></app-spinner>
+
+<div class="login-content">
+    <div class="flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+        <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+            <div class="col-12 lg:col-5">
+                <div class="h-full w-full surface-100 border-round pt-4 pb-8 px-5">
+                    <div class="text-center mb-5">
+                        <img src="assets/logos/infocent_logo_positivo.svg" height="80">
+                        <div class="text-500 text-xl font-italic"><strong> SPI Portal </strong> Versión 7.0.1</div>
+                    </div>
+            
+                    <div *ngIf="msgError.length > 0">
+                        <p-messages [(value)]="msgError"></p-messages>
+                    </div>
+                    
+                    <form [formGroup]="loginForm">
+
+                        <div class="w-full md:w-10 mx-auto">
+                            
+                            <label for="username" class="mb-2"> Usuario </label>
+                            <input 
+                                pInputText
+                                id="username" 
+                                type="text"
+                                formControlName="usernameOrEmail"
+                                class="w-full mb-3">
+
+                            <label for="password" class="mb-2"> Clave </label>
+                            <input 
+                                pInputText
+                                id="password" 
+                                type="password" 
+                                formControlName="password"
+                                class="w-full mb-3"> 
+
+                            <div class="text-center mt-2 mb-5">
+                                <button
+                                    pButton
+                                    type="submit"
+                                    label="Ingresar"
+                                    class="w-full btn-infocent font-medium"
+                                    (click)="login()">
+                                </button>
+            
+                                <p class="font-italic mt-3">¿Olvidó su clave de acceso?</p>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

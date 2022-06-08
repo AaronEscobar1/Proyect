@@ -1,0 +1,19 @@
+<div class="layout-wrapper layout-static" [ngClass]="{'layout-mobile-sidebar-active': menuActiveMobile}">
+    
+    <app-topbar [titleBanner]="'Mail'"
+                (onToggleMenu)="toggleMenu($event)"></app-topbar>
+    
+    <!-- Menu lateral -->
+    <div class="layout-sidebar">
+        <app-menu [menuItems]="menuItems"></app-menu>
+    </div>
+
+    <!-- Contenido dinamico -->
+    <div class="layout-main-container">
+        <div class="layout-main">
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer></app-footer>
+    </div>
+
+</div>

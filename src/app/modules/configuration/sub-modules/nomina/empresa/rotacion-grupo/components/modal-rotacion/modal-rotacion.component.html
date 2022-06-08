@@ -1,0 +1,69 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="rotacionModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleModalRotacion}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                        
+                    <div class="field col-12 md:col-2">
+                        <label for="consc">Consecutivo</label>
+                        <input  type="text"
+                                id="consc" 
+                                pInputText/>
+                    </div>
+
+                    <div class="field col-12 md:col-7">
+                        <label for="esqtrab">Esquema de trabajo y vacación</label>
+                        <input  type="text" 
+                                id="esqtrab"
+                                pInputText/>
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                        <label for="esqadic">Esquema adicional</label>
+                        <input  type="text" 
+                                id="esqadic"
+                                pInputText/>
+                    </div>
+
+                </div>
+                
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="text-left mt-2">
+                <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Aceptar" 
+                    icon="pi pi-check"
+                    class="p-button my-1"
+                    (click)="onSubmit()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        label="Cerrar" 
+                        icon="pi pi-times" 
+                        class="p-button my-1" 
+                        (click)="closeModal()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>
+

@@ -1,0 +1,21 @@
+.layout-sidebar {
+    flex: 0 0 auto;
+    position: fixed;
+    width: 16.6667%;
+    height: calc(100vh - 5.03rem);
+    z-index: 999;
+    top: 5rem;
+    overflow-y: auto;
+    user-select: none;
+    // transition: transform 0.2s, left 0.2s;
+    background-color: var(--surface-50);
+    box-shadow: 0px 3px 5px rgba(0,0,0,.02), 0px 0px 2px rgba(0,0,0,.05), 0px 1px 4px rgba(0,0,0,.08)
+}
+
+@media (max-width: 992px) {
+
+    .layout-sidebar {
+        width: 300px !important;        
+    }
+
+}

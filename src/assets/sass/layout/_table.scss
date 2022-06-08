@@ -1,0 +1,25 @@
+@import "./variables";
+
+// Estilos para la tabla
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    background: $primary-color !important;
+    color: $white-color !important;
+    border: 1px solid $primary-color !important;
+}
+
+:host ::ng-deep .p-datatable .p-sortable-column .p-highlight:hover {
+    color: $white-color !important;
+}
+
+:host ::ng-deep .p-datatable .p-sortable-column .p-highlight:focus {
+    box-shadow: inset 0 0 0 0.15rem #fffefe;
+}
+
+:host ::ng-deep .p-datatable .p-sortable-column .p-sortable-column-icon {
+    background: $primary-color !important;
+    color: $white-color !important;
+}
+
+:host ::ng-deep .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+    color: $white-color !important;
+}

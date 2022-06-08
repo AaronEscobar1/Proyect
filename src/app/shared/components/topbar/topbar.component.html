@@ -1,0 +1,51 @@
+<div class="layout-topbar">
+    <a class="layout-topbar-logo">
+        <img routerLink="/main" class="cursor-pointer" src="assets/logos/infocent_logo_fondo_oscuro.svg">
+    </a>
+
+    <a class="p-link layout-menu-button layout-topbar-button" (click)="toggleMenu($event)">
+        <i class="pi pi-bars"></i>
+    </a>
+
+    <a class="p-link layout-topbar-menu-button layout-topbar-button" (click)="toggeTopMenu($event)">
+        <i class="pi pi-ellipsis-v"></i>
+    </a>
+
+    <div class="layout-topbar-module text-300 ml-2">
+        <h3 class="mb-0">{{ titleBanner | titlecase }}</h3>
+        <span>Versión 12</span>
+    </div>
+    
+    <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': topMenuActive}">
+        
+        <div class="layout-topbar-user">
+            <span>Usuario: {{ user | uppercase }}</span> 
+        </div>
+
+        <div class="layout-menu-item separator" routerLink="/main">
+            <i class="pi pi-home"></i>
+            <span>Inicio</span>
+        </div>
+
+        <div class="layout-menu-item separator">
+            <ng-container *ngIf="isModule; then context; else profile"></ng-container>
+
+            <ng-template #profile>
+                <i class="pi pi-user"></i>
+                <span>Mi perfil</span>
+            </ng-template>
+            
+            <ng-template #context>
+                <i class="pi pi-sort-alt"></i>
+                <span>Context</span>
+            </ng-template>
+        </div>
+
+        <div class="layout-menu-item separator" 
+             (click)="closeSession()">
+            <i class="pi pi-sign-out"></i>
+            <span>Cerrar sesión </span> 
+        </div>
+
+    </div>
+</div>
