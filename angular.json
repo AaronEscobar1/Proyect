@@ -115,5 +115,8 @@
       }
     }
   },
-  "defaultProject": "NominaApp"
+  "defaultProject": "NominaApp",
+  "cli": {
+    "analytics": "5c542e14-62c8-41a5-bb26-d0965a0b5937"
+  }
 }

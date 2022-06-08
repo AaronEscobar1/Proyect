@@ -60,8 +60,8 @@ export class NivelesEducativosComponent implements OnInit {
   }
   
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
     this.isEdit = false;
+    this.titleForm = 'Agregar niveles educativos';
     this.addNivelModal = true;
   }
 
@@ -80,7 +80,7 @@ export class NivelesEducativosComponent implements OnInit {
 
   editRow(nivel: NivelesEducativos) {
     this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar niveles educativos' : 'Agregar niveles educativos';
+    this.titleForm = 'Editar niveles educativos';
     this.nivel = nivel;
     this.addNivelModal = true;
   }
@@ -92,7 +92,7 @@ export class NivelesEducativosComponent implements OnInit {
    */
    deleteRow(nivel: NivelesEducativos) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el nivel <b>${nivel?.desniv}</b>?`,
+      message: `¿Estas seguro que quieres borrar el nivel <b>${nivel.desniv}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',

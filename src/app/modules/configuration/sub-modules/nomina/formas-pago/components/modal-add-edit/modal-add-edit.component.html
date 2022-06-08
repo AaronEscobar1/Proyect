@@ -1,0 +1,70 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          styleClass="p-fluid" 
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="field">
+                    <label for="codpag">Código *</label>
+                    <input  type="text"
+                            id="codpag" 
+                            pInputText
+                            formControlName="codpag"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codpag')">
+                        {{ codpagMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="despag">Descripción *</label>
+                    <input  type="text" 
+                            id="despag"
+                            pInputText
+                            formControlName="despag" 
+                            placeholder="Ingrese la descripción"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('despag')">
+                        {{ despagMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="conins">Tipo de pago *</label>
+                    <p-dropdown [options]="typesPagos" 
+                                appendTo="body" 
+                                formControlName="conins" 
+                                inputId="conins"
+                                placeholder="Seleccione el tipo de pago">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('conins')">
+                        El tipo de pago es obligatorio.
+                    </span>
+                </div>
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
+        </ng-template>
+</p-dialog>

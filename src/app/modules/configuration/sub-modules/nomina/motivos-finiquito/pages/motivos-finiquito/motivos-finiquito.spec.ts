@@ -1,20 +1,21 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { async, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Routes } from '@angular/router';
-import { By } from '@angular/platform-browser';
 
 // Servicios y componentes requeridos
 import { environment } from 'src/environments/environment';
 import { MotivosFiniquitoComponent } from './motivos-finiquito.component';
 import { MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
-import { Inject } from '@angular/core';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
+import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
+import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('MotivoFiniquitoComponent', () => {
+describe('NivelesEducativosComponent', () => {
 
   let httpTestingController: HttpTestingController;
+
+  let services: MotivosFiniquitoService;
 
   const URL = `${environment.api}/motivosfiniquito`;
 
@@ -24,6 +25,8 @@ describe('MotivoFiniquitoComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
         FormsModule,
+        ConfirmDialogModule,
+        BrowserAnimationsModule
       ],
       declarations: [
         MotivosFiniquitoComponent
@@ -32,6 +35,9 @@ describe('MotivoFiniquitoComponent', () => {
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
+
+    services = TestBed.inject(MotivosFiniquitoService);
+
   }));
 
   it('Crear componente de Niveles Educativos correctamente', () => {
@@ -45,10 +51,8 @@ describe('MotivoFiniquitoComponent', () => {
     const app = fixture.componentInstance;
     expect(app.motivosFiniquito.length).toBe(0);
     app.loadData();
-    setTimeout(()=>{
-      fixture.detectChanges();
-      expect(app.motivosFiniquito.length).toBeGreaterThanOrEqual(1);
-    }, 2000)
+    fixture.detectChanges();
+    expect(app.motivosFiniquito.length).toBeGreaterThanOrEqual(0);
   });
 
   it('Validando Refrescar', async () => {
@@ -59,11 +63,8 @@ describe('MotivoFiniquitoComponent', () => {
     app.refresh();
     expect(app.motivosFiniquito.length).toBe(0);
     app.loadData();
-    setTimeout(()=>{
-      fixture.detectChanges();
-      expect(app.motivosFiniquito.length).toBeGreaterThanOrEqual(0);
-    }, 2000)
-  
+    fixture.detectChanges();
+    expect(app.motivosFiniquito.length).toBeGreaterThanOrEqual(0);  
   })
 
   it('Abrir Modal de impresion', async () => {
@@ -89,7 +90,7 @@ describe('MotivoFiniquitoComponent', () => {
     
     // Simulamos el proceso de cerrar modal de impresion  
     expect(app.printModal).toBeTrue();
-    app.printModal = false;
+    app.closeModalPrintDialog();
     expect(app.printModal).toBeFalse();
     
   })
@@ -129,12 +130,12 @@ describe('MotivoFiniquitoComponent', () => {
 
     // seteamos data simulate
     const data: MotivosFiniquito = {
-      desde1: "motivo de finiquito",
-      desde2: "motivo de finiquito",
-      impliq: "1",
-      classo: "1",
-      coddes: "1"
-  }
+      "desde1": "motivo",
+      "desde2": "CCC",
+      "impliq": "0",
+      "classo": "2",
+      "coddes": "2"
+    }
 
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
@@ -152,11 +153,11 @@ describe('MotivoFiniquitoComponent', () => {
     const app = fixture.componentInstance;
 
     const data: MotivosFiniquito = {
-      desde1: "motivo de finiquito",
-      desde2: "motivo de finiquito",
-      impliq: "1",
-      classo: "1",
-      coddes: "1"
+      "desde1": "motivo",
+      "desde2": "CCC",
+      "impliq": "0",
+      "classo": "2",
+      "coddes": "2"
     }
     
     // Simulamos el proceso de abrir el modal de Edicion
@@ -179,55 +180,116 @@ describe('MotivoFiniquitoComponent', () => {
     expect(app.createModal).toBeFalse(); 
   })
 
-  it('Eliminar Niveles Educativos (caso fallido)', inject([MotivosFiniquitoService], (service: MotivosFiniquitoService)=>{
+  it('Eliminar Niveles Educativos (caso fallido)', ()=>{
 
     const data: MotivosFiniquito = {
-      desde1: "motivo de finiquito",
-      desde2: "motivo de finiquito",
-      impliq: "1",
-      classo: "1",
-      coddes: "1"
+      "desde1": "motivo",
+      "desde2": "CCC",
+      "impliq": "0",
+      "classo": "2",
+      "coddes": "2"
     }
-
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
 
-    const error = {
-      "error": "00",
-      "message": `Recurso no encontrado.`,
-      "detail": "Motivo de Finiquito no existente.",
-    }
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "Error en solicitud.",   
+    });
 
-    const response = service.delete(data.coddes).subscribe();
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.coddes}`);
-    fakeBackend.flush(error);
-    expect(fakeBackend.request.method).toBe('DELETE');
+    let confirmDialog: ConfirmDialog;
+    confirmDialog = fixture.debugElement.query(By.css('p-confirmdialog')).componentInstance; 
+    
+    let accept = spyOn(confirmDialog, "accept").and.callThrough();
+    confirmDialog.visible = true;
+    app.deleteRow(data);
+    fixture.detectChanges(); 
+    let acceptBtn = fixture.debugElement.nativeElement.querySelector('.p-confirm-dialog-accept');
+    acceptBtn.click();
+    expect(accept).toHaveBeenCalled();
+    
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.coddes}`); 
 
-  }))
+    fakeBackend.error(error);
+    expect(fakeBackend.request.method).toBe('DELETE'); 
 
-  it('Eliminar Niveles Educativos (caso verdadero)', inject([MotivosFiniquitoService], (service: MotivosFiniquitoService)=>{
+  })
+
+  it('Eliminar Niveles Educativos (caso verdadero)', ()=>{
 
     const data: MotivosFiniquito = {
-      desde1: "motivo de finiquito",
-      desde2: "motivo de finiquito",
-      impliq: "1",
-      classo: "1",
-      coddes: "1"
+      "desde1": "motivo",
+      "desde2": "CCC",
+      "impliq": "0",
+      "classo": "2",
+      "coddes": "2"
     }
 
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
 
     const resp = {
-      "message": "Motivo eliminado con éxito.",
+      "message": "Nivel eliminado con éxito.",
       "status": "success"
     }
 
-    const response = service.delete(data.coddes).subscribe();
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.coddes}`);
-    fakeBackend.flush(resp);
-    expect(fakeBackend.request.method).toBe('DELETE');
+    let confirmDialog: ConfirmDialog;
+    confirmDialog = fixture.debugElement.query(By.css('p-confirmdialog')).componentInstance; 
+    
+    let accept = spyOn(confirmDialog, "accept").and.callThrough();
+    confirmDialog.visible = true;
+    app.deleteRow(data);
+    fixture.detectChanges(); 
+    let acceptBtn = fixture.debugElement.nativeElement.querySelector('.p-confirm-dialog-accept');
+    acceptBtn.click();
+    expect(accept).toHaveBeenCalled();
 
-  }))
+    const fakeBackend = httpTestingController.match(`${URL}/${data.coddes}`);
+    fakeBackend[0].flush(resp);
+    expect(fakeBackend[0].request.method).toBe('DELETE');
 
+  })
+
+  it('Load Data (Caso verdadero)', ()=>{
+
+    const data: MotivosFiniquito = {
+      "desde1": "motivo",
+      "desde2": "CCC",
+      "impliq": "0",
+      "classo": "2",
+      "coddes": "2"
+    }
+
+    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const app = fixture.componentInstance;
+
+    app.loadData()
+
+    const fakeBackend = httpTestingController.match(`${URL}`);
+    fakeBackend[0].flush(data);
+    expect(fakeBackend[0].request.method).toBe('GET');
+
+  })
+
+  it('Load Data (Caso Falso)', ()=>{
+
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "No message available",   
+    });
+    
+    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const app = fixture.componentInstance;
+
+    app.loadData()
+
+    const fakeBackend = httpTestingController.expectOne(`${URL}`);
+    fakeBackend.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  })
 });

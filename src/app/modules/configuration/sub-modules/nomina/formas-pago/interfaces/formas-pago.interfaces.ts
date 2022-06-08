@@ -3,10 +3,10 @@ export interface FormasPago {
     despag: string;
     conins: string;
     coninsString?: string;
-    usrcre: string;
-    feccre: Date;
-    usract: string;
-    fecact: Date;
+    usrcre?: string;
+    feccre?: Date;
+    usract?: string;
+    fecact?: Date;
 }
 
 export interface TypeFormasPago {
