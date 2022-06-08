@@ -9,6 +9,7 @@ import { NivelesEducativosService } from '../../services/niveles-educativos.serv
 @Component({
   selector: 'app-modal-add-edit',
   templateUrl: './modal-add-edit.component.html',
+  styleUrls: ['./modal-add-edit.component.scss']
 })
 export class ModalAddEditComponent implements OnInit {
 

@@ -1,7 +1,7 @@
 <!-- Modal agregar -->
 
 <p-dialog [(visible)]="addNivelModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '40vw'}"
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -65,20 +65,23 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple
-                    label="Cancelar"
-                    icon="pi pi-times"
-                    class="p-button my-1"
-                    (click)="closeModalAdd()">
-            </button>
-            <button pButton 
-                    pRipple
-                    type="submit"
-                    label="Guardar"
-                    icon="pi pi-check"
-                    class="p-button my-1"
-                    (click)="saveNivel()">
-            </button>
+            <div class="mt-2">
+                <button pButton 
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModalAdd()">
+                </button>
+                <button pButton 
+                        pRipple
+                        type="submit"
+                        label="Guardar"
+                        icon="pi pi-check"
+                        class="p-button my-1"
+                        (click)="saveNivel()">
+                </button>
+            </div>
         </ng-template>
+
 </p-dialog>
