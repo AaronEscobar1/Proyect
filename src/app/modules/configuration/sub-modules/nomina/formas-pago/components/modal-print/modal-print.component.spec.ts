@@ -107,7 +107,7 @@ describe('ModalPrintComponent Motivos Finiquito', () => {
       "type": null
     }
 
-    app.form.setValue(data)
+    app.form.reset(data)
     expect(app.form.valid).toEqual(true);    
 
     app.resetForm()

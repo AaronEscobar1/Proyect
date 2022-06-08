@@ -1,6 +1,6 @@
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '70vw'}"
+          styleClass="p-fluid" 
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -17,105 +17,54 @@
 
             <form [formGroup]="form" autocomplete="off">
 
-                <div class="formgrid grid">
-                    
-                    <div class="field md:col-3 sm:col-12">
-                        <label for="coddes">Código *</label>
-                        <input  type="text"
-                                id="coddes" 
-                                pInputText
-                                formControlName="coddes"
-                                placeholder="Ingrese el código"/>
-                        <span class="form-text text-danger"
-                              *ngIf="campoInvalid('coddes')">
-                            {{ coddesMsgError }}
-                        </span>
-                    </div>
-
-                    <div class="field md:col-7 sm:col-12">
-                        <label for="desde1">Descripción *</label>
-                        <input  type="text" 
-                                id="desde1"
-                                pInputText
-                                formControlName="desde1" 
-                                placeholder="Ingrese la descripción"/>
-                        <span class="form-text text-danger"
-                              *ngIf="campoInvalid('desde1')">
-                            {{ desde1MsgError }}
-                        </span>
-                    </div>
-
-                    <div class="field md:col-2 sm:col-12">
-                        <label for="impliq" class="flex justify-content-center align-items-center">Imprimir</label>
-                        <div class="field-checkbox mt-3 flex justify-content-center align-items-center">
-                            <p-checkbox id="impliq"
-                                        name="impliq"
-                                        formControlName="impliq"
-                                        [value]="true"
-                                        [binary]="true">
-                            </p-checkbox>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="formgrid grid">
-
-                    <div class="field col-12">
-                        <label for="desde2">Descripción adicional</label>
-                        <input  type="text" 
-                                id="desde2"
-                                pInputText
-                                formControlName="desde2" 
-                                placeholder="Ingrese la descripción adicional"/>
-                        <span class="form-text text-danger"
-                            *ngIf="campoInvalid('desde2')">
-                            La descripción adicional es de longitud máxima de 30 dígitos.
-                        </span>
-                    </div>
-
-                </div>
-
-                <label class="text-lg font-medium mb-3">Clasificación</label>
-
                 <div class="field">
-                    <label for="classo">Tipo de reporte *</label>
-                    <p-dropdown [options]="classificationMotive" 
-                                appendTo="body" 
-                                formControlName="classo" 
-                                inputId="classo"
-                                placeholder="Seleccione el tipo de reporte"
-                                optionLabel="tipoReporte"
-                                optionValue="codigoOficial">
-                        <ng-template let-option pTemplate="item">
-                            <span> {{ option.tipoReporte }} </span>
-                        </ng-template>
-                    </p-dropdown>
+                    <label for="codpag">Código *</label>
+                    <input  type="text"
+                            id="codpag" 
+                            pInputText
+                            formControlName="codpag"
+                            placeholder="Ingrese el código"/>
                     <span class="form-text text-danger"
-                          *ngIf="campoInvalid('classo')">
-                        El tipo de reporte es obligatorio.
+                          *ngIf="campoInvalid('codpag')">
+                        {{ codpagMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="despag">Descripción *</label>
+                    <input  type="text" 
+                            id="despag"
+                            pInputText
+                            formControlName="despag" 
+                            placeholder="Ingrese la descripción"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('despag')">
+                        {{ despagMsgError }}
                     </span>
                 </div>
 
+                <div class="field">
+                    <label for="conins">Tipo de pago *</label>
+                    <p-dropdown [options]="typesPagos" 
+                                appendTo="body" 
+                                formControlName="conins" 
+                                inputId="conins"
+                                placeholder="Seleccione el tipo de pago">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('conins')">
+                        El tipo de pago es obligatorio.
+                    </span>
+                </div>
             </form>
 
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple 
-                    label="Cancelar" 
-                    icon="pi pi-times" 
-                    class="p-button my-1" 
-                    (click)="closeModal()">
-            </button>
-            <button pButton 
-                    pRipple 
-                    type="submit" 
-                    label="Guardar" 
-                    icon="pi pi-check"
-                    class="p-button my-1" 
-                    (click)="save()">
-            </button>
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
         </ng-template>
 </p-dialog>
