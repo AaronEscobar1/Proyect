@@ -8,8 +8,7 @@ import { FormasPagoService } from '../../services/formas-pago.service';
 
 @Component({
   selector: 'app-modal-add-edit',
-  templateUrl: './modal-add-edit.component.html',
-  styleUrls: ['./modal-add-edit.component.scss']
+  templateUrl: './modal-add-edit.component.html'
 })
 export class ModalAddEditComponent implements OnInit {
 
