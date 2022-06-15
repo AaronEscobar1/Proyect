@@ -155,6 +155,10 @@ export class SindicatosComponent implements OnInit {
     this.createModal = false;
   }
 
+  closeModalPrint(): void {
+    this.printModal = false;
+  }
+
   /**
    * Metodo para guardar y actualizar registros
    * @returns void

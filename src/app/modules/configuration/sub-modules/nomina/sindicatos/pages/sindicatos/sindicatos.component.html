@@ -30,10 +30,21 @@
 
 
 <!-- Modal imprimir -->
-<p-dialog [(visible)]="printModal" header="Imprimir sindicatos" [modal]="true" [style]="{width: '40vw'}" class="p-fluid"
-        [draggable]="false" [resizable]="false">
-        
+<p-dialog [(visible)]="printModal" [modal]="true" [showHeader]="false" [closable]="false"
+        class="p-fluid" [breakpoints]="{'960px': '60vw', '640px': '90vw'}" [style]="{width: '40vw'}"  
+        [draggable]="false" [resizable]="false" >
+
         <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>Imprimir sindicatos</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModalPrint()">
+                    </button>
+                </div>
+            </div>
 
             <div class="field">
                 <label for="status">Tipo *</label>
@@ -63,17 +74,31 @@
         </ng-template>
 
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printModal = false"></button>
-            <p-button icon="pi pi-check" (click)="export()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
+            <div class="mt-2">
+                <button pButton 
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModalPrint()">
+                </button>
+                <button pButton 
+                        pRipple
+                        label="Imprimir"
+                        icon="pi pi-print"
+                        class="p-button my-1"
+                        (click)="export()">
+                </button>
+            </div>
         </ng-template>
 </p-dialog>
 
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '90vw'}"
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
           [draggable]="false" [resizable]="false">
 
-          <ng-template pTemplate="content">
+        <ng-template pTemplate="content">
 
             <div class="flex justify-content-between align-items-center my-4">
                 <h5>{{titleForm}}</h5>
@@ -89,7 +114,7 @@
 
                 <div class="formgrid grid">
                     
-                    <div class="field col-4">
+                    <div class="field col-12 md:col-4">
                         <label for="codsin">Código *</label>
                         <input  type="text"
                                 id="codsin" 
@@ -102,7 +127,7 @@
                         </span>
                     </div>
 
-                    <div class="field col-8">
+                    <div class="field col-12 md:col-8">
                         <label for="dessin">Descripción *</label>
                         <textarea id="dessin" 
                                   pInputTextarea 
@@ -121,15 +146,15 @@
                 
                 <div class="formgrid grid">
                     
-                    <div class="col-4">
+                    <div class="col-12 md:col-4">
 
                         <label class="text-lg font-medium mb-3">Registro</label>
                         
                         <div class="formgrid grid">
-                            <div class="field col-3 text-right mt-2">
+                            <div class="field col-4 md:col-3 text-right mt-2">
                                 <label for="registro">Fecha:</label>
                             </div>
-                            <div class="field col-9">
+                            <div class="field col-8 md:col-9">
                                 <p-calendar inputId="registro" 
                                             formControlName="registro"
                                             dateFormat="dd/mm/yy"
@@ -140,11 +165,11 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-3 text-right mt-2">
+                            <div class="field col-4 md:col-3 text-right mt-2">
                                 <label for="nroreg">Número:</label>
                             </div>
                             
-                            <div class="field col-9">
+                            <div class="field col-8 md:col-9">
                                 <p-inputNumber  inputId="nroreg"
                                                 formControlName="nroreg"
                                                 [format]="false"
@@ -159,10 +184,10 @@
                         </div>
                         
                         <div class="formgrid grid">
-                            <div class="field col-3 text-right mt-2">
+                            <div class="field col-4 md:col-3 text-right mt-2">
                                 <label for="ntomo">Tomo:</label>
                             </div>
-                            <div class="field col-9">
+                            <div class="field col-8 md:col-9">
                                 <p-inputNumber  inputId="ntomo"
                                                 formControlName="ntomo"
                                                 [format]="false"
@@ -177,10 +202,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-3 text-right mt-2">
+                            <div class="field col-4 md:col-3 text-right mt-2">
                                 <label for="nfolio">Folio:</label>
                             </div>
-                            <div class="field col-9">
+                            <div class="field col-8 md:col-9">
                                 <p-inputNumber  inputId="nfolio"
                                                 formControlName="nfolio"
                                                 [format]="false"
@@ -218,15 +243,15 @@
 
                     </div>
 
-                    <div class="col-8">
+                    <div class="col-12 md:col-8">
 
                         <label class="text-lg font-medium mb-3">Dirección</label>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="dirsi1">Descripción: </label>
                             </div>
-                            <div class="field col-10">
+                            <div class="field col-8 md:col-9 lg:col-10">
                                 <textarea id="dirsi1" 
                                           pInputTextarea 
                                           formControlName="dirsi1" 
@@ -237,10 +262,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="pais">País: </label>
                             </div>
-                            <div class="field col-3">
+                            <div class="field col-3 md:col-3 lg:col-3">
                                 <p-dropdown [options]="countrys"
                                             inputId="pais"
                                             appendTo="body"
@@ -254,7 +279,7 @@
                                             placeholder="Seleccione un país">
                                 </p-dropdown>
                             </div>
-                            <div class="field col-7">
+                            <div class="field col-5 md:col-6 lg:col-7">
                                 <input  type="text"
                                         pInputText
                                         [value]="countrySelect"
@@ -264,10 +289,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="entidadfed">Ent. federal: </label>
                             </div>
-                            <div class="field col-3">
+                            <div class="field col-3 md:col-3 lg:col-3">
                                 <p-dropdown [options]="federalEntities"
                                             inputId="entidadfed"
                                             appendTo="body"
@@ -281,7 +306,7 @@
                                             placeholder="Seleccione una entidad">
                                 </p-dropdown>
                             </div>
-                            <div class="field col-7">
+                            <div class="field col-5 md:col-6 lg:col-7">
                                 <input  type="text" 
                                         pInputText
                                         [value]="federalEntitySelect"
@@ -291,10 +316,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="cdadCodciu">Ciudad: </label>
                             </div>
-                            <div class="field col-10">
+                            <div class="field col-8 md:col-9 lg:col-10">
                                 <input  type="text"
                                         id="cdadCodciu" 
                                         pInputText
@@ -309,10 +334,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="tlfsi1">Teléfonos: </label>
                             </div>
-                            <div class="field col-10">
+                            <div class="field col-8 md:col-9 lg:col-10">
 
                                 <div>
                                     <p-inputMask inputId="tlfsi1"
@@ -334,10 +359,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="faxsin">Fax: </label>
                             </div>
-                            <div class="field col-10">
+                            <div class="field col-8 md:col-9 lg:col-10">
                                 <p-inputMask inputId="faxsin"
                                              mask="9999-9999999"
                                              formControlName="faxsin"
@@ -347,10 +372,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="tlxsin">Telex: </label>
                             </div>
-                            <div class="field col-10">
+                            <div class="field col-8 md:col-9 lg:col-10">
                                 <p-inputMask inputId="tlxsin"
                                              mask="9999-9999999"
                                              formControlName="tlxsin"
@@ -360,10 +385,10 @@
                         </div>
 
                         <div class="formgrid grid">
-                            <div class="field col-2 text-right mt-2">
+                            <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
                                 <label for="eMail">E-mail: </label>
                             </div>
-                            <div class="field col-10">
+                            <div class="field col-8 md:col-9 lg:col-10">
                                 <input  type="text"
                                         id="eMail" 
                                         pInputText
@@ -386,20 +411,22 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple 
-                    label="Cancelar" 
-                    icon="pi pi-times" 
-                    class="p-button my-1" 
-                    (click)="closeModal()">
-            </button>
-            <button pButton 
-                    pRipple 
-                    type="submit" 
-                    label="Guardar" 
-                    icon="pi pi-check" 
-                    class="p-button my-1" 
-                    (click)="save()">
-            </button>
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-check" 
+                        class="p-button my-1" 
+                        (click)="save()">
+                </button>
+            </div>
         </ng-template>
 </p-dialog>
