@@ -241,15 +241,23 @@
                                 <label for="pais">País: </label>
                             </div>
                             <div class="field col-3">
-                                <input  type="text"
-                                        id="pais" 
-                                        pInputText
-                                        formControlName="paiCodpai"
-                                        placeholder="Código país"/>
+                                <p-dropdown [options]="countrys"
+                                            inputId="pais"
+                                            appendTo="body"
+                                            formControlName="paiCodpai"
+                                            optionLabel="codigo"
+                                            optionValue="codigo"
+                                            #dropdownElement
+                                            (onChange)="countrySelectChange($event, dropdownElement)"
+                                            [showClear]="true"
+                                            (onClear)="clearCountrySelect()"
+                                            placeholder="Seleccione un país">
+                                </p-dropdown>
                             </div>
                             <div class="field col-7">
                                 <input  type="text"
                                         pInputText
+                                        [value]="countrySelect"
                                         [disabled]="true"
                                         placeholder="País"/>
                             </div>
@@ -260,15 +268,23 @@
                                 <label for="entidadfed">Ent. federal: </label>
                             </div>
                             <div class="field col-3">
-                                <input  type="text"
-                                        id="entidadfed" 
-                                        pInputText
-                                        formControlName="edoCodedo"
-                                        placeholder="Código entidad"/>
+                                <p-dropdown [options]="federalEntities"
+                                            inputId="entidadfed"
+                                            appendTo="body"
+                                            formControlName="edoCodedo"
+                                            optionLabel="codEntidad"
+                                            optionValue="codEntidad"
+                                            #dropdownElementEntity
+                                            (onChange)="entitySelectChange(dropdownElementEntity)"
+                                            [showClear]="true"
+                                            (onClear)="clearEntitySelect()"
+                                            placeholder="Seleccione una entidad">
+                                </p-dropdown>
                             </div>
                             <div class="field col-7">
                                 <input  type="text" 
                                         pInputText
+                                        [value]="federalEntitySelect"
                                         [disabled]="true"
                                         placeholder="Entidad federal"/>
                             </div>
