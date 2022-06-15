@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Sindicatos } from '../../interfaces/sindicatos.interfaces';
+import { Sindicatos, Countrys, ObjectEventChange, FederalEntities } from '../../interfaces/sindicatos.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SindicatosService } from '../../services/sindicatos.service';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-sindicatos',
@@ -19,8 +20,12 @@ export class SindicatosComponent implements OnInit {
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
   // Objetos
-  sindicatos: Sindicatos[] = [];
-  typesFile : TypesFile[] = typesFileData;
+  sindicatos         : Sindicatos[]      = [];
+  typesFile          : TypesFile[]       = typesFileData;
+  countrys           : Countrys[]        = [];
+  countrySelect      : String            = '';
+  federalEntities    : FederalEntities[] = [];
+  federalEntitySelect: String            = '';
 
   // Banderas
   isEdit: boolean = false;
@@ -39,37 +44,81 @@ export class SindicatosComponent implements OnInit {
       codsin:  ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
       dessin:  ['', [ Validators.required, Validators.maxLength(60), this.validatedDes.bind(this) ]],
       // Registro
-      registro:  [''],
-      nroreg:    ['', [ Validators.pattern('[0-9]{1,4}') ]],
-      ntomo:     ['', [ Validators.pattern('[0-9]{1,4}') ]],
-      nfolio:    ['', [ Validators.pattern('[0-9]{1,4}') ]],
+      registro:  [  ],
+      nroreg:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
+      ntomo:     [  , [ Validators.pattern('[0-9]{1,4}') ]],
+      nfolio:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
       // Inspectoria
       local:     ['0'],
       // Direccion
-      dirsi1:     [''],
-      paiCodpai:  [''],
-      pais:       [''], // No se debe incluir porque con el codigo de la entidad se trae la entidad
-      edoCodedo:  [''],
-      entidadfed: [''], // No se debe incluir porque con el codigo de la entidad se trae la entidad
-      cdadCodciu: ['', [ Validators.maxLength(30) ]],
-      tlfsi1:     [''],
-      tlfsi2:     [''],
-      faxsin:     [''],
-      tlxsin:     [''],
-      eMail:      ['', [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]]
+      dirsi1:     [  ],
+      paiCodpai:  [  ],
+      edoCodedo:  [  ],
+      cdadCodciu: [  , [ Validators.maxLength(30) ]],
+      tlfsi1:     [  ],
+      tlfsi2:     [  ],
+      faxsin:     [  ],
+      tlxsin:     [  ],
+      eMail:      [  , [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]]
     });
   }
 
   ngOnInit(): void {
     this.loadData();
+    this.loadCountrysData();
   }
 
-  loadData() {
+  loadData(): void {
     this.spinner.show();
     this.sindicatosService.getAll()
       .subscribe({
         next: (resp) => {
           this.sindicatos = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Carga todos los países
+   */
+  loadCountrysData(): void {
+    this.spinner.show();
+    this.sindicatosService.getAllCountry()
+      .subscribe({
+        next: (resp) => {
+          this.countrys = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Carga las entidades relacionadas con el país
+   * @param codCountry: string código país a buscar
+   * @param codEntity: string (opcional) código entidad para mostrar en el formulario
+   */
+  loadEntitiesByCountry(codCountry: string, codEntity?: string | null): void {
+    this.federalEntities = [];
+    this.spinner.show();
+    this.sindicatosService.getEntitiesByCountry(codCountry)
+      .subscribe({
+        next: (resp) => {
+          this.federalEntities = resp;
+          this.form.controls['edoCodedo'].enable();
+          // Colocar el nombre del pais y la entidad en el campo del formulario
+          if (this.isEdit) {
+            this.countrys.find(country => country.codigo === codCountry ? this.countrySelect = country.nombre : '');
+            this.federalEntities.find(entity => entity.codEntidad === codEntity ? this.federalEntitySelect = entity.nombre : '');
+          }
           this.spinner.hide();
         },
         error: (err) => {
@@ -91,16 +140,23 @@ export class SindicatosComponent implements OnInit {
   }
 
   openModalCreate(): void {
+    this.form.controls['edoCodedo'].disable();
     this.titleForm = this.isEdit ? 'Editar sindicato' : 'Agregar sindicato';
     this.createModal = true;
   }
   
-  closeModal() {
+  closeModal(): void {
     this.form.controls['codsin'].enable();
+    this.countrySelect = '';
+    this.federalEntitySelect = '';
     this.isEdit = false;
     this.form.reset();
     this.form.controls['local'].setValue(0);
     this.createModal = false;
+  }
+
+  closeModalPrint(): void {
+    this.printModal = false;
   }
 
   /**
@@ -115,6 +171,11 @@ export class SindicatosComponent implements OnInit {
 
     // Obtener formulario
     let data: Sindicatos = this.form.getRawValue();
+    // Validamos que país y entidad posean datos
+    if ( data.paiCodpai && !data.edoCodedo ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
+      return;
+    }
 
     this.spinner.show();
 
@@ -155,13 +216,16 @@ export class SindicatosComponent implements OnInit {
   /**
    * Carga la data en el formulario para editar
    * @param sindicatos row de la tabla
-   * @returns void
    */
   editRow(sindicatos: Sindicatos): void {
     this.isEdit = true;
     this.form.controls['codsin'].disable();
     // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
     sindicatos.registro = sindicatos.registro ? new Date(sindicatos.registro) : sindicatos.registro;
+    // Cargar pais y entidades si existen
+    if ( sindicatos.paiCodpai ) {
+      this.loadEntitiesByCountry(sindicatos.paiCodpai, sindicatos.edoCodedo);
+    }
     this.form.reset(sindicatos);
     this.openModalCreate();
   }
@@ -169,7 +233,6 @@ export class SindicatosComponent implements OnInit {
   /**
    * Elimina un registro
    * @param sindicato row de la tabla
-   * @returns void
    */
   deleteRow(sindicato: Sindicatos): void {
     this.confirmationService.confirm({
@@ -195,6 +258,52 @@ export class SindicatosComponent implements OnInit {
     });
   }
 
+  /**
+   * Limpia el campo país que se muestra en el formulario
+   */
+  clearCountrySelect() {
+    this.clearEntitySelect();
+    this.federalEntities = [];
+    this.form.controls['edoCodedo'].disable();
+    this.countrySelect = '';
+  }
+
+  /**
+   * Limpia el campo entidad federal que se muestra en el formulario
+   */
+  clearEntitySelect() {
+    this.form.controls['edoCodedo'].reset();
+    this.federalEntitySelect = '';
+  }
+
+  /**
+   * Asigna el país seleccionado en el campo que se muestra en el formulario y
+   * realiza petición al backend para buscar las entidades relacionadas con el país
+   * @param event: ObjectEventChange
+   * @param dropdownElement: Dropdown
+   */
+  countrySelectChange(event: ObjectEventChange, dropdownElement: Dropdown): void {
+    const codCountry = event.value;
+    if (codCountry == null) { return; }
+    // Asignamos el país al campo en el formulario
+    this.countrySelect = dropdownElement.selectedOption.nombre;
+    // Limpiamos el campo entidad federal
+    this.clearEntitySelect();
+    // Peticion al backend para buscar las entidades
+    this.loadEntitiesByCountry(codCountry);
+  }
+
+  /**
+   * Asigna la entidad federal seleccionada en el campo que se muestra en el formulario
+   * @param dropdownElement: Dropdown
+   */
+  entitySelectChange(dropdownElementEntity: Dropdown): void {
+    this.federalEntitySelect = dropdownElementEntity.selectedOption.nombre;
+  }
+
+  /**
+   * Metodo para exportar data
+   */
   export() {
 
   }

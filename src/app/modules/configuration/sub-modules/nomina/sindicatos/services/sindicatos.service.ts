@@ -31,4 +31,13 @@ export class SindicatosService {
   delete(id: string): Observable<any> {
     return this.http.delete(this.helpers.getBasicEndPoint(`/sindicatos/${id}`));
   }
+
+  getAllCountry(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/paises'));
+  }
+
+  getEntitiesByCountry(codCountry: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}`));
+  }
+
 }
