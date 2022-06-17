@@ -80,10 +80,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Sindicatos',
                   routerLink: ['/main/config/basica-deprecated/sindicatos'],
-                },
-                {
-                  label: 'Tipo de identificacion',
-                  routerLink: ['/main/config/basica/tipo-identificacion']
                 }
               ]
             },
@@ -119,6 +115,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   routerLink: ['/main/config/empresa/grupos/rotacion']
                 }
               ]
+            }
+          ]
+        },
+        {
+          label: 'Organización',
+          icon: 'pi pi-sitemap',
+          items: [
+            {
+              label: 'Tipo de identificacion',
+              routerLink: ['/main/config/organizacion/tipo-identificacion']
             }
           ]
         }

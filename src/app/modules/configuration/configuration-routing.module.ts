@@ -12,7 +12,6 @@ const routes: Routes = [
       {
         path: '', component: ConfigHomeComponent
       },
-      // TODO: cambiar nombre de la ruta cuando se pasen todos los modulos a la carpeta Basica
       {
         path: 'basica',
         // LazyLoad
@@ -79,6 +78,11 @@ const routes: Routes = [
         path: 'empresa',
         // LazyLoad
         loadChildren: () => import('./sub-modules/nomina/empresa/empresa.module').then( m => m.EmpresaModule)
+      },
+      {
+        path: 'organizacion',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/organizacion/organizacion.module').then( m => m.OrganizacionModule)
       }
     ]
   },

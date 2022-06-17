@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'tipo-identificacion',
+    // LazyLoad
+    loadChildren: () => import('./tipo-identificacion/tipo-identificacion.module').then( m => m.TipoIdentificacionModule )
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
@@ -15,4 +20,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class BasicaRoutingModule { }
+export class OrganizacionRoutingModule { }
