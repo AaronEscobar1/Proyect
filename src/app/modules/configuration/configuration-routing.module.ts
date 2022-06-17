@@ -14,13 +14,13 @@ const routes: Routes = [
       },
       // TODO: cambiar nombre de la ruta cuando se pasen todos los modulos a la carpeta Basica
       {
-        path: 'basica-nueva',
+        path: 'basica',
         // LazyLoad
         loadChildren: () => import('./sub-modules/nomina/basica/basica.module').then( m => m.BasicaModule)
       },
       // TODO: reemplazar todo cuando se pasen los modulos a la carpeta Basica
       {
-        path: 'basica', 
+        path: 'basica-deprecated', 
         // TODO: Pasar todas estas rutas y carpetas al módulo Basico
         children: [
           {
