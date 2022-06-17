@@ -1,6 +1,6 @@
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '70vw'}"
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -19,7 +19,7 @@
 
                 <div class="formgrid grid">
                     
-                    <div class="field md:col-3 sm:col-12">
+                    <div class="field col-12 md:col-3">
                         <label for="coddes">Código *</label>
                         <input  type="text"
                                 id="coddes" 
@@ -32,7 +32,7 @@
                         </span>
                     </div>
 
-                    <div class="field md:col-7 sm:col-12">
+                    <div class="field col-12 md:col-7">
                         <label for="desde1">Descripción *</label>
                         <input  type="text" 
                                 id="desde1"
@@ -45,7 +45,7 @@
                         </span>
                     </div>
 
-                    <div class="field md:col-2 sm:col-12">
+                    <div class="field col-12 md:col-2">
                         <label for="impliq" class="flex justify-content-center align-items-center">Imprimir</label>
                         <div class="field-checkbox mt-3 flex justify-content-center align-items-center">
                             <p-checkbox id="impliq"
@@ -102,20 +102,22 @@
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple 
-                    label="Cancelar" 
-                    icon="pi pi-times" 
-                    class="p-button my-1" 
-                    (click)="closeModal()">
-            </button>
-            <button pButton 
-                    pRipple 
-                    type="submit" 
-                    label="Guardar" 
-                    icon="pi pi-check"
-                    class="p-button my-1" 
-                    (click)="save()">
-            </button>
+            <div class="mt-2">
+                <button pButton
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModal()">
+                </button>
+                <button pButton
+                        pRipple
+                        type="submit"
+                        label="Guardar"
+                        icon="pi pi-check"
+                        class="p-button my-1"
+                        (click)="save()">
+                </button>
+            </div>
         </ng-template>
 </p-dialog>

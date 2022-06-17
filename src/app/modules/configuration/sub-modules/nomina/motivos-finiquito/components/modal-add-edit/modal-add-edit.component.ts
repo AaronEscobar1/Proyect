@@ -8,7 +8,7 @@ import { MotivosFiniquitoService } from '../../services/motivos-finiquito.servic
 
 @Component({
   selector: 'app-modal-add-edit',
-  templateUrl: './modal-add-edit.component.html',
+  templateUrl: './modal-add-edit.component.html'
 })
 export class ModalAddEditComponent implements OnInit {
 

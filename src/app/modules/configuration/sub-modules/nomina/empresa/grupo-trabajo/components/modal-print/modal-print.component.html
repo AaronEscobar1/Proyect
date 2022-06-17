@@ -58,12 +58,13 @@
                         class="p-button my-1"
                         (click)="closeModalPrint()">
                 </button>
-                <p-button icon="pi pi-check" 
-                        (click)="export()"
+                <button pButton 
+                        pRipple
                         label="Imprimir"
                         icon="pi pi-print"
-                        styleClass="p-button my-1">
-                </p-button>
+                        class="p-button my-1"
+                        (click)="export()">
+                </button>
             </div>
         </ng-template>
 </p-dialog>
