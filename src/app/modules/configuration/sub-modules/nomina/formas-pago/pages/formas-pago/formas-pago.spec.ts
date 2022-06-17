@@ -247,11 +247,33 @@ describe('NivelesEducativosComponent', () => {
 
   it('Load Data (Caso verdadero)', ()=>{
 
-    const data: FormasPago = {
-      "despag": "EFECTIVO",
-      "conins": "1",
-      "codpag": "1"
-    }
+    const data: FormasPago[] = [
+      {
+        "despag": "EFECTIVO",
+        "conins": "1",
+        "codpag": "1"
+      },
+      {
+        "despag": "EFECTIVO",
+        "conins": "2",
+        "codpag": "2"
+      },
+      {
+        "despag": "EFECTIVO",
+        "conins": "3",
+        "codpag": "3"
+      },
+      {
+        "despag": "EFECTIVO",
+        "conins": "4",
+        "codpag": "4"
+      },
+      {
+        "despag": "EFECTIVO",
+        "conins": "5",
+        "codpag": "5"
+      }
+    ]
 
     const fixture = TestBed.createComponent(FormasPagoComponent);
     const app = fixture.componentInstance;
@@ -261,6 +283,8 @@ describe('NivelesEducativosComponent', () => {
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.flush(data);
     expect(fakeBackend.request.method).toBe('GET');
+
+
 
   })
 

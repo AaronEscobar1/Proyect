@@ -14,11 +14,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class CentrosMedicosComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
   // Objetos
   centrosMedicos: CentrosMedicos[] = [];
+  centrosMedicosSelect: CentrosMedicos | undefined;
   typesFile     : TypesFile[] = typesFileData;
 
   // Banderas
@@ -32,12 +30,7 @@ export class CentrosMedicosComponent implements OnInit {
   constructor(private centrosMedicosService: CentrosMedicosService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService,
-              private fb: FormBuilder) {
-    this.form = this.fb.group({
-      codmed: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
-      desmed: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
-    });
+              private spinner: NgxSpinnerService) {
   }
 
   ngOnInit(): void {
@@ -71,68 +64,18 @@ export class CentrosMedicosComponent implements OnInit {
   }
 
   openModalCreate(): void {
-    if (!this.isEdit) {
-      this.form.controls['codmed'].enable();
-    }
     this.titleForm = this.isEdit ? 'Editar centro médico' : 'Agregar centro médico';
     this.createModal = true;
   }
   
   closeModal() {
     this.isEdit = false;
-    this.form.reset();
+    this.centrosMedicosSelect = undefined
     this.createModal = false;
   }
 
-  /**
-   * Metodo para guardar y actualizar registros
-   * @returns void
-   */
-  save(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    // Obtener formulario
-    let data: CentrosMedicos = this.form.getRawValue();
-    // Eliminar espacios en blanco en su atributo
-    data.desmed.trim();
-
-    this.spinner.show();
-
-    if(this.isEdit) {
-      // Editar
-      this.centrosMedicosService.update(data)
-        .subscribe({
-          next: (resp) => {
-            this.closeModal();
-            this.spinner.hide();
-            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          },
-          error: (err) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el centro médico.', life: 3000});
-          } 
-        });
-      return;
-    }
-
-    // Crear
-    this.centrosMedicosService.create(data)
-      .subscribe({
-        next: (resp) => {
-          this.closeModal();
-          this.spinner.hide();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.loadData();
-        },
-        error: (err) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el centro médico.', life: 3000});
-        }
-      });
+  closeModalPrintDialog(): void {
+    this.printModal = false;
   }
 
   /**
@@ -142,8 +85,7 @@ export class CentrosMedicosComponent implements OnInit {
    */
   editRow(centroMedico: CentrosMedicos): void {
     this.isEdit = true;
-    this.form.controls['codmed'].disable();
-    this.form.reset(centroMedico);
+    this.centrosMedicosSelect = centroMedico
     this.openModalCreate();
   }
   
@@ -174,85 +116,6 @@ export class CentrosMedicosComponent implements OnInit {
           });
       }
     });
-  }
-
-  export() {
-
-  }
-
-  /**
-   * VALIDACIONES DEL FORMULARIO REACTIVO
-   */
-  campoInvalid(campo: string) {
-    return (this.form.controls[campo].errors) 
-            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
-              && this.form.invalid;
-  }
-  
-  // Mensajes de errores dinamicos
-  get codmedMsgError(): string {
-    const errors = this.form.get('codmed')?.errors;
-    if ( errors?.required ) {
-      return 'El código es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'El código es de longitud máximo de 4 dígitos.';
-    } else if ( errors?.duplicated ) {
-      return 'El código esta registrado.';
-    }
-    return '';
-  }
-  
-  // Mensajes de errores dinamicos
-  get desmedMsgError(): string {
-    const errors = this.form.get('desmed')?.errors;
-    if ( errors?.required ) {
-      return 'La descripción es obligatoria.';
-    } else if ( errors?.maxlength ) {
-      return 'La descripción es de longitud máxima de 30 dígitos.';
-    } else if ( errors?.duplicated ) {
-      return 'La descripción ya existe.';
-    }
-    return '';
-  }
-
-  /**
-   * Validar id duplicado
-   * @param control 
-   * @returns ValidationErrors | null
-   */
-  validatedId(control: AbstractControl): ValidationErrors | null {
-    if( !control.value ) { return null; }
-      const duplicated = this.centrosMedicos.findIndex(med => med.codmed === control.value);
-      if (duplicated > -1) {
-        return {'duplicated': true};
-      }
-      return null;
-  }
-
-  /**
-   * Validar descripcion duplicado
-   * @param control 
-   * @returns ValidationErrors | null
-   */
-  validatedDesniv(control: AbstractControl): ValidationErrors | null {
-    if (this.isEdit) {
-      if( !control.value && !this.form.getRawValue() && this.centrosMedicos) { return null; }
-      const duplicatedEdit = this.centrosMedicos.findIndex(
-        med => med.desmed.trim().toLowerCase() === this.form.getRawValue().desmed.trim().toLowerCase() 
-                  && med.codmed !== this.form.getRawValue().codmed
-      );
-      if (duplicatedEdit > -1) {
-        return {'duplicated': true};
-      }
-      return null;
-    } else {
-      if( !control.value ) { return null; }
-      const duplicated = this.centrosMedicos.findIndex(med => med.desmed.trim().toLowerCase() === control.value.trim().toLowerCase());
-      if (duplicated > -1) {
-        return {'duplicated': true};
-      }
-      return null;
-    }
   }
 
 }

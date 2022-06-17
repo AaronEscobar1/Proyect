@@ -78,9 +78,7 @@ export class FormasPagoComponent implements OnInit {
 
   refresh(): void {
     this.formasPagos = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {
@@ -109,10 +107,6 @@ export class FormasPagoComponent implements OnInit {
    */
   editRow(formasPago: FormasPago): void {
     this.isEdit = true;
-    if (!formasPago) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
     this.formaPago = formasPago
     this.openModalCreate();
   }
@@ -123,10 +117,6 @@ export class FormasPagoComponent implements OnInit {
    * @returns void
    */
   deleteRow(formasPago: FormasPago): void {
-    if (!formasPago) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
     this.confirmationService.confirm({
       message: `¿Estas seguro que quieres borrar la forma de pago <b>${formasPago.despag}</b>?`,
       header: 'Confirmar',

@@ -1,0 +1,68 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '60vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="field">
+                    <label for="codmed">Código *</label>
+                    <input  type="text"
+                            id="codmed" 
+                            pInputText
+                            formControlName="codmed"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codmed')">
+                        {{ codmedMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="desmed">Descripción *</label>
+                    <textarea id="desmed" 
+                              pInputTextarea 
+                              formControlName="desmed" 
+                              rows="1"
+                              placeholder="Ingrese la descripción">
+                    </textarea>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('desmed')">
+                        {{ desmedMsgError }}
+                    </span>
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    class="p-button my-1"
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    class="p-button my-1" 
+                    (click)="save()">
+            </button>
+        </ng-template>
+</p-dialog>
