@@ -22,7 +22,7 @@ export interface Sindicatos {
     tlfsi2?     : string;
     faxsin?     : string;
     tlxsin?     : string;
-    eMail?      : string;    
+    eMail?      : string | null;    
 }
 
 export interface Countrys {

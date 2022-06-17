@@ -6,6 +6,7 @@ import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.i
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SindicatosService } from '../../services/sindicatos.service';
 import { Dropdown } from 'primeng/dropdown';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-sindicatos',
@@ -39,7 +40,8 @@ export class SindicatosComponent implements OnInit {
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private selectRowService: SelectRowService) {
     this.form = this.fb.group({
       codsin:  ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
       dessin:  ['', [ Validators.required, Validators.maxLength(60), this.validatedDes.bind(this) ]],
@@ -171,6 +173,8 @@ export class SindicatosComponent implements OnInit {
 
     // Obtener formulario
     let data: Sindicatos = this.form.getRawValue();
+    // Comprobamos que el email se envie un correo valido o un null
+    data.eMail == '' ? data.eMail = null : data.eMail
     // Validamos que país y entidad posean datos
     if ( data.paiCodpai && !data.edoCodedo ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
@@ -194,6 +198,7 @@ export class SindicatosComponent implements OnInit {
             this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el sindicato.', life: 3000});
           } 
         });
+      this.selectRowService.selectRow$.emit(null);
       return;
     }
 
