@@ -8,6 +8,11 @@ const routes: Routes = [
     loadChildren: () => import('./tipo-identificacion/tipo-identificacion.module').then( m => m.TipoIdentificacionModule )
   },
   {
+    path: 'estado-civil',
+    // LazyLoad
+    loadChildren: () => import('./estado-civil/estado-civil.module').then( m => m.EstadoCivilModule )
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
