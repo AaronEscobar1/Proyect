@@ -125,6 +125,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             {
               label: 'Tipo de identificacion',
               routerLink: ['/main/config/organizacion/tipo-identificacion']
+            },
+            {
+              label: 'Estados civiles',
+              routerLink: ['/main/config/organizacion/estado-civil']
             }
           ]
         }
