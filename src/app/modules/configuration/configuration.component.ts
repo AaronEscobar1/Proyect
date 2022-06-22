@@ -43,43 +43,43 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               items: [
                 {
                   label: 'Niveles educativos',
-                  routerLink: ['/main/config/basica/niveles-educativos'],
+                  routerLink: ['/main/config/basica-deprecated/niveles-educativos'],
                 },
                 {
                   label: 'Profesiones',
-                  routerLink: ['/main/config/basica/profesiones'],
+                  routerLink: ['/main/config/basica-deprecated/profesiones'],
                 },
                 {
                   label: 'Formas de pago',
-                  routerLink: ['/main/config/basica/formas-pago'],
+                  routerLink: ['/main/config/basica-deprecated/formas-pago'],
                 },
                 {
                   label: 'Motivos de finiquito',
-                  routerLink: ['/main/config/basica/motivos-finiquito'],
+                  routerLink: ['/main/config/basica-deprecated/motivos-finiquito'],
                 },
                 {
                   label: 'Procesos',
-                  routerLink: ['/main/config/basica/procesos'],
+                  routerLink: ['/main/config/basica-deprecated/procesos'],
                 },
                 {
                   label: 'Categorias',
-                  routerLink: ['/main/config/basica/categories'],
+                  routerLink: ['/main/config/basica-deprecated/categories'],
                 },
                 {
                   label: 'Centros médicos',
-                  routerLink: ['/main/config/basica/centros-medicos'],
+                  routerLink: ['/main/config/basica-deprecated/centros-medicos'],
                 },
                 {
                   label: 'Valores oficiales',
-                  routerLink: ['/main/config/basica/valor-oficial'],
+                  routerLink: ['/main/config/basica-deprecated/valor-oficial'],
                 },
                 {
                   label: 'Clasificación oficial',
-                  routerLink: ['/main/config/basica/clasificacion-oficial'],
+                  routerLink: ['/main/config/basica-deprecated/clasificacion-oficial'],
                 },
                 {
                   label: 'Sindicatos',
-                  routerLink: ['/main/config/basica/sindicatos'],
+                  routerLink: ['/main/config/basica-deprecated/sindicatos'],
                 }
               ]
             },
@@ -115,6 +115,20 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   routerLink: ['/main/config/empresa/grupos/rotacion']
                 }
               ]
+            }
+          ]
+        },
+        {
+          label: 'Organización',
+          icon: 'pi pi-sitemap',
+          items: [
+            {
+              label: 'Tipo de identificacion',
+              routerLink: ['/main/config/organizacion/tipo-identificacion']
+            },
+            {
+              label: 'Estados civiles',
+              routerLink: ['/main/config/organizacion/estado-civil']
             }
           ]
         }

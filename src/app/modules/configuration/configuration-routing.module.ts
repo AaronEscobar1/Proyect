@@ -13,7 +13,15 @@ const routes: Routes = [
         path: '', component: ConfigHomeComponent
       },
       {
-        path: 'basica', children: [
+        path: 'basica',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/basica/basica.module').then( m => m.BasicaModule)
+      },
+      // TODO: reemplazar todo cuando se pasen los modulos a la carpeta Basica
+      {
+        path: 'basica-deprecated', 
+        // TODO: Pasar todas estas rutas y carpetas al módulo Basico
+        children: [
           {
             path: 'niveles-educativos',
             // LazyLoad
@@ -70,6 +78,11 @@ const routes: Routes = [
         path: 'empresa',
         // LazyLoad
         loadChildren: () => import('./sub-modules/nomina/empresa/empresa.module').then( m => m.EmpresaModule)
+      },
+      {
+        path: 'organizacion',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/organizacion/organizacion.module').then( m => m.OrganizacionModule)
       }
     ]
   },
