@@ -152,19 +152,6 @@ export class ModalAddEditComponent implements OnInit {
     return '';
   }
 
-  // Mensajes de errores dinamicos
-  get nomadiMsgError(): string {
-    const errors = this.form.get('desadic')?.errors;
-    if ( errors?.required ) {
-      return 'La descripción adicional es obligatoria.';
-    } else if ( errors?.maxlength ) {
-      return 'La descripción adicional es de longitud máxima de 30 dígitos.';
-    } else if ( errors?.duplicated ) {
-      return 'La descripción adicional ya existe.';
-    }
-    return '';
-  }
-
   /**
    * Validar id duplicado
    * @param control 

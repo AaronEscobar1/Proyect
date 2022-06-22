@@ -16,6 +16,10 @@ export class ModalAddEditComponent implements OnInit {
   // Objetos Input()
   @Input() sindicatos!: Sindicatos[];
   @Input() sindicatosSelect!: Sindicatos | undefined;
+  @Input() countrys!: Countrys[] ;
+  @Input() federalEntities!: FederalEntities[] ;
+  @Input() countrySelect!: string;
+  @Input() federalEntitySelect!: string;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -32,12 +36,6 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
   emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-
-  // Objetos
-  countrys           : Countrys[]        = [];
-  countrySelect      : String            = '';
-  federalEntities    : FederalEntities[] = [];
-  federalEntitySelect: String            = '';
 
   constructor(private sindicatosService: SindicatosService, 
               private spinner: NgxSpinnerService,
@@ -56,6 +54,8 @@ export class ModalAddEditComponent implements OnInit {
           local:     ['0'],
           // Direccion
           dirsi1:     [  ],
+          dirsi2:     [  ],
+          dirsi3:     [  ],
           paiCodpai:  [  ],
           edoCodedo:  [  ],
           cdadCodciu: [  , [ Validators.maxLength(30) ]],
@@ -96,10 +96,10 @@ export class ModalAddEditComponent implements OnInit {
     // Comprobamos que el email se envie un correo valido o un null
     data.eMail == '' ? data.eMail = null : data.eMail
     // Validamos que país y entidad posean datos
-    if ( data.paiCodpai && !data.edoCodedo ) {
-      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
-      return;
-    }
+    // if ( data.paiCodpai && !data.edoCodedo ) {
+    //   this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
+    //   return;
+    // }
 
     this.spinner.show();
 
@@ -174,6 +174,9 @@ export class ModalAddEditComponent implements OnInit {
    * @param dropdownElement: Dropdown
    */
   countrySelectChange(event: ObjectEventChange, dropdownElement: Dropdown): void {
+    console.log(event, 'event');
+    console.log(dropdownElement, 'dropdownElement');
+    
     const codCountry = event.value;
     if (codCountry == null) { return; }
     // Asignamos el país al campo en el formulario
@@ -259,7 +262,7 @@ export class ModalAddEditComponent implements OnInit {
    */
   validatedDes(control: AbstractControl): ValidationErrors | null {
     if (this.isEdit) {
-      if( !control.value && !this.form.getRawValue() && this.sindicatos) { return null; }
+      if( !control.value ) { return null; }
       const duplicatedEdit = this.sindicatos.findIndex(
         sin => sin.dessin.trim().toLowerCase() === this.form.getRawValue().dessin.trim().toLowerCase() 
                   && sin.codsin !== this.form.getRawValue().codsin

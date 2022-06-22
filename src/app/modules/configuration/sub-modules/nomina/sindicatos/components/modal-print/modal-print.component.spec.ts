@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Profession } from '../../interfaces/professions.interfaces';
+import { Sindicatos } from '../../interfaces/sindicatos.interfaces';
 
 // Servicios y componentes requeridos
 import { ModalPrintComponent } from './modal-print.component';

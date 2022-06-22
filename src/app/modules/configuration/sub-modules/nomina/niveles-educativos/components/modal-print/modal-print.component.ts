@@ -35,7 +35,7 @@ export class ModalPrintComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  export() {
+  exportPdf() {
     // Obtener formulario
     const data = this.form.getRawValue();
     console.log(data);
