@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'compania',
+    // LazyLoad
+    loadChildren: () => import('./compania/compania.module').then( m => m.CompaniaModule),
+  },
+  {
     path: 'empresa',
     // LazyLoad
     loadChildren: () => import('./empresa/empresa.module').then( m => m.EmpresaModule),
