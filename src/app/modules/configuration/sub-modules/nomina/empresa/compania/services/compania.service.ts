@@ -32,4 +32,12 @@ export class CompaniaService {
     return this.http.delete(this.helpers.getBasicEndPoint(`/empresas/${id}`));
   }
 
+  getAllCountry(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/paises'));
+  }
+
+  getEntitiesByCountry(codCountry: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}`));
+  }
+
 }
