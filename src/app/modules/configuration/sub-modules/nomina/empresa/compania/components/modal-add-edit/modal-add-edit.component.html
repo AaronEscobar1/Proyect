@@ -1,0 +1,399 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="id">Código de empresa: *</label>
+                        <input  type="text"
+                                id="id" 
+                                pInputText
+                                formControlName="id"
+                                placeholder="Ingrese el código de empresa">
+                            <span class="form-text text-danger"
+                                  *ngIf="campoInvalid('id')">
+                                {{ idMsgError }}
+                            </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="nombre">Nombre completo: *</label>
+                        <input  type="text" 
+                                id="nombre"
+                                pInputText 
+                                formControlName="nombre"
+                                placeholder="Ingrese el nombre"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('nombre')">
+                            {{ nombreMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="nombreAbrev">Nombre abreviado: *</label>
+                        <input  type="text" 
+                                id="nombreAbrev"
+                                pInputText
+                                formControlName="nombreAbrev"
+                                placeholder="Ingrese el nombre abreviado"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('nombreAbrev')">
+                            {{ nombreAbrevMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="clave">Clave de venta: </label>
+                        <input  type="text" 
+                                id="clave"
+                                pInputText
+                                formControlName="clave"
+                                placeholder="Ingrese la clave de venta"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('clave')">
+                            La clave de venta es de longitud máxima de 20 dígitos.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="sectorEmp">Sector empresarial: *</label>
+                        <p-dropdown [options]="sectorEmpre"
+                                    inputId="sectorEmp"
+                                    appendTo="body"
+                                    [showClear]="true"
+                                    optionLabel="descripcion"
+                                    optionValue="sectorEmp"
+                                    formControlName="sectorEmp"
+                                    placeholder="Seleccione un sector empresarial">
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('sectorEmp')">
+                            El sector empresarial es obligatorio.
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="publica">Concepto económico: *</label>
+                        <p-dropdown [options]="conceptoEco"
+                                    inputId="publica"
+                                    appendTo="body"
+                                    optionDisabled="inactive"
+                                    [showClear]="true"
+                                    formControlName="publica"
+                                    placeholder="Seleccione un concepto económico">
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('publica')">
+                            El concepto económico es obligatorio.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="capitalPag">Capital pagado: </label>
+                        <input  type="text" 
+                                id="capitalPag"
+                                pInputText
+                                formControlName="capitalPag"
+                                placeholder="Ingrese el capital pagado, ejemplo: 1000.50"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('capitalPag')">
+                            El capital pagado es de longitud de 25 enteros y 9 decimales y es de formato numérico.
+                        </span>
+                    </div>
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="capitalSub">Capital suscrito: </label>
+                        <input  type="text" 
+                                id="capitalSub"
+                                pInputText
+                                formControlName="capitalSub"
+                                placeholder="Ingrese el capital suscrito, ejemplo: 1000.50"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('capitalSub')">
+                            El capital suscrito es de longitud de 25 enteros y 9 decimales y es de formato numérico.
+                        </span>
+                    </div>
+
+                </div>
+                
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="rif1">Primer RIF: *</label>
+                        <input  type="text"
+                                id="rif1" 
+                                pInputText
+                                formControlName="rif1"
+                                placeholder="Ingrese el primer RIF">
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('rif1')">
+                            {{ rif1MsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="rif2">Segundo RIF: </label>
+                        <input  type="text"
+                                id="rif2" 
+                                pInputText
+                                formControlName="rif2"
+                                placeholder="Ingrese el segundo RIF">
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('rif2')">
+                              El segundo rif es de longitud máxima de 15 dígitos y es de formato alfanumérico.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="pais">País: </label>
+                        <p-dropdown [options]="countrys"
+                                    inputId="pais"
+                                    appendTo="body"
+                                    formControlName="idPais"
+                                    optionLabel="nombre"
+                                    optionValue="codigo"
+                                    (onChange)="countrySelectChange($event)"
+                                    [showClear]="true"
+                                    (onClear)="clearCountrySelect()"
+                                    placeholder="Seleccione un país">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="entidad">Entidad federal: </label>
+                        <p-dropdown [options]="federalEntities"
+                                    inputId="entidadfed"
+                                    appendTo="body"
+                                    formControlName="idEntfe"
+                                    optionLabel="nombre"
+                                    optionValue="codEntidad"
+                                    [showClear]="true"
+                                    (onClear)="clearEntitySelect()"
+                                    placeholder="Seleccione una entidad federal">
+                        </p-dropdown>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="ciudad">Ciudad: </label>
+                        <input  type="text"
+                                id="ciudad" 
+                                pInputText
+                                formControlName="ciudad"
+                                placeholder="Ingrese el ciudad">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('ciudad')">
+                            La ciudad es de longitud máxima de 30 dígitos.
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="codPostal">Código postal: </label>
+                        <input  type="text"
+                                id="codPostal" 
+                                pInputText
+                                formControlName="codPostal"
+                                placeholder="Ingrese el código postal">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('codPostal')">
+                            La código postal es de longitud máxima de 10 dígitos.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="telefono1">Teléfono 1: *</label>
+                        <input  type="text"
+                                id="telefono1"
+                                pInputText
+                                formControlName="telefono1"
+                                placeholder="Ingrese el teléfono 1">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('telefono1')">
+                            {{ telefono1MsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="telefono2">Teléfono 2: </label>
+                        <input  type="text"
+                                id="telefono2"
+                                pInputText
+                                formControlName="telefono2"
+                                placeholder="Ingrese el teléfono 2">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('telefono2')">
+                            El segundo teléfono es de longitud máxima de 15 dígitos y es de formato numérico.
+                        </span>
+                    </div>
+
+                </div>
+                
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="fax">Fax: </label>
+                        <input  type="text"
+                                id="fax"
+                                pInputText
+                                formControlName="fax"
+                                placeholder="Ingrese el fax">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('fax')">
+                            El fax es de longitud máxima de 15 dígitos y es de formato alfanumérico.
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="eMail">Correo electrónico: </label>
+                        <input  type="text"
+                                id="eMail"
+                                pInputText
+                                formControlName="eMail"
+                                placeholder="Ingrese el correo electrónico">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('eMail')">
+                            {{ eMailMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="paginaWeb">Página web: </label>
+                        <input  type="text" 
+                                id="paginaWeb"
+                                pInputText
+                                formControlName="paginaWeb"
+                                placeholder="Ingrese la página web, ejemplo: www.google.com"/>
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('paginaWeb')">
+                            La página web no tiene un formato válido.
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="feFunda">Fecha de fundación: </label>
+                        <p-calendar inputId="feFunda" 
+                                    formControlName="feFunda"
+                                    dateFormat="dd/mm/yy"
+                                    placeholder="dd/mm/yyyy"
+                                    appendTo="body">
+                        </p-calendar>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12">
+                        <label for="direccion">Dirección: *</label>
+                        <textarea id="direccion" 
+                                  pInputTextarea 
+                                  rows="2"
+                                  formControlName="direccion"
+                                  placeholder="Ingrese la dirección">
+                        </textarea>
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('direccion')">
+                            {{ direccionMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6">
+                        <label for="filemail">Servidor de correo: </label>
+                        <input  type="text"
+                                id="filemail" 
+                                pInputText
+                                formControlName="filemail"
+                                placeholder="Ingrese el servidor de correo">
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('filemail')">
+                              {{ filemailMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="subpro">Sub-proceso (RNET): </label>
+                        <input  type="text"
+                                id="subpro" 
+                                pInputText
+                                formControlName="subprocesoRnet"
+                                placeholder="Ingrese el sub-proceso">
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('subprocesoRnet')">
+                            El Sub-proceso es de longitud máxima de 10 dígitos y es de formato numérico.
+                        </span>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple
+                        type="submit"
+                        label="Guardar"
+                        icon="pi pi-check"
+                        class="p-button my-1"
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+
+</p-dialog>

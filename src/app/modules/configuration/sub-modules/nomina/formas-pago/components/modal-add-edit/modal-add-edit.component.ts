@@ -48,6 +48,7 @@ export class ModalAddEditComponent implements OnInit {
   
   ngOnChanges() {
     if( !this.isEdit ) {
+      this.form.reset();
       this.form.controls['codpag'].enable();
       return;
     }

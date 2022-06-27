@@ -4,8 +4,9 @@ export interface TypesFile {
 }
 
 export interface dropdownType {
-    label: string;
-    value: string;
+    label    : string;
+    value    : string;
+    inactive?: boolean;
 }
 
 export const typesFileData: TypesFile[] = [

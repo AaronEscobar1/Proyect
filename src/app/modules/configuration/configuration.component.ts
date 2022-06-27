@@ -87,6 +87,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               label: 'Empresa',
               items: [
                 {
+                  label: 'Compañia',
+                  routerLink: ['/main/config/empresa/compania'],
+                },
+                {
                   label: 'Empresa',
                   routerLink: ['/main/config/empresa/empresa'],
                 },
