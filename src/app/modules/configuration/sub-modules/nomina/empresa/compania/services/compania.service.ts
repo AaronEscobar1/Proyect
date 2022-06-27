@@ -40,4 +40,8 @@ export class CompaniaService {
     return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}`));
   }
 
+  getSectoresEmpresas(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/sectoresempresas`));
+  }
+
 }

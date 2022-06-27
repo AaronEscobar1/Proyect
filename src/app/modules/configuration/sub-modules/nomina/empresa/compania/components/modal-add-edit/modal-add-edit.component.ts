@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Company, sectorEmpresaData, conceptoEconomicoData } from '../../interfaces/compania.interfaces';
+import { Company, conceptoEconomicoData, SectorEmpresas } from '../../interfaces/compania.interfaces';
 import { Validators, FormGroup, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CompaniaService } from '../../services/compania.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -31,11 +31,12 @@ export class ModalAddEditComponent implements OnInit {
 
   // Formulario reactivo
   form!: FormGroup;
-  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
+  // Regex validators
+  emailPattern    : string = '^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]{3,}\\.[a-zA-Z]{2,}$';
 
   // Objetos
-  sectorEmpre    : dropdownType[]    = sectorEmpresaData;
+  sectorEmpre    : SectorEmpresas[] = [];
   conceptoEco    : dropdownType[]    = conceptoEconomicoData;
   countrys       : Countrys[]        = [];
   federalEntities: FederalEntities[] = [];
@@ -52,8 +53,8 @@ export class ModalAddEditComponent implements OnInit {
       clave:          ['' , [ Validators.maxLength(20) ]],
       sectorEmp:      [   , [ Validators.required ]],
       publica:        [   , [ Validators.required ]],
-      capitalPag:     [   ], //[ Validators.pattern('([0-9]{0,13})+\\,[0-9]{0,2}$') ]], // Mejorar validación ^([0-9]{1,25})+([,][0-9]{1,9})?$
-      capitalSub:     [   ], //[ Validators.pattern('[0-9]{0,15}')]], // Mejorar validación ^([0-9]{1,25})+([,][0-9]{1,9})?$
+      capitalPag:     [   , [ this.validateCapital.bind(this) ]], 
+      capitalSub:     [   , [ this.validateCapital.bind(this) ]],
       rif1:           [   , [ Validators.required, Validators.maxLength(15) ]],
       rif2:           [   , [ Validators.maxLength(15) ]],
       idPais:         [  ],
@@ -64,7 +65,7 @@ export class ModalAddEditComponent implements OnInit {
       telefono2:      [   , [ Validators.pattern('[0-9]{1,15}') ]],
       fax:            [   , [ Validators.maxLength(15) ]],
       eMail:          [   , [ Validators.maxLength(60), Validators.pattern(this.emailPattern) ]],
-      paginaWeb:      [  ],
+      paginaWeb:      [   , [ this.validatePaginaWeb.bind(this) ]],
       feFunda:        [  ],
       direccion:      [   , [ Validators.required, Validators.maxLength(120) ]],
       filemail:       [   , [ Validators.maxLength(60), Validators.pattern(this.emailPattern) ]],
@@ -74,10 +75,12 @@ export class ModalAddEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCountrysData();
+    this.loadSectoresEmpresas();
   }
 
   ngOnChanges() {
     if (!this.isEdit) {
+      this.form.reset();
       this.form.controls['id'].enable();
       this.form.controls['idEntfe'].disable();
       return;
@@ -111,7 +114,25 @@ export class ModalAddEditComponent implements OnInit {
         }
       });
   }
-  
+
+  /**
+   * Carga lista de sectores empresariales
+   */
+  loadSectoresEmpresas(): void {
+    this.spinner.show()
+    this.companiaService.getSectoresEmpresas()
+      .subscribe({
+        next: (resp) => {
+          this.sectorEmpre = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
   /**
    * Carga las entidades relacionadas con el país
    * @param codCountry: string código país a buscar
@@ -140,14 +161,15 @@ export class ModalAddEditComponent implements OnInit {
     }
     // Obtener formulario
     let data: Company = this.form.getRawValue();
-    
+    // Enviar eMail o telefono2 null
+    data.eMail == '' ? data.eMail = null : data.eMail;
+    data.telefono2 == '' ? data.telefono2 = null : data.telefono2;
     // Validamos que país y entidad posean datos
     if ( data.idPais && !data.idEntfe ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
       return;
     }
     
-    // console.log(data);
     this.spinner.show();
     
     if (this.isEdit) {
@@ -225,7 +247,7 @@ export class ModalAddEditComponent implements OnInit {
   campoInvalid( campo: string ) {
     return (this.form.controls[campo].errors) 
             && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
-             && this.form.invalid;
+            && this.form.invalid;
   }
 
   // Mensajes de errores id
@@ -324,6 +346,24 @@ export class ModalAddEditComponent implements OnInit {
     return this.companias.findIndex(val => val.id === control.value) > -1 ?
                                     {'duplicated': true} :
                                     null;
+  }
+
+  // Validar que cumpla con la expresión regular 25 numeros enteros y 9 decimales maximo
+  validateCapital(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let capitalPattern = new RegExp(/^([0-9]{1,25})(\.[0-9]{1,9})?$/g);
+    return !capitalPattern.test(control.value) ? 
+                              {'patternError': true } :
+                              null;
+  }
+
+  // Validar que cumpla con la expresión regular pagina web correcta
+  validatePaginaWeb(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let paginaWebPattern = new RegExp(/^(https?:\/\/)?[a-zA-Z0-9\-]+\.[a-zA-Z0-9\/\-\?\=]{2,}/g);
+    return !paginaWebPattern.test(control.value) ?
+                                {'patternError': true} :
+                                null;
   }
 
 }

@@ -85,6 +85,8 @@
                                     inputId="sectorEmp"
                                     appendTo="body"
                                     [showClear]="true"
+                                    optionLabel="descripcion"
+                                    optionValue="sectorEmp"
                                     formControlName="sectorEmp"
                                     placeholder="Seleccione un sector empresarial">
                         </p-dropdown>
@@ -116,29 +118,24 @@
 
                     <div class="field col-12 md:col-6">
                         <label for="capitalPag">Capital pagado: </label>
-                        <input  type="number" 
+                        <input  type="text" 
                                 id="capitalPag"
                                 pInputText
                                 formControlName="capitalPag"
-                                placeholder="Ingrese el capital pagado"/>
+                                placeholder="Ingrese el capital pagado, ejemplo: 1000.50"/>
                         <span class="form-text text-danger"
                               *ngIf="campoInvalid('capitalPag')">
-                            El capital pagado es de longitud de 25 enteros y 2 decimales y es de formato numérico.
+                            El capital pagado es de longitud de 25 enteros y 9 decimales y es de formato numérico.
                         </span>
-                        <!-- <pre> {{
-                            this.form.controls['capitalPag'].value 
-                                ? this.form.controls['capitalPag'].value.length 
-                                : null}}
-                        </pre> -->
                     </div>
                     
                     <div class="field col-12 md:col-6">
                         <label for="capitalSub">Capital suscrito: </label>
-                        <input  type="number" 
+                        <input  type="text" 
                                 id="capitalSub"
                                 pInputText
                                 formControlName="capitalSub"
-                                placeholder="Ingrese el capital suscrito"/>
+                                placeholder="Ingrese el capital suscrito, ejemplo: 1000.50"/>
                         <span class="form-text text-danger"
                               *ngIf="campoInvalid('capitalSub')">
                             El capital suscrito es de longitud de 25 enteros y 9 decimales y es de formato numérico.
@@ -308,7 +305,11 @@
                                 id="paginaWeb"
                                 pInputText
                                 formControlName="paginaWeb"
-                                placeholder="Ingrese la página web"/>
+                                placeholder="Ingrese la página web, ejemplo: www.google.com"/>
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('paginaWeb')">
+                            La página web no tiene un formato válido.
+                        </span>
                     </div>
 
                     <div class="field col-12 md:col-6">
