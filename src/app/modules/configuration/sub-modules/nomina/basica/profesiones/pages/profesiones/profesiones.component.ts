@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProfesionesService } from '../../services/profesiones.service';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { Profession } from '../../interfaces/professions.interfaces';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({
   selector: 'app-profesiones',

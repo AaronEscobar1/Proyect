@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Profession } from '../interfaces/professions.interfaces';
-import { HttpService } from '../../../../../../shared/services/http/http.service';
-import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
+import { Helpers } from 'src/app/shared/helpers/helpers';
+import { HttpService } from 'src/app/shared/services/http/http.service';
 
 @Injectable({
   providedIn: 'root'

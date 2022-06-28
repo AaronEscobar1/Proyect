@@ -23,11 +23,6 @@ const routes: Routes = [
         // TODO: Pasar todas estas rutas y carpetas al módulo Basico
         children: [
           {
-            path: 'profesiones',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/profesiones/profesiones.module').then( m => m.ProfesionesModule),
-          },
-          {
             path: 'formas-pago',
             // LazyLoad
             loadChildren: () => import('./sub-modules/nomina/formas-pago/formas-pago.module').then( m => m.FormasPagoModule),

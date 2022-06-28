@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { Profession } from '../../interfaces/professions.interfaces';
 import { ProfesionesService } from '../../services/profesiones.service';
 
 @Component({
@@ -25,9 +24,9 @@ export class ModalPrintComponent implements OnInit {
   constructor(private profesionesService: ProfesionesService, 
               private fb: FormBuilder) { 
     this.form = this.fb.group({
-      type: [],
-      id: [''],
-      des: ['']
+      type: [ ],
+      id:   [''],
+      des:  ['']
     });
   }
 
