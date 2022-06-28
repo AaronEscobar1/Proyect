@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Helpers } from '../../../../../../shared/helpers/helpers';
-import { HttpService } from '../../../../../../shared/services/http/http.service';
+import { Helpers } from 'src/app/shared/helpers/helpers';
+import { HttpService } from 'src/app/shared/services/http/http.service';
 import { NivelesEducativos } from '../interfaces/niveles-educativos.interfaces';
 
 @Injectable({
