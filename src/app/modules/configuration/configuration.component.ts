@@ -51,7 +51,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Formas de pago',
-                  routerLink: ['/main/config/basica-deprecated/formas-pago'],
+                  routerLink: ['/main/config/basica/formas-pago'],
                 },
                 {
                   label: 'Motivos de finiquito',

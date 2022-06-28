@@ -1,7 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FormasPago } from '../../interfaces/formas-pago.interfaces';
 
 // Servicios y componentes requeridos
 import { ModalPrintComponent } from './modal-print.component';

@@ -13,6 +13,11 @@ const routes: Routes = [
     loadChildren: () => import('./profesiones/profesiones.module').then( m => m.ProfesionesModule),
   },
   {
+    path: 'formas-pago',
+    // LazyLoad
+    loadChildren: () => import('./formas-pago/formas-pago.module').then( m => m.FormasPagoModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];

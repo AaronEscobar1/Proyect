@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
-import { FormasPagoService } from '../../services/formas-pago.service';
 import { FormasPago } from '../../interfaces/formas-pago.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 
 @Component({
   selector: 'app-data-table',

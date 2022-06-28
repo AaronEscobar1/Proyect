@@ -14,7 +14,7 @@
                 </tr> 
                 <tr>
                     <th *ngFor="let col of columns">
-                        <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false">
+                        <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                 <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '..'">
                             </ng-template>

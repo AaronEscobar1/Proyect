@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 import { FormasPagoService } from '../../services/formas-pago.service';
-import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({
   selector: 'app-formas-pago',
   templateUrl: './formas-pago.component.html',
-  styleUrls: ['./formas-pago.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class FormasPagoComponent implements OnInit {
