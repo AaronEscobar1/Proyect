@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Countrys, ValorOficial } from '../../interfaces/valor-oficial.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ValoresOficialesService } from '../../services/valores-oficiales.service';
-import { valorOficialData } from '../../interfaces/valor-oficial';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({
   selector: 'app-valores-oficiales',
   templateUrl: './valores-oficiales.component.html',
-  styleUrls: ['./valores-oficiales.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class ValoresOficialesComponent implements OnInit {
@@ -38,8 +36,7 @@ export class ValoresOficialesComponent implements OnInit {
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private fb: FormBuilder,
-              private helpers: Helpers) {
-  }
+              private helpers: Helpers) { }
 
   ngOnInit(): void {
     this.loadData();

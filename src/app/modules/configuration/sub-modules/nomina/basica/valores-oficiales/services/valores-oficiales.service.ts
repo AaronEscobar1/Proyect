@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ValorOficial } from '../interfaces/valor-oficial.interfaces';
-import { ResponseBack } from '../../../../../../shared/interfaces/response.interfaces';
 import { Observable } from 'rxjs';
-import { HttpService } from '../../../../../../shared/services/http/http.service';
-import { Helpers } from '../../../../../../shared/helpers/helpers';
+import { HttpService } from 'src/app/shared/services/http/http.service';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Injectable({
   providedIn: 'root'

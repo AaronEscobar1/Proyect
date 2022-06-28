@@ -69,7 +69,7 @@ export class ModalAddEditComponent implements OnInit {
 
     // Obtener formulario
     let data: ValorOficial = this.form.getRawValue();
-    console.log(data);
+    // console.log(data);
     
     // Eliminar espacios en blanco en su atributo
     data.paisId.trim();

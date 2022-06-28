@@ -71,7 +71,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Valores oficiales',
-                  routerLink: ['/main/config/basica-deprecated/valor-oficial'],
+                  routerLink: ['/main/config/basica/valor-oficial'],
                 },
                 {
                   label: 'Clasificación oficial',

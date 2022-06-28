@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { ValorOficial } from '../../interfaces/valor-oficial.interfaces';
 import { ValoresOficialesService } from '../../services/valores-oficiales.service';
 
 @Component({
