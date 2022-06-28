@@ -76,33 +76,6 @@ export class SindicatosComponent implements OnInit {
       });
   }
 
-  /**
-   * Carga las entidades relacionadas con el país
-   * @param codCountry: string código país a buscar
-   * @param codEntity: string (opcional) código entidad para mostrar en el formulario
-   */
-  loadEntitiesByCountry(codCountry: string, codEntity?: string | null): void {
-    this.federalEntities = [];
-    this.spinner.show();
-    this.sindicatosService.getEntitiesByCountry(codCountry)
-      .subscribe({
-        next: (resp) => {
-          this.federalEntities = resp;
-          this.form.controls['edoCodedo'].enable();
-          // Colocar el nombre del pais y la entidad en el campo del formulario
-          if (this.isEdit) {
-            this.countrys.find(country => country.codigo === codCountry ? this.countrySelect = country.nombre : '');
-            this.federalEntities.find(entity => entity.codEntidad === codEntity ? this.federalEntitySelect = entity.nombre : '');
-          }
-          this.spinner.hide();
-        },
-        error: (err) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-        }
-      });
-  }
-
   refresh(): void {
     this.sindicatos = [];
     setTimeout(() => {
@@ -137,13 +110,7 @@ export class SindicatosComponent implements OnInit {
    */
   editRow(sindicatos: Sindicatos): void {
     this.isEdit = true;
-    // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
-    sindicatos.registro = sindicatos.registro ? new Date(sindicatos.registro) : sindicatos.registro;
-    // Cargar pais y entidades si existen
-    if ( sindicatos.paiCodpai ) {
-      this.loadEntitiesByCountry(sindicatos.paiCodpai, sindicatos.edoCodedo);
-    }
-    this.sindicatosSelect = sindicatos
+    this.sindicatosSelect = sindicatos;
     this.openModalCreate();
   }
 
