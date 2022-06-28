@@ -1,0 +1,86 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [style]="{width: '40vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="field">
+                    <label for="tipevlo">ID Valores Oficiales *</label>
+                    <input  type="text"
+                            id="id" 
+                            pInputText
+                            formControlName="id"
+                            placeholder="Ingrese el tipo de valor"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('id')">
+                        {{ idvloMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="paisId">Pais *</label>
+                    <p-dropdown [options]="countrys"
+                        inputId="paisId"
+                        appendTo="body"
+                        formControlName="paisId"
+                        optionLabel="codigo"
+                        optionValue="codigo"
+                        #dropdownElement
+                        [showClear]="true"
+                        placeholder="Seleccione un país">
+                    </p-dropdown>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('paisId')">
+                        {{ tipevloMsgError }}
+                    </span>
+                </div>
+                
+                <div class="field">
+                    <label for="datevlo">Fecha *</label>
+                    <p-calendar id="fecefe" 
+                                formControlName="fecefe"
+                                dateFormat="dd/mm/yy"
+                                placeholder="dd/mm/yyyy"
+                                appendTo="body">
+                    </p-calendar>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('fecefe')">
+                        {{ datevloMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="valor">Valor *</label>
+                    <p-inputNumber id="valor"
+                                    type="number"
+                                    formControlName="valor" 
+                                    placeholder="Ingrese el valor">
+                    </p-inputNumber>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('valor')">
+                        {{ valorMsgError }}
+                    </span>
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="closeModal()"></button>
+            <button pButton pRipple type="submit" label="Guardar" icon="pi pi-check" class="p-button" (click)="save()"></button>
+        </ng-template>
+</p-dialog>

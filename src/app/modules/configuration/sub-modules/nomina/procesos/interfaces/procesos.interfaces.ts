@@ -2,5 +2,5 @@ export interface Procesos {
     tippro: number;
     nompro: string;
     nodefi: string;
-    nomadi: string;
+    nomadi: string | null;
 }

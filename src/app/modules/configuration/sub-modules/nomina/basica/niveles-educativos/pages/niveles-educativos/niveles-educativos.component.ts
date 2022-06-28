@@ -73,9 +73,7 @@ export class NivelesEducativosComponent implements OnInit {
 
   refresh(): void {
     this.niveles = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   editRow(nivel: NivelesEducativos) {

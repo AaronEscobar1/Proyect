@@ -19,6 +19,7 @@ export class ClasificacionOficialComponent implements OnInit {
 
   // Objetos
   officialClassification: OfficialClassification[] = [];
+  officialClassificationSelect: OfficialClassification | undefined;
   typesFile             : TypesFile[] = typesFileData;
 
   // Banderas
@@ -32,13 +33,8 @@ export class ClasificacionOficialComponent implements OnInit {
   constructor(private clasificacionOficialService: ClasificacionOficialService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService,
-              private fb: FormBuilder) {
-    this.form = this.fb.group({
-      codofi: ['', [ Validators.required, Validators.maxLength(2), this.validatedId.bind(this) ]],
-      desofi: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
-      tiprep: ['', [ Validators.required, Validators.maxLength(2) ]]
-    });
+              private confirmationService: ConfirmationService) {
+    
   }
 
   ngOnInit(): void {
@@ -72,79 +68,28 @@ export class ClasificacionOficialComponent implements OnInit {
   }
 
   openModalCreate(): void {
-    if (!this.isEdit) {
-      this.form.controls['codofi'].enable();
-    }
     this.titleForm = this.isEdit ? 'Editar clasificación oficial' : 'Agregar clasificación oficial';
     this.createModal = true;
   }
   
   closeModal() {
     this.isEdit = false;
-    this.form.reset();
+    this.officialClassificationSelect = undefined;
     this.createModal = false;
   }
 
-  /**
-   * Metodo para guardar y actualizar registros
-   * @returns void
-   */
-  save(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    // Obtener formulario
-    let data: OfficialClassification = this.form.getRawValue();
-    // Eliminar espacios en blanco en su atributo
-    data.desofi.trim();
-
-    // this.spinner.show();
-
-    if(this.isEdit) {
-      // Editar
-      this.clasificacionOficialService.update(data)
-        .subscribe({
-          next: (resp) => {
-            this.closeModal();
-            this.spinner.hide();
-            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.loadData();
-          },
-          error: (err) => {
-            this.spinner.hide();
-            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la clasificación. ' + err.error.detail, life: 3000});
-          } 
-        });
-      return;
-    }
-
-    // Crear
-    this.clasificacionOficialService.create(data)
-      .subscribe({
-        next: (resp) => {
-          this.closeModal();
-          this.spinner.hide();
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.loadData();
-        },
-        error: (err) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la clasificación. ' + err.error.detail, life: 3000});
-        }
-      });
+  closeModalPrintDialog(): void {
+    this.printModal = false;
   }
 
   /**
    * Carga la data en el formulario para editar
-   * @param OfficialClassification row de la tabla
+   * @param officialClassification row de la tabla
    * @returns void
    */
   editRow(officialClassification: OfficialClassification): void {
     this.isEdit = true;
-    this.form.controls['codofi'].disable();
-    this.form.reset(officialClassification);
+    this.officialClassificationSelect = officialClassification
     this.openModalCreate();
   }
 
@@ -175,87 +120,6 @@ export class ClasificacionOficialComponent implements OnInit {
           });
       }
     });
-  }
-
-  export() {
-
-  }
-
-  /**
-   * VALIDACIONES DEL FORMULARIO REACTIVO
-   */
-  campoInvalid(campo: string) {
-    return (this.form.controls[campo].errors) 
-            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
-              && this.form.invalid;
-  }
-  
-  // Mensajes de errores dinamicos
-  get codofiMsgError(): string {
-    const errors = this.form.get('codofi')?.errors;
-    if ( errors?.required ) {
-      return 'El código es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'El código es de longitud máximo de 2 dígitos.';
-    } else if ( errors?.duplicated ) {
-      return 'El código esta registrado.';
-    }
-    return '';
-  }
-  
-  // Mensajes de errores dinamicos
-  get desofiMsgError(): string {
-    const errors = this.form.get('desofi')?.errors;
-    if ( errors?.required ) {
-      return 'La descripción es obligatoria.';
-    } else if ( errors?.maxlength ) {
-      return 'La descripción es de longitud máxima de 30 dígitos.';
-    } else if ( errors?.duplicated ) {
-      return 'La descripción ya existe.';
-    }
-    return '';
-  }
-
-  /**
-   * Validar id duplicado
-   * @param control 
-   * @returns ValidationErrors | null
-   */
-  validatedId(control: AbstractControl): ValidationErrors | null {
-    if( !control.value ) { return null; }
-      const duplicated = this.officialClassification.findIndex(val => val.codofi === control.value);
-      if (duplicated > -1) {
-        return {'duplicated': true};
-      }
-      return null;
-  }
-
-  /**
-   * Validar descripcion duplicado
-   * @param control 
-   * @returns ValidationErrors | null
-   */
-  validatedDesniv(control: AbstractControl): ValidationErrors | null {
-    // Validaciones para crear
-    if (!this.isEdit) {
-      if( !control.value ) { return null; }
-      const duplicated = this.officialClassification.findIndex(val => val.desofi.trim().toLowerCase() === control.value.trim().toLowerCase());
-      if (duplicated > -1) {
-        return {'duplicated': true};
-      }
-      return null;
-      
-    } 
-    // Validaciones para editar 
-    if ( this.form.getRawValue().desofi == null ) { return null; }
-      const duplicatedEdit = this.officialClassification.findIndex(
-        val => val.desofi.trim().toLowerCase() === this.form.getRawValue().desofi.trim().toLowerCase() 
-                  && val.codofi !== this.form.getRawValue().codofi
-      );
-      if (duplicatedEdit > -1) {
-        return {'duplicated': true};
-      }
-      return null;
   }
   
 }

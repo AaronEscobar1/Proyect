@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValorOficial } from '../../interfaces/valor-oficial.interfaces';
+import { Countrys, ValorOficial } from '../../interfaces/valor-oficial.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { Helpers } from '../../../../../../../shared/helpers/helpers';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -21,6 +21,8 @@ export class ValoresOficialesComponent implements OnInit {
 
   // Objetos
   valoresOficiales: ValorOficial[] = [];
+  countrys: Countrys[] = [];
+  valoresSelect!: ValorOficial | undefined;
   typesFile       : TypesFile[] = typesFileData;
 
   // Banderas
@@ -37,32 +39,31 @@ export class ValoresOficialesComponent implements OnInit {
               private confirmationService: ConfirmationService,
               private fb: FormBuilder,
               private helpers: Helpers) {
-    this.form = this.fb.group({
-      codvlo: [],
-      tipevlo: ['', [ Validators.required ]],
-      datevlo: ['', [ Validators.required ]],
-      valor: ['', [ Validators.required, Validators.maxLength(10) ]],
-    });
   }
 
   ngOnInit(): void {
     this.loadData();
+    this.loadCountrysData();
   }
 
   loadData() {
     this.spinner.show();
-    setTimeout(() => {
-      this.valoresOficiales = valorOficialData;
-      console.log(' > ', this.valoresOficiales );
-      this.spinner.hide();
-    }, 500);
+    this.valoresOficialesService.getAll()
+      .subscribe({
+        next: (res) => {
+          this.valoresOficiales = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
     this.valoresOficiales = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {
@@ -76,50 +77,13 @@ export class ValoresOficialesComponent implements OnInit {
   
   closeModal() {
     this.isEdit = false;
-    this.form.reset();
     this.createModal = false;
-  }
-
-  /**
-   * Metodo para guardar y actualizar registros
-   * @returns void
-   */
-  save(): void {
-    console.log('this.form.value > ', this.form.getRawValue());
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    // Obtener formulario
-    let data: ValorOficial = this.form.getRawValue();
-    // Eliminar espacios en blanco en su atributo
-    data.tipevlo.trim();
-
-    this.spinner.show();
-
-    if(this.isEdit) {
-      // Editar
-      console.log('Update', data);
-      this.valoresOficiales[this.findIndexById(this.form.getRawValue().codvlo)] = this.form.getRawValue();
-      this.valoresOficiales = [...this.valoresOficiales];
-      this.spinner.hide();
-      this.closeModal();
-      return;
-    }
-
-    // Crear
-    console.log('Create', data);
-    this.valoresOficiales.push(data);
-    this.valoresOficiales = [...this.valoresOficiales];
-    this.spinner.hide();
-    this.closeModal();
   }
 
   findIndexById(id: string): number {
     let index = -1;
     for (let i = 0; i < this.valoresOficiales.length; i++) {
-        if (this.valoresOficiales[i].codvlo === id) {
+        if (this.valoresOficiales[i].id === id) {
             index = i;
             break;
         }
@@ -128,18 +92,41 @@ export class ValoresOficialesComponent implements OnInit {
   } 
 
   /**
+   * Carga todos los países
+   */
+   loadCountrysData(): void {
+    this.spinner.show();
+    this.valoresOficialesService.getAllCountry()
+      .subscribe({
+        next: (resp) => {
+          this.countrys = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  closeModalPrintDialog(): void {
+    this.printModal = false;
+  }
+
+  /**
    * Carga la data en el formulario para editar
    * @param valorOficial row de la tabla
    * @returns void
    */
-   editRow(valorOficial: ValorOficial): void {
+   editRow(valorOficial: ValorOficial): void {    
     this.isEdit = true;
     if (!valorOficial) {  
       this.helpers.openErrorAlert('No se encontro el id.')
       return;
     }
-    // this.form.controls['codcat'].disable();
-    this.form.reset(valorOficial);
+    valorOficial.fecefe = valorOficial.fecefe ? new Date(valorOficial.fecefe) : valorOficial.fecefe;
+
+    this.valoresSelect = valorOficial
     this.openModalCreate();
   }
 
@@ -154,59 +141,25 @@ export class ValoresOficialesComponent implements OnInit {
       return; 
     }
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el valor oficial <b>${valorOficial.codvlo}</b>?`,
+      message: `¿Estas seguro que quieres borrar el valor oficial <b>${valorOficial.id}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-        this.valoresOficiales = this.valoresOficiales.filter(valOf => valOf.codvlo !== valorOficial.codvlo);
-        this.spinner.hide();
+        this.valoresOficialesService.delete(valorOficial)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.loadData();
+            },
+            error: (err) => {
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar Valor Oficial.', life: 3000});
+            }
+          });
       }
     });
   }
-
-  export() {
-
-  }
-
-
-  /**
-   * VALIDACIONES DEL FORMULARIO REACTIVO
-   */
-  campoInvalid(campo: string) {
-    return (this.form.controls[campo].errors) 
-            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
-              && this.form.invalid;
-  }
-  
-  // Mensajes de errores dinamicos
-  get tipevloMsgError(): string {
-    const errors = this.form.get('tipevlo')?.errors;
-    if ( errors?.required ) {
-      return 'El tipo es obligatorio.';
-    }
-    return '';
-  }
- 
-  // Mensajes de errores dinamicos
-  get datevloMsgError(): string {
-    const errors = this.form.get('datevlo')?.errors;
-    if ( errors?.required ) {
-      return 'La fecha es obligatoria.';
-    }
-    return '';
-  }
-  
-  // Mensajes de errores dinamicos
-  get valorMsgError(): string {
-    const errors = this.form.get('valor')?.errors;
-    if ( errors?.required ) {
-      return 'El valor es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'El valor es de longitud máxima de 10 dígitos.';
-    }
-    return '';
-  }
-
 }

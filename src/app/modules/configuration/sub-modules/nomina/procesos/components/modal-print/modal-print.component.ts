@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { NivelesEducativosService } from '../../services/niveles-educativos.service';
+import { Procesos } from '../../interfaces/procesos.interfaces';
+import { ProcesosService } from '../../services/procesos.service';
 
 @Component({
   selector: 'app-modal-print',
@@ -11,10 +11,10 @@ import { NivelesEducativosService } from '../../services/niveles-educativos.serv
 export class ModalPrintComponent implements OnInit {
 
   // Ver modal
-  @Input() printNivelModal!: boolean;
+  @Input() printModal!: boolean;
 
   // Emisión de eventos (cerrar)
-  @Output() onCloseModalPrint  = new EventEmitter();
+  @Output() onCloseModalPrint = new EventEmitter();
 
   // Formulario
   form!: FormGroup
@@ -22,9 +22,8 @@ export class ModalPrintComponent implements OnInit {
   // Objeto
   typesFile: TypesFile[] = typesFileData;
 
-  constructor(private nivelesServices: NivelesEducativosService, 
-              private fb: FormBuilder,
-              private selectRowService: SelectRowService) { 
+  constructor(private procesosService: ProcesosService, 
+              private fb: FormBuilder) { 
     this.form = this.fb.group({
       type: [],
       id: [''],
@@ -36,10 +35,7 @@ export class ModalPrintComponent implements OnInit {
   }
 
   export() {
-    // Obtener formulario
-    const data = this.form.getRawValue();
-    console.log(data);
-    this.resetForm();
+    console.log(this.form.value);
   }
 
   resetForm(): void {
@@ -47,7 +43,7 @@ export class ModalPrintComponent implements OnInit {
   }
 
   closeModalPrint(): void {
-    this.form.reset();
+    this.resetForm();
     this.onCloseModalPrint.emit();
   }
 

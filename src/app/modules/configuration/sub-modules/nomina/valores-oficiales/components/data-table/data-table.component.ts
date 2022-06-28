@@ -19,8 +19,9 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'tipevlo', header: 'Tipo' },
-      { field: 'datevlo', header: 'Fecha' },
+      { field: 'id', header: 'id' },
+      { field: 'paisId', header: 'País' },
+      { field: 'fecefe', header: 'Fecha' },
       { field: 'valor',   header: 'Valor' }
     ];
   }

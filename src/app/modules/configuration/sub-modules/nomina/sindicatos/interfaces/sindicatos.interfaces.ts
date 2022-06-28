@@ -3,25 +3,27 @@ export interface Sindicatos {
     dessin      : string;
     
     // Registro
-    registro    : Date;
-    nroreg      : string;
-    ntomo       : string;
-    nfolio      : string;
+    registro    : Date | null;
+    nroreg      : string | null;
+    ntomo       : string | null;
+    nfolio      : string | null;
 
     // Inspectoria
     local       : string;
 
     // Direccion
-    dirsi1?     : string;
-    paiCodpai   : string;
-    pais        : string;
-    edoCodedo   : string;
-    entidadfed  : string;
-    cdadCodciu? : string;
-    tlfsi1?     : string;
-    tlfsi2?     : string;
-    faxsin?     : string;
-    tlxsin?     : string;
+    dirsi1?     : string | null;
+    dirsi2?     : string | null;
+    dirsi3?     : string | null;
+    paiCodpai   : string | null;
+    pais?        : string | null;
+    edoCodedo   : string | null;
+    entidadfed?  : string | null;
+    cdadCodciu? : string | null;
+    tlfsi1?     : string | null;
+    tlfsi2?     : string | null;
+    faxsin?     : string | null;
+    tlxsin?     : string | null;
     eMail?      : string | null;    
 }
 
