@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 // Modules
 import { ClasificacionOficialRoutingModule } from './clasificacion-oficial-routing.module';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 // Components
 import { ClasificacionOficialComponent } from './pages/clasificacion-oficial/clasificacion-oficial.component';

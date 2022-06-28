@@ -23,11 +23,6 @@ const routes: Routes = [
         // TODO: Pasar todas estas rutas y carpetas al módulo Basico
         children: [
           
-          {
-            path: 'clasificacion-oficial',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/clasificacion-oficial/clasificacion-oficial.module').then( m => m.ClasificacionOficialModule),
-          },
           
           {
             path: 'sindicatos',

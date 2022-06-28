@@ -43,6 +43,11 @@ const routes: Routes = [
     loadChildren: () => import('./valores-oficiales/valores-oficiales.module').then( m => m.ValoresOficialesModule),
   },
   {
+    path: 'clasificacion-oficial',
+    // LazyLoad
+    loadChildren: () => import('./clasificacion-oficial/clasificacion-oficial.module').then( m => m.ClasificacionOficialModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { OfficialClassification } from '../../interfaces/clasificacion-oficial.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,7 +9,6 @@ import { ClasificacionOficialService } from '../../services/clasificacion-oficia
 @Component({
   selector: 'app-clasificacion-oficial',
   templateUrl: './clasificacion-oficial.component.html',
-  styleUrls: ['./clasificacion-oficial.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class ClasificacionOficialComponent implements OnInit {
