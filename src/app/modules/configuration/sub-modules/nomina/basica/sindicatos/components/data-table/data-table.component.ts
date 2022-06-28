@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Sindicatos } from '../../interfaces/sindicatos.interfaces';
-import { TableHead } from '../../../../../../../shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 
 @Component({
   selector: 'app-data-table',

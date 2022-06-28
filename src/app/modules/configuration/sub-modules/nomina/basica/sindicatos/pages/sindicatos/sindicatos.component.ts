@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { Sindicatos, Countrys, ObjectEventChange, FederalEntities } from '../../interfaces/sindicatos.interfaces';
-import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
+import { FormGroup } from '@angular/forms';
+import { Sindicatos, Countrys, FederalEntities } from '../../interfaces/sindicatos.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SindicatosService } from '../../services/sindicatos.service';
-import { Dropdown } from 'primeng/dropdown';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-sindicatos',

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 // Modules
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { SindicatosRoutingModule } from './sindicatos-routing.module';
 
 // Components

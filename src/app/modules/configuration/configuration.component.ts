@@ -79,7 +79,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Sindicatos',
-                  routerLink: ['/main/config/basica-deprecated/sindicatos'],
+                  routerLink: ['/main/config/basica/sindicatos'],
                 }
               ]
             },

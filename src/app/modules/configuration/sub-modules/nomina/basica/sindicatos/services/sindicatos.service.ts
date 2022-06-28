@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Sindicatos } from '../interfaces/sindicatos.interfaces';
-import { HttpService } from '../../../../../../shared/services/http/http.service';
-import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
+import { HttpService } from 'src/app/shared/services/http/http.service';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Injectable({
   providedIn: 'root'
