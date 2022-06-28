@@ -59,7 +59,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Procesos',
-                  routerLink: ['/main/config/basica-deprecated/procesos'],
+                  routerLink: ['/main/config/basica/procesos'],
                 },
                 {
                   label: 'Categorias',

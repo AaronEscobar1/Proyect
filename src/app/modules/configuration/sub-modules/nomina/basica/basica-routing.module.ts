@@ -23,6 +23,11 @@ const routes: Routes = [
     loadChildren: () => import('./motivos-finiquito/motivos-finiquito.module').then( m => m.MotivosFiniquitoModule),
   },
   {
+    path: 'procesos',
+    // LazyLoad
+    loadChildren: () => import('./procesos/procesos.module').then( m => m.ProcesosModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];

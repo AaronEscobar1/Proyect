@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Procesos } from '../../interfaces/procesos.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { ProcesosService } from '../../services/procesos.service';
@@ -9,7 +9,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-procesos',
   templateUrl: './procesos.component.html',
-  styleUrls: ['./procesos.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class ProcesosComponent implements OnInit {
