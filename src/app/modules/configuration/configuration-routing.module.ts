@@ -24,11 +24,6 @@ const routes: Routes = [
         children: [
           
           {
-            path: 'centros-medicos',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/centros-medicos/centros-medicos.module').then( m => m.CentrosMedicosModule),
-          },
-          {
             path: 'clasificacion-oficial',
             // LazyLoad
             loadChildren: () => import('./sub-modules/nomina/clasificacion-oficial/clasificacion-oficial.module').then( m => m.ClasificacionOficialModule),

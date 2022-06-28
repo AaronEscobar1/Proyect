@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 // Modules
 import { CentrosMedicosRoutingModule } from './centros-medicos-routing.module';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 // Components
 import { CentrosMedicosComponent } from './pages/centros-medicos/centros-medicos.component';

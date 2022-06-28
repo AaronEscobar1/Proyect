@@ -67,7 +67,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Centros médicos',
-                  routerLink: ['/main/config/basica-deprecated/centros-medicos'],
+                  routerLink: ['/main/config/basica/centros-medicos'],
                 },
                 {
                   label: 'Valores oficiales',

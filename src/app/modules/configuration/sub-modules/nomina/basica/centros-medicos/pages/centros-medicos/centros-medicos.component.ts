@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CentrosMedicos } from '../../interfaces/centro-medico.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { CentrosMedicosService } from '../../services/centros-medicos.service';
@@ -9,7 +8,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-centros-medicos',
   templateUrl: './centros-medicos.component.html',
-  styleUrls: ['./centros-medicos.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class CentrosMedicosComponent implements OnInit {
