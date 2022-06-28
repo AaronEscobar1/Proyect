@@ -8,7 +8,6 @@ import { SindicatosService } from '../../services/sindicatos.service';
 @Component({
   selector: 'app-sindicatos',
   templateUrl: './sindicatos.component.html',
-  styleUrls: ['./sindicatos.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class SindicatosComponent implements OnInit {

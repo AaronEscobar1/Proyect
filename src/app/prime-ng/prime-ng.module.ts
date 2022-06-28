@@ -18,6 +18,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { PanelModule } from 'primeng/panel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SkeletonModule } from "primeng/skeleton";
@@ -46,6 +47,7 @@ import { ToastModule } from 'primeng/toast';
     MessageModule,
     MenubarModule,
     PanelMenuModule,
+    PanelModule,
     ProgressSpinnerModule,
     RadioButtonModule,
     SkeletonModule,
