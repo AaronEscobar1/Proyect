@@ -1,0 +1,48 @@
+<!-- Modal imprimir -->
+<p-dialog [(visible)]="printModal" [modal]="true" [showHeader]="false" [style]="{width: '40vw'}" class="p-fluid"
+[draggable]="false" [resizable]="false" [closable]="false">
+        
+        <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>Imprimir Centros Medicos</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModalPrint()">
+                    </button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="status">Tipo *</label>
+                <p-dropdown [options]="typesFile" 
+                            appendTo="body"
+                            [showClear]="true"
+                            placeholder="Seleccione un tipo" >
+                </p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="id">Código</label>
+                <input  type="text"
+                        pInputText
+                        id="id"
+                        placeholder="Ingrese el código"/>
+            </div>
+            
+            <div class="field">
+                <label for="desniv">Descripción</label>
+                <input  type="text"
+                        pInputText
+                        id="desniv"
+                        placeholder="Ingrese la descripción"/>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printModal = false"></button>
+            <p-button icon="pi pi-check" (click)="export()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
+        </ng-template>
+</p-dialog>

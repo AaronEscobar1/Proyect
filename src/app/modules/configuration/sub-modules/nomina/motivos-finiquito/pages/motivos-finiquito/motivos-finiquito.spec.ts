@@ -11,7 +11,7 @@ import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('NivelesEducativosComponent', () => {
+describe('MotivosFiniquitoComponent', () => {
 
   let httpTestingController: HttpTestingController;
 
@@ -40,7 +40,7 @@ describe('NivelesEducativosComponent', () => {
 
   }));
 
-  it('Crear componente de Niveles Educativos correctamente', () => {
+  it('Crear componente de motivos finiquito correctamente', () => {
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
@@ -95,7 +95,7 @@ describe('NivelesEducativosComponent', () => {
     
   })
 
-  it('Abrir modal de Crear Nivel', async () => {
+  it('Abrir modal de Crear motivos finiquito', async () => {
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
 
@@ -107,7 +107,7 @@ describe('NivelesEducativosComponent', () => {
     expect(app.createModal).toBeTrue();  
   })
 
-  it('Cerrar Modal de Crear Nivel', async () => {
+  it('Cerrar Modal de Crear motivos finiquito', async () => {
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
     
@@ -124,7 +124,7 @@ describe('NivelesEducativosComponent', () => {
     expect(app.createModal).toBeFalse();  
   })
 
-  it('Abrir modal de Editar Nivel', async () => {
+  it('Abrir modal de Editar motivos finiquito', async () => {
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
 
@@ -148,7 +148,7 @@ describe('NivelesEducativosComponent', () => {
     expect(app.createModal).toBeTrue();  
   })
 
-  it('Cerrar Modal de Editar Nivel', async () => {
+  it('Cerrar Modal de Editar motivos finiquito', async () => {
     const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
     const app = fixture.componentInstance;
 
@@ -180,7 +180,7 @@ describe('NivelesEducativosComponent', () => {
     expect(app.createModal).toBeFalse(); 
   })
 
-  it('Eliminar Niveles Educativos (caso fallido)', ()=>{
+  it('Eliminar motivos finiquito (caso fallido)', ()=>{
 
     const data: MotivosFiniquito = {
       "desde1": "motivo",
@@ -217,7 +217,7 @@ describe('NivelesEducativosComponent', () => {
 
   })
 
-  it('Eliminar Niveles Educativos (caso verdadero)', ()=>{
+  it('Eliminar motivos finiquito (caso verdadero)', ()=>{
 
     const data: MotivosFiniquito = {
       "desde1": "motivo",
@@ -231,7 +231,7 @@ describe('NivelesEducativosComponent', () => {
     const app = fixture.componentInstance;
 
     const resp = {
-      "message": "Nivel eliminado con éxito.",
+      "message": "motivos finiquito eliminado con éxito.",
       "status": "success"
     }
 

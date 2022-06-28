@@ -15,6 +15,7 @@ import { TableSkeletonComponent } from './components/table-skeleton/table-skelet
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { ButtonsComponent } from './components/buttons/buttons.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ButtonsComponent } from './components/buttons/buttons.component';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    CalendarModule
   ],
   exports: [
     CommonModule,

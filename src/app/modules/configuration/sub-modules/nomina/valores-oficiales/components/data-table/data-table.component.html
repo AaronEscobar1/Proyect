@@ -25,8 +25,9 @@
 
             <ng-template pTemplate="body" let-valorOficial>
                 <tr [pSelectableRow]="valorOficial">
-                    <td>{{ valorOficial.tipevlo }}</td>
-                    <td>{{ valorOficial.datevlo | date: 'dd/MM/YYYY' }}</td>
+                    <td>{{ valorOficial.id }}</td>
+                    <td>{{ valorOficial.paisId }}</td>
+                    <td>{{ valorOficial.fecefe | date: 'dd/MM/YYYY' }}</td>
                     <td>{{ valorOficial.valor | number: '1.4-4':'es-ve' }}</td>
                 </tr>
             </ng-template>

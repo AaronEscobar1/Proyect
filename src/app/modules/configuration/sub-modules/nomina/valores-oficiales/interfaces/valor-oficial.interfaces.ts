@@ -1,6 +1,11 @@
 export interface ValorOficial {
-    codvlo: string;
-    tipevlo: string;
-    datevlo: Date;
-    valor: string;
+    valor: string | number,
+    id: string,
+    fecefe: Date | string,
+    paisId: string;
+}
+
+export interface Countrys {
+    nombre: string;
+    codigo: string;
 }

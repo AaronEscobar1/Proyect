@@ -32,176 +32,19 @@
     </div>
 </div>
 
-<!-- Modal imprimir -->
-<p-dialog [(visible)]="printModal" header="Imprimir procesos" [modal]="true" [style]="{width: '40vw'}" class="p-fluid"
-        [draggable]="false" [resizable]="false">
-        
-        <ng-template pTemplate="content">
+<!-- Modal Imprimir -->
+<app-modal-print  
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print>
 
-            <div class="field">
-                <label for="status">Tipo *</label>
-                <p-dropdown [options]="typesFile" 
-                            appendTo="body"
-                            [showClear]="true"
-                            placeholder="Seleccione un tipo">
-                </p-dropdown>
-            </div>
-
-            <div class="field">
-                <label for="id">Código</label>
-                <input  type="text"
-                        pInputText
-                        id="id"
-                        placeholder="Ingrese el código"/>
-            </div>
-            
-            <div class="field">
-                <label for="desniv">Descripción</label>
-                <input  type="text"
-                        pInputText
-                        id="desniv"
-                        placeholder="Ingrese la descripción"/>
-            </div>
-
-        </ng-template>
-
-        <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printModal = false"></button>
-            <p-button icon="pi pi-check" (click)="export()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
-        </ng-template>
-</p-dialog>
-
-<!-- Modal agregar -->
-<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [style]="{width: '60vw'}"
-          [draggable]="false" [resizable]="false">
-
-          <ng-template pTemplate="content">
-
-            <div class="flex justify-content-between align-items-center my-4">
-                <h5>{{titleForm}}</h5>
-                <div class="p-dialog-header-icons">
-                    <button pButton pRipple type="button" icon="pi pi-times"
-                            class="p-button-rounded p-button-secondary p-button-text"
-                            (click)="closeModal()">
-                    </button>
-                </div>
-            </div>
-
-            <form [formGroup]="form" autocomplete="off">
-               
-                <div class="formgrid grid">
-
-                    <div class="field col-12 md:col-3">
-                        <label for="tippro">Código *</label>
-                        <input  type="number"
-                                id="tippro" 
-                                pInputText
-                                formControlName="tippro"
-                                placeholder="Ingrese el código"/>
-                        <span class="form-text text-danger"
-                            *ngIf="campoInvalid('tippro')">
-                            {{ tipproMsgError }}
-                        </span>
-                    </div>
-                    
-                    <div class="field col-12 md:col-9">
-                        <label for="nompro">Descripción *</label>
-                        <textarea id="nompro" 
-                                pInputTextarea 
-                                formControlName="nompro" 
-                                rows="1"
-                                placeholder="Ingrese la descripción">
-                        </textarea>
-                        <span class="form-text text-danger"
-                            *ngIf="campoInvalid('nompro')">
-                            {{ nomproMsgError }}
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="formgrid grid">
-
-                    <div class="field col-12 md:col-9">
-                        <label for="nomadi">Descripción adicional</label>
-                        <textarea id="nomadi" 
-                                pInputTextarea 
-                                formControlName="nomadi"
-                                rows="1"
-                                placeholder="Ingrese la descripción adicional">
-                        </textarea>
-                        <span class="form-text text-danger"
-                            *ngIf="campoInvalid('nomadi')">
-                            {{ nomadiMsgError }}
-                        </span>
-                    </div>
-                    
-                    <div class="field col-12 md:col-3">
-                        <label for="nodefi" class="flex justify-content-center align-items-center">No definitivo</label>
-                        <div class="field-checkbox mt-3 flex justify-content-center align-items-center">
-                            <p-checkbox id="nodefi"
-                                        name="nodefi"
-                                        formControlName="nodefi"
-                                        [value]="true"
-                                        [binary]="true">
-                            </p-checkbox>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- <label class="text-lg font-medium mb-3">Sub-procesos</label>
-
-                <div class="field">
-                    <label for="codsec">Código sub-proceso *</label>
-                    <input type="text"
-                           id="codsec" 
-                           pInputText
-                           formControlName="codsec"
-                           placeholder="Ingrese el código del sub proceso"/>
-                    <span class="form-text text-danger"
-                          *ngIf="campoInvalid('codsec')">
-                        {{ codsecMsgError }}
-                    </span>
-                </div>
-
-                <div class="field">
-                    <label for="dessec">Descripción sub-proceso *</label>
-                    <textarea id="dessec" 
-                              pInputTextarea 
-                              formControlName="dessec"
-                              rows="1"
-                              placeholder="Ingrese la descripción de sub proceso">
-                    </textarea>
-                    <span class="form-text text-danger"
-                          *ngIf="campoInvalid('dessec')">
-                        {{ dessecMsgError }}
-                    </span>
-                </div> -->
-
-            </form>
-
-        </ng-template>
-        
-        <ng-template pTemplate="footer">
-            <div class="grid">
-                <div class="col-12">
-                    <button pButton 
-                            pRipple 
-                            label="Cancelar" 
-                            icon="pi pi-times" 
-                            class="p-button my-1"
-                            (click)="closeModal()">
-                    </button>
-                    <button pButton 
-                            pRipple 
-                            type="submit" 
-                            label="Guardar" 
-                            icon="pi pi-check" 
-                            class="p-button my-1"
-                            (click)="save()">
-                    </button>
-                </div>
-            </div>
-        </ng-template>
-</p-dialog>
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit 
+    [procesos]="procesos" 
+    [procesoSelect]="procesoSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="loadData()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>
