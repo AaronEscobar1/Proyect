@@ -55,7 +55,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Motivos de finiquito',
-                  routerLink: ['/main/config/basica-deprecated/motivos-finiquito'],
+                  routerLink: ['/main/config/basica/motivos-finiquito'],
                 },
                 {
                   label: 'Procesos',

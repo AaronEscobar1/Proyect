@@ -23,11 +23,6 @@ const routes: Routes = [
         // TODO: Pasar todas estas rutas y carpetas al módulo Basico
         children: [
           {
-            path: 'motivos-finiquito',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/motivos-finiquito/motivos-finiquito.module').then( m => m.MotivosFiniquitoModule),
-          },
-          {
             path: 'procesos',
             // LazyLoad
             loadChildren: () => import('./sub-modules/nomina/procesos/procesos.module').then( m => m.ProcesosModule),
