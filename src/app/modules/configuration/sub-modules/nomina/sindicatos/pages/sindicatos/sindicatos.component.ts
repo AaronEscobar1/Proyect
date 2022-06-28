@@ -141,14 +141,13 @@ export class SindicatosComponent implements OnInit {
    */
   editRow(sindicatos: Sindicatos): void {
     this.isEdit = true;
-    this.form.controls['codsin'].disable();
     // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
     sindicatos.registro = sindicatos.registro ? new Date(sindicatos.registro) : sindicatos.registro;
     // Cargar pais y entidades si existen
     if ( sindicatos.paiCodpai ) {
       this.loadEntitiesByCountry(sindicatos.paiCodpai, sindicatos.edoCodedo);
     }
-    this.form.reset(sindicatos);
+    this.sindicatosSelect = sindicatos
     this.openModalCreate();
   }
 
