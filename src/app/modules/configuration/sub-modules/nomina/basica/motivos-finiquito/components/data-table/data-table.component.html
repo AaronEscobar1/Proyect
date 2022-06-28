@@ -1,5 +1,5 @@
 <div class="mt-3" >
-    <p-table [value]="professions"
+    <p-table [value]="motivosFiniquito"
             selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()"
             [paginator]="true" [rows]="5"
             [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
@@ -23,10 +23,12 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-profesion>
-                <tr [pSelectableRow]="profesion">
-                    <td>{{ profesion.codprf }}</td>
-                    <td>{{ profesion.desprf | titlecase }}</td>
+            <ng-template pTemplate="body" let-motivo>
+                <tr [pSelectableRow]="motivo">
+                    <td>{{ motivo.coddes }}</td>
+                    <td>{{ motivo.desde1 | titlecase }}</td>
+                    <td>{{ motivo.desde2 | titlecase }}</td>
+                    <td>{{ (motivo.impliq === "1") ? 'Si' : 'No'}}</td>
                 </tr>
             </ng-template>
 

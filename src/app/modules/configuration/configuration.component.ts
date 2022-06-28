@@ -51,35 +51,35 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Formas de pago',
-                  routerLink: ['/main/config/basica-deprecated/formas-pago'],
+                  routerLink: ['/main/config/basica/formas-pago'],
                 },
                 {
                   label: 'Motivos de finiquito',
-                  routerLink: ['/main/config/basica-deprecated/motivos-finiquito'],
+                  routerLink: ['/main/config/basica/motivos-finiquito'],
                 },
                 {
                   label: 'Procesos',
-                  routerLink: ['/main/config/basica-deprecated/procesos'],
+                  routerLink: ['/main/config/basica/procesos'],
                 },
                 {
                   label: 'Categorias',
-                  routerLink: ['/main/config/basica-deprecated/categories'],
+                  routerLink: ['/main/config/basica/categories'],
                 },
                 {
                   label: 'Centros médicos',
-                  routerLink: ['/main/config/basica-deprecated/centros-medicos'],
+                  routerLink: ['/main/config/basica/centros-medicos'],
                 },
                 {
                   label: 'Valores oficiales',
-                  routerLink: ['/main/config/basica-deprecated/valor-oficial'],
+                  routerLink: ['/main/config/basica/valor-oficial'],
                 },
                 {
                   label: 'Clasificación oficial',
-                  routerLink: ['/main/config/basica-deprecated/clasificacion-oficial'],
+                  routerLink: ['/main/config/basica/clasificacion-oficial'],
                 },
                 {
                   label: 'Sindicatos',
-                  routerLink: ['/main/config/basica-deprecated/sindicatos'],
+                  routerLink: ['/main/config/basica/sindicatos'],
                 }
               ]
             },
