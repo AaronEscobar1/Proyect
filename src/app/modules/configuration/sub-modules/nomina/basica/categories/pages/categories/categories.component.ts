@@ -9,7 +9,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class CategoriesComponent implements OnInit {

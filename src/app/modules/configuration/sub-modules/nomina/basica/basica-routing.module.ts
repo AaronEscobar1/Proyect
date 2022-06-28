@@ -28,6 +28,11 @@ const routes: Routes = [
     loadChildren: () => import('./procesos/procesos.module').then( m => m.ProcesosModule),
   },
   {
+    path: 'categories',
+    // LazyLoad
+    loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];

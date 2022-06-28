@@ -1,8 +1,8 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Categories } from '../interfaces/categories.interfaces';
-import { Helpers } from '../../../../../../shared/helpers/helpers';
 import { Observable } from 'rxjs';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Injectable({
   providedIn: 'root'

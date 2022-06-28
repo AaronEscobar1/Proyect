@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 // Modules
 import { CategoriesRoutingModule } from './categories-routing.module';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 // Components
 import { CategoriesComponent } from './pages/categories/categories.component';

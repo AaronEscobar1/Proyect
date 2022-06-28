@@ -22,11 +22,7 @@ const routes: Routes = [
         path: 'basica-deprecated', 
         // TODO: Pasar todas estas rutas y carpetas al módulo Basico
         children: [
-          {
-            path: 'categories',
-            // LazyLoad
-            loadChildren: () => import('./sub-modules/nomina/categories/categories.module').then( m => m.CategoriesModule),
-          },
+          
           {
             path: 'centros-medicos',
             // LazyLoad

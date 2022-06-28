@@ -63,7 +63,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 },
                 {
                   label: 'Categorias',
-                  routerLink: ['/main/config/basica-deprecated/categories'],
+                  routerLink: ['/main/config/basica/categories'],
                 },
                 {
                   label: 'Centros médicos',

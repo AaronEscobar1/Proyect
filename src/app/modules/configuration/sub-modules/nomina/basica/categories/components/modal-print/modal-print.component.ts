@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { Categories } from '../../interfaces/categories.interfaces';
 import { CategoriesService } from '../../services/categories.service';
 
 @Component({
