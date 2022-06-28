@@ -15,16 +15,18 @@ import { Dropdown } from 'primeng/dropdown';
 export class ModalAddEditComponent implements OnInit {
 
   // Objetos Input()
-  @Input() sindicatos!: Sindicatos[];
-  @Input() sindicatosSelect!: Sindicatos | undefined;
-  @Input() countrys!: Countrys[] ;
-  @Input() federalEntities!: FederalEntities[] ;
-  @Input() countrySelect!: string;
-  @Input() federalEntitySelect!: string;
+  @Input() sindicatos!        : Sindicatos[];
+  @Input() sindicatosSelect!  : Sindicatos | undefined;
+  @Input() countrys!          : Countrys[] ;
+
+  // Objetos y atributos
+  federalEntities!   : FederalEntities[] ;
+  countrySelect      : string = '';
+  federalEntitySelect: string = '';
 
   // Banderas
   @Input() createModal!: boolean;
-  @Input() isEdit: boolean = false;
+  @Input() isEdit      : boolean = false;
 
   // Titulo del modal
   @Input() titleForm!: string;
@@ -32,7 +34,6 @@ export class ModalAddEditComponent implements OnInit {
   // Emisión de eventos (cerrar modal, cargar data)
   @Output() onCloseModal  = new EventEmitter();
   @Output() onLoadData  = new EventEmitter();
-  @Output() onLoadCountrysData  = new EventEmitter();
 
   // Formulario reactivo
   form!: FormGroup;
@@ -43,29 +44,29 @@ export class ModalAddEditComponent implements OnInit {
               private messageService: MessageService,
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
-        this.form = this.fb.group({
-          codsin:  ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
-          dessin:  ['', [ Validators.required, Validators.maxLength(60), this.validatedDes.bind(this) ]],
-          // Registro
-          registro:  [  ],
-          nroreg:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
-          ntomo:     [  , [ Validators.pattern('[0-9]{1,4}') ]],
-          nfolio:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
-          // Inspectoria
-          local:     ['0'],
-          // Direccion
-          dirsi1:     [  ],
-          dirsi2:     [  ],
-          dirsi3:     [  ],
-          paiCodpai:  [  ],
-          edoCodedo:  [  ],
-          cdadCodciu: [  , [ Validators.maxLength(30) ]],
-          tlfsi1:     [  ],
-          tlfsi2:     [  ],
-          faxsin:     [  ],
-          tlxsin:     [  ],
-          eMail:      [  , [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]]
-        });
+    this.form = this.fb.group({
+      codsin:  ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
+      dessin:  ['', [ Validators.required, Validators.maxLength(60), this.validatedDes.bind(this) ]],
+      // Registro
+      registro:  [  ],
+      nroreg:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
+      ntomo:     [  , [ Validators.pattern('[0-9]{1,4}') ]],
+      nfolio:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
+      // Inspectoria
+      local:     ['0'],
+      // Direccion
+      dirsi1:     [  ],
+      dirsi2:     [  ],
+      dirsi3:     [  ],
+      paiCodpai:  [  ],
+      edoCodedo:  [  ],
+      cdadCodciu: [  , [ Validators.maxLength(30) ]],
+      tlfsi1:     [  ],
+      tlfsi2:     [  ],
+      faxsin:     [  ],
+      tlxsin:     [  ],
+      eMail:      [  , [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]]
+    });
   }
 
   ngOnInit(): void {
@@ -77,6 +78,14 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     this.form.controls['codsin'].disable();
+    // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
+    if ( this.sindicatosSelect && this.sindicatosSelect.registro) {
+      this.sindicatosSelect.registro = this.sindicatosSelect.registro ? new Date(this.sindicatosSelect.registro) : this.sindicatosSelect.registro;
+    }
+    // Cargar pais y entidades si existen
+    if ( this.sindicatosSelect && this.sindicatosSelect.paiCodpai ) {
+      this.loadEntitiesByCountry(this.sindicatosSelect.paiCodpai, this.sindicatosSelect.edoCodedo);
+    }
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.sindicatosSelect);
   }
@@ -96,10 +105,10 @@ export class ModalAddEditComponent implements OnInit {
     // Comprobamos que el email se envie un correo valido o un null
     data.eMail == '' ? data.eMail = null : data.eMail
     // Validamos que país y entidad posean datos
-    // if ( data.paiCodpai && !data.edoCodedo ) {
-    //   this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
-    //   return;
-    // }
+    if ( data.paiCodpai && !data.edoCodedo ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
+      return;
+    }
 
     this.spinner.show();
 
@@ -174,9 +183,6 @@ export class ModalAddEditComponent implements OnInit {
    * @param dropdownElement: Dropdown
    */
   countrySelectChange(event: ObjectEventChange, dropdownElement: Dropdown): void {
-    console.log(event, 'event');
-    console.log(dropdownElement, 'dropdownElement');
-    
     const codCountry = event.value;
     if (codCountry == null) { return; }
     // Asignamos el país al campo en el formulario
@@ -184,7 +190,34 @@ export class ModalAddEditComponent implements OnInit {
     // Limpiamos el campo entidad federal
     this.clearEntitySelect();
     // Peticion al backend para buscar las entidades
-    this.onLoadCountrysData.emit(codCountry);
+    this.loadEntitiesByCountry(codCountry);
+  }
+
+  /**
+   * Carga las entidades relacionadas con el país
+   * @param codCountry: string código país a buscar
+   * @param codEntity: string (opcional) código entidad para mostrar en el formulario
+   */
+  loadEntitiesByCountry(codCountry: string, codEntity?: string | null): void {
+    this.federalEntities = [];
+    this.spinner.show();
+    this.sindicatosService.getEntitiesByCountry(codCountry)
+      .subscribe({
+        next: (resp) => {
+          this.federalEntities = resp;
+          this.form.controls['edoCodedo'].enable();
+          // Colocar el nombre del pais y la entidad en el campo del formulario
+          if (this.isEdit) {
+            this.countrys.find(country => country.codigo === codCountry ? this.countrySelect = country.nombre : '');
+            this.federalEntities.find(entity => entity.codEntidad === codEntity ? this.federalEntitySelect = entity.nombre : '');
+          }
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   /**
