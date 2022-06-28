@@ -72,7 +72,6 @@ export class ModalAddEditComponent implements OnInit {
   }
   
   ngOnChanges() {
-    this.form.controls['edoCodedo'].disable();
     if( !this.isEdit ) {
       this.form.controls['codsin'].enable();
       return;

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
@@ -69,7 +69,7 @@ export class ModalAddEditComponent implements OnInit {
 
     // Obtener formulario
     let data: ValorOficial = this.form.getRawValue();
-    // console.log(data);
+    data.fecefe = `${new Date(data.fecefe).toISOString().slice(0, 10)}T00:00:00`;
     
     // Eliminar espacios en blanco en su atributo
     data.paisId.trim();
