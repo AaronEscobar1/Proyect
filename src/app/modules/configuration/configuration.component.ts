@@ -135,6 +135,16 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               routerLink: ['/main/config/organizacion/estado-civil']
             }
           ]
+        },
+        {
+          label: 'Talento',
+          icon: 'pi pi-star',
+          items: [
+            {
+              label: 'Parentescos',
+              routerLink: ['/main/config/talento/parentesco']
+            }
+          ]
         }
     ];
   }
