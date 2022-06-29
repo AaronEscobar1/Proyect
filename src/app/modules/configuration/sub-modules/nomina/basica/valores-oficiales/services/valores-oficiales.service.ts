@@ -25,7 +25,7 @@ export class ValoresOficialesService {
   }
 
   update(valorOficial: ValorOficial): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/valoresoficiales/${valorOficial.id}`), valorOficial);
+    return this.http.put(this.helpers.getBasicEndPoint(`/valoresoficiales/${valorOficial.paisId}/${valorOficial.id}?fecefe=${valorOficial.fecefe}`), valorOficial);
   }
 
   delete(valorOficial: ValorOficial): Observable<any> {

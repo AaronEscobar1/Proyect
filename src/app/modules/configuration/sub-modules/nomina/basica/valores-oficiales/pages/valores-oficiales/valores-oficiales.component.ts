@@ -133,6 +133,8 @@ export class ValoresOficialesComponent implements OnInit {
    * @returns void
    */
   deleteRow(valorOficial: ValorOficial): void {
+    valorOficial.fecefe = `${new Date(valorOficial.fecefe).toISOString().slice(0, 10)}T00:00:00`;
+    
     if (!valorOficial) {  
       this.helpers.openErrorAlert('No se encontro el id.')
       return; 
