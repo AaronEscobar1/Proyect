@@ -8,6 +8,11 @@ const routes: Routes = [
     loadChildren: () => import('./parentesco/parentesco.module').then( m => m.ParentescoModule )
   },
   {
+    path: 'competencias',
+    // LazyLoad
+    loadChildren: () => import('./competencias/competencias.module').then( m => m.CompetenciasModule )
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
