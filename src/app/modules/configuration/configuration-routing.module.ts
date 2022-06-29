@@ -26,6 +26,11 @@ const routes: Routes = [
         path: 'organizacion',
         // LazyLoad
         loadChildren: () => import('./sub-modules/organizacion/organizacion.module').then( m => m.OrganizacionModule)
+      },
+      {
+        path: 'talento',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/talento/talento.module').then( m => m.TalentoModule)
       }
     ]
   },

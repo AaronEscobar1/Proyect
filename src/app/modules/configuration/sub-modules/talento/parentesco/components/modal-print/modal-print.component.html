@@ -1,0 +1,70 @@
+<!-- Modal imprimir -->
+<p-dialog [(visible)]="printModal" [modal]="true" [showHeader]="false" [closable]="false"
+        class="p-fluid" [breakpoints]="{'960px': '60vw', '640px': '90vw'}" [style]="{width: '40vw'}"  
+        [draggable]="false" [resizable]="false" >
+        
+        <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>Imprimir parentesco</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModalPrint()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form">
+
+                <div class="field">
+                    <label for="type">Tipo *</label>
+                    <p-dropdown [options]="typesFile" 
+                                appendTo="body"
+                                formControlName="type"
+                                [showClear]="true"
+                                placeholder="Seleccione un tipo">
+                    </p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label for="id">Código</label>
+                    <input  type="text"
+                            pInputText
+                            id="id"
+                            formControlName="id"
+                            placeholder="Ingrese el código"/>
+                </div>
+                
+                <div class="field">
+                    <label for="desniv">Descripción</label>
+                    <input  type="text"
+                            pInputText
+                            id="desniv"
+                            formControlName="desniv"
+                            placeholder="Ingrese la descripción"/>
+                </div>
+
+            </form>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModalPrint()">
+                </button>
+                <button pButton 
+                        pRipple
+                        label="Imprimir"
+                        icon="pi pi-print"
+                        class="p-button my-1"
+                        (click)="export()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { EstadoCivil } from '../../interfaces/estado-civil.interfaces';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { EstadoCivilService } from '../../services/estado-civil.service';
+import { Parentesco } from '../../interfaces/parentesco.interfaces';
+import { ParentescoService } from '../../services/parentesco.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
@@ -13,8 +13,8 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 export class ModalAddEditComponent implements OnInit {
 
   // Objetos Input()
-  @Input() estadosCiviles!   : EstadoCivil[];
-  @Input() estadoCivilSelect!: EstadoCivil | undefined;
+  @Input() parentescos!   : Parentesco[];
+  @Input() parentescoSelect!: Parentesco | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -30,15 +30,14 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
-  constructor(private estadoCivilService: EstadoCivilService, 
+  constructor(private parentescoService: ParentescoService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
     this.form = this.fb.group({
-      id:        ['', [ Validators.required, Validators.maxLength(1), this.validatedId.bind(this) ]],
-      nombre:    ['', [ Validators.required, Validators.maxLength(30), this.validatedDesc.bind(this) ]],
-      codigoLey: ['', [ Validators.maxLength(1) ]]
+      id:        ['', [ Validators.required, Validators.maxLength(10), this.validatedId.bind(this)]],
+      nombre:    ['', [ Validators.required, Validators.pattern('([a-zA-Z]{1,30})$'), this.validatedDesc.bind(this) ]],
     });
   }
 
@@ -51,7 +50,7 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     this.form.controls['id'].disable();
-    this.form.reset(this.estadoCivilSelect); 
+    this.form.reset(this.parentescoSelect); 
   }
 
   save(): void {
@@ -60,7 +59,7 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     // Obtener formulario
-    let data: EstadoCivil = this.form.getRawValue();
+    let data: Parentesco = this.form.getRawValue();
     // Eliminar espacios en blanco en su atributo
     data.nombre.trim();
     
@@ -68,7 +67,7 @@ export class ModalAddEditComponent implements OnInit {
     
     if (this.isEdit) {
       // Editar
-      this.estadoCivilService.update(data)
+      this.parentescoService.update(data)
       .subscribe({
         next: (resp) => {
           this.closeModal();
@@ -78,14 +77,14 @@ export class ModalAddEditComponent implements OnInit {
         },
         error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el estado civil.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el parentesco.', life: 3000});
         }
       });
       return;
     }
 
     // Crear
-    this.estadoCivilService.create(data)
+    this.parentescoService.create(data)
       .subscribe({
         next: (resp) => {
           this.closeModal();
@@ -95,7 +94,7 @@ export class ModalAddEditComponent implements OnInit {
         },
         error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el estado civil.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado el parentesco.', life: 3000});
         }
       });
   }
@@ -121,7 +120,7 @@ export class ModalAddEditComponent implements OnInit {
     if ( errors?.required ) {
       return 'El código es obligatorio.';
     } else if ( errors?.maxlength ) {
-      return 'El código es de longitud máxima de 1 dígito.';
+      return 'El código es de longitud máxima de 10 dígito.';
     } else if ( errors?.duplicated ) {
       return 'El código ya existe.';
     }
@@ -133,26 +132,17 @@ export class ModalAddEditComponent implements OnInit {
     const errors = this.form.get('nombre')?.errors;
     if ( errors?.required ) {
       return 'El nombre es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'El nombre es de longitud máxima de 30 dígitos.';
+    } else if ( errors?.pattern ) {
+      return 'El nombre es de longitud máxima de 30 dígitos y de formato alfabético.';
     } else if ( errors?.duplicated ) {
       return 'El nombre ya existe.';
     }
     return '';
   }
 
-  // Mensajes de errores dinamicos
-  get codigoLeyMsgError(): string {
-    const errors = this.form.get('codigoLey')?.errors;
-    if ( errors?.maxlength ) {
-      return 'El código oficial es de longitud máxima de 1 dígito.';
-    }
-    return '';
-  }
-
   validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-    return this.estadosCiviles.findIndex(val => val.id === control.value) > -1 ?
+    return this.parentescos.findIndex(val => val.id === control.value) > -1 ?
                                               {'duplicated': true} :
                                               null;
   }
@@ -161,16 +151,16 @@ export class ModalAddEditComponent implements OnInit {
     // Validaciones para crear
     if ( !this.isEdit ) {
       if ( !control.value ) { return null; }
-      return this.estadosCiviles.findIndex(val => val.nombre.trim().toLowerCase() === control.value.trim().toLowerCase()) > -1 ? 
-                                                {'duplicated': true} :
-                                                null;
+      return this.parentescos.findIndex(val => val.nombre.trim().toLowerCase() === control.value.trim().toLowerCase()) > -1 ? 
+                                              {'duplicated': true} :
+                                              null;
     }
     // Validaciones para editar 
     if ( this.form.getRawValue().nombre == null ) { return null; }
-    return this.estadosCiviles.findIndex(val => val.nombre.trim().toLowerCase() === this.form.getRawValue().nombre.trim().toLowerCase() && 
-                                              val.id !== this.form.getRawValue().id) > -1 ? 
-                                              {'duplicated': true} :
-                                              null;
+    return this.parentescos.findIndex(val => val.nombre.trim().toLowerCase() === this.form.getRawValue().nombre.trim().toLowerCase() && 
+                                            val.id !== this.form.getRawValue().id) > -1 ? 
+                                            {'duplicated': true} :
+                                            null;
   }
 
 }
