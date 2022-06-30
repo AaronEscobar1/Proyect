@@ -143,6 +143,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             {
               label: 'Parentescos',
               routerLink: ['/main/config/talento/parentesco']
+            },
+            {
+              label: 'Competencias',
+              routerLink: ['/main/config/talento/competencias']
             }
           ]
         }

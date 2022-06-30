@@ -1,0 +1,45 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+        
+        <div class="header-card bg-gray-600 text-white p-2">Niveles</div>
+        <div class="card-table">
+
+            <!-- Componente de botones -->
+            <app-buttons-nivel (onRefresh)="refresh()"
+                                 (onOpenModalPrint)="openModalPrint()"
+                                 (onOpenModalCreate)="openModalCreate($event)"
+                                 (onEditRow)="editRow($event)"
+                                 (onDeleteRow)="deleteRow($event)">
+            </app-buttons-nivel>
+
+            <!-- Componente table -->
+            <app-data-table-nivel [niveles]="niveles"></app-data-table-nivel>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Imprimir -->
+<app-modal-print-nivel
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print-nivel>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit-nivel
+    [niveles]="niveles" 
+    [nivelSelect]="nivelSelect"
+    [competenciaSelect]="competenciaSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="loadData()"
+    [titleForm]="titleForm">
+</app-modal-add-edit-nivel>
