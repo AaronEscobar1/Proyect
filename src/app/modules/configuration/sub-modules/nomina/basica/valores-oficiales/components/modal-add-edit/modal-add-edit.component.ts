@@ -53,6 +53,8 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     this.form.controls['id'].disable();
+    this.form.controls['paisId'].disable();
+    this.form.controls['fecefe'].disable();
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.valoresSelect);
   }

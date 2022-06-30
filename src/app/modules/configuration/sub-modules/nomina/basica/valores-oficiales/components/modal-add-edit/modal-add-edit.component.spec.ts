@@ -245,7 +245,7 @@ describe('ModalAddEditComponent', () => {
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.id}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.paisId}/${data.id}?fecefe=${data.fecefe}`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('PUT');
 
@@ -300,7 +300,7 @@ describe('ModalAddEditComponent', () => {
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.id}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.paisId}/${data.id}?fecefe=${data.fecefe}`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('PUT');
 

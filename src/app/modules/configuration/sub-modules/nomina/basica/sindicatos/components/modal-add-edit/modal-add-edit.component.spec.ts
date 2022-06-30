@@ -14,6 +14,7 @@ describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
   const URL = `${environment.api}/sindicatos`;
+  const URLPAIS = `${environment.api}/entidadesfederales`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -113,31 +114,35 @@ describe('ModalAddEditComponent', () => {
       }
     ];
 
-    app.sindicatosSelect = {
-      "dessin": "prueba jose",
-      "registro": null,
-      "nroreg": null,
-      "ntomo": null,
-      "nfolio": null,
-      "dirsi1": null,
+    const data = {
+      "dessin": "Prueba Jose2",
+      "registro": new Date("2022-06-18T08:00:00"),
+      "nroreg": "12",
+      "ntomo": "1",
+      "nfolio": "45",
+      "dirsi1": "Hola",
       "dirsi2": null,
       "dirsi3": null,
       "cdadCodciu": null,
       "edoCodedo": null,
-      "paiCodpai": null,
+      "paiCodpai": "ARG",
       "tlfsi1": null,
       "tlfsi2": null,
       "faxsin": null,
       "tlxsin": null,
       "eMail": null,
       "local": "0",
-      "codsin": "666"
+      "codsin": "34"
     };
+
+    app.sindicatosSelect = data
     // Se simula que hubo un cambio en los inputs
+
     app.ngOnChanges();
-  
+
+    app.save();
     // Validacion
-    expect(app.form.value.dessin).toEqual("prueba jose")
+    expect(app.form.value.dessin).toEqual("Prueba Jose2")
     expect(app.form.value.codsin).toEqual(undefined)
     expect(app.form.valid).toEqual(true)
   });
@@ -838,5 +843,81 @@ describe('ModalAddEditComponent', () => {
 
     app.campoInvalid('eMail');
     
+  });
+
+  it('Validando el formulario (Caso kkkk)', () => {
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    // Variables de los inputs
+    app.isEdit = false;
+    // datos del formulario
+    const data = {
+      "dessin": "Sindi opopo",
+      "registro": null,
+      "nroreg": null,
+      "ntomo": null,
+      "nfolio": null,
+      "dirsi1": null,
+      "dirsi2": null,
+      "dirsi3": null,
+      "cdadCodciu": null,
+      "edoCodedo": null,
+      "paiCodpai": "VEN",
+      "tlfsi1": null,
+      "tlfsi2": null,
+      "faxsin": null,
+      "tlxsin": null,
+      "eMail": '234567891234567891234567444444444444489123456789',
+      "local": "0",
+      "codsin": "646"
+    };
+
+    app.countrys = [
+      {
+        "nombre": "Venezuela",
+        "codigo": "VEN",
+      },
+      {
+          "nombre": "ARGENTINA",
+          "codigo": "ARG",
+      },
+      {
+          "nombre": "AUSTRALIA",
+          "codigo": "AUS",
+      },
+      {
+          "nombre": "AUSTRIA",
+          "codigo": "AUT",
+      },
+      {
+          "nombre": "BELGICA",
+          "codigo": "BEL",
+      },
+      {
+          "nombre": "BERMUDA",
+          "codigo": "BMU",
+      },
+    ];
+
+    const resp = [
+      {
+          "nombre": "Amazonas",
+          "codPais": "VEN",
+          "codEntidad": "AM"
+      },
+      {
+          "nombre": "Apure",
+          "codPais": "VEN",
+          "codEntidad": "AP"
+      },
+    ];
+
+    app.loadEntitiesByCountry(data.paiCodpai)
+
+    const fakeBackend = httpTestingController.expectOne(`${URLPAIS}/${data.paiCodpai}`);
+    fakeBackend.flush(resp);
+    expect(fakeBackend.request.method).toBe('GET');
+
   });
 });
