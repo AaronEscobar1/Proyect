@@ -80,7 +80,7 @@ export class ModalAddEditComponent implements OnInit {
     this.form.controls['codsin'].disable();
     // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
     if ( this.sindicatosSelect && this.sindicatosSelect.registro) {
-      this.sindicatosSelect.registro = this.sindicatosSelect.registro ? new Date(this.sindicatosSelect.registro) : this.sindicatosSelect.registro;
+      this.sindicatosSelect.registro = new Date(this.sindicatosSelect.registro);
     }
     // Cargar pais y entidades si existen
     if ( this.sindicatosSelect && this.sindicatosSelect.paiCodpai ) {

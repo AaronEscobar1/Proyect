@@ -48,11 +48,11 @@ describe('ModalAddEditComponent', () => {
     
     // Validamos los datos del formulario vacio
 
-    expect(app.form.value.desde1).toEqual('')
-    expect(app.form.value.desde2).toEqual('')
-    expect(app.form.value.impliq).toEqual(false)
-    expect(app.form.value.classo).toEqual('')
-    expect(app.form.value.coddes).toEqual('')
+    expect(app.form.value.desde1).toEqual(null)
+    expect(app.form.value.desde2).toEqual(null)
+    expect(app.form.value.impliq).toEqual(null)
+    expect(app.form.value.classo).toEqual(null)
+    expect(app.form.value.coddes).toEqual(null)
     
     // Validamos el requiere de los campos
     

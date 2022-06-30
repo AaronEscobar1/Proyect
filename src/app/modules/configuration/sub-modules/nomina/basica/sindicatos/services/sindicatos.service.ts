@@ -39,5 +39,8 @@ export class SindicatosService {
   getEntitiesByCountry(codCountry: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}`));
   }
+  getEntitiesByCountryAndEntity(codCountry: string, codEntidad: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}/${codEntidad}`));
+  }
 
 }
