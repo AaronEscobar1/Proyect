@@ -28,7 +28,7 @@ export class CompetenciasService {
     return this.http.put(this.helpers.getBasicEndPoint(`/competencias/${competencia.id}`), competencia);
   }
 
-  delete(id: string): Observable<any> {
+  delete(id: number): Observable<any> {
     return this.http.delete(this.helpers.getBasicEndPoint(`/competencias/${id}`));
   }
 

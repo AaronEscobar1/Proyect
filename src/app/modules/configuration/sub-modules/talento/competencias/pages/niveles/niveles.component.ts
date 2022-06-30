@@ -1,31 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+import { Niveles } from '../../interfaces/nivel.interfaces';
+import { NivelService } from '../../services/nivel.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Competencias, TiposCompetencias } from '../../interfaces/competencias.interfaces';
-import { CompetenciasService } from '../../services/competencias.service';
+import { Competencias } from '../../interfaces/competencias.interfaces';
 
 @Component({
-  selector: 'app-competencias',
-  templateUrl: './competencias.component.html',
+  selector: 'app-niveles',
+  templateUrl: './niveles.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class CompetenciasComponent implements OnInit {
+export class NivelesComponent implements OnInit {
 
-  // Objetos competencias
-  competencias      : Competencias[] = [];
+  // Objetos niveles
+  niveles     : Niveles[] = [];
+  nivelSelect!: Niveles | undefined;
+
+  // Objeto competencia para obtener el ID
   competenciaSelect!: Competencias | undefined;
-  tiposCompetencias : TiposCompetencias[] = [];
 
   // Banderas
   isEdit: boolean = false;
   
   // Modales
-  titleForm  : string  = 'Agregar competencia';
+  titleForm  : string  = 'Agregar nivel';
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private competenciasService: CompetenciasService,
+  constructor(private nivelService: NivelService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -33,30 +36,14 @@ export class CompetenciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    this.loadTiposCompetencias();
   }
 
   loadData() {
     this.spinner.show();
-    this.competenciasService.getAll()
+    this.nivelService.getAll()
       .subscribe({
         next: (res) => {
-          this.competencias = res;
-          this.spinner.hide();
-        },
-        error: (err) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-        }
-      });
-  }
-
-  loadTiposCompetencias() {
-    this.spinner.show();
-    this.competenciasService.getAllTiposCompetencias()
-      .subscribe({
-        next: (res) => {
-          this.tiposCompetencias = res;
+          this.niveles = res;
           this.spinner.hide();
         },
         error: (err) => {
@@ -74,20 +61,21 @@ export class CompetenciasComponent implements OnInit {
     this.printModal = false;
   }
   
-  openModalCreate(): void {
+  openModalCreate(competencia: Competencias): void {
     this.isEdit = false;
-    this.titleForm = 'Agregar competencia';
+    this.titleForm = 'Agregar nivel';
+    this.competenciaSelect = competencia;
     this.createModal = true;
   }
 
   closeModal(): void {
     this.isEdit = false;
     this.createModal = false;
-    this.competenciaSelect = undefined;
+    this.nivelSelect = undefined;
   }
 
   refresh(): void {
-    this.competencias = [];
+    this.niveles = [];
     setTimeout(() => {
       this.loadData();
     }, 200);
@@ -95,12 +83,12 @@ export class CompetenciasComponent implements OnInit {
 
   /**
    * Seleccionar el row para editar y abrir el modal
-   * @param competencia row de la tabla
+   * @param nivel row de la tabla
    */
-  editRow(competencia: Competencias) {
+  editRow(nivel: Niveles) {
     this.isEdit = true;
-    this.titleForm = 'Editar competencia';
-    this.competenciaSelect = competencia;
+    this.titleForm = 'Editar nivel';
+    this.nivelSelect = nivel;
     this.createModal = true;
   }
   
@@ -109,15 +97,15 @@ export class CompetenciasComponent implements OnInit {
    * @param competencia row de la tabla
    * @returns void
    */
-  deleteRow(competencia: Competencias) {
+  deleteRow(nivel: Niveles) {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta competencia <b>${competencia.nombre}</b>?`,
+      message: `¿Desea eliminar este nivel <b>${nivel.nivel}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       accept: () => {
         this.spinner.show();
-        this.competenciasService.delete(competencia.id)
+        this.nivelService.delete(nivel.id)
           .subscribe({
             next: (resp) => {
               this.spinner.hide();
@@ -126,19 +114,14 @@ export class CompetenciasComponent implements OnInit {
               return true;
             },
             error: (err) => {
-              if ( err.error.message === 'Error en solicitud.' ) {
-                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la competencia, posee dependencia de registros.', life: 3000});
-                this.spinner.hide();
-                return false;
-              }
               this.spinner.hide();
-              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la competencia.', life: 3000});
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el nivel.', life: 3000});
               return false;
             }
           });
       }
     });
-    this.selectRowServices.selectRow$.emit(null);
+    this.selectRowServices.selectRowAlterno$.emit(null);
   }
 
 }

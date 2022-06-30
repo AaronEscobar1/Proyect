@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components
-import { CompetenciasComponent } from './pages/competencias/competencias.component';
+import { CompetenciasHomeComponent } from './pages/competencias-home/competencias-home.component';
 
 const routes: Routes = [
   {
-    path: '', component: CompetenciasComponent
+    path: '', component: CompetenciasHomeComponent
   },
   {
     path: '**', redirectTo: ''

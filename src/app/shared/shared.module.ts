@@ -8,14 +8,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxSpinnerModule } from "ngx-spinner";
 
 // Components
+import { ButtonsComponent } from './components/buttons/buttons.component';
 import { CardMainComponent } from './components/card-main/card-main.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { TableSkeletonComponent } from './components/table-skeleton/table-skeleton.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
-import { ButtonsComponent } from './components/buttons/buttons.component';
-import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -34,8 +33,7 @@ import { CalendarModule } from 'primeng/calendar';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    NgxSpinnerModule,
-    CalendarModule
+    NgxSpinnerModule
   ],
   exports: [
     CommonModule,
