@@ -41,5 +41,5 @@ export interface SectorEmpresas {
 export const conceptoEconomicoData: dropdownType[] = [
     { label: 'Empresa pública', value: '1', inactive: false },
     { label: 'Empresa privada', value: '0', inactive: false },
-    { label: 'Empresa mixta',   value: '2', inactive: true }
+    { label: 'Empresa mixta',   value: '2', inactive: false }
 ];
