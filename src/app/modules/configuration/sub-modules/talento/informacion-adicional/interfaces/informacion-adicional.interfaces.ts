@@ -5,3 +5,8 @@ export interface InformacionAdicional {
     tipoInfo : string;
     idEmpresa: string;
 }
+
+export interface TipoInformacionAdicional {
+    tipoInfo   : string;
+    descripcion: string;
+}

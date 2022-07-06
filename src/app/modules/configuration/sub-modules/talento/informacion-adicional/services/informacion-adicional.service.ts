@@ -32,6 +32,10 @@ export class InformacionAdicionalService {
     return this.http.delete(this.helpers.getBasicEndPoint(`/informacionesadicionales/${id}`));
   }
   
+  getAllEmpresas(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/empresas'));
+  }
+
   getAllTiposInformacionesAdicionales(): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint('/tinformacionesadicionales'));
   }
