@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () => import('./evaluaciones/evaluaciones.module').then( m => m.EvaluacionesModule )
   },
   {
+    path: 'informacion-adicional',
+    // LazyLoad
+    loadChildren: () => import('./informacion-adicional/informacion-adicional.module').then( m => m.InformacionAdicionalModule )
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
