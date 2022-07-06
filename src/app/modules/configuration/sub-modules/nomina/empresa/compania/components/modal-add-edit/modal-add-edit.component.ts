@@ -86,7 +86,7 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     this.form.controls['id'].disable();
-    // Comprobar si la compañia tiene fecha para establecerlo en el formulario y poder editar
+    // Comprobar si la empresa tiene fecha para establecerlo en el formulario y poder editar
     if (this.companiaSelect && this.companiaSelect.feFunda) {
       this.companiaSelect.feFunda = this.companiaSelect.feFunda ? new Date(this.companiaSelect.feFunda) : null;
     }
@@ -201,7 +201,7 @@ export class ModalAddEditComponent implements OnInit {
         },
         error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo creado la compañia.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la empresa.', life: 3000});
         }
       });
   }

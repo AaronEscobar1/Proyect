@@ -20,7 +20,7 @@ export class CompaniaComponent implements OnInit {
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar compañia';
+  titleForm  : string = 'Agregar empresa';
   createModal: boolean = false;
   printModal : boolean = false;
 
@@ -59,7 +59,7 @@ export class CompaniaComponent implements OnInit {
   
   openModalCreate(): void {
     this.isEdit = false;
-    this.titleForm = 'Agregar compañia';
+    this.titleForm = 'Agregar empresa';
     this.createModal = true;
   }
 
@@ -78,7 +78,7 @@ export class CompaniaComponent implements OnInit {
 
   editRow(company: Company) {
     this.isEdit = true;
-    this.titleForm = 'Editar compañia';
+    this.titleForm = 'Editar empresa';
     this.companiaSelect = company;
     this.createModal = true;
   }
@@ -90,7 +90,7 @@ export class CompaniaComponent implements OnInit {
    */
   deleteRow(company: Company) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la compañia <b>${company.nombre}</b>?`,
+      message: `¿Desea eliminar esta empresa <b>${company.nombre}</b>?`,
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
@@ -106,7 +106,7 @@ export class CompaniaComponent implements OnInit {
             },
             error: (err) => {
               this.spinner.hide();
-              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la compañia.', life: 3000});
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la empresa.', life: 3000});
               return false;
             }
           });
