@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'compania',
     // LazyLoad
-    loadChildren: () => import('./compania/compania.module').then( m => m.CompaniaModule),
+    loadChildren: () => import('./empresas/compania.module').then( m => m.CompaniaModule),
   },
   {
     path: 'empresa-consultar/tarifas',
