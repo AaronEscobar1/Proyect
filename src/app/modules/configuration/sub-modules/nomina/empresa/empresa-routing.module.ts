@@ -8,11 +8,6 @@ const routes: Routes = [
     loadChildren: () => import('./compania/compania.module').then( m => m.CompaniaModule),
   },
   {
-    path: 'empresa',
-    // LazyLoad
-    loadChildren: () => import('./empresa/empresa.module').then( m => m.EmpresaModule),
-  },
-  {
     path: 'empresa-consultar/tarifas',
     // LazyLoad
     loadChildren: () => import('./tarifas-impuestos/tarifas-impuestos.module').then( m => m.TarifasImpuestosModule),

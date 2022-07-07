@@ -91,10 +91,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   routerLink: ['/main/config/empresa/compania'],
                 },
                 {
-                  label: ' /// Empresa deprecada ///',
-                  routerLink: ['/main/config/empresa/empresa'],
-                },
-                {
                   label: 'Tarifas de impuestos',
                   routerLink: ['/main/config/empresa/empresa-consultar/tarifas']
                 },
