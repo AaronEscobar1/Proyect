@@ -10,17 +10,40 @@
 
         <div class="header-card bg-gray-600 text-white p-2">Empresas</div>
         <div class="card-table">
-            
-            <!-- Componente de botones -->
-            <app-buttons (onRefresh)="refresh()"
-                         (onOpenModalPrint)="openModalPrint()"
-                         (onOpenModalCreate)="openModalCreate()"
-                         (onEditRow)="editRow($event)"
-                         (onDeleteRow)="deleteRow($event)">
-            </app-buttons>
 
-            <!-- Componente table -->
-            <app-data-table [companias]="companias"></app-data-table>
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/*******************
+                /*  Consultar empresas *
+                /*********************** -->
+                <p-tabPanel header="Consultar empresas">
+
+                    <!-- Componente de botones -->
+                    <app-buttons (onRefresh)="refresh()"
+                                 (onOpenModalPrint)="openModalPrint()"
+                                 (onOpenModalCreate)="openModalCreate()"
+                                 (onEditRow)="editRow($event)"
+                                 (onDeleteRow)="deleteRow($event)">
+                    </app-buttons>
+
+                    <!-- Componente table -->
+                    <app-data-table [companias]="companias"
+                                    [tab]="'consultar'">
+                    </app-data-table>
+
+                </p-tabPanel>
+
+                <!--/*************************
+                /*  Otros datos adicionales  *
+                /***************************** -->
+                <p-tabPanel header="Otros datos de empresa">
+                    
+                    <app-otro-datos-adicionales [companias]="companias"></app-otro-datos-adicionales>
+
+                </p-tabPanel>
+
+            </p-tabView>
    
         </div>
 

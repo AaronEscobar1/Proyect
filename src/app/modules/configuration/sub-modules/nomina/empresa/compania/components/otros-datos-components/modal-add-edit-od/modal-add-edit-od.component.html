@@ -1,0 +1,224 @@
+
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+          
+          <ng-template pTemplate="content">
+              
+              <div class="flex justify-content-between align-items-center my-4">
+                  <h5>{{titleForm}}</h5>
+                  <div class="p-dialog-header-icons">
+                      <button pButton pRipple type="button" icon="pi pi-times"
+                      class="p-button-rounded p-button-secondary p-button-text"
+                      (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+            
+            <div class="formgrid grid">
+
+                <div class="field col-3 md:col-3 text-right mt-2">
+                    <label for="codemp">Empresa:</label>
+                </div>
+                <div class="field col-3 md:col-2">
+                    <input  type="text"
+                            id="codemp"
+                            [value]="companySelect.id"
+                            pInputText
+                            disabled/>
+                </div>
+            
+                <div class="field col-6 md:col-6">
+                    <input  type="text"
+                            id="nameCompany" 
+                            [value]="companySelect.nombre"
+                            pInputText
+                            disabled/>
+                </div>
+
+            </div>
+
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+
+                    <div class="col-12 md:col-6">
+
+                        <p-panel header="Funcionario">
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 text-right mt-2">
+                                    <label for="nomfun">Nombre: </label>
+                                </div>
+                                <div class="field col-8">
+                                    <input  type="text"
+                                            id="nomfun" 
+                                            pInputText
+                                            formControlName="nomfun"
+                                            placeholder="Ingrese el nombre">
+                                    <span class="form-text text-danger"
+                                        *ngIf="campoInvalid('nomfun')">
+                                        El nombre es de longitud máxima de 50 dígitos.
+                                    </span>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="formgrid grid">
+                                <div class="field col-4 text-right mt-2">
+                                    <label>Nacionalidad: </label>
+                                </div>
+                                <div class="field-radiobutton col-8">
+                                    <p-radioButton  inputId="natural" 
+                                                    name="nacfun"
+                                                    value="0" 
+                                                    formControlName="nacfun">
+                                    </p-radioButton>
+                                    <label for="natural" class="mr-3">Natural</label>
+
+                                    <p-radioButton  inputId="extranjero" 
+                                                    name="nacfun"
+                                                    value="1" 
+                                                    formControlName="nacfun">
+                                    </p-radioButton>
+                                    <label for="extranjero">Extranjero</label>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-4 lg:col-4 text-right">
+                                    <label for="tideIdefun">Tipo de identificacion: </label>
+                                </div>
+                                <div class="field col-5">
+                                    <p-dropdown [options]="identificatioType" 
+                                                appendTo="body"
+                                                inputId="tideIdefun"
+                                                formControlName="tideIdefun"
+                                                placeholder="Seleccione el tipo">
+                                        <ng-template let-option pTemplate="item">
+                                            <span> {{ option.label }} </span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                                <div class="field col-3">
+                                    <input  type="text"
+                                            pInputText
+                                            value="{{this.form.controls['tideIdefun'].value}}"
+                                            disabled>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 text-right">
+                                    <label for="cedfun">Cédula del funcionario: </label>
+                                </div>
+                                <div class="field col-8">
+                                    <input  type="text"
+                                            id="cedfun" 
+                                            pInputText
+                                            formControlName="cedfun"
+                                            placeholder="Ingrese el cédula">
+                                    <span class="form-text text-danger"
+                                        *ngIf="campoInvalid('cedfun')">
+                                        El cédula es de longitud máxima de 20 dígitos y de formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                        </p-panel>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+
+                        <p-panel header="Contribuyente">
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 md:col-4 lg:col-4 text-right mt-2">
+                                    <label for="tipage">Tipo de agente: </label>
+                                </div>
+                                <div class="field col-5">
+                                    <p-dropdown [options]="agentType" 
+                                                appendTo="body"
+                                                inputId="tipage"
+                                                formControlName="tipage"
+                                                placeholder=" Seleccione el tipo ">
+                                        <ng-template let-option pTemplate="item">
+                                            <span> {{ option.label }} </span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                                <div class="field col-3">
+                                    <input  type="text"
+                                            pInputText
+                                            value="{{this.form.controls['tipage'].value}}"
+                                            disabled>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 text-right">
+                                    <label for="nrocon">Número del contribuyente: </label>
+                                </div>
+                                <div class="field col-8">
+                                    <input  type="text"
+                                            id="nrocon" 
+                                            pInputText
+                                            formControlName="nrocon"
+                                            placeholder="Número del contribuyente">
+                                    <span class="form-text text-danger"
+                                        *ngIf="campoInvalid('nrocon')">
+                                        El número es de longitud máxima de 15 dígitos y de formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col-4 text-right">
+                                    <label for="datcon">Otros datos: </label>
+                                </div>
+                                <div class="field col-8">
+                                    <textarea id="datcon" 
+                                            pInputTextarea 
+                                            formControlName="datcon" 
+                                            rows="3"
+                                            placeholder="Ingrese otros datos">
+                                    </textarea>
+                                    <span class="form-text text-danger"
+                                        *ngIf="campoInvalid('datcon')">
+                                        El campo otros datos es de longitud máxima de 60 dígitos y de formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+                            
+                        </p-panel>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar" 
+                        icon="pi pi-times" 
+                        class="p-button my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-check"
+                        class="p-button my-1" 
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Company, conceptoEconomicoData, SectorEmpresas } from '../../interfaces/compania.interfaces';
+import { Company, conceptoEconomicoData, SectorEmpresas } from '../../../interfaces/compania.interfaces';
 import { Validators, FormGroup, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
-import { CompaniaService } from '../../services/compania.service';
+import { CompaniaService } from '../../../services/compania.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
