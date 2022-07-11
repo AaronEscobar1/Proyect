@@ -360,6 +360,49 @@ describe('ClasificacionOficialComponent', () => {
     fakeBackend.flush(data);
     expect(fakeBackend.request.method).toBe('GET');
 
+    const countryTrue = [
+      {
+        "nombre": "Venezuela",
+        "codigo": "VEN",
+        "links": [
+            {
+                "rel": "entidadesFederales",
+                "href": "/entidadesfederales/VEN"
+            }
+        ]
+      },
+      {
+        "nombre": "ARGENTINA",
+        "codigo": "ARG",
+        "links": [
+            {
+                "rel": "entidadesFederales",
+                "href": "/entidadesfederales/ARG"
+            }
+        ]
+      }
+    ] 
+
+    app.loadCountrysData()
+
+    const fakeBackendCountry = httpTestingController.expectOne(`http://localhost:8080/api/paises`);
+    fakeBackendCountry.flush(countryTrue);
+    expect(fakeBackend.request.method).toBe('GET');
+    
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "Error en solicitud.",   
+    });
+
+    app.loadCountrysData()
+
+    const fakeBackendCountryFalse = httpTestingController.expectOne(`http://localhost:8080/api/paises`);
+    fakeBackendCountryFalse.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
+
 
 
   })

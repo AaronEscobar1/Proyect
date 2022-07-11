@@ -4,8 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { SindicatosService } from '../../services/sindicatos.service';
-import { Countrys, FederalEntities, ObjectEventChange, Sindicatos } from '../../interfaces/sindicatos.interfaces';
-import { Dropdown } from 'primeng/dropdown';
+import { Countrys, Dropdown, FederalEntities, ObjectEventChange, Sindicatos } from '../../interfaces/sindicatos.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
