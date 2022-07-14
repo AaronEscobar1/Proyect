@@ -13,35 +13,35 @@ export class CompaniaService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/empresas'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/empresas'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/empresas/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${id}`));
   }
 
   create(company: Company): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/empresas'), company);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/empresas'), company);
   }
 
   update(company: Company): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/empresas/${company.id}`), company);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${company.id}`), company);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/empresas/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${id}`));
   }
 
   getAllCountry(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/paises'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/paises'));
   }
 
   getEntitiesByCountry(codCountry: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/entidadesfederales/${codCountry}`));
   }
 
   getSectoresEmpresas(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/sectoresempresas`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/sectoresempresas`));
   }
 
 }

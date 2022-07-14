@@ -13,19 +13,19 @@ export class OtroDatosAdicionalesService {
               private helpers: Helpers) { }
 
   getDatosAdicionalesByIdEmpresa(idEmpresa: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/empresas/${idEmpresa}/datosadicionales`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/datosadicionales`));
   }
 
   create(otrosDatosEmpresa: OtrosDatosEmpresa): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint(`/empresas/${otrosDatosEmpresa.idEmpresa}/datosadicionales`), otrosDatosEmpresa);
+    return this.http.post(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${otrosDatosEmpresa.idEmpresa}/datosadicionales`), otrosDatosEmpresa);
   }
 
   update(otrosDatosEmpresa: OtrosDatosEmpresa): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/empresas/${otrosDatosEmpresa.idEmpresa}/datosadicionales`), otrosDatosEmpresa);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${otrosDatosEmpresa.idEmpresa}/datosadicionales`), otrosDatosEmpresa);
   }
 
   delete(idEmpresa: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/empresas/${idEmpresa}/datosadicionales`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/datosadicionales`));
   }
 
 }
