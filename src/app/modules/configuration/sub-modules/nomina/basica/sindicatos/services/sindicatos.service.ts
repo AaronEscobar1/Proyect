@@ -13,34 +13,34 @@ export class SindicatosService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/sindicatos'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/sindicatos'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/sindicatos/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/sindicatos/${id}`));
   }
 
   create(sindicatos: Sindicatos): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/sindicatos'), sindicatos);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/sindicatos'), sindicatos);
   }
 
   update(sindicatos: Sindicatos): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/sindicatos/${sindicatos.codsin}`), sindicatos);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/sindicatos/${sindicatos.codsin}`), sindicatos);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/sindicatos/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/sindicatos/${id}`));
   }
 
   getAllCountry(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/paises'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/paises'));
   }
 
   getEntitiesByCountry(codCountry: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/entidadesfederales/${codCountry}`));
   }
   getEntitiesByCountryAndEntity(codCountry: string, codEntidad: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/entidadesfederales/${codCountry}/${codEntidad}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/entidadesfederales/${codCountry}/${codEntidad}`));
   }
 
 }
