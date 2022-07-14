@@ -53,6 +53,11 @@ const routes: Routes = [
     loadChildren: () => import('./sindicatos/sindicatos.module').then( m => m.SindicatosModule),
   },
   {
+    path: 'motivos-cambios',
+    // LazyLoad
+    loadChildren: () => import('./motivos-cambios/motivos-cambios.module').then( m => m.MotivosCambiosModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
