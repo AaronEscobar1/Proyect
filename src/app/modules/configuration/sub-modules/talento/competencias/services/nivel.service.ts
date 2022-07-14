@@ -13,23 +13,23 @@ export class NivelService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/nivelescompetencias'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/nivelescompetencias'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/nivelescompetencias/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/talentos/nivelescompetencias/${id}`));
   }
 
   create(niveles: Niveles): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/nivelescompetencias'), niveles);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/talentos/nivelescompetencias'), niveles);
   }
 
   update(niveles: Niveles): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/nivelescompetencias/${niveles.id}`), niveles);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/talentos/nivelescompetencias/${niveles.id}`), niveles);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/nivelescompetencias/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/talentos/nivelescompetencias/${id}`));
   }
 
 }
