@@ -13,31 +13,31 @@ export class InformacionAdicionalService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/informacionesadicionales'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/datosadicionales'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/informacionesadicionales/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/talentos/datosadicionales/${id}`));
   }
 
   create(informacionAdicional: InformacionAdicional): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/informacionesadicionales'), informacionAdicional);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/talentos/datosadicionales'), informacionAdicional);
   }
 
   update(informacionAdicional: InformacionAdicional): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/informacionesadicionales/${informacionAdicional.id}`), informacionAdicional);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/talentos/datosadicionales/${informacionAdicional.id}`), informacionAdicional);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/informacionesadicionales/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/talentos/datosadicionales/${id}`));
   }
   
   getAllEmpresas(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/empresas'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/empresas'));
   }
 
   getAllTiposInformacionesAdicionales(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/tinformacionesadicionales'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/tiposdatosadicionales'));
   }
 
 }
