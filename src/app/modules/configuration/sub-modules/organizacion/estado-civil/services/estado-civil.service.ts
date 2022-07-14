@@ -13,23 +13,23 @@ export class EstadoCivilService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/estadosciviles'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/estadosciviles'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/estadosciviles/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/estadosciviles/${id}`));
   }
 
   create(estadoCivil: EstadoCivil): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/estadosciviles'), estadoCivil);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/estadosciviles'), estadoCivil);
   }
 
   update(estadoCivil: EstadoCivil): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/estadosciviles/${estadoCivil.id}`), estadoCivil);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/estadosciviles/${estadoCivil.id}`), estadoCivil);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/estadosciviles/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/estadosciviles/${id}`));
   }
 
 }
