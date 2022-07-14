@@ -80,6 +80,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Sindicatos',
                   routerLink: ['/main/config/basica/sindicatos'],
+                },
+                {
+                  label: 'Motivos de cambios',
+                  routerLink: ['/main/config/basica/motivos-cambios'],
                 }
               ]
             },
