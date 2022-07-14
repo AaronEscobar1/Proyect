@@ -13,23 +13,23 @@ export class ProfesionesService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/profesiones'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/profesiones'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/profesiones/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/profesiones/${id}`));
   }
 
   create(profession: Profession): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/profesiones'), profession);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/profesiones'), profession);
   }
 
   update(profession: Profession): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/profesiones/${profession.codprf}`), profession);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/profesiones/${profession.codprf}`), profession);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/profesiones/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/profesiones/${id}`));
   }
 
 }

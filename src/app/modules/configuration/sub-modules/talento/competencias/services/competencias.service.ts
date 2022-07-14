@@ -13,27 +13,27 @@ export class CompetenciasService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/competencias'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/competencias'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/competencias/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/talentos/competencias/${id}`));
   }
 
   create(competencia: Competencias): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/competencias'), competencia);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/talentos/competencias'), competencia);
   }
 
   update(competencia: Competencias): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/competencias/${competencia.id}`), competencia);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/talentos/competencias/${competencia.id}`), competencia);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/competencias/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/talentos/competencias/${id}`));
   }
 
   getAllTiposCompetencias(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/tiposcompetencias'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/tiposcompetencias'));
   }
 
 }

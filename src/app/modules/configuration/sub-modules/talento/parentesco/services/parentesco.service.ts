@@ -13,23 +13,23 @@ export class ParentescoService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/parentescos'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/parentescos'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/parentescos/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/talentos/parentescos/${id}`));
   }
 
   create(parentesco: Parentesco): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/parentescos'), parentesco);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/talentos/parentescos'), parentesco);
   }
 
   update(parentesco: Parentesco): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/parentescos/${parentesco.id}`), parentesco);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/talentos/parentescos/${parentesco.id}`), parentesco);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/parentescos/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/talentos/parentescos/${id}`));
   }
   
 }

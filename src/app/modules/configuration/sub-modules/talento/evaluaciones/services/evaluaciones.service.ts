@@ -13,27 +13,27 @@ export class EvaluacionesService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/evaluaciones'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/evaluaciones'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/evaluaciones/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/talentos/evaluaciones/${id}`));
   }
 
   create(evaluaciones: Evaluaciones): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/evaluaciones'), evaluaciones);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/talentos/evaluaciones'), evaluaciones);
   }
 
   update(evaluaciones: Evaluaciones): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/evaluaciones/${evaluaciones.id}`), evaluaciones);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/talentos/evaluaciones/${evaluaciones.id}`), evaluaciones);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/evaluaciones/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/talentos/evaluaciones/${id}`));
   }
 
   getAllTiposEvaluaciones(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/tiposevaluaciones'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/talentos/tiposevaluaciones'));
   }
 
 }

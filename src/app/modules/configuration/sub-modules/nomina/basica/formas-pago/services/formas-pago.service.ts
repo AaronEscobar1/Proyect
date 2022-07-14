@@ -13,23 +13,23 @@ export class FormasPagoService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/pagoformas'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/pagoformas'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/pagoformas/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${id}`));
   }
 
   create(formasPago: FormasPago): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/pagoformas'), formasPago);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/pagoformas'), formasPago);
   }
 
   update(formasPago: FormasPago): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/pagoformas/${formasPago.codpag}`), formasPago);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${formasPago.codpag}`), formasPago);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/pagoformas/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${id}`));
   }
 
 }
