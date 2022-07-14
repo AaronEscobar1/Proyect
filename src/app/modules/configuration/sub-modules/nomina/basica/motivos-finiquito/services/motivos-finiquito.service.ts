@@ -13,22 +13,22 @@ export class MotivosFiniquitoService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/motivosfiniquito'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/motivosfiniquito'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/motivosfiniquito/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/motivosfiniquito/${id}`));
   }
 
   create(motivoFiniquito: MotivosFiniquito): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/motivosfiniquito'), motivoFiniquito);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/motivosfiniquito'), motivoFiniquito);
   }
 
   update(motivoFiniquito: MotivosFiniquito): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/motivosfiniquito/${motivoFiniquito.coddes}`), motivoFiniquito);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/motivosfiniquito/${motivoFiniquito.coddes}`), motivoFiniquito);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/motivosfiniquito/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/motivosfiniquito/${id}`));
   }
 }
