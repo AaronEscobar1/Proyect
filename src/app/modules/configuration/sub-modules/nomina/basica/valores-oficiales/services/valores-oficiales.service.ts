@@ -13,27 +13,27 @@ export class ValoresOficialesService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/valoresoficiales'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/valoresoficiales'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/valoresoficiales/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/valoresoficiales/${id}`));
   }
 
   create(valorOficial: ValorOficial): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/valoresoficiales'), valorOficial);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/valoresoficiales'), valorOficial);
   }
 
   update(valorOficial: ValorOficial): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/valoresoficiales/${valorOficial.paisId}/${valorOficial.id}?fecefe=${valorOficial.fecefe}`), valorOficial);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/valoresoficiales/${valorOficial.paisId}/${valorOficial.id}?fecefe=${valorOficial.fecefe}`), valorOficial);
   }
 
   delete(valorOficial: ValorOficial): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/valoresoficiales/${valorOficial.paisId}/${valorOficial.id}?fecefe=${valorOficial.fecefe}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/valoresoficiales/${valorOficial.paisId}/${valorOficial.id}?fecefe=${valorOficial.fecefe}`));
   }
 
   getAllCountry(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/paises'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/paises'));
   }
 
 }

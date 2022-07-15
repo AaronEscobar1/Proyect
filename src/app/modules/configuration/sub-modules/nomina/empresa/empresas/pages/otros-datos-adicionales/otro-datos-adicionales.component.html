@@ -1,0 +1,23 @@
+<!-- Componente de botones -->
+<app-buttons-od (onOpenModalCreate)="openModalCreate($event)"
+                (onEditRow)="editRow($event)"
+                (onDeleteRow)="deleteRow($event)"
+                [otrosDatosEmpresaSelect]="otrosDatosEmpresaSelect">
+</app-buttons-od>
+
+<!-- Componente table -->
+<app-data-table [companias]="companias"
+                [tab]="'otrosDatos'"
+                (onLoadAdditionalData)="loadOtherDataEmpresa($event)">
+</app-data-table>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit-od
+    [companySelect]="companySelect"
+    [otrosDatosEmpresaSelect]="otrosDatosEmpresaSelect"
+    [createModal]="createModal"
+    [isEdit]="isEdit"
+    [titleForm]="titleForm"
+    (onCloseModal)="closeModal()">
+</app-modal-add-edit-od>
+

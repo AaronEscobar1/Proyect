@@ -13,23 +13,23 @@ export class ClasificacionOficialService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/clasificacionesoficiales'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/clasificacionesoficiales'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/clasificacionesoficiales/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/clasificacionesoficiales/${id}`));
   }
 
   create(officialClassification: OfficialClassification): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/clasificacionesoficiales'), officialClassification);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/clasificacionesoficiales'), officialClassification);
   }
 
   update(officialClassification: OfficialClassification): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/clasificacionesoficiales/${officialClassification.codofi}/${officialClassification.tiprep}`), officialClassification);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/clasificacionesoficiales/${officialClassification.codofi}/${officialClassification.tiprep}`), officialClassification);
   }
 
   delete(clasif_codigo: string, clasif_tipo: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/clasificacionesoficiales/${clasif_codigo}/${clasif_tipo}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/clasificacionesoficiales/${clasif_codigo}/${clasif_tipo}`));
   }
 
 }

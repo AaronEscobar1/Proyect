@@ -13,23 +13,23 @@ export class CategoriesService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/categorias'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/categorias'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/categorias/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/categorias/${id}`));
   }
 
   create(categories: Categories): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/categorias'), categories);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/categorias'), categories);
   }
 
   update(categories: Categories): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/categorias/${categories.codcat}`), categories);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/categorias/${categories.codcat}`), categories);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/categorias/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/categorias/${id}`));
   }
 
 }

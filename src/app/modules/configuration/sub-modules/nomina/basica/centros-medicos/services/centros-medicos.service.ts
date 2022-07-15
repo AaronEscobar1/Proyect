@@ -13,23 +13,23 @@ export class CentrosMedicosService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/centrosmedicos'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/centrosmedicos'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/centrosmedicos/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/centrosmedicos/${id}`));
   }
 
   create(centroMedico: CentrosMedicos): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/centrosmedicos'), centroMedico);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/centrosmedicos'), centroMedico);
   }
 
   update(centroMedico: CentrosMedicos): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/centrosmedicos/${centroMedico.codmed}`), centroMedico);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/centrosmedicos/${centroMedico.codmed}`), centroMedico);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/centrosmedicos/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/centrosmedicos/${id}`));
   }
 
 }

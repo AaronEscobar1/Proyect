@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../../nomina/empresa/compania/interfaces/compania.interfaces';
+import { Company } from '../../../../nomina/empresa/empresas/interfaces/compania.interfaces';
 import { InformacionAdicional, TipoInformacionAdicional } from '../../interfaces/informacion-adicional.interfaces';
 import { InformacionAdicionalService } from '../../services/informacion-adicional.service';
 

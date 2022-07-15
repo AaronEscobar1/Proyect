@@ -13,23 +13,23 @@ export class TipoIdentificacionService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/tiposidentificacion'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/tiposidentificacion'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/tiposidentificacion/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/tiposidentificacion/${id}`));
   }
 
   create(tipoIdentificacion: TipoIdentificacion): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/tiposidentificacion'), tipoIdentificacion);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/tiposidentificacion'), tipoIdentificacion);
   }
 
   update(tipoIdentificacion: TipoIdentificacion): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/tiposidentificacion/${tipoIdentificacion.id}`), tipoIdentificacion);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/tiposidentificacion/${tipoIdentificacion.id}`), tipoIdentificacion);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/tiposidentificacion/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/tiposidentificacion/${id}`));
   }
   
 }

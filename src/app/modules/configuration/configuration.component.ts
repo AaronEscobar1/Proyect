@@ -80,6 +80,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Sindicatos',
                   routerLink: ['/main/config/basica/sindicatos'],
+                },
+                {
+                  label: 'Motivos de cambios',
+                  routerLink: ['/main/config/basica/motivos-cambios'],
                 }
               ]
             },
@@ -87,12 +91,8 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               label: 'Empresa',
               items: [
                 {
-                  label: 'Compañia',
+                  label: 'Empresas',
                   routerLink: ['/main/config/empresa/compania'],
-                },
-                {
-                  label: 'Empresa',
-                  routerLink: ['/main/config/empresa/empresa'],
                 },
                 {
                   label: 'Tarifas de impuestos',

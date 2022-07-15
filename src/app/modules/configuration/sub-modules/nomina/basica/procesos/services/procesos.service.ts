@@ -13,23 +13,23 @@ export class ProcesosService {
               private helpers: Helpers) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/procesos'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/procesos'));
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/procesos/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/procesos/${id}`));
   }
 
   create(procesos: Procesos): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/procesos'), procesos);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/procesos'), procesos);
   }
 
   update(procesos: Procesos): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/procesos/${procesos.tippro}`), procesos);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/procesos/${procesos.tippro}`), procesos);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/procesos/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/procesos/${id}`));
   }
 
 }

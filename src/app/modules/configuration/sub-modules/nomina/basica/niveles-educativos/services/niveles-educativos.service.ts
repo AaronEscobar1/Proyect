@@ -13,23 +13,23 @@ export class NivelesEducativosService {
               private helpers: Helpers) { }
 
   getNivelesAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/niveleseducativos'));
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/niveleseducativos'));
   }
 
   getNivelById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/niveleseducativos/${id}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/niveleseducativos/${id}`));
   }
   
   createNivel(nivel: NivelesEducativos): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/niveleseducativos'), nivel);
+    return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/niveleseducativos'), nivel);
   }
 
   updateNivel(nivel: NivelesEducativos): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/niveleseducativos/${nivel.codniv}`), nivel);
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/niveleseducativos/${nivel.codniv}`), nivel);
   }
 
   deleteNivel(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/niveleseducativos/${id}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/niveleseducativos/${id}`));
   }
 
 }
