@@ -26,7 +26,7 @@
             <ng-template pTemplate="body" let-competencia>
                 <tr [pSelectableRow]="competencia">
                     <td>{{ competencia.nombre | titlecase}}</td>
-                    <td>{{ competencia.tipo }}</td>
+                    <td>{{ competencia.tipo.nombre }}</td>
                 </tr>
             </ng-template>
 
