@@ -75,11 +75,12 @@ export class ModalAddEditComponent implements OnInit {
   ngOnChanges() {
     if( !this.isEdit ) {
       this.form.controls['codsin'].enable();
+      this.form.controls['edoCodedo'].disable();
       return;
     }
     this.form.controls['codsin'].disable();
     // Comprobar si el sindicato tiene fecha de inscripción para establecerlo en el formulario y poder editar
-    if ( this.sindicatosSelect && this.sindicatosSelect.registro) {
+    if ( this.sindicatosSelect && this.sindicatosSelect.registro ) {
       this.sindicatosSelect.registro = new Date(this.sindicatosSelect.registro);
     }
     // Cargar pais y entidades si existen
