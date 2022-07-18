@@ -155,6 +155,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             {
               label: 'Información adicional',
               routerLink: ['/main/config/talento/informacion-adicional']
+            },
+            {
+              label: 'Entrevistas',
+              routerLink: ['/main/config/talento/entrevistas']
             }
           ]
         }
