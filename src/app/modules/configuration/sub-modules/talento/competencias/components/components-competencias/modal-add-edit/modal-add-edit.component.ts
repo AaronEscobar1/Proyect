@@ -32,6 +32,11 @@ export class ModalAddEditComponent implements OnInit {
   form!: FormGroup;
   maxLengthDescrip: number = 150;
 
+  // Variable para obtener el form group de tipo y a su vez validar si el campo de los controles tiene errores
+  get tipoFormGroup() {
+    return this.form.controls['tipo'] as FormGroup;
+  }
+
   constructor(private competenciasService: CompetenciasService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
@@ -41,7 +46,9 @@ export class ModalAddEditComponent implements OnInit {
       id:      [  , [ Validators.required, Validators.pattern('[0-9]{1,10}$'), this.validatedId.bind(this) ]],
       nombre:  [  , [ Validators.required, Validators.maxLength(50), this.validatedDesc.bind(this) ]],
       descrip: [  , [ Validators.required, Validators.maxLength(150) ]],
-      tipo:    [  , [ Validators.required ]]
+      tipo:    this.fb.group({
+        id: [  , [ Validators.required ]]
+      })
     });
   }
 
@@ -63,11 +70,12 @@ export class ModalAddEditComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
     // Obtener formulario
     let data: Competencias = this.form.getRawValue();
     // Eliminar espacios en blanco en su atributo
     data.nombre.trim();
-    
+
     this.spinner.show();
     
     if (this.isEdit) {

@@ -73,19 +73,22 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <label for="tipo">Tipo: *</label>
+                <div class="field" formGroupName="tipo">
+                    <label for="idTipo">Tipo: *</label>
                     <p-dropdown [options]="tiposCompetencias"
-                                inputId="tipo"
+                                inputId="idTipo"
                                 appendTo="body"
-                                formControlName="tipo"
+                                formControlName="id"
                                 optionLabel="nombre"
-                                optionValue="tipo"
+                                optionValue="id"
                                 [showClear]="true"
                                 placeholder="Seleccione un tipo">
                     </p-dropdown>
                     <span class="form-text text-danger"
-                          *ngIf="campoInvalid('tipo')">
+                          *ngIf="tipoFormGroup.controls['id'].errors
+                                 && tipoFormGroup.controls['id'].touched
+                                 && tipoFormGroup.controls['id'].dirty 
+                                 && this.form.invalid">
                         El tipo es obligatorio.
                     </span>
                 </div>
