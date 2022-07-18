@@ -11,7 +11,7 @@ import { By } from '@angular/platform-browser';
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/niveleseducativos`;
+  const URL = `${environment.api}/configuraciones/nominas/niveleseducativos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

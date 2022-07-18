@@ -4,20 +4,20 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Servicios y componentes requeridos
 import { environment } from 'src/environments/environment';
-import { MotivosFiniquitoComponent } from './motivos-finiquito.component';
-import { MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
-import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
+import { MotivosCambiosComponent } from './motivos-cambios.component';
+import { MotivosCambios } from '../../interfaces/motivos-cambios.interfaces';
+import { MotivosCambiosService } from '../../services/motivos-cambios.service';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('MotivosFiniquitoComponent', () => {
+describe('NivelesEducativosComponent', () => {
 
   let httpTestingController: HttpTestingController;
 
-  let services: MotivosFiniquitoService;
+  let services: MotivosCambiosService;
 
-  const URL = `${environment.api}/configuraciones/nominas/motivosfiniquito`;
+  const URL = `${environment.api}/configuraciones/nominas/motivoscambios`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -29,46 +29,46 @@ describe('MotivosFiniquitoComponent', () => {
         BrowserAnimationsModule
       ],
       declarations: [
-        MotivosFiniquitoComponent
+        MotivosCambiosComponent
       ]
     }).compileComponents();
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
 
-    services = TestBed.inject(MotivosFiniquitoService);
+    services = TestBed.inject(MotivosCambiosService);
 
   }));
 
-  it('Crear componente de motivos finiquito correctamente', () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+  it('Crear componente de Niveles Educativos correctamente', () => {
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it('Inicializar el componente', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
-    expect(app.motivosFiniquito.length).toBe(0);
+    expect(app.motivosCambios.length).toBe(0);
     app.loadData();
     fixture.detectChanges();
-    expect(app.motivosFiniquito.length).toBeGreaterThanOrEqual(0);
+    expect(app.motivosCambios.length).toBeGreaterThanOrEqual(0);
   });
 
   it('Validando Refrescar', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de carga despues del boton 
     app.refresh();
-    expect(app.motivosFiniquito.length).toBe(0);
+    expect(app.motivosCambios.length).toBe(0);
     app.loadData();
     fixture.detectChanges();
-    expect(app.motivosFiniquito.length).toBeGreaterThanOrEqual(0);  
+    expect(app.motivosCambios.length).toBeGreaterThanOrEqual(0);  
   })
 
   it('Abrir Modal de impresion', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de abrir el modal de impresion 
@@ -79,7 +79,7 @@ describe('MotivosFiniquitoComponent', () => {
   })
 
   it('Cerrar Modal de impresion', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de abrir el modal de impresion 
@@ -95,26 +95,26 @@ describe('MotivosFiniquitoComponent', () => {
     
   })
 
-  it('Abrir modal de Crear motivos finiquito', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+  it('Abrir modal de Crear Nivel', async () => {
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de abrir el modal de Creacion 
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar motivos de finiquito');
+    expect(app.titleForm).toBe('Agregar motivo de cambio');
     expect(app.createModal).toBeTrue();  
   })
 
-  it('Cerrar Modal de Crear motivos finiquito', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+  it('Cerrar Modal de Crear Nivel', async () => {
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
     
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar motivos de finiquito');
+    expect(app.titleForm).toBe('Agregar motivo de cambio');
     expect(app.createModal).toBeTrue();
     fixture.detectChanges();
     
@@ -124,72 +124,64 @@ describe('MotivosFiniquitoComponent', () => {
     expect(app.createModal).toBeFalse();  
   })
 
-  it('Abrir modal de Editar motivos finiquito', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+  it('Abrir modal de Editar Nivel', async () => {
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     // seteamos data simulate
-    const data: MotivosFiniquito = {
-      "desde1": "motivo",
-      "desde2": "CCC",
-      "impliq": "0",
-      "classo": "2",
-      "coddes": "2"
+    const data: MotivosCambios = {
+      "descam": "CREACION DE PUESTO",
+      "codcam": "CRE"
     }
 
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.motivoFiniquito).toBe(undefined);
+    expect(app.motivoCambioSelect).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.motivoFiniquito).toBe(data);
+    expect(app.motivoCambioSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar motivos de finiquito');
+    expect(app.titleForm).toBe('Editar motivo de cambio');
     expect(app.createModal).toBeTrue();  
   })
 
-  it('Cerrar Modal de Editar motivos finiquito', async () => {
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+  it('Cerrar Modal de Editar Nivel', async () => {
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
-    const data: MotivosFiniquito = {
-      "desde1": "motivo",
-      "desde2": "CCC",
-      "impliq": "0",
-      "classo": "2",
-      "coddes": "2"
+    const data: MotivosCambios = {
+      "descam": "CREACION DE PUESTO",
+      "codcam": "CRE"
     }
     
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.motivoFiniquito).toBe(undefined);
+    expect(app.motivoCambioSelect).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.motivoFiniquito).toBe(data);
+    expect(app.motivoCambioSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar motivos de finiquito');
+    expect(app.titleForm).toBe('Editar motivo de cambio');
     expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion
     expect(app.isEdit).toBeTrue();
-    expect(app.motivoFiniquito).toBe(data);
+    expect(app.motivoCambioSelect).toBe(data);
     app.closeModal();
     fixture.detectChanges();
-    expect(app.motivoFiniquito).toBe(undefined);
+    expect(app.motivoCambioSelect).toBe(undefined);
     expect(app.isEdit).toBeFalse();
     expect(app.createModal).toBeFalse(); 
   })
 
-  it('Eliminar motivos finiquito (caso fallido)', ()=>{
+  it('Eliminar Niveles Educativos (caso fallido)', ()=>{
 
-    const data: MotivosFiniquito = {
-      "desde1": "motivo",
-      "desde2": "CCC",
-      "impliq": "0",
-      "classo": "2",
-      "coddes": "2"
+    const data: MotivosCambios = {
+      "descam": "CREACION DE PUESTO",
+      "codcam": "CRE"
     }
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     const error = new ErrorEvent('', {
@@ -210,28 +202,25 @@ describe('MotivosFiniquitoComponent', () => {
     acceptBtn.click();
     expect(accept).toHaveBeenCalled();
     
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.coddes}`); 
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codcam}`); 
 
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('DELETE'); 
 
   })
 
-  it('Eliminar motivos finiquito (caso verdadero)', ()=>{
+  it('Eliminar Niveles Educativos (caso verdadero)', ()=>{
 
-    const data: MotivosFiniquito = {
-      "desde1": "motivo",
-      "desde2": "CCC",
-      "impliq": "0",
-      "classo": "2",
-      "coddes": "2"
+    const data: MotivosCambios = {
+      "descam": "CREACION DE PUESTO",
+      "codcam": "CRE"
     }
 
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     const resp = {
-      "message": "motivos finiquito eliminado con éxito.",
+      "message": "Forma de pago eliminado con éxito.",
       "status": "success"
     }
 
@@ -246,7 +235,7 @@ describe('MotivosFiniquitoComponent', () => {
     acceptBtn.click();
     expect(accept).toHaveBeenCalled();
 
-    const fakeBackend = httpTestingController.match(`${URL}/${data.coddes}`);
+    const fakeBackend = httpTestingController.match(`${URL}/${data.codcam}`);
     fakeBackend[0].flush(resp);
     expect(fakeBackend[0].request.method).toBe('DELETE');
 
@@ -254,22 +243,27 @@ describe('MotivosFiniquitoComponent', () => {
 
   it('Load Data (Caso verdadero)', ()=>{
 
-    const data: MotivosFiniquito = {
-      "desde1": "motivo",
-      "desde2": "CCC",
-      "impliq": "0",
-      "classo": "2",
-      "coddes": "2"
-    }
+    const data: MotivosCambios[] = [
+      {
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
+      },
+      {
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
+    ]
 
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     app.loadData()
 
-    const fakeBackend = httpTestingController.match(`${URL}`);
-    fakeBackend[0].flush(data);
-    expect(fakeBackend[0].request.method).toBe('GET');
+    const fakeBackend = httpTestingController.expectOne(`${URL}`);
+    fakeBackend.flush(data);
+    expect(fakeBackend.request.method).toBe('GET');
+
+
 
   })
 
@@ -282,7 +276,7 @@ describe('MotivosFiniquitoComponent', () => {
       message: "No message available",   
     });
     
-    const fixture = TestBed.createComponent(MotivosFiniquitoComponent);
+    const fixture = TestBed.createComponent(MotivosCambiosComponent);
     const app = fixture.componentInstance;
 
     app.loadData()

@@ -17,7 +17,9 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: InformacionAdicionalService;
 
-  const URL = `${environment.api}/informacionesadicionales`;
+  const URL = `${environment.api}/configuraciones/talentos/datosadicionales`;
+  const URLEMPRESAS = `${environment.api}/configuraciones/nominas/empresas`;
+  const URLTIPOS = `${environment.api}/configuraciones/talentos/tiposdatosadicionales`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -300,6 +302,106 @@ describe('ClasificacionOficialComponent', () => {
     app.loadData()
 
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
+    fakeBackend.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  })
+
+  it('Load Empresas (Caso verdadero)', ()=>{
+
+    const data: InformacionAdicional[] = [
+      {
+        "nombre": "Prueba 3",
+        "descrip": "ca",
+        "tipoInfo": "1",
+        "idEmpresa": "97",
+        "id": "3"
+      },
+      {
+        "nombre": "info adicional",
+        "descrip": "descripcion",
+        "tipoInfo": "1",
+        "idEmpresa": "95",
+        "id": "1"
+      },
+    ]
+
+    const fixture = TestBed.createComponent(InformacionAdicionalComponent);
+    const app = fixture.componentInstance;
+
+    app.loadEmpresas()
+
+    const fakeBackend = httpTestingController.expectOne(`${URLEMPRESAS}`);
+    fakeBackend.flush(data);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  })
+
+  it('Load Data (Caso Falso)', ()=>{
+
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "No message available",   
+    });
+    
+    const fixture = TestBed.createComponent(InformacionAdicionalComponent);
+    const app = fixture.componentInstance;
+
+    app.loadEmpresas()
+
+    const fakeBackend = httpTestingController.expectOne(`${URLEMPRESAS}`);
+    fakeBackend.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  })
+
+  it('Load Tipos (Caso verdadero)', ()=>{
+
+    const data: InformacionAdicional[] = [
+      {
+        "nombre": "Prueba 3",
+        "descrip": "ca",
+        "tipoInfo": "1",
+        "idEmpresa": "97",
+        "id": "3"
+      },
+      {
+        "nombre": "info adicional",
+        "descrip": "descripcion",
+        "tipoInfo": "1",
+        "idEmpresa": "95",
+        "id": "1"
+      },
+    ]
+
+    const fixture = TestBed.createComponent(InformacionAdicionalComponent);
+    const app = fixture.componentInstance;
+
+    app.loadTiposInformacionesAdicionales()
+
+    const fakeBackend = httpTestingController.expectOne(`${URLTIPOS}`);
+    fakeBackend.flush(data);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  })
+
+  it('Load Data (Caso Falso)', ()=>{
+
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "No message available",   
+    });
+    
+    const fixture = TestBed.createComponent(InformacionAdicionalComponent);
+    const app = fixture.componentInstance;
+
+    app.loadTiposInformacionesAdicionales()
+
+    const fakeBackend = httpTestingController.expectOne(`${URLTIPOS}`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('GET');
 

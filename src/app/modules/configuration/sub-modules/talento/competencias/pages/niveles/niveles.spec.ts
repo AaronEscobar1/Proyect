@@ -19,7 +19,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: NivelService;
 
-  const URL = `${environment.api}/nivelescompetencias`;
+  const URL = `${environment.api}/configuraciones/talentos/nivelescompetencias`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

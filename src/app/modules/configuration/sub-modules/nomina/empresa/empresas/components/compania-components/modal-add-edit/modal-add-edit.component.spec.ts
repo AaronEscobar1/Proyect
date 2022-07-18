@@ -20,8 +20,8 @@ const dropdownElement: Dropdown = {
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/empresas`;
-  const URLPAIS = `${environment.api}/entidadesfederales`;
+  const URL = `${environment.api}/configuraciones/nominas/empresas`;
+  const URLPAIS = `${environment.api}/configuraciones/organizaciones/entidadesfederales`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -1317,7 +1317,7 @@ describe('ModalAddEditComponent', () => {
 
     app.loadCountrysData()
     
-    const fakeBackend = httpTestingController.match(`http://localhost:8080/api/paises`);
+    const fakeBackend = httpTestingController.match(`http://localhost:8080/api/configuraciones/organizaciones/paises`);
     fakeBackend[0].flush(app.countrys);
     expect(fakeBackend[0].request.method).toBe('GET');
 
@@ -1330,7 +1330,7 @@ describe('ModalAddEditComponent', () => {
 
     app.loadCountrysData()
 
-    const fakeBackendFalse = httpTestingController.match(`http://localhost:8080/api/paises`);
+    const fakeBackendFalse = httpTestingController.match(`http://localhost:8080/api/configuraciones/organizaciones/paises`);
     fakeBackendFalse[0].error(error);
     expect(fakeBackendFalse[0].request.method).toBe('GET');
 
@@ -1338,13 +1338,13 @@ describe('ModalAddEditComponent', () => {
     
     app.loadSectoresEmpresas()
     
-    const fakeBackendEmpresas = httpTestingController.match(`http://localhost:8080/api/sectoresempresas`);
+    const fakeBackendEmpresas = httpTestingController.match(`http://localhost:8080/api/configuraciones/nominas/sectoresempresas`);
     fakeBackendEmpresas[0].flush(app.sectorEmpre);
     expect(fakeBackendEmpresas[0].request.method).toBe('GET');
 
     app.loadSectoresEmpresas()
 
-    const fakeBackendEmpresasFalse = httpTestingController.match(`http://localhost:8080/api/sectoresempresas`);
+    const fakeBackendEmpresasFalse = httpTestingController.match(`http://localhost:8080/api/configuraciones/nominas/sectoresempresas`);
     fakeBackendEmpresasFalse[0].error(error);
     expect(fakeBackendEmpresasFalse[0].request.method).toBe('GET');
     

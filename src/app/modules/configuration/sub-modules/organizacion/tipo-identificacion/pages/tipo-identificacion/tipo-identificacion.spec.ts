@@ -17,7 +17,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: TipoIdentificacionService;
 
-  const URL = `${environment.api}/tiposidentificacion`;
+  const URL = `${environment.api}/configuraciones/organizaciones/tiposidentificacion`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

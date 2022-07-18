@@ -20,7 +20,7 @@ const dropdownElement: Dropdown = {
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/tiposidentificacion`;
+  const URL = `${environment.api}/configuraciones/organizaciones/tiposidentificacion`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

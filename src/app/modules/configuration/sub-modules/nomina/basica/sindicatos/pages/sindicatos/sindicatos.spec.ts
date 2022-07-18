@@ -18,7 +18,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: SindicatosService;
 
-  const URL = `${environment.api}/sindicatos`;
+  const URL = `${environment.api}/configuraciones/nominas/sindicatos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -385,7 +385,7 @@ describe('ClasificacionOficialComponent', () => {
 
     app.loadCountrysData()
 
-    const fakeBackendCountry = httpTestingController.expectOne(`http://localhost:8080/api/paises`);
+    const fakeBackendCountry = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/organizaciones/paises`);
     fakeBackendCountry.flush(countryTrue);
     expect(fakeBackend.request.method).toBe('GET');
     
@@ -398,7 +398,7 @@ describe('ClasificacionOficialComponent', () => {
 
     app.loadCountrysData()
 
-    const fakeBackendCountryFalse = httpTestingController.expectOne(`http://localhost:8080/api/paises`);
+    const fakeBackendCountryFalse = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/organizaciones/paises`);
     fakeBackendCountryFalse.error(error);
     expect(fakeBackend.request.method).toBe('GET');
 

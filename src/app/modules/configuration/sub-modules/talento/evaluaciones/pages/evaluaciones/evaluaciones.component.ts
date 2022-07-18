@@ -88,9 +88,7 @@ export class EvaluacionesComponent implements OnInit {
 
   refresh(): void {
     this.evaluaciones = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   /**

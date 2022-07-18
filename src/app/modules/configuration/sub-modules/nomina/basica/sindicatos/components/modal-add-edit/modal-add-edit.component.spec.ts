@@ -20,8 +20,8 @@ const dropdownElement: Dropdown = {
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/sindicatos`;
-  const URLPAIS = `${environment.api}/entidadesfederales`;
+  const URL = `${environment.api}/configuraciones/nominas/sindicatos`;
+  const URLPAIS = `${environment.api}/configuraciones/organizaciones/entidadesfederales`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

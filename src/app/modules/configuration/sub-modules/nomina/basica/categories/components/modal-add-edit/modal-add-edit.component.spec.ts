@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/categorias`;
+  const URL = `${environment.api}/configuraciones/nominas/categorias`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

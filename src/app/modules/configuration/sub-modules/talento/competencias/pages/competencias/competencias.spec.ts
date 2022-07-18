@@ -17,7 +17,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: CompetenciasService;
 
-  const URL = `${environment.api}/competencias`;
+  const URL = `${environment.api}/configuraciones/talentos/competencias`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -331,7 +331,7 @@ describe('ClasificacionOficialComponent', () => {
 
     app.loadTiposCompetencias()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/tiposcompetencias`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/talentos/tiposcompetencias`);
     fakeBackend.flush(data);
     expect(fakeBackend.request.method).toBe('GET');
   })
@@ -350,7 +350,7 @@ describe('ClasificacionOficialComponent', () => {
 
     app.loadTiposCompetencias()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/tiposcompetencias`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/talentos/tiposcompetencias`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('GET');
 

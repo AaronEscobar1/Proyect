@@ -5,22 +5,12 @@ import { MessageService } from 'primeng/api';
 
 import { ModalAddEditComponent } from './modal-add-edit.component';
 import { environment } from 'src/environments/environment';
-import { Dropdown, ObjectEventChange } from 'src/app/shared/interfaces/country-entity.interfaces';
 
-const event: ObjectEventChange  = {
-  originalEvent: true,
-  value: "VEN"
-}
-const dropdownElement: Dropdown = {
-  selectedOption: {
-    nombre: "VEN"
-  }
-}
 
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/configuraciones/organizaciones/estadosciviles`;
+  const URL = `${environment.api}/configuraciones/nominas/motivoscambios`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -56,44 +46,48 @@ describe('ModalAddEditComponent', () => {
 
     app.ngOnChanges()
     
+    // Validamos los datos del formulario vacio
+
+    expect(app.form.value.descam).toEqual(null)
+    expect(app.form.value.codcam).toEqual(null)
+    
     // Validamos el requiere de los campos
     
     expect(app.form.valid).toEqual(false)
 
     // validamos que no exista el nivelSelect
 
-    expect(app.estadoCivilSelect).toEqual(undefined);
+    expect(app.motivoCambioSelect).toEqual(undefined);
   
   });
-
+  
   it('Inicializar el componente Forma de Editar', () => {
     const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
-    },
-    {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-    },
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
+      },
+      {
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
-    app.estadoCivilSelect = {
-      "nombre": "Sin definir",
-      "codigoLey": "s",
-      "id": "O"
+    app.motivoCambioSelect = {
+      "descam": "REEMPLAZO",
+      "codcam": "REM"
     };
-
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
+    // Validacion
+    expect(app.form.value.descam).toEqual("REEMPLAZO")
+    expect(app.form.value.codcam).toEqual(undefined)
+    expect(app.form.valid).toEqual(true)
   });
-
 
   it('Cerrando modal de Crear-Editar', () => {
     const fixture = TestBed.createComponent(ModalAddEditComponent);
@@ -101,6 +95,9 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Llamamos al close modal para resetear todo
     app.closeModal()
+    expect(app.form.value.descam).toEqual(null)
+    expect(app.form.value.codcam).toEqual(null)
+    expect(app.motivoCambioSelect).toEqual(undefined);
   });
 
   it('Probando el Guardado de Datos (Caso Verdadero)', () => {
@@ -109,24 +106,21 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
       },
       {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-      },
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
 
     // datos del formulario
     const data = {
-      "nombre": "Sin definir",
-      "codigoLey": "S",
-      "id": "O"
+      "descam": "REEMPLAZO",
+      "codcam": "REM"
     };
 
     const resp = {"message":"Forma de pago creado."}
@@ -134,10 +128,7 @@ describe('ModalAddEditComponent', () => {
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.setValue(data)
     expect(app.form.valid).toEqual(true)
-    app.idMsgError
-    app.nombreMsgError
-    app.codigoLeyMsgError
-    
+    app.codcamMsgError
 
     // Llamamos a la funcion de Guardado
     app.save()
@@ -154,24 +145,21 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
       },
       {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-      },
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
 
     // datos del formulario
     const data = {
-      "nombre": "Sin definir",
-      "codigoLey": "S",
-      "id": "O"
+      "descam": "REEMPLAZO",
+      "codcam": "REM"
     };
 
     const error = new ErrorEvent('', {
@@ -200,41 +188,43 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
       },
       {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-      },
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
 
     // datos del formulario
     const data = {
-      "nombre": "Sin definir",
-      "codigoLey": "S",
-      "id": "O"
+      "descam": "REEMPLAZO",
+      "codcam": "REM"
     };
 
     const resp = {"message":"Forma de pago creado."}
 
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['codcam'].disable();
     app.form.reset(data)
     console.log(app.form.valid)
     expect(app.form.valid).toEqual(true)
-    app.codigoLeyMsgError
+    app.descamMsgError
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.id}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codcam}`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('PUT');
+
+    // Reset hecho por la funcion
+    expect(app.form.value.descam).toEqual(null)
+    expect(app.form.value.codcam).toEqual(undefined)
+    expect(app.motivoCambioSelect).toEqual(undefined);
   });
 
   it('Probando el Editado de Datos (Caso Falso)', () => {
@@ -243,24 +233,21 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
       },
       {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-      },
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
 
     // datos del formulario
     const data = {
-      "nombre": "Sin definir",
-      "codigoLey": "S",
-      "id": "O"
+      "descam": "REEMPLAZO",
+      "codcam": "REM"
     };
 
     const error = new ErrorEvent('', {
@@ -270,19 +257,22 @@ describe('ModalAddEditComponent', () => {
       message: "Error en solicitud.",   
     });
 
-
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['codcam'].disable();
     app.form.reset(data)
     expect(app.form.valid).toEqual(true)
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.id}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.codcam}`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('PUT');
 
+    // Reset hecho por la funcion
+    expect(app.form.value.descam).toEqual(data.descam)
+    expect(app.form.value.codcam).toEqual(undefined)
+    expect(app.motivoCambioSelect).toEqual(undefined);
   });
 
   it('Validando el formulario (Caso Creado)', () => {
@@ -291,48 +281,57 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
       },
       {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-      },
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
 
     // datos del formulario
     const data = {
-      "nombre": "Sin definir",
-      "codigoLey": "S",
-      "id": "O"
+      "descam": "REEMPLAZO",
+      "codcam": "REM"
     };
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['id'].setValue("D")
+    app.form.controls['codcam'].setValue("INC")
     expect(app.form.valid).toEqual(false)
-    app.idMsgError
+    app.codcamMsgError
     
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['id'].setValue("01234444444444444444444444444444444444444")
+    app.form.controls['codcam'].setValue("123456789123")
     expect(app.form.valid).toEqual(false)
-    app.idMsgError
+    app.codcamMsgError
 
     // caso vacio
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['id'].setValue("")
+    app.form.controls['codcam'].setValue("")
     expect(app.form.valid).toEqual(false)
-    app.idMsgError
+    app.codcamMsgError
 
-    app.campoInvalid('id');
+    // caso vacio con descripcion duplicada
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.reset(data)
+    app.form.controls['codcam'].setValue("")
+    app.form.controls['descam'].setValue("CREACION DE PUESTO")
+    expect(app.form.valid).toEqual(false)
+    app.codcamMsgError
+
+    // Reset hecho por la funcion
+    expect(app.form.value.descam).toEqual("CREACION DE PUESTO")
+    expect(app.form.value.codcam).toEqual("")
+
+    app.campoInvalid('codcam');
 
 
   });
@@ -342,71 +341,57 @@ describe('ModalAddEditComponent', () => {
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.estadosCiviles = [
+    app.motivosCambios = [
       {
-        "nombre": "Divorciado",
-        "codigoLey": "D",
-        "id": "D"
+        "descam": "CREACION DE PUESTO",
+        "codcam": "CRE"
       },
       {
-        "nombre": "Concubino",
-        "codigoLey": "C",
-        "id": "U"
-      },
+        "descam": "INCREMENTO DE LA ACTIVDAD",
+        "codcam": "INC"
+      }
     ];
 
     // datos del formulario
     const data = {
-      "nombre": "Sin definir",
-      "codigoLey": "S",
-      "id": "O"
+      "descam": "REEMPLAZO",
+      "codcam": "Hola"
     };
 
-    // caso required nombre
+    // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['codcam'].disable();
     app.form.reset(data)
-    app.form.controls['nombre'].setValue("")
-    console.log(app.form.value);
+    app.form.controls['descam'].setValue("INCREMENTO DE LA ACTIVDAD")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.nombreMsgError
+    app.descamMsgError
 
-    // caso repite nombre
+    // caso length
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['codcam'].disable();
     app.form.reset(data)
-    app.form.controls['nombre'].setValue("Concubino")
-    console.log(app.form.value);
+    app.form.controls['descam'].setValue("123456789123456785555555555555555555555555555555555555555555555555555555555555591234567891234")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.nombreMsgError
-    
-    // caso maxlength nombre
-    // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
-    app.form.reset(data)
-    app.form.controls['nombre'].setValue("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
-    console.log(app.form.value);
-    expect(app.form.valid).toEqual(false)
-    expect(app.form.invalid).toEqual(true)
-    app.nombreMsgError
+    app.descamMsgError
 
-    // caso required nombre Abreviado
+    //Caso Vacio
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['codcam'].disable();
     app.form.reset(data)
-    app.form.controls['codigoLey'].setValue("CC")
+    app.form.controls['descam'].setValue("")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.codigoLeyMsgError
+    app.descamMsgError
 
     app.save();
 
-    app.campoInvalid('nombre');
-    app.campoInvalid('codigoLey');
-    app.campoInvalid('id');
+    // Reset hecho por la funcion
+    expect(app.form.value.descam).toEqual('')
+    expect(app.form.value.codcam).toEqual(undefined)
+
+    app.campoInvalid('descam');
     
   });
-
 });

@@ -17,7 +17,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: EvaluacionesService;
 
-  const URL = `${environment.api}/evaluaciones`;
+  const URL = `${environment.api}/configuraciones/talentos/evaluaciones`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -298,7 +298,7 @@ describe('ClasificacionOficialComponent', () => {
 
     app.loadTiposEvaluaciones()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/tiposevaluaciones`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/talentos/tiposevaluaciones`);
     fakeBackend.flush(data);
     expect(fakeBackend.request.method).toBe('GET');
   })
@@ -317,7 +317,7 @@ describe('ClasificacionOficialComponent', () => {
 
     app.loadTiposEvaluaciones()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/tiposevaluaciones`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/talentos/tiposevaluaciones`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('GET');
 

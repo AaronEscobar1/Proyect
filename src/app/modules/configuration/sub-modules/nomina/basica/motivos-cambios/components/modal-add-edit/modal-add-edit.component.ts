@@ -172,9 +172,9 @@ export class ModalAddEditComponent implements OnInit {
                                               null;
     }
     // Validaciones para editar 
-    if ( this.form.getRawValue().nombre == null ) { return null; }
+    if ( this.form.getRawValue().descam == null ) { return null; }
     return this.motivosCambios.findIndex(val => val.descam.trim().toLowerCase() === this.form.getRawValue().descam.trim().toLowerCase() && 
-                                            val.descam !== this.form.getRawValue().id) > -1 ? 
+                                            val.codcam !== this.form.getRawValue().codcam) > -1 ? 
                                             {'duplicated': true} :
                                             null;
   }

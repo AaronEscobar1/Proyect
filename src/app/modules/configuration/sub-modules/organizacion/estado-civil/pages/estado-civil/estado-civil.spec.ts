@@ -17,7 +17,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: EstadoCivilService;
 
-  const URL = `${environment.api}/estadosciviles`;
+  const URL = `${environment.api}/configuraciones/organizaciones/estadosciviles`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
