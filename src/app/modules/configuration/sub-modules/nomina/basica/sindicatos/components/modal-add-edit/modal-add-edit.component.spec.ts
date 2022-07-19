@@ -5,16 +5,23 @@ import { MessageService } from 'primeng/api';
 
 import { ModalAddEditComponent } from './modal-add-edit.component';
 import { environment } from 'src/environments/environment';
+import { Dropdown, ObjectEventChange } from '../../interfaces/sindicatos.interfaces';
 
-const event = {
+const event: ObjectEventChange  = {
+  originalEvent: true,
   value: "VEN"
+}
+const dropdownElement: Dropdown = {
+  selectedOption: {
+    nombre: "VEN"
+  }
 }
 
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/sindicatos`;
-  const URLPAIS = `${environment.api}/entidadesfederales`;
+  const URL = `${environment.api}/configuraciones/nominas/sindicatos`;
+  const URLPAIS = `${environment.api}/configuraciones/organizaciones/entidadesfederales`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -432,6 +439,54 @@ describe('ModalAddEditComponent', () => {
     expect(app.sindicatosSelect).toEqual(undefined);
 
     app.clearCountrySelect();
+
+    app.countrys = [
+      {
+        "nombre": "Venezuela",
+        "codigo": "VEN",
+      },
+      {
+          "nombre": "ARGENTINA",
+          "codigo": "ARG",
+      },
+      {
+          "nombre": "AUSTRALIA",
+          "codigo": "AUS",
+      },
+      {
+          "nombre": "AUSTRIA",
+          "codigo": "AUT",
+      },
+      {
+          "nombre": "BELGICA",
+          "codigo": "BEL",
+      },
+      {
+          "nombre": "BERMUDA",
+          "codigo": "BMU",
+      },
+    ];
+
+    const respEntyti = [
+      {
+          "nombre": "Amazonas",
+          "codPais": "VEN",
+          "codEntidad": "AM"
+      },
+      {
+          "nombre": "Apure",
+          "codPais": "VEN",
+          "codEntidad": "AP"
+      },
+    ];
+
+    let data2 = ["VEN", "AP"]
+
+    app.loadEntitiesByCountry(data2[0], data2[1] )
+
+    const fakeBackend01 = httpTestingController.expectOne(`${URLPAIS}/${data2[0]}`);
+    fakeBackend01.flush(respEntyti);
+    expect(fakeBackend01.request.method).toBe('GET');
 
   });
 
@@ -919,5 +974,82 @@ describe('ModalAddEditComponent', () => {
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('GET');
 
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "Error en solicitud.",   
+    });
+
+    app.loadEntitiesByCountry(data.paiCodpai)
+
+    const fakeBackendFalse = httpTestingController.expectOne(`${URLPAIS}/${data.paiCodpai}`);
+    fakeBackendFalse.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  });
+
+  it('Validando el formulario (Caso)', () => {
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    // Variables de los inputs
+    app.isEdit = false;
+    // datos del formulario
+    const data = {
+      "dessin": "Sindi opopo",
+      "registro": null,
+      "nroreg": null,
+      "ntomo": null,
+      "nfolio": null,
+      "dirsi1": null,
+      "dirsi2": null,
+      "dirsi3": null,
+      "cdadCodciu": null,
+      "edoCodedo": null,
+      "paiCodpai": "VEN",
+      "tlfsi1": null,
+      "tlfsi2": null,
+      "faxsin": null,
+      "tlxsin": null,
+      "eMail": '234567891234567891234567444444444444489123456789',
+      "local": "0",
+      "codsin": "646"
+    };
+
+    app.countrys = [
+      {
+        "nombre": "Venezuela",
+        "codigo": "VEN",
+      },
+      {
+          "nombre": "ARGENTINA",
+          "codigo": "ARG",
+      },
+      {
+          "nombre": "AUSTRALIA",
+          "codigo": "AUS",
+      },
+      {
+          "nombre": "AUSTRIA",
+          "codigo": "AUT",
+      },
+      {
+          "nombre": "BELGICA",
+          "codigo": "BEL",
+      },
+      {
+          "nombre": "BERMUDA",
+          "codigo": "BMU",
+      },
+    ];
+
+    app.countrySelectChange(event, dropdownElement)
+    app.entitySelectChange(dropdownElement)
+    const eventfalse: ObjectEventChange  = {
+      originalEvent: true,
+      value: null
+    }
+    app.countrySelectChange(eventfalse, dropdownElement)
   });
 });

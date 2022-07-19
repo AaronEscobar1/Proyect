@@ -17,7 +17,7 @@ describe('NivelesEducativosComponent', () => {
 
   let services: FormasPagoService;
 
-  const URL = `${environment.api}/pagoformas`;
+  const URL = `${environment.api}/configuraciones/nominas/pagoformas`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

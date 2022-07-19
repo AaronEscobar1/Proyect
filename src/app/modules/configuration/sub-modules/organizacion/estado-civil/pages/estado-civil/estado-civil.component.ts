@@ -71,9 +71,7 @@ export class EstadoCivilComponent implements OnInit {
 
   refresh(): void {
     this.estadosCiviles = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   editRow(estadoCivil: EstadoCivil) {

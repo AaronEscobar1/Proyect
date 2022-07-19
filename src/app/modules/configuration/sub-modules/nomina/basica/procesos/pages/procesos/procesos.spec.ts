@@ -17,7 +17,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: ProcesosService;
 
-  const URL = `${environment.api}/procesos`;
+  const URL = `${environment.api}/configuraciones/nominas/procesos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

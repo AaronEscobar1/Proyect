@@ -17,7 +17,7 @@ describe('MotivosFiniquitoComponent', () => {
 
   let services: MotivosFiniquitoService;
 
-  const URL = `${environment.api}/motivosfiniquito`;
+  const URL = `${environment.api}/configuraciones/nominas/motivosfiniquito`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

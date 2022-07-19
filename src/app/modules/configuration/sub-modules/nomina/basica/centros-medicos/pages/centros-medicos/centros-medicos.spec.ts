@@ -17,7 +17,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: CentrosMedicosService;
 
-  const URL = `${environment.api}/centrosmedicos`;
+  const URL = `${environment.api}/configuraciones/nominas/centrosmedicos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
