@@ -1,0 +1,38 @@
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+        
+        <div class="header-card bg-gray-600 text-white p-2">Preguntas</div>
+        <div class="card-table">
+
+            <!-- Componente de botones -->
+            <app-buttons-pregunta (onRefresh)="refresh()"
+                                  (onOpenModalCreate)="openModalCreate()"
+                                  (onEditRow)="editRow($event)"
+                                  (onDeleteRow)="deleteRow($event)">
+            </app-buttons-pregunta>
+
+            <!-- Componente table -->
+            <app-data-table-pregunta [preguntasEntrevistas]="preguntasEntrevistas"></app-data-table-pregunta>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit-pregunta
+    [preguntas]="preguntas" 
+    [preguntaSelect]="preguntaSelect"
+    [entrevistaRow]="entrevistaRow"
+    [tiposPreguntas]="tiposPreguntas"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="loadPreguntas()"
+    [titleForm]="titleForm">
+</app-modal-add-edit-pregunta>
+

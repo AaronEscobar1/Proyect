@@ -23,3 +23,26 @@
 :host ::ng-deep .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
     color: $white-color !important;
 }
+
+// Mensaje cuando no hay data
+
+.div-center {
+    margin: auto !important;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.div-round {
+    background-color: #EDF4FF;
+    width: 9.375rem !important;
+    height: 9.375rem !important;;
+    border-radius: 100px !important;
+    margin: 0 auto;
+}
+
+.no-data-message-1 {
+    font-size: 1.5rem;
+    line-height: 2.375rem;
+    color: #5D7CAB;
+}
