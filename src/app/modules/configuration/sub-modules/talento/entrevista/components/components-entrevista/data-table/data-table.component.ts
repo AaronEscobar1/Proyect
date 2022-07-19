@@ -25,10 +25,12 @@ export class DataTableComponent implements OnInit {
 
   onRowSelect(event: any): void {    
     this.selectRowService.selectRow$.emit(event.data);
+    this.selectRowService.selectRowAlterno$.emit(null);
   }
 
   onRowUnselect(): void {
     this.selectRowService.selectRow$.emit(null);
+    this.selectRowService.selectRowAlterno$.emit(null);
   }
 
 }

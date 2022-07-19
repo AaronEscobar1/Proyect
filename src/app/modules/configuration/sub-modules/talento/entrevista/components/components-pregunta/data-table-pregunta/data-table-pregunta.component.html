@@ -1,5 +1,5 @@
 <div class="mt-3" >
-    <p-table [value]="entrevistas" [columns]="columns"
+    <p-table [value]="preguntasEntrevistas" [columns]="columns"
             selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()"
             [paginator]="true" [rows]="10"
             [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
@@ -13,10 +13,21 @@
                     </th>
                 </tr> 
                 <tr>
-                    <th *ngFor="let col of columns">
-                        <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                    <th>
+                        <p-columnFilter [field]="columns[0].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '...'">
+                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + columns[0].field + '...'">
+                            </ng-template>
+                        </p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter [field]="columns[1].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [ngModel]="value" [options]="tipoFilter" appendTo="body" (onChange)="filter($event.value)" [placeholder]="'Buscar tipo...'">
+                                    <ng-template let-option pTemplate="item">
+                                        <span>{{option.label}}</span>
+                                    </ng-template>
+                                </p-dropdown>
                             </ng-template>
                         </p-columnFilter>
                     </th>
@@ -25,7 +36,8 @@
 
             <ng-template pTemplate="body" let-entrevista>
                 <tr [pSelectableRow]="entrevista">
-                    <td>{{ entrevista.nombre | titlecase }}</td>
+                    <td>{{ entrevista.titulo | titlecase }}</td>
+                    <td>{{ entrevista.cerrada == 1 ? 'Abierta' : 'Cerrada' }}</td>
                 </tr>
             </ng-template>
 

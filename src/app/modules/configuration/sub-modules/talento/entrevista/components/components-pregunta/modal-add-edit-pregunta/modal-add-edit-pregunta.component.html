@@ -1,0 +1,90 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+                
+                <div class="field">
+                    <label for="id">Código: *</label>
+                    <input  type="number" 
+                            id="id"
+                            pInputText 
+                            formControlName="id"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('id')">
+                        {{ idMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="titulo">Nombre: *</label>
+                    <input  type="text" 
+                            id="titulo"
+                            pInputText 
+                            formControlName="titulo"
+                            placeholder="Ingrese el nombre"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('titulo')">
+                        {{ tituloMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="cerrada">Tipo de pregunta *</label>
+                    <p-dropdown [options]="tiposPreguntas"
+                                appendTo="body" 
+                                formControlName="cerrada"
+                                inputId="cerrada"
+                                optionLabel="descripcion"
+                                optionValue="cerrada"
+                                [showClear]="true"
+                                placeholder="Seleccione el tipo de pregunta">
+                        <ng-template let-option pTemplate="item">
+                            <span>{{option.descripcion}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('cerrada')">
+                        El tipo de pregunta es obligatorio.
+                    </span>
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple
+                        label="Cancelar"
+                        icon="pi pi-times"
+                        class="p-button my-1"
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple
+                        type="submit"
+                        label="Guardar"
+                        icon="pi pi-check"
+                        class="p-button my-1"
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+
+</p-dialog>
