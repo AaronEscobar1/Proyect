@@ -66,8 +66,8 @@ export class ModalAddEditPreguntaComponent implements OnInit {
       return;
     };
     // Obtener el Id de la entrevista ya registrada para volver a editar correctamente
-    if ( this.preguntaSelect && this.preguntaSelect.id_entrevista ) {
-      this.idEntrevistaLocal = this.preguntaSelect.id_entrevista;
+    if ( this.preguntaSelect && this.preguntaSelect.idEntrevista ) {
+      this.idEntrevistaLocal = this.preguntaSelect.idEntrevista;
     }
     this.form.controls['id'].disable();
     this.form.reset(this.preguntaSelect);
@@ -89,7 +89,7 @@ export class ModalAddEditPreguntaComponent implements OnInit {
     // Editar
     if (this.isEdit) {
       // Asignar id entrevista a la pregunta para editar
-      data.id_entrevista = this.idEntrevistaLocal;
+      data.idEntrevista = this.idEntrevistaLocal;
       
       this.spinner.show();
 
@@ -111,7 +111,7 @@ export class ModalAddEditPreguntaComponent implements OnInit {
 
     // Crear
     // Asignar id entrevista a la pregunta para crear
-    data.id_entrevista = this.idEntrevistaLocal;
+    data.idEntrevista = this.idEntrevistaLocal;
 
     this.spinner.show();
 

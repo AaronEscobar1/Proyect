@@ -109,7 +109,7 @@ export class PreguntaComponent implements OnInit {
    * @returns PreguntaEntrevista[]
    */
   filterPreguntas( id: number ): PreguntaEntrevista[] {
-    return this.preguntas.filter(pregunta => pregunta.id_entrevista === id);
+    return this.preguntas.filter(pregunta => pregunta.idEntrevista === id);
   }
 
   openModalCreate(): void {
