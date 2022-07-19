@@ -10,6 +10,12 @@ export interface FederalEntities {
 }
 
 export interface ObjectEventChange {
-    originalEvent: PointerEvent;
-    value: string;
+    originalEvent: PointerEvent | any;
+    value: any;
+}
+
+export interface Dropdown {
+    selectedOption: {
+        nombre: string
+    };
 }

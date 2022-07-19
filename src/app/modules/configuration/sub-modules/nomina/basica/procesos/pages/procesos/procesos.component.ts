@@ -59,9 +59,7 @@ export class ProcesosComponent implements OnInit {
   
   refresh(): void {
     this.procesos = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {

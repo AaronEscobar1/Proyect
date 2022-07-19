@@ -106,9 +106,7 @@ export class InformacionAdicionalComponent implements OnInit {
 
   refresh(): void {
     this.informacionesAdicionales = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   /**

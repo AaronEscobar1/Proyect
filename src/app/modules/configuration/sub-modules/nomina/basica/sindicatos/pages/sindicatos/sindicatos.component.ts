@@ -78,9 +78,7 @@ export class SindicatosComponent implements OnInit {
 
   refresh(): void {
     this.sindicatos = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {

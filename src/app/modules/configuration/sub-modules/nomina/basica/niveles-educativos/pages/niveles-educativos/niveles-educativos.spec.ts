@@ -17,7 +17,7 @@ describe('NivelesEducativosComponent', () => {
 
   let services: NivelesEducativosService;
 
-  const URL = `${environment.api}/niveleseducativos`;
+  const URL = `${environment.api}/configuraciones/nominas/niveleseducativos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({

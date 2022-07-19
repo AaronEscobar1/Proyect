@@ -24,7 +24,7 @@ export class ModalPrintNivelComponent implements OnInit {
     this.form = this.fb.group({
       type: [],
       id: [''],
-      desniv: ['']
+      des: ['']
     });
   }
 

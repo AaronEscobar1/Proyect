@@ -434,5 +434,44 @@ describe('NivelesEducativosServices', () => {
       });
   }));
 
+  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Sindicatos = {
+      "dessin": "prueba jose",
+      "registro": null,
+      "nroreg": null,
+      "ntomo": null,
+      "nfolio": null,
+      "dirsi1": null,
+      "dirsi2": null,
+      "dirsi3": null,
+      "cdadCodciu": null,
+      "edoCodedo": null,
+      "paiCodpai": "VEN",
+      "tlfsi1": null,
+      "tlfsi2": null,
+      "faxsin": null,
+      "tlxsin": null,
+      "eMail": null,
+      "local": "0",
+      "codsin": "666"
+    } 
+
+    const mockResult: any = {
+      response: false,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getEntitiesByCountryAndEntity("VEN", "AP")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
 });
   

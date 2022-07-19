@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/clasificacionesoficiales`;
+  const URL = `${environment.api}/configuraciones/nominas/clasificacionesoficiales`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -154,7 +154,7 @@ describe('ModalAddEditComponent', () => {
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/clasificacionesoficiales`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/clasificacionesoficiales`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('POST');
 

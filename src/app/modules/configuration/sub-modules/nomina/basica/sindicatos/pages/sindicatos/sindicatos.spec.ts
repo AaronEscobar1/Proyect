@@ -18,7 +18,7 @@ describe('ClasificacionOficialComponent', () => {
 
   let services: SindicatosService;
 
-  const URL = `${environment.api}/sindicatos`;
+  const URL = `${environment.api}/configuraciones/nominas/sindicatos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -359,6 +359,49 @@ describe('ClasificacionOficialComponent', () => {
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.flush(data);
     expect(fakeBackend.request.method).toBe('GET');
+
+    const countryTrue = [
+      {
+        "nombre": "Venezuela",
+        "codigo": "VEN",
+        "links": [
+            {
+                "rel": "entidadesFederales",
+                "href": "/entidadesfederales/VEN"
+            }
+        ]
+      },
+      {
+        "nombre": "ARGENTINA",
+        "codigo": "ARG",
+        "links": [
+            {
+                "rel": "entidadesFederales",
+                "href": "/entidadesfederales/ARG"
+            }
+        ]
+      }
+    ] 
+
+    app.loadCountrysData()
+
+    const fakeBackendCountry = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/organizaciones/paises`);
+    fakeBackendCountry.flush(countryTrue);
+    expect(fakeBackend.request.method).toBe('GET');
+    
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "Error en solicitud.",   
+    });
+
+    app.loadCountrysData()
+
+    const fakeBackendCountryFalse = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/organizaciones/paises`);
+    fakeBackendCountryFalse.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
 
 
 
