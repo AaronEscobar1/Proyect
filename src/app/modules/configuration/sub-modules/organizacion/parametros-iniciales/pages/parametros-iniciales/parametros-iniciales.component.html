@@ -1,0 +1,51 @@
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <form [formGroup]="form" autocomplete="off">
+
+            <div class="field col-12 md:col-6 lg:col-4">
+                <label for="id_empresa" class="block">Empresa: </label>
+                <input type="text"
+                        class="w-full"
+                        id="id_empresa"
+                        formControlName="id_empresa"
+                        pInputText/>
+                <small class="block form-text text-danger"
+                        *ngIf="campoInvalid('id_empresa')">
+                    El código de empresa es obligatorio.
+                </small>
+            </div>
+
+            <div class="field col-12 md:col-6 lg:col-4">
+                <label for="vacacionPorVencer" class="block">Vacaciones por vencer: </label>
+                    <p-dropdown [options]="tipoVacaciones"
+                                appendTo="body"
+                                optionLabel="descripcion"
+                                optionValue="vacacionPorVencer"
+                                formControlName="vacacionPorVencer"
+                                [showClear]="true"
+                                placeholder="Ingrese el vacaciones por vencer">
+                    </p-dropdown>
+                <small class="block form-text text-danger"
+                        *ngIf="campoInvalid('vacacionPorVencer')">
+                    El campo vacaciones es obligatorio.
+                </small>
+            </div>
+
+        </form>
+
+        <button pButton 
+                pRipple 
+                type="submit" 
+                label="Guardar" 
+                icon="pi pi-save" 
+                class="p-button my-1" 
+                (click)="save()">
+        </button>
+    </div>
+</div>

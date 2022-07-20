@@ -133,6 +133,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             {
               label: 'Estados civiles',
               routerLink: ['/main/config/organizacion/estado-civil']
+            },
+            {
+              label: 'Empresa',
+              routerLink: ['/main/config/organizacion/parametros-iniciales']
             }
           ]
         },
