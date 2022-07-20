@@ -91,9 +91,11 @@ export class CompaniaComponent implements OnInit {
   deleteRow(company: Company) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta empresa <b>${company.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.companiaService.delete(company.id)

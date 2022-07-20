@@ -87,10 +87,12 @@ export class NominasComponent implements OnInit {
    */
   deleteRow(nomina: Nominas): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el tipo de nómina <b>${nomina.desemp}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar este tipo de nómina <b>${nomina.desemp}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.nominas = this.nominas.filter(val => val.codemp !== nomina.codemp);

@@ -1,5 +1,5 @@
 <div class="mt-3" >
-    <p-table [value]="rotacionGrupos"
+    <p-table [value]="rotacionGrupos" [columns]="columns"
             selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()"
             [paginator]="true" [rows]="5"
             [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
@@ -32,5 +32,18 @@
                 </tr>
             </ng-template>
 
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="columns.length" >
+                        <div class="div-center">
+                            <div>
+                                <div class="div-round"></div>
+                                <h5 class="no-data-message-1">Sin datos para mostrar</h5>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            
     </p-table>
 </div>

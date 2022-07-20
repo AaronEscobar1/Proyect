@@ -87,10 +87,12 @@ export class DistribucionNominaComponent implements OnInit {
    */
   deleteRow(distribucionNomina: EmpresaNomina): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la distribución de nómina <b>${distribucionNomina.desemp}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta distribución de nómina <b>${distribucionNomina.desemp}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.distribucionNominas = this.distribucionNominas.filter(val => val.codemp !== distribucionNomina.codemp);
