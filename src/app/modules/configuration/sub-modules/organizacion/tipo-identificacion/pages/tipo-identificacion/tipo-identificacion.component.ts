@@ -90,10 +90,12 @@ export class TipoIdentificacionComponent implements OnInit {
    */
   deleteRow(tipoIdentificacion: TipoIdentificacion) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el tipo de identificación <b>${tipoIdentificacion.descrip}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar el tipo de identificación <b>${tipoIdentificacion.descrip}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.tipoIdentificacionService.delete(tipoIdentificacion.id)
