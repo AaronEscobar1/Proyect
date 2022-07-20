@@ -13,6 +13,11 @@ const routes: Routes = [
     loadChildren: () => import('./estado-civil/estado-civil.module').then( m => m.EstadoCivilModule )
   },
   {
+    path: 'parametros-iniciales',
+    // LazyLoad
+    loadChildren: () => import('./parametros-iniciales/parametros-iniciales.module').then( m => m.ParametrosInicialesModule )
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
