@@ -116,10 +116,12 @@ export class FormasPagoComponent implements OnInit {
    */
   deleteRow(formasPago: FormasPago): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la forma de pago <b>${formasPago.despag}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta forma de pago <b>${formasPago.despag}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.formasPagoService.delete(formasPago.codpag)

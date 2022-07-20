@@ -91,9 +91,11 @@ export class OtroDatosAdicionalesComponent implements OnInit {
    deleteRow(company: Company) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar los otros datos adicionales de <b>${company.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.otroDatosAdicionalesService.delete(company.id)

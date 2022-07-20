@@ -93,9 +93,11 @@ export class EntrevistaComponent implements OnInit {
   deleteRow(entrevista: Entrevista) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta entrevista <b>${entrevista.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.entrevistaService.delete(entrevista.id)

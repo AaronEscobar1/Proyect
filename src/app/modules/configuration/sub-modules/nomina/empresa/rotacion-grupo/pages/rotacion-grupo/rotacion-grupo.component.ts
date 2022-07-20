@@ -87,10 +87,12 @@ export class RotacionGrupoComponent implements OnInit {
    */
   deleteRow(rotacionGrupo: RotacionGrupo): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la rotación de grupo <b>${rotacionGrupo.desemp}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta rotación de grupo <b>${rotacionGrupo.desemp}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.rotacionGrupos = this.rotacionGrupos.filter(val => val.codemp !== rotacionGrupo.codemp);

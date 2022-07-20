@@ -87,10 +87,12 @@ export class TarifasImpuestosComponent implements OnInit {
    */
   deleteRow(tarifaImpuesto: TarifaImpuesto): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la tarifa de impuesto <b>${tarifaImpuesto.destar}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta tarifa de impuesto <b>${tarifaImpuesto.destar}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.tarifasImpuestos = this.tarifasImpuestos.filter(val => val.codtar !== tarifaImpuesto.codtar);

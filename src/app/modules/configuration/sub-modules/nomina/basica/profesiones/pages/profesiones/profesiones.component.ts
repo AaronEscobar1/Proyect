@@ -99,10 +99,12 @@ export class ProfesionesComponent implements OnInit {
    */
   deleteRow(profesion: Profession) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la profesión <b>${profesion.desprf}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta profesión <b>${profesion.desprf}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.profesionesService.delete(profesion.codprf)

@@ -87,10 +87,12 @@ export class LocalidadesComponent implements OnInit {
    */
   deleteRow(localidad: Localidades): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la localidad <b>${localidad.desloc}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta localidad <b>${localidad.desloc}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.localidades = this.localidades.filter(val => val.codloc !== localidad.codloc);

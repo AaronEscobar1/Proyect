@@ -99,10 +99,12 @@ export class ClasificacionOficialComponent implements OnInit {
    */
   deleteRow(officialClassification: OfficialClassification): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la clasificación oficial <b>${officialClassification.desofi}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta clasificación oficial <b>${officialClassification.desofi}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.clasificacionOficialService.delete(officialClassification.codofi, officialClassification.tiprep)

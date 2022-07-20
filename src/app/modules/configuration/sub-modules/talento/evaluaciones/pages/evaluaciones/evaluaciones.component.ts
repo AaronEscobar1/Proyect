@@ -110,9 +110,11 @@ export class EvaluacionesComponent implements OnInit {
   deleteRow(evaluacion: Evaluaciones) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta evaluación <b>${evaluacion.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.evaluacionesService.delete(evaluacion.id)

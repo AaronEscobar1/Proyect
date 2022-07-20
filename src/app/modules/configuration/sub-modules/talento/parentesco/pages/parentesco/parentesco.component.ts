@@ -94,10 +94,12 @@ export class ParentescoComponent implements OnInit {
    */
   deleteRow(parentesco: Parentesco) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el parentesco <b>${parentesco.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar el parentesco <b>${parentesco.nombre}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.parentescoService.delete(parentesco.id)

@@ -118,10 +118,12 @@ export class SindicatosComponent implements OnInit {
    */
   deleteRow(sindicato: Sindicatos): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el sindicato <b>${sindicato.dessin}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar este sindicato <b>${sindicato.dessin}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.sindicatosService.delete(sindicato.codsin)

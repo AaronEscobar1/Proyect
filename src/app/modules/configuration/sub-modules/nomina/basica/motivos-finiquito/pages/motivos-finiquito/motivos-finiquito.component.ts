@@ -94,10 +94,12 @@ export class MotivosFiniquitoComponent implements OnInit {
    */
     deleteRow(motivosFiniquito: MotivosFiniquito): void {
       this.confirmationService.confirm({
-        message: `¿Estas seguro que quieres borrar el motivo de finiquito <b>${motivosFiniquito.desde1}</b>?`,
-        header: 'Confirmar',
-        icon: 'pi pi-exclamation-triangle',
-        acceptLabel: 'Si',
+        message: `¿Desea eliminar este motivo de finiquito <b>${motivosFiniquito.desde1}</b>?`,
+        header: 'Eliminar',
+        icon: 'pi pi-trash',
+        acceptLabel: 'Si, eliminar',
+        acceptButtonStyleClass: 'btn-infocent',
+        rejectButtonStyleClass: 'p-button-secondary',
         accept: () => {
           this.spinner.show();
           this.motivosFiniquitoService.delete(motivosFiniquito.coddes)

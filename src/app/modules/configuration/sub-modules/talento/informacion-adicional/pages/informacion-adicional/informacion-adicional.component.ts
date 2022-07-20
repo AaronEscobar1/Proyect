@@ -128,9 +128,11 @@ export class InformacionAdicionalComponent implements OnInit {
   deleteRow(informacionAdicional: InformacionAdicional) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta información adicional <b>${informacionAdicional.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.informacionAdicionalService.delete(informacionAdicional.id)

@@ -112,9 +112,11 @@ export class CompetenciasComponent implements OnInit {
   deleteRow(competencia: Competencias) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta competencia <b>${competencia.nombre}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.competenciasService.delete(competencia.id)

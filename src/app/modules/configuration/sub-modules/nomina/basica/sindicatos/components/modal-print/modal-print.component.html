@@ -50,7 +50,17 @@
         </ng-template>
 
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button" (click)="printModal = false"></button>
-            <p-button icon="pi pi-check" (click)="export()" label="Imprimir" icon="pi pi-print" styleClass="p-button"></p-button>
+            <button pButton 
+                    pRipple 
+                    label="Cancelar"
+                    class="p-button-secondary my-1" 
+                    (click)="printModal = false">
+            </button>
+            <p-button icon="pi pi-check" 
+                      (click)="export()" 
+                      label="Imprimir" 
+                      icon="pi pi-print" 
+                      styleClass="btn-infocent my-1">
+            </p-button>
         </ng-template>
 </p-dialog>
