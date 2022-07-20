@@ -97,10 +97,12 @@ export class CategoriesComponent implements OnInit {
    */
   deleteRow(category: Categories): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar la categoría <b>${category.descat}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar esta categoría <b>${category.descat}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.categoriesService.delete(category.codcat)

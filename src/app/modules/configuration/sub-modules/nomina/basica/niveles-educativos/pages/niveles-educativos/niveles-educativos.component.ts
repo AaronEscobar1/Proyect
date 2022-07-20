@@ -90,10 +90,12 @@ export class NivelesEducativosComponent implements OnInit {
    */
    deleteRow(nivel: NivelesEducativos) {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el nivel <b>${nivel.desniv}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar este nivel <b>${nivel.desniv}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.nivelesServices.deleteNivel(nivel.codniv)

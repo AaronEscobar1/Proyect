@@ -94,10 +94,12 @@ export class CentrosMedicosComponent implements OnInit {
    */
   deleteRow(centroMedico: CentrosMedicos): void {
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el centro médico <b>${centroMedico.desmed}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar este centro médico <b>${centroMedico.desmed}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.centrosMedicosService.delete(centroMedico.codmed)

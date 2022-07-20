@@ -140,10 +140,12 @@ export class ValoresOficialesComponent implements OnInit {
       return; 
     }
     this.confirmationService.confirm({
-      message: `¿Estas seguro que quieres borrar el valor oficial <b>${valorOficial.id}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      message: `¿Desea eliminar este valor oficial <b>${valorOficial.id}</b>?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.valoresOficialesService.delete(valorOficial)

@@ -92,9 +92,11 @@ export class MotivosCambiosComponent implements OnInit {
   deleteRow(motivoCambio: MotivosCambios) {
     this.confirmationService.confirm({
       message: `¿Desea eliminar el motivo de cambio <b>${motivoCambio.descam}</b>?`,
-      header: 'Confirmar',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Si',
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
         this.motivosCambiosService.delete(motivoCambio.codcam)
