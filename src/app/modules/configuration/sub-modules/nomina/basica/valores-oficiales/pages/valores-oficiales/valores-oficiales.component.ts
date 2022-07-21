@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Countrys, ValorOficial } from '../../interfaces/valor-oficial.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ValoresOficialesService } from '../../services/valores-oficiales.service';
 import { Helpers } from 'src/app/shared/helpers/helpers';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-valores-oficiales',
@@ -35,8 +36,8 @@ export class ValoresOficialesComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private fb: FormBuilder,
-              private helpers: Helpers) { }
+              private helpers: Helpers,
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -153,6 +154,7 @@ export class ValoresOficialesComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {

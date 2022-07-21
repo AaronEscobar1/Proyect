@@ -74,6 +74,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModalAdd();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRow$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -91,6 +92,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModalAdd();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRow$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -103,7 +105,6 @@ export class ModalAddEditComponent implements OnInit {
   closeModalAdd(): void {
     this.onCloseModalAdd.emit();
     this.form.reset();
-    this.selectRowService.selectRow$.emit(null);
   }
 
   /**
