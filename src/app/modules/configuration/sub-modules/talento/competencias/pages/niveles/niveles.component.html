@@ -11,14 +11,13 @@
 
             <!-- Componente de botones -->
             <app-buttons-nivel (onRefresh)="refresh()"
-                                 (onOpenModalPrint)="openModalPrint()"
-                                 (onOpenModalCreate)="openModalCreate($event)"
-                                 (onEditRow)="editRow($event)"
-                                 (onDeleteRow)="deleteRow($event)">
+                               (onOpenModalCreate)="openModalCreate()"
+                               (onEditRow)="editRow($event)"
+                               (onDeleteRow)="deleteRow($event)">
             </app-buttons-nivel>
 
             <!-- Componente table -->
-            <app-data-table-nivel [niveles]="niveles"></app-data-table-nivel>
+            <app-data-table-nivel [nivelesCompetencias]="nivelesCompetencias"></app-data-table-nivel>
         </div>
 
     </div>
@@ -28,10 +27,10 @@
 <app-modal-add-edit-nivel
     [niveles]="niveles" 
     [nivelSelect]="nivelSelect"
-    [competenciaSelect]="competenciaSelect"
+    [competenciaRow]="competenciaRow"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 
-    (onLoadData)="loadData()"
+    (onLoadData)="loadNiveles()"
     [titleForm]="titleForm">
 </app-modal-add-edit-nivel>

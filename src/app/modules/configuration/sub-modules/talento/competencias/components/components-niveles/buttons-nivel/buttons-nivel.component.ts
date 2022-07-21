@@ -35,7 +35,7 @@ export class ButtonsNivelComponent implements OnInit {
 
   // Mediante la compentencia seleccionada se envia al metodo el ROW para poder crear y obtener el ID
   openModalCreate(): void {
-    this.onOpenModalCreate.emit(this.selectRow);
+    this.onOpenModalCreate.emit();
   }
 
   editSelectRow(): void {
