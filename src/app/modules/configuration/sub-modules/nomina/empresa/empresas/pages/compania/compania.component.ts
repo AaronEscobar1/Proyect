@@ -103,6 +103,7 @@ export class CompaniaComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowServices.selectRow$.emit(null);
               this.loadData();
               return true;
             },
@@ -114,7 +115,6 @@ export class CompaniaComponent implements OnInit {
           });
       }
     });
-    this.selectRowServices.selectRow$.emit(null);
   }
 
 }

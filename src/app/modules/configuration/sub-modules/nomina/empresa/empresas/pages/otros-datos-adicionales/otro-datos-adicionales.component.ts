@@ -103,6 +103,7 @@ export class OtroDatosAdicionalesComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRowAlterno$.emit(null);
               return true;
             },
             error: (err) => {
@@ -113,7 +114,6 @@ export class OtroDatosAdicionalesComponent implements OnInit {
           });
       }
     });
-    this.selectRowService.selectRowAlterno$.emit(null);
   }
   
 
