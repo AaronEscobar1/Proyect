@@ -120,6 +120,7 @@ export class ModalAddEditComponent implements OnInit {
             this.closeModal();
             this.spinner.hide();
             this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.selectRowService.selectRow$.emit(null);
             this.onLoadData.emit();
           },
           error: (err) => {
@@ -138,6 +139,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRow$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -155,7 +157,6 @@ export class ModalAddEditComponent implements OnInit {
     this.federalEntitySelect = '';
     this.form.controls['local'].setValue(0);
     this.createModal = false;
-    this.selectRowService.selectRow$.emit(null);
   }
 
   /**

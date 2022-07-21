@@ -28,7 +28,7 @@ export class MotivosCambiosComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private selectRowServices: SelectRowService) { }
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -104,6 +104,7 @@ export class MotivosCambiosComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {
@@ -113,7 +114,6 @@ export class MotivosCambiosComponent implements OnInit {
           });
       }
     });
-    this.selectRowServices.selectRow$.emit(null);
   }
 
 }

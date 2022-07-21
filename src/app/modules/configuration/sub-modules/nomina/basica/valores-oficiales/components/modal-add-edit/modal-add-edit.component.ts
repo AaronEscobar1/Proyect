@@ -37,10 +37,10 @@ export class ModalAddEditComponent implements OnInit {
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
       this.form = this.fb.group({
-          id: ['', [ Validators.required ]],
+          id    : ['', [ Validators.required ]],
           paisId: ['', [ Validators.required ]],
           fecefe: ['', [ Validators.required ]],
-          valor: ['', [ Validators.required, Validators.maxLength(10) ]],
+          valor : ['', [ Validators.required, Validators.maxLength(10) ]],
       });
   }
 
@@ -49,7 +49,10 @@ export class ModalAddEditComponent implements OnInit {
   
   ngOnChanges() {
     if( !this.isEdit ) {
+      this.form.reset();
       this.form.controls['id'].enable();
+      this.form.controls['paisId'].enable();
+      this.form.controls['fecefe'].enable();
       return;
     }
     this.form.controls['id'].disable();
@@ -86,6 +89,7 @@ export class ModalAddEditComponent implements OnInit {
             this.closeModal();
             this.spinner.hide();
             this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.selectRowService.selectRow$.emit(null);
             this.onLoadData.emit();
           },
           error: (err) => {
@@ -102,6 +106,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRow$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -114,7 +119,6 @@ export class ModalAddEditComponent implements OnInit {
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.selectRowService.selectRow$.emit(null);
   }
 
   /**

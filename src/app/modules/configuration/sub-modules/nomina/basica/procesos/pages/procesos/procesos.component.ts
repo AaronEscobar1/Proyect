@@ -5,6 +5,7 @@ import { Procesos } from '../../interfaces/procesos.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { ProcesosService } from '../../services/procesos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-procesos',
@@ -35,8 +36,8 @@ export class ProcesosComponent implements OnInit {
   constructor(private procesosService: ProcesosService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) {
-  }
+              private spinner: NgxSpinnerService,
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -113,6 +114,7 @@ export class ProcesosComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {

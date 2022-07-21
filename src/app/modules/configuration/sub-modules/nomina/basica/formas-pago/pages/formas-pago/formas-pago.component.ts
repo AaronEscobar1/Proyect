@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 import { FormasPagoService } from '../../services/formas-pago.service';
 import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
-import { Helpers } from 'src/app/shared/helpers/helpers';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-formas-pago',
@@ -34,9 +34,7 @@ export class FormasPagoComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private fb: FormBuilder,
-              private helpers: Helpers) {
-  }
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.typesPagos = [
@@ -129,6 +127,7 @@ export class FormasPagoComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {

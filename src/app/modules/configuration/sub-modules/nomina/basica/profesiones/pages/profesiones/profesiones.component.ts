@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProfesionesService } from '../../services/profesiones.service';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { Profession } from '../../interfaces/professions.interfaces';
-import { Helpers } from 'src/app/shared/helpers/helpers';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-profesiones',
@@ -35,8 +35,7 @@ export class ProfesionesComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private helpers: Helpers) {
-  }
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -112,6 +111,7 @@ export class ProfesionesComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {

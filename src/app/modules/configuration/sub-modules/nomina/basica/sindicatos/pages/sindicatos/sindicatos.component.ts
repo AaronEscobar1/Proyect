@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Sindicatos, Countrys, FederalEntities } from '../../interfaces/sindicatos.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SindicatosService } from '../../services/sindicatos.service';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-sindicatos',
@@ -35,8 +36,8 @@ export class SindicatosComponent implements OnInit {
   constructor(private sindicatosService: SindicatosService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) {
-  }
+              private spinner: NgxSpinnerService,
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -131,6 +132,7 @@ export class SindicatosComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {

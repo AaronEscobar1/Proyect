@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Categories } from '../../interfaces/categories.interfaces';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { CategoriesService } from '../../services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-categories',
@@ -33,8 +34,7 @@ export class CategoriesComponent implements OnInit {
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
-              private fb: FormBuilder) {
-  }
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -110,6 +110,7 @@ export class CategoriesComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRow$.emit(null);
               this.loadData();
             },
             error: (err) => {

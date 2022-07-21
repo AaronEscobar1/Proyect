@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClasificacionMotivo, MotivosFiniquito } from '../../interfaces/motivos-finiquito.interfaces';
 import { MotivosFiniquitoService } from '../../services/motivos-finiquito.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-motivos-finiquito',
@@ -27,8 +28,8 @@ export class MotivosFiniquitoComponent implements OnInit {
   constructor(private motivosFiniquitoService: MotivosFiniquitoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) {
-  }
+              private spinner: NgxSpinnerService,
+              private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -107,6 +108,7 @@ export class MotivosFiniquitoComponent implements OnInit {
               next: (resp) => {
                 this.spinner.hide();
                 this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+                this.selectRowService.selectRow$.emit(null);
                 this.loadData();
               },
               error: (err) => {
