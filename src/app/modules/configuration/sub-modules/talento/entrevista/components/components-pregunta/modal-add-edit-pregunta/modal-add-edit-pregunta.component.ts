@@ -99,6 +99,7 @@ export class ModalAddEditPreguntaComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRowAlterno$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -121,6 +122,7 @@ export class ModalAddEditPreguntaComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRowAlterno$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -133,7 +135,6 @@ export class ModalAddEditPreguntaComponent implements OnInit {
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.selectRowService.selectRowAlterno$.emit(null);
   }
 
   /**

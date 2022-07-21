@@ -105,10 +105,16 @@ export class EntrevistaComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowServices.selectRow$.emit(null);
               this.loadData();
               return true;
             },
             error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la entrevista, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
               this.spinner.hide();
               this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la entrevista.', life: 3000});
               return false;
@@ -116,7 +122,6 @@ export class EntrevistaComponent implements OnInit {
           });
       }
     });
-    this.selectRowServices.selectRow$.emit(null);
   }
 
 }

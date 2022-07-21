@@ -160,6 +160,7 @@ export class PreguntaComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowServices.selectRowAlterno$.emit(null);
               this.loadPreguntas();
               return true;
             },
@@ -171,7 +172,6 @@ export class PreguntaComponent implements OnInit {
           });
       }
     });
-    this.selectRowServices.selectRowAlterno$.emit(null);
   }
 
 }

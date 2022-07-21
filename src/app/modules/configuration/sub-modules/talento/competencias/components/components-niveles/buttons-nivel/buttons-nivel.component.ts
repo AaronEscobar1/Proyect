@@ -9,7 +9,6 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 export class ButtonsNivelComponent implements OnInit {
 
   @Output() onRefresh         = new EventEmitter();
-  @Output() onOpenModalPrint  = new EventEmitter();
   @Output() onOpenModalCreate = new EventEmitter();
   @Output() onEditRow         = new EventEmitter();
   @Output() onDeleteRow       = new EventEmitter();
@@ -34,13 +33,9 @@ export class ButtonsNivelComponent implements OnInit {
     this.onRefresh.emit();
   } 
 
-  openModalPrint(): void {
-    this.onOpenModalPrint.emit();
-  }
-
   // Mediante la compentencia seleccionada se envia al metodo el ROW para poder crear y obtener el ID
   openModalCreate(): void {
-    this.onOpenModalCreate.emit(this.selectRow);
+    this.onOpenModalCreate.emit();
   }
 
   editSelectRow(): void {

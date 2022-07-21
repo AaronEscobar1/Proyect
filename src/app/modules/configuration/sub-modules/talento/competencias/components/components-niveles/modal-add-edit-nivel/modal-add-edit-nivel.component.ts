@@ -13,11 +13,14 @@ import { Competencias } from '../../../interfaces/competencias.interfaces';
 })
 export class ModalAddEditNivelComponent implements OnInit {
 
-  // Objetos Input()
+  // Objeto para validaciones de valores duplicados
   @Input() niveles!    : Niveles[];
+
+  // Variable para editar si se selecciona de la tabla
   @Input() nivelSelect!: Niveles | undefined;
+
   // Objeto competencia para obtener el ID
-  @Input() competenciaSelect!: Competencias | undefined;
+  @Input() competenciaRow!: Competencias | undefined;
   
   // Banderas
   @Input() createModal!: boolean;
@@ -32,6 +35,8 @@ export class ModalAddEditNivelComponent implements OnInit {
 
   // Formulario reactivo
   form!: FormGroup;
+
+  // Variable para registrar el nivel a la competencia correcta mediante el ID
   idCompetenciaLocal! : number;
   maxLengthDescrip    : number = 1000;
 
@@ -53,8 +58,8 @@ export class ModalAddEditNivelComponent implements OnInit {
   ngOnChanges() {
     if (!this.isEdit) {
       // Obtener el ID de la competencia seleccionada
-      if ( this.competenciaSelect && this.competenciaSelect.id ) {
-        this.idCompetenciaLocal = this.competenciaSelect.id;
+      if ( this.competenciaRow && this.competenciaRow.id ) {
+        this.idCompetenciaLocal = this.competenciaRow.id;
       }
       this.form.controls['id'].enable();
       this.form.reset();
@@ -68,6 +73,9 @@ export class ModalAddEditNivelComponent implements OnInit {
     this.form.reset(this.nivelSelect);
   }
 
+  /**
+   * Guardar y Actualizar registros
+   */
   save() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -91,6 +99,7 @@ export class ModalAddEditNivelComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRowAlterno$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -113,6 +122,7 @@ export class ModalAddEditNivelComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRowAlterno$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -125,7 +135,6 @@ export class ModalAddEditNivelComponent implements OnInit {
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.selectRowService.selectRowAlterno$.emit(null);
   }
 
   /**

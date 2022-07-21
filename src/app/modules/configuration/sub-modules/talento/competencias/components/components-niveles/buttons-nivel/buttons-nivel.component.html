@@ -6,14 +6,6 @@
             tooltipPosition="bottom"
             (click)="refresh()">
     </button>
-    <button pButton class="btn-infocent mr-3"
-            id="print" 
-            icon="pi pi-print"
-            pTooltip="Imprimir"
-            tooltipPosition="bottom"
-            (click)="openModalPrint()">
-    </button>
-    <div class="separator"></div>
     <button pButton class="btn-infocent mr-2"
             id="add"  
             icon="pi pi-plus" 
@@ -22,6 +14,7 @@
             (click)="openModalCreate()"
             [disabled]="!selectRow">
     </button>
+    <div class="separator"></div>
     <button pButton
             id="edit" 
             class="btn-infocent mr-2" 

@@ -13,7 +13,6 @@ import { DataTableNivelComponent } from './components/components-niveles/data-ta
 import { ModalAddEditComponent } from './components/components-competencias/modal-add-edit/modal-add-edit.component';
 import { ModalAddEditNivelComponent } from './components/components-niveles/modal-add-edit-nivel/modal-add-edit-nivel.component';
 import { ModalPrintComponent } from './components/components-competencias/modal-print/modal-print.component';
-import { ModalPrintNivelComponent } from './components/components-niveles/modal-print-nivel/modal-print-nivel.component';
 import { NivelesComponent } from './pages/niveles/niveles.component';
 
 @NgModule({
@@ -26,7 +25,6 @@ import { NivelesComponent } from './pages/niveles/niveles.component';
     ModalAddEditComponent,
     ModalAddEditNivelComponent,
     ModalPrintComponent,
-    ModalPrintNivelComponent,
     NivelesComponent
   ],
   imports: [

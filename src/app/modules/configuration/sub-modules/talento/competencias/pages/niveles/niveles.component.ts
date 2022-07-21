@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Niveles } from '../../interfaces/nivel.interfaces';
 import { NivelService } from '../../services/nivel.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,12 +13,17 @@ import { Competencias } from '../../interfaces/competencias.interfaces';
 })
 export class NivelesComponent implements OnInit {
 
-  // Objetos niveles
-  niveles     : Niveles[] = [];
-  nivelSelect!: Niveles | undefined;
+  // Fila seleccionada para filtrar los niveles relacionadas con la competencia
+  @Input() competenciaRow!: Competencias; 
 
-  // Objeto competencia para obtener el ID
-  competenciaSelect!: Competencias | undefined;
+  // Variable para obtener todas los niveles 
+  niveles: Niveles[] = [];
+
+  // Variable para filtrar los niveles relacionadas con las competencias
+  nivelesCompetencias: Niveles[] = [];
+
+  // Variable de seleccion para editar
+  nivelSelect!: Niveles | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -35,15 +40,37 @@ export class NivelesComponent implements OnInit {
               private selectRowServices: SelectRowService) { }
 
   ngOnInit(): void {
-    this.loadData();
   }
 
-  loadData() {
+  ngOnChanges(): void {
+    // Realizar peticion al backend al seleccionar una competencia
+    if ( this.competenciaRow && this.niveles.length == 0 ) {
+      this.loadNiveles();
+    } 
+    // Filtrar niveles de compentecia sin ir al backend nuevamente
+    else if ( this.niveles.length >= 1 && this.competenciaRow && (this.competenciaRow.id || this.competenciaRow.id == 0) ) {
+      this.nivelesCompetencias = this.filterNiveles(this.competenciaRow.id);
+    } 
+    // Vaciar niveles cuando la competencia se deselecciona
+    else if ( this.competenciaRow == null ) {
+      this.nivelesCompetencias = []; 
+    }
+  }
+
+  /**
+   * Obtener niveles relacionadas con una competencia
+   */
+  loadNiveles() {
+    if ( !this.competenciaRow ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'No hay una competencia seleccionada.', life: 3000});
+      return;
+    }
     this.spinner.show();
     this.nivelService.getAll()
       .subscribe({
-        next: (res) => {
+        next: (res: Niveles[]) => {
           this.niveles = res;
+          this.nivelesCompetencias = this.filterNiveles(this.competenciaRow.id);
           this.spinner.hide();
         },
         error: (err) => {
@@ -53,32 +80,30 @@ export class NivelesComponent implements OnInit {
       });
   }
 
-  openModalPrint(): void {
-    this.printModal = true;
-  }
-
-  closeModalPrintDialog(): void {
-    this.printModal = false;
+  /**
+   * Filtra los niveles relacionadas con la competencia
+   * @param id: number, id del nivel
+   * @returns Niveles[]
+   */
+  filterNiveles( id: number ): Niveles[] {
+    return this.niveles.filter(nivel => nivel.id_competencia === id);
   }
   
-  openModalCreate(competencia: Competencias): void {
+  openModalCreate(): void {
     this.isEdit = false;
     this.titleForm = 'Agregar nivel';
-    this.competenciaSelect = competencia;
     this.createModal = true;
   }
 
   closeModal(): void {
     this.isEdit = false;
-    this.createModal = false;
     this.nivelSelect = undefined;
+    this.createModal = false;
   }
 
   refresh(): void {
-    this.niveles = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.nivelesCompetencias = [];
+    this.loadNiveles();
   }
 
   /**
@@ -94,7 +119,7 @@ export class NivelesComponent implements OnInit {
   
   /**
    * Elimina un registro
-   * @param competencia row de la tabla
+   * @param nivel row de la tabla
    * @returns void
    */
   deleteRow(nivel: Niveles) {
@@ -112,7 +137,8 @@ export class NivelesComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.loadData();
+              this.selectRowServices.selectRowAlterno$.emit(null);
+              this.loadNiveles();
               return true;
             },
             error: (err) => {
@@ -123,7 +149,6 @@ export class NivelesComponent implements OnInit {
           });
       }
     });
-    this.selectRowServices.selectRowAlterno$.emit(null);
   }
 
 }

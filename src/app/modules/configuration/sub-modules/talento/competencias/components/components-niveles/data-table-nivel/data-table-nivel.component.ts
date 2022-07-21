@@ -10,7 +10,7 @@ import { Niveles } from '../../../interfaces/nivel.interfaces';
 })
 export class DataTableNivelComponent implements OnInit {
 
-  @Input() niveles!: Niveles[];
+  @Input() nivelesCompetencias!: Niveles[];
 
   // Table
   columns: TableHead[] = [];
