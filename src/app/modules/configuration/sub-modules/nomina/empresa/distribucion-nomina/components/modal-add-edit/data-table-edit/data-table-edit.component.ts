@@ -1,6 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { distribucionNominaData } from '../../../interfaces/distribucion-impuesto-data';
-import { DistribucionNominaEmpresa } from '../../../interfaces/distribucion-impuesto.interfaces';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -12,8 +10,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class DataTableEditComponent implements OnInit {
 
   // Objetos
-  distribucionNominas: DistribucionNominaEmpresa[] = [];
-  distribucionNominaSelect: DistribucionNominaEmpresa | undefined;
+  distribucionNominas: any[] = [];
+  distribucionNominaSelect: any | undefined;
 
   // Emisión de eventos (cerrar modal)
   @Output() onCloseModal = new EventEmitter();
@@ -30,7 +28,7 @@ export class DataTableEditComponent implements OnInit {
       { field: 'desdis', header: 'Descripción' },
       { field: 'ubidis', header: 'Ubicación'   }
     ];
-    this.distribucionNominas = distribucionNominaData;
+    // this.distribucionNominas = distribucionNominaData;
     // console.log(this.distribucionNominas);
   }
 

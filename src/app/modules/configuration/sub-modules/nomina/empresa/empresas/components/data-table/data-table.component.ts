@@ -4,7 +4,7 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 import { Company } from '../../interfaces/compania.interfaces';
 
 @Component({
-  selector: 'app-data-table',
+  selector: 'app-data-table-empresa',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })

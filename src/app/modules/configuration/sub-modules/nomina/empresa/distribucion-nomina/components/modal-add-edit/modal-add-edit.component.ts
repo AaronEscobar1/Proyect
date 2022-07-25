@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { EmpresaNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { DataTableEditComponent } from './data-table-edit/data-table-edit.component';
+import { Company } from '../../../empresas/interfaces/compania.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -14,8 +14,8 @@ import { DataTableEditComponent } from './data-table-edit/data-table-edit.compon
 export class ModalAddEditComponent implements OnInit {
 
   // Objetos Input()
-  @Input() distribucionNominas!     : EmpresaNomina[];
-  @Input() distribucionNominaSelect!: EmpresaNomina | undefined;
+  @Input() companias!     : Company[];
+  @Input() companiaSelect!: Company | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -57,7 +57,7 @@ export class ModalAddEditComponent implements OnInit {
     this.form.controls['codemp'].disable();
     this.form.controls['desemp'].disable();
     // Seteamos los valores del row seleccionado al formulario
-    this.form.reset(this.distribucionNominaSelect);
+    this.form.reset(this.companiaSelect);
   }
 
   /**

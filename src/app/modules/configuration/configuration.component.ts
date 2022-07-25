@@ -95,6 +95,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   routerLink: ['/main/config/empresa/compania'],
                 },
                 {
+                  label: 'Distribución de Nómina',
+                  routerLink: ['/main/config/empresa/distribucion-nomina']
+                },
+                {
                   label: 'Tarifas de impuestos',
                   routerLink: ['/main/config/empresa/empresa-consultar/tarifas']
                 },
@@ -105,10 +109,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Nóminas',
                   routerLink: ['/main/config/empresa/nominas']
-                },
-                {
-                  label: 'Distribución de Nómina',
-                  routerLink: ['/main/config/empresa/distribucion-nomina']
                 },
                 {
                   label: 'Grupos de trabajo',

@@ -20,8 +20,7 @@
             </app-buttons>
 
             <!-- Componente table -->
-            <app-data-table [distribucionNominas]="distribucionNominas"></app-data-table>
-   
+            <app-data-table-distribucion [distribucionesNomina]="distribucionesNomina"></app-data-table-distribucion>
         </div>
 
     </div>
@@ -35,11 +34,10 @@
 
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit 
-    [distribucionNominas]="distribucionNominas" 
-    [distribucionNominaSelect]="distribucionNominaSelect"
+    [companias]="companias" 
+    [companiaSelect]="companiaSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()" 
-    (onLoadData)="loadData()"
+    (onCloseModal)="closeModal()"
     [titleForm]="titleForm">
 </app-modal-add-edit>

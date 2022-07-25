@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { empresasData } from '../../interfaces/distribucion-impuesto-data';
-import { EmpresaNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
+import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 
 @Component({
   selector: 'app-distribucion-nomina',
@@ -13,9 +13,14 @@ import { DistribucionNominaService } from '../../services/distribucion-nomina.se
 })
 export class DistribucionNominaComponent implements OnInit {
 
+  // Objeto para obtener el id de la empresa
+  @Input() empresa!: Company | null;
+
   // Objetos
-  distribucionNominas      : EmpresaNomina[] = [];
-  distribucionNominaSelect!: EmpresaNomina | undefined;
+  companias      : Company[] = [];
+  companiaSelect!: Company | undefined;
+
+  distribucionesNomina: DistribucionNomina[] = [];
 
   // Banderas
   isEdit: boolean = false;
@@ -31,22 +36,43 @@ export class DistribucionNominaComponent implements OnInit {
               private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.loadData();
   }
 
-  loadData(): void {
+  ngOnChanges() {
+    // Realizar peticion al backend para ver si tiene registro asignado a la empresa
+    if ( this.empresa && this.empresa.id ) {
+      console.log('backend', this.empresa.id);
+      this.loadDistribucionNomina(this.empresa.id);
+    }
+  }
+
+  /**
+   * Obtener datos de parametros asignado a la empresa
+   * @param id: string id empresa
+   */
+  loadDistribucionNomina( id: string ) {
+    console.log(id);
     this.spinner.show();
-    setTimeout(() => {
-      this.distribucionNominas = empresasData;
-      this.spinner.hide();
-    }, 500);
+    this.distribucionNominaService.getAllDistribuciones(id)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.distribucionesNomina = res;
+          // Asignar datos al formulario
+          
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+        }
+      });
   }
 
   refresh(): void {
-    this.distribucionNominas = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.distribucionesNomina = [];
+    if ( this.empresa && this.empresa.id ) {
+      this.loadDistribucionNomina(this.empresa.id);
+    }
   }
 
   openModalPrint(): void {
@@ -65,18 +91,18 @@ export class DistribucionNominaComponent implements OnInit {
   closeModal() {
     this.isEdit = false;
     this.createModal = false;
-    this.distribucionNominaSelect = undefined;
+    this.companiaSelect = undefined;
   }
 
   /**
      * Carga la data en el formulario para editar
-     * @param distribucionNomina row de la tabla
+     * @param company row de la tabla
      * @returns void
      */
-  editRow(distribucionNomina: EmpresaNomina): void {
+  editRow(company: Company): void {
     this.isEdit = true;
     this.titleForm = this.isEdit ? 'Editar distribución de nómina' : 'Agregar distribución de nómina';
-    this.distribucionNominaSelect = distribucionNomina;
+    this.companiaSelect = company;
     this.openModalCreate();
   }
 
@@ -85,7 +111,7 @@ export class DistribucionNominaComponent implements OnInit {
    * @param distribucionNomina row de la tabla
    * @returns void
    */
-  deleteRow(distribucionNomina: EmpresaNomina): void {
+  deleteRow(distribucionNomina: any): void {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta distribución de nómina <b>${distribucionNomina.desemp}</b>?`,
       header: 'Eliminar',
@@ -95,7 +121,7 @@ export class DistribucionNominaComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.distribucionNominas = this.distribucionNominas.filter(val => val.codemp !== distribucionNomina.codemp);
+        this.companias = this.companias.filter(val => val.id !== distribucionNomina.codemp);
         this.spinner.hide();
       }
     });
