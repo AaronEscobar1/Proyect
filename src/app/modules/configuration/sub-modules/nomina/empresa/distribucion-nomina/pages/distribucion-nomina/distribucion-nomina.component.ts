@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
 import { Company } from '../../../empresas/interfaces/compania.interfaces';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-distribucion-nomina',
@@ -14,13 +15,13 @@ import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.inter
 export class DistribucionNominaComponent implements OnInit {
 
   // Objeto para obtener el id de la empresa
-  @Input() empresa!: Company | null;
+  @Input() empresa!: Company;
 
-  // Objetos
-  companias      : Company[] = [];
-  companiaSelect!: Company | undefined;
-
+  // Objeto de distribuciones de nominas por empresa
   distribucionesNomina: DistribucionNomina[] = [];
+
+  // Objeto seleccionado para editar
+  distribucionNominaSelect!: DistribucionNomina | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -33,15 +34,18 @@ export class DistribucionNominaComponent implements OnInit {
   constructor(private distribucionNominaService: DistribucionNominaService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private selectRowService: SelectRowService ) { }
 
   ngOnInit(): void {
   }
 
   ngOnChanges() {
-    // Realizar peticion al backend para ver si tiene registro asignado a la empresa
+    // Validar si empresa existe y tiene id
     if ( this.empresa && this.empresa.id ) {
-      console.log('backend', this.empresa.id);
+      // Limpia el row de la tabla de distribucion nomina
+      this.selectRowService.selectRowAlterno$.emit(null);
+      // Realizar peticion al backend asociada a la empresa seleccionada
       this.loadDistribucionNomina(this.empresa.id);
     }
   }
@@ -51,15 +55,11 @@ export class DistribucionNominaComponent implements OnInit {
    * @param id: string id empresa
    */
   loadDistribucionNomina( id: string ) {
-    console.log(id);
     this.spinner.show();
     this.distribucionNominaService.getAllDistribuciones(id)
       .subscribe({
         next: (res) => {
-          console.log(res);
-          this.distribucionesNomina = res;
-          // Asignar datos al formulario
-          
+          this.distribucionesNomina = res;          
           this.spinner.hide();
         },
         error: (err) => {
@@ -83,27 +83,31 @@ export class DistribucionNominaComponent implements OnInit {
     this.printModal = false;
   }
 
+  /**
+   * Abre modal para crear
+   * @returns void
+   */
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar distribución de nómina' : 'Agregar distribución de nómina';
+    this.titleForm = 'Agregar distribución de nómina';
     this.createModal = true;
   }
 
   closeModal() {
     this.isEdit = false;
     this.createModal = false;
-    this.companiaSelect = undefined;
+    this.distribucionNominaSelect = undefined;
   }
 
   /**
-     * Carga la data en el formulario para editar
-     * @param company row de la tabla
-     * @returns void
-     */
-  editRow(company: Company): void {
+   * Carga la data en el formulario para editar
+   * @param distribucionNomina row de la tabla
+   * @returns void
+   */
+  editRow(distribucionNomina: DistribucionNomina): void {
     this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar distribución de nómina' : 'Agregar distribución de nómina';
-    this.companiaSelect = company;
-    this.openModalCreate();
+    this.titleForm = 'Editar distribución de nómina';
+    this.distribucionNominaSelect = distribucionNomina;
+    this.createModal = true;
   }
 
   /**
@@ -111,9 +115,9 @@ export class DistribucionNominaComponent implements OnInit {
    * @param distribucionNomina row de la tabla
    * @returns void
    */
-  deleteRow(distribucionNomina: any): void {
+  deleteRow(distribucionNomina: DistribucionNomina): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta distribución de nómina <b>${distribucionNomina.desemp}</b>?`,
+      message: `¿Desea eliminar esta distribución de nómina <b>${distribucionNomina.dessuc}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -121,8 +125,26 @@ export class DistribucionNominaComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.companias = this.companias.filter(val => val.id !== distribucionNomina.codemp);
-        this.spinner.hide();
+        this.distribucionNominaService.delete(distribucionNomina)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRowAlterno$.emit(null);
+              this.refresh();
+              return true;
+            },
+            error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la distribución nómina, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la distribución nómina.', life: 3000});
+              return false;
+            }
+          });
       }
     });
   }

@@ -17,7 +17,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
   companias: Company[] = [];
 
   // Variable para seleccionar el registro
-  empresaRow!: Company | null;
+  empresaRow!: Company;
 
   // Banderas
   isEdit: boolean = false;

@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { DataTableEditComponent } from './data-table-edit/data-table-edit.component';
 import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -13,9 +13,14 @@ import { Company } from '../../../empresas/interfaces/compania.interfaces';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
-  @Input() companias!     : Company[];
-  @Input() companiaSelect!: Company | undefined;
+  // Objeto para obtener el id para registrar la distribucion de nomina a la empresa asociada
+  @Input() empresa!: Company;
+
+  // Objeto para validaciones de valores duplicados 
+  @Input() distribucionesNomina: DistribucionNomina[] = [];
+
+  // Variable de seleccion para editar
+  @Input() distribucionNominaSelect!: DistribucionNomina | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -28,9 +33,6 @@ export class ModalAddEditComponent implements OnInit {
   @Output() onCloseModal = new EventEmitter();
   @Output() onLoadData   = new EventEmitter();
 
-  // Emision de evento componente padre a hijo
-  @ViewChild(DataTableEditComponent) dataTableEditComponent!: DataTableEditComponent;
-
   // Formulario reactivo
   form!: FormGroup;
 
@@ -40,8 +42,10 @@ export class ModalAddEditComponent implements OnInit {
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
     this.form = this.fb.group({
-      codemp: [''],
-      desemp: ['']
+      codsuc: [  , [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
+      dessuc: [  , [ Validators.required, Validators.maxLength(30) ]],
+      codubi: [  , [ Validators.maxLength(6) ]],
+      codctb: [  ]
     });
   }
 
@@ -50,14 +54,13 @@ export class ModalAddEditComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
-      this.form.controls['codemp'].enable();
-      this.form.controls['desemp'].enable();
+      this.form.reset();
+      this.form.controls['codsuc'].enable();
       return;
     }
-    this.form.controls['codemp'].disable();
-    this.form.controls['desemp'].disable();
+    this.form.controls['codsuc'].disable();
     // Seteamos los valores del row seleccionado al formulario
-    this.form.reset(this.companiaSelect);
+    this.form.reset(this.distribucionNominaSelect);
   }
 
   /**
@@ -65,13 +68,54 @@ export class ModalAddEditComponent implements OnInit {
    * @returns void
    */
   save(): void {
-    this.dataTableEditComponent.guardar();
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    // Obtener formulario
+    let data: DistribucionNomina = this.form.getRawValue();
+    
+    this.spinner.show();
+    
+    if (this.isEdit) {
+      // Editar
+      this.distribucionNominaService.update(this.empresa.id, data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRowAlterno$.emit(null);
+          this.onLoadData.emit();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la distribución nómina.', life: 3000});
+        }
+      });
+      return;
+    }
+
+    // Crear
+    this.distribucionNominaService.create(this.empresa.id, data)
+      .subscribe({
+        next: (resp) => {
+          this.closeModal();
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.selectRowService.selectRowAlterno$.emit(null);
+          this.onLoadData.emit();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la distribución nómina.', life: 3000});
+        }
+      });
   }
 
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.selectRowService.selectRow$.emit(null);
   }
 
   /**
@@ -81,6 +125,38 @@ export class ModalAddEditComponent implements OnInit {
     return (this.form.controls[campo].errors) 
             && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
              && this.form.invalid;
+  }
+  
+  // Mensajes de errores id
+  get codsucMsgError(): string {
+    const errors = this.form.get('codsuc')?.errors;
+    if ( errors?.required ) {
+      return 'El código es obligatorio.';
+    } else if ( errors?.maxlength ) {
+      return 'El código es de longitud máxima de 4 dígitos y formato alfanumérico.';
+    } else if ( errors?.duplicated ) {
+      return 'El código ya existe.';
+    }
+    return '';
+  }
+
+  // Mensajes de errores nombre
+  get dessucMsgError(): string {
+    const errors = this.form.get('dessuc')?.errors;
+    if ( errors?.required ) {
+      return 'La descripción es obligatoria.';
+    } else if ( errors?.maxlength ) {
+      return 'La descripción es de longitud máxima de 30 dígitos y formato alfanumérico.';
+    }
+    return '';
+  }
+
+  // Validar si esta duplicado el id 
+  validatedId(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    return this.distribucionesNomina.findIndex(val => val.codsuc === control.value) > -1 ?
+                                              {'duplicated': true} :
+                                              null;
   }
 
 }

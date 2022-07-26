@@ -28,8 +28,8 @@ export class DistribucionNominaService {
     return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/distribucionesnomina/${distribucionNomina.codsuc}`), distribucionNomina);
   }
 
-  delete(idEmpresa: string, distribucionNomina: DistribucionNomina): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/distribucionesnomina/${distribucionNomina.codsuc}`));
+  delete(distribucionNomina: DistribucionNomina): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${distribucionNomina.idEmpresa}/distribucionesnomina/${distribucionNomina.codsuc}`));
   }
 
 }
