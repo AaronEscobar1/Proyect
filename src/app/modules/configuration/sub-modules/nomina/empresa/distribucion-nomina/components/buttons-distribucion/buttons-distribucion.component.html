@@ -1,0 +1,42 @@
+<div class="flex">
+    <button pButton class="btn-infocent mr-2"
+            id="refresh"
+            icon="pi pi-refresh"
+            pTooltip="Refrescar tabla"
+            tooltipPosition="bottom"
+            (click)="refresh()">
+    </button>
+    <button pButton class="btn-infocent mr-3"
+            id="print" 
+            icon="pi pi-print"
+            pTooltip="Imprimir"
+            tooltipPosition="bottom"
+            (click)="openModalPrint()">
+    </button>
+    <div class="separator"></div>
+    <button pButton class="btn-infocent mr-2"
+            id="add"  
+            icon="pi pi-plus" 
+            pTooltip="Agregar"
+            tooltipPosition="bottom"
+            (click)="openModalCreate()">
+    </button>
+    <button pButton
+            id="edit" 
+            class="btn-infocent mr-2" 
+            icon="pi pi-pencil" 
+            pTooltip="Editar"
+            tooltipPosition="bottom"
+            (click)="editSelectRow()"
+            [disabled]="!selectRow">
+    </button>
+    <button pButton 
+            id="delete"
+            class="btn-infocent mr-2" 
+            icon="pi pi-trash"
+            pTooltip="Eliminar"
+            tooltipPosition="bottom"
+            (click)="deleteRow()"
+            [disabled]="!selectRow">
+    </button>
+</div>

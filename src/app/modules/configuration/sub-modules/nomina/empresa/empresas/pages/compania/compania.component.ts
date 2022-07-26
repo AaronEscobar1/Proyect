@@ -108,6 +108,11 @@ export class CompaniaComponent implements OnInit {
               return true;
             },
             error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la empresa, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
               this.spinner.hide();
               this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la empresa.', life: 3000});
               return false;

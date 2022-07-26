@@ -1,10 +1,7 @@
-export interface EmpresaNomina {
-    codemp: string;
-    desemp: string;
-}
-
-export interface DistribucionNominaEmpresa {
-    coddis: string;
-    desdis: string;
-    ubidis: string;
+export interface DistribucionNomina {
+    idEmpresa?: string;
+    codsuc:     string;
+    dessuc:     string;
+    codubi:     string;
+    codctb?:    string;
 }

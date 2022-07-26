@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { empresasData } from '../../interfaces/distribucion-impuesto-data';
-import { EmpresaNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
+import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
   selector: 'app-distribucion-nomina',
@@ -13,9 +14,14 @@ import { DistribucionNominaService } from '../../services/distribucion-nomina.se
 })
 export class DistribucionNominaComponent implements OnInit {
 
-  // Objetos
-  distribucionNominas      : EmpresaNomina[] = [];
-  distribucionNominaSelect!: EmpresaNomina | undefined;
+  // Objeto para obtener el id de la empresa
+  @Input() empresa!: Company;
+
+  // Objeto de distribuciones de nominas por empresa
+  distribucionesNomina: DistribucionNomina[] = [];
+
+  // Objeto seleccionado para editar
+  distribucionNominaSelect!: DistribucionNomina | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -28,25 +34,45 @@ export class DistribucionNominaComponent implements OnInit {
   constructor(private distribucionNominaService: DistribucionNominaService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private selectRowService: SelectRowService ) { }
 
   ngOnInit(): void {
-    this.loadData();
   }
 
-  loadData(): void {
+  ngOnChanges() {
+    // Validar si empresa existe y tiene id
+    if ( this.empresa && this.empresa.id ) {
+      // Limpia el row de la tabla de distribucion nomina
+      this.selectRowService.selectRowAlterno$.emit(null);
+      // Realizar peticion al backend asociada a la empresa seleccionada
+      this.loadDistribucionNomina(this.empresa.id);
+    }
+  }
+
+  /**
+   * Obtener datos de parametros asignado a la empresa
+   * @param id: string id empresa
+   */
+  loadDistribucionNomina( id: string ) {
     this.spinner.show();
-    setTimeout(() => {
-      this.distribucionNominas = empresasData;
-      this.spinner.hide();
-    }, 500);
+    this.distribucionNominaService.getAllDistribuciones(id)
+      .subscribe({
+        next: (res) => {
+          this.distribucionesNomina = res;          
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+        }
+      });
   }
 
   refresh(): void {
-    this.distribucionNominas = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.distribucionesNomina = [];
+    if ( this.empresa && this.empresa.id ) {
+      this.loadDistribucionNomina(this.empresa.id);
+    }
   }
 
   openModalPrint(): void {
@@ -57,8 +83,12 @@ export class DistribucionNominaComponent implements OnInit {
     this.printModal = false;
   }
 
+  /**
+   * Abre modal para crear
+   * @returns void
+   */
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar distribución de nómina' : 'Agregar distribución de nómina';
+    this.titleForm = 'Agregar distribución de nómina';
     this.createModal = true;
   }
 
@@ -69,15 +99,15 @@ export class DistribucionNominaComponent implements OnInit {
   }
 
   /**
-     * Carga la data en el formulario para editar
-     * @param distribucionNomina row de la tabla
-     * @returns void
-     */
-  editRow(distribucionNomina: EmpresaNomina): void {
+   * Carga la data en el formulario para editar
+   * @param distribucionNomina row de la tabla
+   * @returns void
+   */
+  editRow(distribucionNomina: DistribucionNomina): void {
     this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar distribución de nómina' : 'Agregar distribución de nómina';
+    this.titleForm = 'Editar distribución de nómina';
     this.distribucionNominaSelect = distribucionNomina;
-    this.openModalCreate();
+    this.createModal = true;
   }
 
   /**
@@ -85,9 +115,9 @@ export class DistribucionNominaComponent implements OnInit {
    * @param distribucionNomina row de la tabla
    * @returns void
    */
-  deleteRow(distribucionNomina: EmpresaNomina): void {
+  deleteRow(distribucionNomina: DistribucionNomina): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta distribución de nómina <b>${distribucionNomina.desemp}</b>?`,
+      message: `¿Desea eliminar esta distribución de nómina <b>${distribucionNomina.dessuc}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -95,8 +125,26 @@ export class DistribucionNominaComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.distribucionNominas = this.distribucionNominas.filter(val => val.codemp !== distribucionNomina.codemp);
-        this.spinner.hide();
+        this.distribucionNominaService.delete(distribucionNomina)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRowAlterno$.emit(null);
+              this.refresh();
+              return true;
+            },
+            error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la distribución nómina, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la distribución nómina.', life: 3000});
+              return false;
+            }
+          });
       }
     });
   }

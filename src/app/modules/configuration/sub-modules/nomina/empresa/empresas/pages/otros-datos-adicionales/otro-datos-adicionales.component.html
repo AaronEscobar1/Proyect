@@ -6,10 +6,10 @@
 </app-buttons-od>
 
 <!-- Componente table -->
-<app-data-table [companias]="companias"
-                [tab]="'otrosDatos'"
-                (onLoadAdditionalData)="loadOtherDataEmpresa($event)">
-</app-data-table>
+<app-data-table-empresa [companias]="companias"
+                        [tab]="'otrosDatos'"
+                        (onLoadAdditionalData)="loadOtherDataEmpresa($event)">
+</app-data-table-empresa>
 
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit-od
