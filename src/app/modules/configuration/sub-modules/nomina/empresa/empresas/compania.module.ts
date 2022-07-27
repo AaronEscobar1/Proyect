@@ -26,6 +26,9 @@ import { OtroDatosAdicionalesComponent } from './pages/otros-datos-adicionales/o
   imports: [
     SharedModule,
     CompaniaRoutingModule
+  ],
+  exports: [
+    DataTableComponent
   ]
 })
 export class CompaniaModule { }

@@ -1,48 +1,84 @@
+
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
           [draggable]="false" [resizable]="false">
-
+          
           <ng-template pTemplate="content">
-
+              
             <div class="flex justify-content-between align-items-center my-4">
                 <h5>{{titleForm}}</h5>
                 <div class="p-dialog-header-icons">
                     <button pButton pRipple type="button" icon="pi pi-times"
-                            class="p-button-rounded p-button-secondary p-button-text"
+                    class="p-button-rounded p-button-secondary p-button-text"
                             (click)="closeModal()">
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            <form [formGroup]="form" autocomplete="off">
-
+                
+                <form [formGroup]="form" autocomplete="off">
+                    
                 <div class="formgrid grid">
                     
-                    <div class="field col-3 md:col-2 md:col-offset-2 text-right mt-2">
+                    <div class="field col-3 md:col-2 md:col-offset-1 text-right mt-2">
                         <label for="codemp">Compañia:</label>
                     </div>
-                    <div class="field col-3 md:col-2">
+                    <div class="field col-9 md:col-3">
                         <input  type="text"
                                 id="codemp" 
                                 pInputText
-                                formControlName="codemp"
-                                placeholder="Ingrese el código"/>
+                                [value]="empresa.id"
+                                disabled/>
                     </div>
 
-                    <div class="field col-6 md:col-4">
-                        <input  id="desemp" 
-                                pInputText 
-                                formControlName="desemp"
-                                placeholder="Ingrese la compañía"/>
+                    <div class="field col-12 md:col-5">
+                        <input  type="text"
+                                id="desemp" 
+                                pInputText
+                                [value]="empresa.nombre"
+                                disabled/>
                     </div>
 
                 </div>
 
-                <!-- Datatable Edit -->
-                <app-data-table-edit *ngIf="isEdit" 
-                                     (onCloseModal)="closeModal()">
-                </app-data-table-edit>
+                <div class="field">
+                    <label for="codsuc">Código: *</label>
+                    <input  type="text" 
+                            id="codsuc"
+                            pInputText 
+                            formControlName="codsuc"
+                            placeholder="Ingrese el código"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codsuc')">
+                        {{ codsucMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="dessuc">Descripción *</label>
+                    <input  type="text" 
+                            id="dessuc"
+                            pInputText 
+                            formControlName="dessuc"
+                            placeholder="Ingrese la descripción">
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('dessuc')">
+                        {{ dessucMsgError }}
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label for="codubi">Ubicación: </label>
+                    <input  type="text" 
+                            id="codubi"
+                            pInputText 
+                            formControlName="codubi"
+                            placeholder="Ingrese la ubicación"/>
+                    <span class="form-text text-danger"
+                          *ngIf="campoInvalid('codubi')">
+                        La ubicación es de longitud máxima de 6 dígitos y formato alfanumérico.
+                    </span>
+                </div>
 
             </form>
 
@@ -57,12 +93,12 @@
                         (click)="closeModal()">
                 </button>
                 <button pButton 
-                    pRipple 
-                    type="submit" 
-                    label="Guardar" 
-                    icon="pi pi-save"
-                    class="btn-infocent my-1" 
-                    (click)="save()">
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-save"
+                        class="btn-infocent my-1" 
+                        (click)="save()">
                 </button>
             </div>
         </ng-template>

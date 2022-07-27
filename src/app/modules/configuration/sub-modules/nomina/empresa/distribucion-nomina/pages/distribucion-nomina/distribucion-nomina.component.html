@@ -1,28 +1,20 @@
-<!-- Spinner -->
-<app-spinner></app-spinner>
-
 <!-- Mensajes de alertas para usuarios -->
 <p-toast></p-toast>
 <p-confirmDialog ></p-confirmDialog>
 
 <div class="grid">
     <div class="col-12">
-
-        <div class="header-card bg-gray-600 text-white p-2">Distribución de nómina</div>
-        <div class="card-table">
             
-            <!-- Componente de botones -->
-            <app-buttons (onRefresh)="refresh()"
-                         (onOpenModalPrint)="openModalPrint()"
-                         (onOpenModalCreate)="openModalCreate()"
-                         (onEditRow)="editRow($event)"
-                         (onDeleteRow)="deleteRow($event)">
-            </app-buttons>
+        <!-- Componente de botones -->
+        <app-buttons-distribucion (onRefresh)="refresh()"
+                                  (onOpenModalPrint)="openModalPrint()"
+                                  (onOpenModalCreate)="openModalCreate()"
+                                  (onEditRow)="editRow($event)"
+                                  (onDeleteRow)="deleteRow($event)">
+        </app-buttons-distribucion>
 
-            <!-- Componente table -->
-            <app-data-table [distribucionNominas]="distribucionNominas"></app-data-table>
-   
-        </div>
+        <!-- Componente table -->
+        <app-data-table-distribucion [distribucionesNomina]="distribucionesNomina"></app-data-table-distribucion>
 
     </div>
 </div>
@@ -34,12 +26,13 @@
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
-<app-modal-add-edit 
-    [distribucionNominas]="distribucionNominas" 
+<app-modal-add-edit
+    [empresa]="empresa"
+    [distribucionesNomina]="distribucionesNomina"
     [distribucionNominaSelect]="distribucionNominaSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()" 
-    (onLoadData)="loadData()"
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
     [titleForm]="titleForm">
 </app-modal-add-edit>

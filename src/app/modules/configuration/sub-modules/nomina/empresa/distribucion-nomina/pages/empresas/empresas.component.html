@@ -8,7 +8,7 @@
 <div class="grid">
     <div class="col-12">
 
-        <div class="header-card bg-gray-600 text-white p-2">Empresas</div>
+        <div class="header-card bg-gray-600 text-white p-2">Empresas / Distribución nómina</div>
         <div class="card-table">
 
             <!-- Pestañas -->
@@ -20,12 +20,13 @@
                 <p-tabPanel header="Consultar empresas">
 
                     <!-- Componente de botones -->
-                    <app-buttons (onRefresh)="refresh()"
+                    <!-- TODO: Realizar si hace falta agregar, modificar y eliminar empresas en este modulo -->
+                    <!-- <app-buttons (onRefresh)="refresh()"
                                  (onOpenModalPrint)="openModalPrint()"
                                  (onOpenModalCreate)="openModalCreate()"
                                  (onEditRow)="editRow($event)"
                                  (onDeleteRow)="deleteRow($event)">
-                    </app-buttons>
+                    </app-buttons> -->
 
                     <!-- Componente table -->
                     <app-data-table-empresa [companias]="companias"
@@ -35,11 +36,11 @@
                 </p-tabPanel>
 
                 <!--/*************************
-                /*  Otros datos adicionales  *
+                /*    Parametros iniciales   *
                 /***************************** -->
-                <p-tabPanel header="Otros datos de empresa">
+                <p-tabPanel header="Distribución nómina" [disabled]="empresaRow == null">
                     
-                    <app-otro-datos-adicionales [companias]="companias"></app-otro-datos-adicionales>
+                    <app-distribucion-nomina [empresa]="empresaRow"></app-distribucion-nomina>
 
                 </p-tabPanel>
 
@@ -49,20 +50,3 @@
 
     </div>
 </div>
-
-<!-- Modal Imprimir -->
-<app-modal-print  
-    [printModal]="printModal"
-    (onCloseModalPrint)="closeModalPrintDialog()">
-</app-modal-print>
-
-<!-- Modal Agregar Editar-->
-<app-modal-add-edit 
-    [companias]="companias" 
-    [companiaSelect]="companiaSelect"
-    [createModal]="createModal" 
-    [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()" 
-    (onLoadData)="loadData()"
-    [titleForm]="titleForm">
-</app-modal-add-edit>
