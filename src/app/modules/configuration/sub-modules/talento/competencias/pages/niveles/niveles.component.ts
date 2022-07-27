@@ -61,6 +61,8 @@ export class NivelesComponent implements OnInit {
    * Obtener niveles relacionadas con una competencia
    */
   loadNiveles() {
+    console.log(this.competenciaRow);
+    
     if ( !this.competenciaRow ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No hay una competencia seleccionada.', life: 3000});
       return;

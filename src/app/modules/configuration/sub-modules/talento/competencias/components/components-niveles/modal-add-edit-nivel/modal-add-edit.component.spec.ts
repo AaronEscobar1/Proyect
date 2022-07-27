@@ -95,13 +95,6 @@ describe('ModalAddEditComponent', () => {
     
     app.isEdit = false
 
-    app.competenciaSelect = {
-      "nombre": "competencia modif",
-      "descrip": "informaciones",
-      "tipo": "02",
-      "id": 1,
-    };
-
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion

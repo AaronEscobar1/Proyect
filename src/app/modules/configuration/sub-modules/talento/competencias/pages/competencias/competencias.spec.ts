@@ -132,7 +132,10 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
 
@@ -154,7 +157,10 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
     
@@ -183,7 +189,10 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
 
@@ -220,7 +229,10 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
 
@@ -257,7 +269,10 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
 
@@ -292,13 +307,19 @@ describe('ClasificacionOficialComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46
       },
       {
         "nombre": "eva 2",
         "descrip": "descripcion",
-        "tipo": "03",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 4
       }
     ]
@@ -318,11 +339,11 @@ describe('ClasificacionOficialComponent', () => {
     const data: TiposCompetencias[] = [
       {
           "nombre": "Habilidad",
-          "tipo": "01"
+          "id": "01"
       },
       {
           "nombre": "Destreza",
-          "tipo": "02"
+          "id": "02"
       }
   ]
 

@@ -127,7 +127,10 @@ describe('NivelesEducativosServices', () => {
     const query: Competencias = {
       "nombre": "eva 2",
       "descrip": "descripcion",
-      "tipo": "03",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 4
     }
 
@@ -152,7 +155,10 @@ describe('NivelesEducativosServices', () => {
     const query: Competencias = {
       "nombre": "eva 2",
       "descrip": "descripcion",
-      "tipo": "03",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 4
     }
 
@@ -178,7 +184,10 @@ describe('NivelesEducativosServices', () => {
     const query: Competencias = {
       "nombre": "eva 2",
       "descrip": "descripcion",
-      "tipo": "03",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 4
     }
 
@@ -203,7 +212,10 @@ describe('NivelesEducativosServices', () => {
     const query: Competencias = {
       "nombre": "eva 2",
       "descrip": "descripcion",
-      "tipo": "03",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 4
     }
 
@@ -229,7 +241,10 @@ describe('NivelesEducativosServices', () => {
     const query: Competencias = {
       "nombre": "eva 2",
       "descrip": "descripcion",
-      "tipo": "03",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 4
     }
 
@@ -254,7 +269,10 @@ describe('NivelesEducativosServices', () => {
     const query: Competencias = {
       "nombre": "eva 2",
       "descrip": "descripcion",
-      "tipo": "03",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 4
     }
 

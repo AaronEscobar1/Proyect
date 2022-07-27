@@ -73,7 +73,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -85,7 +88,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -99,7 +105,10 @@ describe('ModalAddEditComponent', () => {
     app.competenciaSelect = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -114,7 +123,10 @@ describe('ModalAddEditComponent', () => {
     app.competenciaSelect = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -159,7 +171,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -171,7 +186,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -186,7 +204,10 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "Competencia 4666",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 76,
     };
 
@@ -216,7 +237,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -228,7 +252,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -277,7 +304,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -289,7 +319,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -348,7 +381,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -360,7 +396,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -424,7 +463,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -436,7 +478,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -451,7 +496,10 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -510,7 +558,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -522,7 +573,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -537,7 +591,10 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "competencia modif",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 76,
       "links": [
         {
@@ -579,7 +636,7 @@ describe('ModalAddEditComponent', () => {
     // Reset hecho por la funcion
     expect(app.form.value.nombre).toEqual("")
     expect(app.form.value.descrip).toEqual(data.descrip)
-    expect(app.form.value.tipo).toEqual(data.tipo)
+    expect(app.form.value.tipo).toEqual(data.tipo.id)
     expect(app.form.value.id).toEqual(undefined)
 
     app.campoInvalid('nombre');
