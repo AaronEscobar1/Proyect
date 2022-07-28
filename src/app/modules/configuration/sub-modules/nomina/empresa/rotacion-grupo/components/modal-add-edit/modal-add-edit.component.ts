@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { dayType } from '../../../grupo-trabajo/interfaces/grupo-trabajo.interfaces';
+import { tipoJornadaData } from '../../../grupo-trabajo/interfaces/grupo-trabajo.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -38,7 +38,7 @@ export class ModalAddEditComponent implements OnInit {
   form!: FormGroup;
 
   // Objeto
-  dayType: dropdownType[] = dayType;
+  dayType: dropdownType[] = tipoJornadaData;
 
   constructor(private rotacionGrupoService: RotacionGrupoService, 
               private spinner: NgxSpinnerService,

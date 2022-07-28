@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
+import { Company } from '../../../../empresas/interfaces/compania.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -10,7 +10,8 @@ import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() gruposTrabajo!: GrupoTrabajo[];
+  @Input() companias!: Company[];
+  @Input() tab: string = 'consultar';
 
   // Table
   columns: TableHead[] = [];
@@ -19,15 +20,14 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codemp', header: 'Código'      },
-      { field: 'desemp', header: 'Descripción' },
-      { field: 'codtipnom', header: 'Código' },
-      { field: 'destipnom', header: 'Tipo nómina' }
+      { field: 'id',     header: 'Código'      },
+      { field: 'nombre', header: 'Descripción' }
     ];
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRow$.emit(event.data);
+    const companySelect: Company = event.data;
+    this.selectRowService.selectRow$.emit(companySelect);
   }
 
   onRowUnselect(): void {

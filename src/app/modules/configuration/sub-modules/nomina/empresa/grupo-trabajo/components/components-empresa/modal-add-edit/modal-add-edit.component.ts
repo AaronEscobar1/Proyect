@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { GrupoTrabajo, dayType } from '../../interfaces/grupo-trabajo.interfaces';
+import { GrupoTrabajo, tipoJornadaData } from '../../../interfaces/grupo-trabajo.interfaces';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
+import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
@@ -32,7 +32,7 @@ export class ModalAddEditComponent implements OnInit {
   form!: FormGroup;
 
   // Objeto
-  dayType: dropdownType[] = dayType;
+  dayType: dropdownType[] = tipoJornadaData;
 
   constructor(private grupoTrabajoService: GrupoTrabajoService, 
               private spinner: NgxSpinnerService,
@@ -79,14 +79,12 @@ export class ModalAddEditComponent implements OnInit {
     // Obtener formulario
     let data: GrupoTrabajo = this.form.getRawValue();
     // Transformar la data que viene del formulario
-    data.desemp.trim();
 
     this.spinner.show();
 
     if(this.isEdit) {
       // Editar
       console.log('editar', data);
-      this.gruposTrabajo[this.findIndexById(this.form.getRawValue().codtipnom)] = this.form.getRawValue();
       this.spinner.hide();
       this.closeModal();
       return;
@@ -94,26 +92,14 @@ export class ModalAddEditComponent implements OnInit {
     
     // Crear
     console.log('crear', data);
-    this.gruposTrabajo.push(data);
     this.spinner.hide();
     this.closeModal();
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.gruposTrabajo.length; i++) {
-      if (this.gruposTrabajo[i].codtipnom === id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
   }
 
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.selectRowService.selectRow$.emit(null);
+    // this.selectRowService.selectRow$.emit(null);
   }
 
   /**

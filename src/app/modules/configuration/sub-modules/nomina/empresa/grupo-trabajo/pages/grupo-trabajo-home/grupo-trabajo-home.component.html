@@ -1,0 +1,50 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Grupos de trabajo</div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/*******************
+                /*  Consultar empresas *
+                /*********************** -->
+                <p-tabPanel header="Consultar empresa">
+
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <app-empresa></app-empresa>
+                        </div>
+                    
+                        <div class="col-12 md:col-6">
+                            <app-tipo-nomina [empresaRow]="empresaRow"
+                                             (onGetDataGrupo)="getDataGrupo($event)">
+                            </app-tipo-nomina>
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+
+                <!--/*************************
+                /*      Grupo de trabajo     *
+                /***************************** -->
+                <p-tabPanel header="Grupo de trabajo" [disabled]="empresaRow == null || nominaRow == null">
+                    
+                    <app-grupo-trabajo  [empresaRow]="empresaRow"
+                                        [nominaRow]="nominaRow"
+                                        [gruposTrabajo]="gruposTrabajo"
+                                        (onRefresh)="refresh()">
+                    </app-grupo-trabajo>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>

@@ -1,83 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { GrupoTrabajoData } from '../../interfaces/grupo-trabajo-data';
-import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
+import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { TipoNomina } from '../../interfaces/nominas.interfaces';
 import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
+import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
 
 @Component({
   selector: 'app-grupo-trabajo',
   templateUrl: './grupo-trabajo.component.html',
-  styleUrls: ['./grupo-trabajo.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class GrupoTrabajoComponent implements OnInit {
 
-  // Objetos
-  gruposTrabajo      : GrupoTrabajo[] = [];
-  grupoTrabajoSelect!: GrupoTrabajo | undefined;
+  // Empresa seleccionada desde la tabla 
+  @Input() empresaRow!: Company;
 
-  // Banderas
-  isEdit: boolean = false;
+  // Nomina seleccionada desde la tabla
+  @Input() nominaRow!: TipoNomina;
 
-  // Modales
-  titleForm  : string = 'Agregar grupo de trabajo';
-  createModal: boolean = false;
-  printModal : boolean = false;
+  // Objeto de grupos de trabajo por empresa y nomina
+  @Input() gruposTrabajo: any;
 
+  // Emisión de evento (cargar data de grupos)
+  @Output() onRefresh = new EventEmitter();
+  
   constructor(private grupoTrabajoService: GrupoTrabajoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.loadData();
-  }
-
-  loadData(): void {
-    this.spinner.show();
-    setTimeout(() => {
-      this.gruposTrabajo = GrupoTrabajoData;
-      this.spinner.hide();
-    }, 500);
   }
 
   refresh(): void {
     this.gruposTrabajo = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
-  }
-
-  openModalPrint(): void {
-    this.printModal = true;
-  }
-
-  closeModalPrintDialog(): void {
-    this.printModal = false;
-  }
-
-  openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar grupo de trabajo' : 'Agregar grupo de trabajo';
-    this.createModal = true;
-  }
-
-  closeModal() {
-    this.isEdit = false;
-    this.createModal = false;
-    this.grupoTrabajoSelect = undefined;
-  }
-
-  /**
-     * Carga la data en el formulario para editar
-     * @param grupoTrabajo row de la tabla
-     * @returns void
-     */
-  editRow(grupoTrabajo: GrupoTrabajo): void {
-    this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar grupo de trabajo' : 'Agregar grupo de trabajo';
-    this.grupoTrabajoSelect = grupoTrabajo;
-    this.openModalCreate();
+    this.onRefresh.emit();
   }
 
   /**
@@ -87,7 +45,7 @@ export class GrupoTrabajoComponent implements OnInit {
    */
   deleteRow(grupoTrabajo: GrupoTrabajo): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar este grupo de trabajo <b>${grupoTrabajo.desemp}</b>?`,
+      message: `¿Desea eliminar este grupo de trabajo <b>${grupoTrabajo.desgru}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -95,8 +53,26 @@ export class GrupoTrabajoComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.gruposTrabajo = this.gruposTrabajo.filter(val => val.codemp !== grupoTrabajo.codemp);
-        this.spinner.hide();
+        this.grupoTrabajoService.delete(this.empresaRow.id, this.nominaRow.tipnom, grupoTrabajo.codgru)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.grupoTrabajoService.selectRowGrupo$.emit(null);
+              this.refresh();
+              return true;
+            },
+            error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar el grupo de trabajo, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el grupo de trabajo.', life: 3000});
+              return false;
+            }
+          });
       }
     });
   }
