@@ -3,14 +3,14 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
-import { ModalAddEditNivelComponent } from './modal-add-edit-nivel.component';
+import { ModalAddEditComponent } from './modal-add-edit.component';
 import { environment } from 'src/environments/environment';
 
 
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/configuraciones/talentos/nivelescompetencias`;
+  const URL = `${environment.api}/configuraciones/talentos/entrevistas`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('ModalAddEditComponent', () => {
         FormsModule,
       ],
       declarations: [
-        ModalAddEditNivelComponent
+        ModalAddEditComponent
       ]
     }).compileComponents()
     
@@ -33,13 +33,13 @@ describe('ModalAddEditComponent', () => {
 
 
   it('Crear componente de Niveles Educativos Crear-Editar', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it('Inicializar el componente Forma de Crear', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Se valida que no haya cambios en el input isEdit
@@ -49,8 +49,7 @@ describe('ModalAddEditComponent', () => {
     // Validamos los datos del formulario vacio
 
     expect(app.form.value.id).toEqual(null)
-    expect(app.form.value.nivel).toEqual(null)
-    expect(app.form.value.descrip).toEqual(null)
+    expect(app.form.value.nombre).toEqual(null)
 
     // Validamos el requiere de los campos
     
@@ -58,103 +57,90 @@ describe('ModalAddEditComponent', () => {
 
     // validamos que no exista el nivelSelect
 
-    expect(app.nivelSelect).toEqual(undefined);
+    expect(app.entrevistaSelect).toEqual(undefined);
   
   });
 
   it('Inicializar el componente Forma de Editar', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
 
-    app.nivelSelect = {
-      "nivel": "nivel dos",
-      "descrip": "descrip 2",
-      "id_competencia": 1,
-      "id": 4226
-    }
+    app.entrevistaSelect = {
+      "nombre": "Entrevista abierta",
+      "id": 3,
+    };
 
-    
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     
-    app.isEdit = false
-    
-    app.competenciaRow = {
-      "nombre": "Competencia 46",
-      "descrip": "competencia 46",
-      "tipo": {
-        "nombre": "competencia modifs",
-        "id": "02"
-      },
-      "id": 21
-    }
+    app.entrevistaSelect = {
+      "nombre": "Entrevista abierta",
+      "id": 3,
+    };
 
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion
-    expect(app.form.value.id).toEqual(null)
-    expect(app.form.value.nivel).toEqual(null)
-    expect(app.form.value.descrip).toEqual(null)
-    expect(app.form.valid).toEqual(false)
+    expect(app.form.value.id).toEqual(undefined)
+    expect(app.form.value.nombre).toEqual("Entrevista abierta")
+    expect(app.form.valid).toEqual(true)
   });
 
 
   it('Cerrando modal de Crear-Editar', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Llamamos al close modal para resetear todo
     app.closeModal()
     // Reset hecho por la funcion
     expect(app.form.value.id).toEqual(null)
-    expect(app.form.value.nivel).toEqual(null)
-    expect(app.form.value.descrip).toEqual(null)
-    expect(app.nivelSelect).toEqual(undefined);
+    expect(app.form.value.nombre).toEqual(null)
+    expect(app.entrevistaSelect).toEqual(undefined);
   });
 
   it('Probando el Guardado de Datos (Caso Verdadero)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
-    
+
     // datos del formulario
     const data = {
-      "nivel": "nivel dos",
-      "descrip": "descrip 2",
-      "id": 4227
+      "nombre": "Entrevista abiertaa",
+      "id": 1,
     };
 
     const resp = {"message":"Forma de pago creado."}
@@ -174,31 +160,30 @@ describe('ModalAddEditComponent', () => {
   });
 
   it('Probando el Guardado de Datos (Caso Falso)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
-    
+
     // datos del formulario
     const data = {
-      "nivel": "nivel dos",
-      "descrip": "descrip 2",
-      "id": 4227
+      "nombre": "Entrevista abiertaa",
+      "id": 1,
     };
 
     const error = new ErrorEvent('', {
@@ -222,32 +207,30 @@ describe('ModalAddEditComponent', () => {
   });
 
   it('Probando el Editado de Datos (caso Verdadero)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
-    
+
     // datos del formulario
     const data = {
-      "nivel": "nivel dos",
-      "descrip": "descrip 2",
-      "id_competencia": 1,
-      "id": 4226
+      "nombre": "Entrevista abierta",
+      "id": 3,
     };
 
     const resp = {"message":"Forma de pago creado."}
@@ -257,7 +240,7 @@ describe('ModalAddEditComponent', () => {
     app.form.reset(data)
     console.log(app.form.valid)
     expect(app.form.valid).toEqual(true)
-    app.nivelMsgError
+    app.nombreMsgError
 
     // Llamamos a la funcion de Guardado
     app.save()
@@ -268,37 +251,35 @@ describe('ModalAddEditComponent', () => {
 
     // Reset hecho por la funcion
     expect(app.form.value.id).toEqual(undefined)
-    expect(app.form.value.nivel).toEqual(null)
-    expect(app.form.value.descrip).toEqual(null)
-    expect(app.nivelSelect).toEqual(undefined);
+    expect(app.form.value.nombre).toEqual(null)
+    expect(app.entrevistaSelect).toEqual(undefined);
   });
 
   it('Probando el Editado de Datos (Caso Falso)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
-    
+
     // datos del formulario
     const data = {
-      "nivel": "nivel dos",
-      "descrip": "descrip 2",
-      "id": 4226
+      "nombre": "Entrevista abierta",
+      "id": 3,
     };
 
     const error = new ErrorEvent('', {
@@ -312,7 +293,7 @@ describe('ModalAddEditComponent', () => {
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.controls['id'].disable();
     app.form.reset(data)
-    app.form.controls['nivel'].setValue("hola")
+    app.form.controls['nombre'].setValue("hola")
     expect(app.form.valid).toEqual(true)
 
     // Llamamos a la funcion de Guardado
@@ -323,52 +304,49 @@ describe('ModalAddEditComponent', () => {
     expect(fakeBackend.request.method).toBe('PUT');
 
     // Reset hecho por la funcion
-    expect(app.form.value.nivel).toEqual("hola")
-    expect(app.form.value.descrip).toEqual(data.descrip)
+    expect(app.form.value.nombre).toEqual("hola")
     expect(app.form.value.id).toEqual(undefined)
-    expect(app.nivelSelect).toEqual(undefined);
+    expect(app.entrevistaSelect).toEqual(undefined);
   });
 
   it('Validando el formulario (Caso Creado)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
-    
+
     // datos del formulario
     const data = {
-      "nivel": "nivel dos",
-      "descrip": "descrip 2",
-      "id_competencia": 1,
-      "id": 4226
+      "nombre": "Entrevista abierta",
+      "id": 3,
     };
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['id'].setValue(46)
+    app.form.controls['id'].setValue(3)
     expect(app.form.valid).toEqual(false)
     app.idMsgError
     
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['id'].setValue("01234444444444444444444555555555555555444444444444444444")
+    app.form.controls['id'].setValue("01234444444444444444444444444444444444444")
     expect(app.form.valid).toEqual(false)
     app.idMsgError
 
@@ -383,13 +361,12 @@ describe('ModalAddEditComponent', () => {
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
     app.form.controls['id'].setValue("")
-    app.form.controls['nivel'].setValue("nivel dos")
+    app.form.controls['nombre'].setValue("AJUSTE DE UTILIDADES")
     expect(app.form.valid).toEqual(false)
     app.idMsgError
 
     // Reset hecho por la funcion
-    expect(app.form.value.nivel).toEqual("nivel dos")
-    expect(app.form.value.descrip).toEqual(data.descrip)
+    expect(app.form.value.nombre).toEqual("AJUSTE DE UTILIDADES")
     expect(app.form.value.id).toEqual("")
 
     app.campoInvalid('id');
@@ -397,60 +374,65 @@ describe('ModalAddEditComponent', () => {
 
   });
   it('Validando el formulario (Caso Editado)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditNivelComponent);
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.niveles = [
+    app.entrevistas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "1",
-        "id_competencia": 46,
-        "id": 46
+        "nombre": "Entrevista abierta",
+        "id": 3,
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id_competencia": 1,
-        "id": 4226
+        "nombre": "Entrevista funcional",
+        "id": 2,
+      },
+      {
+        "nombre": "prueba 8",
+        "id": 4,
       }
     ];
-    
+
     // datos del formulario
     const data = {
-      "nivel": "",
-      "descrip": "descrip 2",
-      "id_competencia": 1,
-      "id": 4226
+      "nombre": "Entrevista funcional",
+      "id": 3,
     };
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.controls['id'].disable();
     app.form.reset(data)
-    console.log(app.form.value);
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.nivelMsgError
+    app.nombreMsgError
 
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.controls['id'].disable();
     app.form.reset(data)
-    app.form.controls['nivel'].setValue("12345678912345678912345678915555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555234")
+    app.form.controls['nombre'].setValue("12345678912345678912345678915555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555234")
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.nivelMsgError
+    app.nombreMsgError
+
+    //Caso Vacio
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.controls['id'].disable();
+    app.form.reset(data)
+    app.form.controls['nombre'].setValue("")
+    expect(app.form.valid).toEqual(false)
+    expect(app.form.invalid).toEqual(true)
+    app.nombreMsgError
 
     app.save();
 
     // Reset hecho por la funcion
-    expect(app.form.value.nivel).toEqual("12345678912345678912345678915555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555234")
-    expect(app.form.value.descrip).toEqual(data.descrip)
+    expect(app.form.value.nombre).toEqual("")
     expect(app.form.value.id).toEqual(undefined)
 
-    app.campoInvalid('nivel');
+    app.campoInvalid('nombre');
     
   });
 });

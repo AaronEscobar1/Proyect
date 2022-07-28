@@ -4,22 +4,20 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Servicios y componentes requeridos
 import { environment } from 'src/environments/environment';
-import { NivelesComponent } from './niveles.component';
-import { NivelesEducativosService } from '../../../../nomina/basica/niveles-educativos/services/niveles-educativos.service';
-import { Niveles } from '../../interfaces/nivel.interfaces';
+import { PreguntaService } from '../../services/pregunta.service';
+import { PreguntaComponent } from './pregunta.component';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Competencias } from '../../interfaces/competencias.interfaces';
-import { NivelService } from '../../services/nivel.service';
+import { PreguntaEntrevista, TipoPregunta } from '../../interfaces/pregunta.interfaces';
 
 describe('ClasificacionOficialComponent', () => {
 
   let httpTestingController: HttpTestingController;
 
-  let services: NivelService;
+  let services: PreguntaService;
 
-  const URL = `${environment.api}/configuraciones/talentos/nivelescompetencias`;
+  const URL = `${environment.api}/configuraciones/talentos/preguntas`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -31,131 +29,104 @@ describe('ClasificacionOficialComponent', () => {
         BrowserAnimationsModule
       ],
       declarations: [
-        NivelesComponent
+        PreguntaComponent
       ]
     }).compileComponents();
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
 
-    services = TestBed.inject(NivelService);
+    services = TestBed.inject(PreguntaService);
 
   }));
 
   it('Crear componente de Clasificacion Oficial correctamente', () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it('Inicializar el componente', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
-    expect(app.niveles.length).toBe(0);
-    app.loadNiveles();
+    expect(app.preguntas.length).toBe(0);
+    app.loadPreguntas();
     fixture.detectChanges();
-    app.competenciaRow = {
-      "nombre": "Competencia 46",
-      "descrip": "competencia 46",
-      "tipo": {
-        "nombre": "competencia modifs",
-        "id": "02"
-      },
-      "id": 0
+    app.entrevistaRow = {
+      "nombre": "Entrevista funcional",
+      "id": 0,
     }
-    app.niveles = []
+
+    app.preguntas = []
 
     app.ngOnChanges()
 
-    app.niveles = [
+    app.preguntas = [
       {
-        "nivel": "nivel 46",
-        "descrip": "3333",
-        "id": 46,
-        "id_competencia": 46
+        "titulo": "pregunta 11",
+        "cerrada": "1",
+        "idEntrevista": 3,
+        "id": 11
       },
       {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id": 4226,
-        "id_competencia": 1
-      }
-    ];
-
-    app.ngOnChanges()
-    
-    app.niveles = [
-      {
-        "nivel": "nivel 46",
-        "descrip": "3333",
-        "id": 46,
-        "id_competencia": 46
-      },
-      {
-        "nivel": "nivel dos",
-        "descrip": "descrip 2",
-        "id": 4226,
-        "id_competencia": 1
+        "titulo": "prueba",
+        "cerrada": "0",
+        "idEntrevista": 3,
+        "id": 12
       }
     ];
 
     app.ngOnChanges()
 
-    expect(app.niveles.length).toBeGreaterThanOrEqual(0);
+    expect(app.preguntas.length).toBeGreaterThanOrEqual(0);
   });
 
   it('Validando Refrescar', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
     // Simulamos el proceso de carga despues del boton 
     app.refresh();
-    expect(app.niveles.length).toBe(0);
-    app.loadNiveles();
+    expect(app.preguntas.length).toBe(0);
+    app.loadPreguntas();
     fixture.detectChanges();
-    expect(app.niveles.length).toBeGreaterThanOrEqual(0);  
+    expect(app.preguntas.length).toBeGreaterThanOrEqual(0);  
   })
 
   it('Abrir modal de Crear Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
-    const data: Competencias = {
-      "nombre": "Competencia 46",
-      "descrip": "1",
-      "tipo": {
-        "nombre": "competencia modifs",
-        "id": "02"
-      },
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
 
     // Simulamos el proceso de abrir el modal de Creacion 
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar nivel');
+    expect(app.titleForm).toBe('Agregar pregunta');
     expect(app.createModal).toBeTrue();  
   })
 
   it('Cerrar Modal de Crear Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
     
-    const data: Competencias = {
-      "nombre": "Competencia 46",
-      "descrip": "1",
-      "tipo": {
-        "nombre": "competencia modifs",
-        "id": "02"
-      },
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
 
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar nivel');
+    expect(app.titleForm).toBe('Agregar pregunta');
     expect(app.createModal).toBeTrue();
     fixture.detectChanges();
     
@@ -166,69 +137,69 @@ describe('ClasificacionOficialComponent', () => {
   })
 
   it('Abrir modal de Editar Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
     // seteamos data simulate
-    const data: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
 
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.nivelSelect).toBe(undefined);
+    expect(app.preguntaSelect).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.nivelSelect).toBe(data);
+    expect(app.preguntaSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar nivel');
+    expect(app.titleForm).toBe('Editar pregunta');
     expect(app.createModal).toBeTrue();  
   })
 
   it('Cerrar Modal de Editar Nivel', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
-    const data: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
     
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.nivelSelect).toBe(undefined);
+    expect(app.preguntaSelect).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.nivelSelect).toBe(data);
+    expect(app.preguntaSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar nivel');
+    expect(app.titleForm).toBe('Editar pregunta');
     expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion
     expect(app.isEdit).toBeTrue();
-    expect(app.nivelSelect).toBe(data);
+    expect(app.preguntaSelect).toBe(data);
     app.closeModal();
     fixture.detectChanges();
-    expect(app.nivelSelect).toBe(undefined);
+    expect(app.preguntaSelect).toBe(undefined);
     expect(app.isEdit).toBeFalse();
     expect(app.createModal).toBeFalse(); 
   })
 
   it('Eliminar Niveles Educativos (caso fallido)', ()=>{
 
-    const data: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
 
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
     const error = new ErrorEvent('', {
@@ -258,14 +229,14 @@ describe('ClasificacionOficialComponent', () => {
 
   it('Eliminar Niveles Educativos (caso fallido)', ()=>{
 
-    const data: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
 
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
     const error = new ErrorEvent('', {
@@ -295,14 +266,14 @@ describe('ClasificacionOficialComponent', () => {
 
   it('Eliminar Niveles Educativos (caso verdadero)', ()=>{
 
-    const data: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+    const data: PreguntaEntrevista = {
+      "titulo": "pregunta 11",
+      "cerrada": "1",
+      "idEntrevista": 3,
+      "id": 11
     }
 
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
     const resp = {
@@ -329,42 +300,31 @@ describe('ClasificacionOficialComponent', () => {
 
   it('Load Data (Caso verdadero)', ()=>{
 
-    const data: Competencias[] = [
+    const data: PreguntaEntrevista[] = [
       {
-        "nombre": "Competencia 46",
-        "descrip": "competencia 46",
-        "tipo": {
-          "nombre": "competencia modifs",
-          "id": "02"
-        },
-        "id": 46
+        "titulo": "pregunta 11",
+        "cerrada": "1",
+        "idEntrevista": 3,
+        "id": 11
       },
       {
-        "nombre": "eva 2",
-        "descrip": "descripcion",
-        "tipo": {
-          "nombre": "competencia modifs",
-          "id": "02"
-        },
-        "id": 4
+        "titulo": "prueba",
+        "cerrada": "0",
+        "idEntrevista": 3,
+        "id": 12
       }
     ]
 
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
     
-    app.competenciaRow = {
-      "nombre": "Competencia 46",
-      "descrip": "competencia 46",
-      "tipo": {
-        "nombre": "competencia modifs",
-        "id": "02"
-      },
-      "id": 46
+    app.entrevistaRow = {
+      "nombre": "Entrevista funcional",
+      "id": 2,
     }
 
 
-    app.loadNiveles()
+    app.loadPreguntas()
 
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.flush(data);
@@ -380,22 +340,74 @@ describe('ClasificacionOficialComponent', () => {
       message: "No message available",   
     });
     
-    const fixture = TestBed.createComponent(NivelesComponent);
+    const fixture = TestBed.createComponent(PreguntaComponent);
     const app = fixture.componentInstance;
 
-    app.competenciaRow = {
-      "nombre": "Competencia 46",
-      "descrip": "competencia 46",
-      "tipo": {
-        "nombre": "competencia modifs",
-        "id": "02"
-      },
-      "id": 46
+    app.entrevistaRow = {
+      "nombre": "Entrevista funcional",
+      "id": 2,
     }
 
-    app.loadNiveles()
+    app.loadPreguntas()
 
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
+    fakeBackend.error(error);
+    expect(fakeBackend.request.method).toBe('GET');
+
+  })
+
+  it('Load Data (Caso verdadero)', ()=>{
+
+    const data: PreguntaEntrevista[] = [
+      {
+        "titulo": "pregunta 11",
+        "cerrada": "1",
+        "idEntrevista": 3,
+        "id": 11
+      },
+      {
+        "titulo": "prueba",
+        "cerrada": "0",
+        "idEntrevista": 3,
+        "id": 12
+      }
+    ]
+
+    const fixture = TestBed.createComponent(PreguntaComponent);
+    const app = fixture.componentInstance;
+    
+    app.entrevistaRow = {
+      "nombre": "Entrevista funcional",
+      "id": 2,
+    }
+
+    app.loadTipoPreguntas()
+
+    const fakeBackend = httpTestingController.expectOne(`${environment.api}/configuraciones/talentos/tipospreguntas`);
+    fakeBackend.flush(data);
+    expect(fakeBackend.request.method).toBe('GET');
+  })
+
+  it('Load Data (Caso Falso)', ()=>{
+
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "No message available",   
+    });
+    
+    const fixture = TestBed.createComponent(PreguntaComponent);
+    const app = fixture.componentInstance;
+
+    app.entrevistaRow = {
+      "nombre": "Entrevista funcional",
+      "id": 2,
+    }
+
+    app.loadTipoPreguntas()
+
+    const fakeBackend = httpTestingController.expectOne(`${environment.api}/configuraciones/talentos/tipospreguntas`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('GET');
 
