@@ -4,6 +4,9 @@
 
     <!-- Componente de botones -->
     <app-buttons-grupos (onRefresh)="refresh()"
+                        (onOpenModalPrint)="openModalPrint()"
+                        (onOpenModalCreate)="openModalCreate()"
+                        (onEditRow)="editRow($event)"
                         (onDeleteRow)="deleteRow($event)">
     </app-buttons-grupos>
 
@@ -44,3 +47,22 @@
 
     <!-- Componente table -->
     <app-data-table-grupos [gruposTrabajo]="gruposTrabajo"></app-data-table-grupos>
+
+    <!-- Modal Imprimir -->
+    <app-modal-print
+        [printModal]="printModal"
+        (onCloseModalPrint)="closeModalPrintDialog()">
+    </app-modal-print>
+
+    <!-- Modal Agregar Editar-->
+    <app-modal-add-edit
+        [empresaRow]="empresaRow"
+        [nominaRow]="nominaRow"
+        [gruposTrabajo]="gruposTrabajo"
+        [grupoTrabajoSelect]="grupoTrabajoSelect"
+        [createModal]="createModal" 
+        [isEdit]="isEdit" 
+        (onCloseModal)="closeModal()"
+        (onLoadData)="refresh()"
+        [titleForm]="titleForm">
+    </app-modal-add-edit>

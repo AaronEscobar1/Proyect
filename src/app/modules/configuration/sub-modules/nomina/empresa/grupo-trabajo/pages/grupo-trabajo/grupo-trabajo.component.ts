@@ -20,11 +20,22 @@ export class GrupoTrabajoComponent implements OnInit {
   @Input() nominaRow!: TipoNomina;
 
   // Objeto de grupos de trabajo por empresa y nomina
-  @Input() gruposTrabajo: any;
+  @Input() gruposTrabajo: GrupoTrabajo[] = [];
+
+  // Objeto seleccionado para editar
+  grupoTrabajoSelect!: GrupoTrabajo | undefined;
 
   // Emisión de evento (cargar data de grupos)
   @Output() onRefresh = new EventEmitter();
-  
+
+  // Banderas
+  isEdit: boolean = false;
+
+  // Modales
+  titleForm  : string = 'Agregar grupo de trabajo';
+  createModal: boolean = false;
+  printModal : boolean = false;
+
   constructor(private grupoTrabajoService: GrupoTrabajoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -36,6 +47,41 @@ export class GrupoTrabajoComponent implements OnInit {
   refresh(): void {
     this.gruposTrabajo = [];
     this.onRefresh.emit();
+  }
+
+  openModalPrint(): void {
+    this.printModal = true;
+  }
+
+  closeModalPrintDialog(): void {
+    this.printModal = false;
+  }
+
+  /**
+   * Abre modal para crear
+   * @returns void
+   */
+  openModalCreate(): void {
+    this.titleForm = 'Agregar grupo de trabajo';
+    this.createModal = true;
+  }
+
+  closeModal() {
+    this.isEdit = false;
+    this.createModal = false;
+    this.grupoTrabajoSelect = undefined;
+  }
+
+  /**
+   * Carga la data en el formulario para editar
+   * @param grupoTrabajo row de la tabla
+   * @returns void
+   */
+   editRow(grupoTrabajo: GrupoTrabajo): void {
+    this.isEdit = true;
+    this.titleForm = 'Editar grupo de trabajo';
+    this.grupoTrabajoSelect = grupoTrabajo;
+    this.createModal = true;
   }
 
   /**

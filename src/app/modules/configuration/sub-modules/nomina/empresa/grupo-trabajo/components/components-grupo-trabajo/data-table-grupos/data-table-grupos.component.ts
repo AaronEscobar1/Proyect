@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
-import { GrupoTrabajo, tipoJornadaData } from '../../../interfaces/grupo-trabajo.interfaces';
+import { GrupoTrabajo } from '../../../interfaces/grupo-trabajo.interfaces';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
 
@@ -18,15 +18,15 @@ export class DataTableGruposComponent implements OnInit {
   columns: TableHead[] = [];
 
   // Filtro dropdown
-  tipoJornadaFilter : dropdownType[] = [];
   diaLaborableFilter: dropdownType[] = [];
 
   constructor(private grupoTrabajoService: GrupoTrabajoService) { }
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codgru',  header: 'Código'      },
-      { field: 'desgru',  header: 'Descripción' }
+      { field: 'codgru',                  header: 'Código'       },
+      { field: 'desgru',                  header: 'Descripción'  },
+      { field: 'tipoJornada.descripcion', header: 'Tipo jornada' }
     ];
     // Objeto para filtrar los dias laborables en la tabla
     this.diaLaborableFilter = [
@@ -34,10 +34,6 @@ export class DataTableGruposComponent implements OnInit {
       { label: 'Si labora', value: '1' },
       { label: 'No labora', value: '0' }
     ];
-    // Objeto para filtrar los tipos de jornada en la tabla
-    this.tipoJornadaFilter = tipoJornadaData;
-    // Agregar el objeto al principio del arreglo
-    this.tipoJornadaFilter.unshift({ label: 'Todos', value: '' });
   }
 
   onRowSelect(event: any): void {

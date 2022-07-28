@@ -1,6 +1,6 @@
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
-          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -17,79 +17,70 @@
 
             <form [formGroup]="form" autocomplete="off">
 
+                <!-- <hr *ngIf="isEdit" class="mt-4"> -->
+
                 <div class="formgrid grid">
-
-                    <div class="field col-3 md:col-2 text-right mt-2">
-                        <label for="codemp">Nómina:</label>
-                    </div>
-                    <div class="field col-3 md:col-2">
+                    
+                    <div class="field col-12 md:col-4">
+                        <label for="codgru">Código *</label>
                         <input  type="text"
-                                id="codemp" 
+                                id="codgru" 
                                 pInputText
-                                formControlName="codemp"
+                                formControlName="codgru"
                                 placeholder="Ingrese el código"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('codgru')">
+                            {{ codgruMsgError }}
+                        </span>
                     </div>
 
-                    <div class="field col-6 md:col-3">
-                        <input  id="desemp" 
-                                pInputText 
-                                formControlName="desemp"
-                                placeholder="Ingrese la compañía"/>
-                    </div>
-
-                    <div class="field col-3 md:col-2">
-                        <input  type="text"
-                                id="codtipnom" 
-                                formControlName="codtipnom" 
+                    <div class="field col-12 md:col-8">
+                        <label for="desgru">Descripción *</label>
+                        <input  type="text" 
+                                id="desgru"
                                 pInputText
-                                placeholder="Ingrese el código"/>
-                    </div>
-                
-                    <div class="field col-9 md:col-3">
-                        <input  id="destipnom" 
-                                pInputText 
-                                formControlName="destipnom"
-                                placeholder="Ingrese tipo nómina"/>
+                                formControlName="desgru"
+                                placeholder="Ingrese la descripción"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('desgru')">
+                            {{ desgruMsgError }}
+                        </span>
                     </div>
 
                 </div>
 
-                <hr *ngIf="isEdit" class="mt-4">
+                <div class="formgrid grid">
 
-                <div class="formgrid grid" *ngIf="isEdit">
-                    
-                    <div class="field col-12 md:col-2">
-                        <label for="coddis">Código *</label>
-                        <input  type="text"
-                                id="coddis" 
-                                pInputText
-                                placeholder="Ingrese el código"/>
-                    </div>
-
-                    <div class="field col-12 md:col-4">
-                        <label for="desdis">Descripción *</label>
-                        <input  type="text" 
-                                id="desdis"
-                                pInputText
-                                placeholder="Ingrese la descripción"/>
-                    </div>
-
-                    <div class="field col-12 md:col-3">
-                        <label for="ubidis">Tipo de jornada </label>
-                        <p-dropdown [options]="dayType" 
+                    <div class="field col-12 md:col-12" formGroupName="tipoJornada">
+                        <label for="tipoJornada">Tipo de jornada *</label>
+                        <p-dropdown [options]="tipoJornada" 
+                                    inputId="tipoJornada"
                                     appendTo="body"
-                                    inputId="ubidis">
+                                    optionDisabled="inactive"
+                                    formControlName="id">
                             <ng-template let-option pTemplate="item">
                                 <span> {{ option.label }} </span>
                             </ng-template>
                         </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="tipoJornadaFormGroup.controls['id'].errors
+                                    && tipoJornadaFormGroup.controls['id'].touched
+                                    && tipoJornadaFormGroup.controls['id'].dirty
+                                    && this.form.invalid">
+                            El tipo de jornada es obligatorio.
+                        </span>
                     </div>
+                    
+                </div>
 
-                    <div class="field col-12 md:col-3">
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-12">
                         <label for="labdom" class="flex justify-content-center align-items-center">Labora el día Domingo</label>
                         <div class="field-checkbox mt-3 flex justify-content-center align-items-center">
                             <p-checkbox id="labdom"
                                         name="labdom"
+                                        formControlName="labdom"
                                         [value]="true"
                                         [binary]="true">
                             </p-checkbox>

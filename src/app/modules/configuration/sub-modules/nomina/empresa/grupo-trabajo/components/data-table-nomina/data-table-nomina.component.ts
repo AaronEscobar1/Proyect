@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { TipoNomina } from '../../../interfaces/nominas.interfaces';
+import { TipoNomina } from '../../interfaces/nominas.interfaces';
+import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
 
 @Component({
   selector: 'app-data-table-nomina',
@@ -16,7 +17,8 @@ export class DataTableNominaComponent implements OnInit {
   // Table
   columns: TableHead[] = [];
 
-  constructor(private selectRowService: SelectRowService) { }
+  constructor(private selectRowService: SelectRowService,
+              private grupoTrabajoService: GrupoTrabajoService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -26,12 +28,15 @@ export class DataTableNominaComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    const tipoNominaSelect: TipoNomina = event.data;
-    this.selectRowService.selectRowAlterno$.emit(tipoNominaSelect);
+    this.selectRowService.selectRowAlterno$.emit(event.data);
+    // Limpiar variable observable de tabla grupo de trabajo
+    this.grupoTrabajoService.selectRowGrupo$.emit(null);
   }
 
   onRowUnselect(): void {
     this.selectRowService.selectRowAlterno$.emit(null);
+    // Limpiar variable observable de tabla grupo de trabajo
+    this.grupoTrabajoService.selectRowGrupo$.emit(null);
   }
 
 }

@@ -11,10 +11,6 @@
                         {{ col.header }}
                         <p-sortIcon [field]="col.field"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="tipjorn">
-                        Tipo de Jornada
-                        <p-sortIcon field="tipjorn"></p-sortIcon>
-                    </th>
                     <th pSortableColumn="labdom">
                         Labora el día Domingo
                         <p-sortIcon field="labdom"></p-sortIcon>
@@ -25,17 +21,6 @@
                         <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                 <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '...'">
-                            </ng-template>
-                        </p-columnFilter>
-                    </th>
-                    <th>
-                        <p-columnFilter field="tipjorn" matchMode="contains" [showMenu]="false" [showClearButton]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="tipoJornadaFilter" appendTo="body" (onChange)="filter($event.value)" [placeholder]="'Buscar tipo de jornada...'">
-                                    <ng-template let-option pTemplate="item">
-                                        <span>{{option.label}}</span>
-                                    </ng-template>
-                                </p-dropdown>
                             </ng-template>
                         </p-columnFilter>
                     </th>
@@ -57,7 +42,7 @@
                 <tr [pSelectableRow]="company">
                     <td>{{ company.codgru }}</td>
                     <td>{{ company.desgru  | titlecase }}</td>
-                    <td>{{ company.tipjorn | transformTJornada }}</td>
+                    <td>{{ company.tipoJornada?.descripcion }}</td>
                     <td>{{ company.labdom == "1" ? 'Si' : 'No' }}</td>
                 </tr>
             </ng-template>
