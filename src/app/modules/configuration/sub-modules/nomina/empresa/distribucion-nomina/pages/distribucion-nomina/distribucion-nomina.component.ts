@@ -9,7 +9,6 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 @Component({
   selector: 'app-distribucion-nomina',
   templateUrl: './distribucion-nomina.component.html',
-  styleUrls: ['./distribucion-nomina.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class DistribucionNominaComponent implements OnInit {

@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components
-import { GrupoTrabajoComponent } from './pages/grupo-trabajo/grupo-trabajo.component';
+import { GrupoTrabajoHomeComponent } from './pages/grupo-trabajo-home/grupo-trabajo-home.component';
 
 const routes: Routes = [
   {
-    path: '', component: GrupoTrabajoComponent
+    path: '', component: GrupoTrabajoHomeComponent
   },
   {
     path: '**', redirectTo: ''
