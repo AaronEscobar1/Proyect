@@ -1,0 +1,64 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+            
+        <!-- Componente de botones -->
+        <app-buttons-centro-trabajo (onRefresh)="refresh()"
+                                    (onOpenModalPrint)="openModalPrint()"
+                                    (onOpenModalCreate)="openModalCreate()"
+                                    (onEditRow)="editRow($event)"
+                                    (onDeleteRow)="deleteRow($event)">
+        </app-buttons-centro-trabajo>
+
+        <!-- Inputs de nombre de empresa -->
+        <div class="formgrid grid mt-3">
+                            
+            <div class="field col-3 md:col-3 text-right mt-2">
+                <label for="codemp">Empresa:</label>
+            </div>
+            <div class="field col-3 md:col-2">
+                <input  type="text"
+                        id="codemp" 
+                        class="w-full"
+                        pInputText
+                        [value]="empresaRow ? empresaRow.id : '' "
+                        disabled/>
+            </div>
+        
+            <div class="field col-5 md:col-4">
+                <input  type="text"
+                        id="desemp" 
+                        class="w-full"
+                        pInputText
+                        [value]="empresaRow ? empresaRow.nombre : '' "
+                        disabled/>
+            </div>
+
+        </div>
+
+        <!-- Componente table -->
+        <app-data-table-centro-trabajo [centrosTrabajos]="centrosTrabajos"></app-data-table-centro-trabajo>
+
+    </div>
+</div>
+
+<!-- Modal Imprimir -->
+<app-modal-print
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit
+    [empresaRow]="empresaRow"
+    [centrosTrabajos]="centrosTrabajos"
+    [centroTrabajoSelect]="centroTrabajoSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>
