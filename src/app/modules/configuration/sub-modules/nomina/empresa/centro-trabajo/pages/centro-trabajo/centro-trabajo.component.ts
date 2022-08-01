@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Company } from '../../../empresas/interfaces/compania.interfaces';
 import { CentroTrabajo } from '../../interfaces/distribucion-impuesto.interfaces';
@@ -54,7 +55,7 @@ export class CentroTrabajoComponent implements OnInit {
    * @param id: string id empresa
    */
   loadCentroTrabajo( idEmpresa: string ) {
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.centroTrabajoService.getAllCentrosTrabajosByEmpresa(idEmpresa)
       .subscribe({
         next: (res) => {
