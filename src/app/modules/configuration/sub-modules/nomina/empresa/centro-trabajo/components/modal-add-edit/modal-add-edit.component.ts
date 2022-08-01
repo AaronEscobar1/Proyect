@@ -159,7 +159,7 @@ export class ModalAddEditComponent implements OnInit {
     if ( errors?.required ) {
       return 'La factor es obligatorio.';
     } else if ( errors?.patternError ) {
-      return 'El factor es de longitud de 12 enteros y 10 decimales y es de formato numérico.';
+      return 'El factor es de longitud de 3 enteros y 10 decimales, formato númerico.';
     }
     return '';
   }
@@ -175,7 +175,7 @@ export class ModalAddEditComponent implements OnInit {
   // Validar que cumpla con la expresión regular 12 numeros enteros y 10 decimales maximo
   validateFactor(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-    let factorPattern = new RegExp(/^([0-9]{1,12})(\.[0-9]{1,10})?$/g);
+    let factorPattern = new RegExp(/^([0-9]{1,3})(\.[0-9]{1,10})?$/g);
     return !factorPattern.test(control.value) ? 
                           {'patternError': true } :
                           null;
