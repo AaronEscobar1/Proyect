@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Competencias } from '../../interfaces/competencias.interfaces';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 
 @Component({
   selector: 'app-niveles',
@@ -65,7 +66,7 @@ export class NivelesComponent implements OnInit {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No hay una competencia seleccionada.', life: 3000});
       return;
     }
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.nivelService.getAll()
       .subscribe({
         next: (res: Niveles[]) => {

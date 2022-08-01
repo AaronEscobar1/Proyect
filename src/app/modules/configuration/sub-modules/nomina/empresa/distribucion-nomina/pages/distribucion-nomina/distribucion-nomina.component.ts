@@ -5,6 +5,7 @@ import { DistribucionNominaService } from '../../services/distribucion-nomina.se
 import { Company } from '../../../empresas/interfaces/compania.interfaces';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 
 @Component({
   selector: 'app-distribucion-nomina',
@@ -54,7 +55,7 @@ export class DistribucionNominaComponent implements OnInit {
    * @param id: string id empresa
    */
   loadDistribucionNomina( id: string ) {
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.distribucionNominaService.getAllDistribuciones(id)
       .subscribe({
         next: (res) => {
