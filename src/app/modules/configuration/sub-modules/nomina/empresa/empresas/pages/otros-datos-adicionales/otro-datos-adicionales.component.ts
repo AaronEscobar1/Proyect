@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Company } from '../../interfaces/compania.interfaces';
 import { OtrosDatosEmpresa } from '../../interfaces/otros-datos-empresa.interfaces';
@@ -43,7 +44,7 @@ export class OtroDatosAdicionalesComponent implements OnInit {
       this.otrosDatosEmpresaSelect = undefined;
       return;
     }
-    this.spinner.show()
+    this.spinner.show(undefined, spinnerLight);
     this.otroDatosAdicionalesService.getDatosAdicionalesByIdEmpresa(id)
       .subscribe({
         next: (resp) => {

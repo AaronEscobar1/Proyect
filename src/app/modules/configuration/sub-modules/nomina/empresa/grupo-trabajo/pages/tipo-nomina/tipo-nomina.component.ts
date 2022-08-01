@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Subscription } from 'rxjs';
 import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -56,7 +57,7 @@ export class TipoNominaComponent implements OnInit {
   }
 
   loadNominas(id: string): void {
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.grupoTrabajoService.getAllNominasByEmpresa(id)
       .subscribe({
         next: (res: TipoNomina[]) => {
@@ -77,7 +78,7 @@ export class TipoNominaComponent implements OnInit {
     if ( !this.tipoNominaRow ) {
       return;
     }
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.grupoTrabajoService.getAllGruposByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
       .subscribe({
         next: (res: GrupoTrabajo[]) => {

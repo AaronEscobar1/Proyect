@@ -5,6 +5,7 @@ import { Entrevista } from '../../interfaces/entrevista.interfaces';
 import { PreguntaService } from '../../services/pregunta.service';
 import { PreguntaEntrevista, TipoPregunta } from '../../interfaces/pregunta.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 
 @Component({
   selector: 'app-pregunta',
@@ -87,7 +88,7 @@ export class PreguntaComponent implements OnInit {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No hay una entrevista seleccionada.', life: 3000});
       return;
     }
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.preguntaService.getAll()
       .subscribe({
         next: (res: PreguntaEntrevista[]) => {

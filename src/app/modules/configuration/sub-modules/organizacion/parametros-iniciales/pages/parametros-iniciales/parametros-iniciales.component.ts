@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ParametrosInicialesService } from '../../services/parametros-iniciales.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 
 @Component({
   selector: 'app-parametros-iniciales',
@@ -70,7 +71,7 @@ export class ParametrosInicialesComponent implements OnInit {
    * @param id: string id empresa
    */
   loadParametroInicial( id: string ) {
-    this.spinner.show();
+    this.spinner.show(undefined, spinnerLight);
     this.parametrosInicialesService.getById(id)
       .subscribe({
         next: (res) => {
