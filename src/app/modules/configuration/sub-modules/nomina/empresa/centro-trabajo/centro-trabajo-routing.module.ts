@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components
-import { GrupoTrabajoHomeComponent } from './pages/grupo-trabajo-home/grupo-trabajo-home.component';
+import { EmpresasComponent } from './pages/empresas/empresas.component';
 
 const routes: Routes = [
   {
-    path: '', component: GrupoTrabajoHomeComponent
+    path: '', component: EmpresasComponent
   },
   {
     path: '**', redirectTo: ''
@@ -21,4 +21,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class GrupoTrabajoRoutingModule { }
+export class CentroTrabajoRoutingModule { }

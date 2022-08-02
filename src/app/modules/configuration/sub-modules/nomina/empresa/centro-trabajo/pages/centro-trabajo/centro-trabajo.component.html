@@ -6,12 +6,12 @@
     <div class="col-12">
             
         <!-- Componente de botones -->
-        <app-buttons-distribucion (onRefresh)="refresh()"
-                                  (onOpenModalPrint)="openModalPrint()"
-                                  (onOpenModalCreate)="openModalCreate()"
-                                  (onEditRow)="editRow($event)"
-                                  (onDeleteRow)="deleteRow($event)">
-        </app-buttons-distribucion>
+        <app-buttons-centro-trabajo (onRefresh)="refresh()"
+                                    (onOpenModalPrint)="openModalPrint()"
+                                    (onOpenModalCreate)="openModalCreate()"
+                                    (onEditRow)="editRow($event)"
+                                    (onDeleteRow)="deleteRow($event)">
+        </app-buttons-centro-trabajo>
 
         <!-- Inputs de nombre de empresa -->
         <div class="formgrid grid mt-3">
@@ -24,7 +24,7 @@
                         id="codemp" 
                         class="w-full"
                         pInputText
-                        [value]="empresa ? empresa.id : '' "
+                        [value]="empresaRow ? empresaRow.id : '' "
                         disabled/>
             </div>
         
@@ -33,29 +33,29 @@
                         id="desemp" 
                         class="w-full"
                         pInputText
-                        [value]="empresa ? empresa.nombre : '' "
+                        [value]="empresaRow ? empresaRow.nombre : '' "
                         disabled/>
             </div>
 
         </div>
 
         <!-- Componente table -->
-        <app-data-table-distribucion [distribucionesNomina]="distribucionesNomina"></app-data-table-distribucion>
+        <app-data-table-centro-trabajo [centrosTrabajos]="centrosTrabajos"></app-data-table-centro-trabajo>
 
     </div>
 </div>
 
 <!-- Modal Imprimir -->
-<app-modal-print  
+<app-modal-print
     [printModal]="printModal"
     (onCloseModalPrint)="closeModalPrintDialog()">
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
-    [empresa]="empresa"
-    [distribucionesNomina]="distribucionesNomina"
-    [distribucionNominaSelect]="distribucionNominaSelect"
+    [empresaRow]="empresaRow"
+    [centrosTrabajos]="centrosTrabajos"
+    [centroTrabajoSelect]="centroTrabajoSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()"
