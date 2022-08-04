@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
-import { TarifaImpuesto } from '../interfaces/tarifas-impuestos.interfaces';
+import { TarifaImpuesto, TarifaImpuestoUpdate } from '../interfaces/tarifas-impuestos.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,8 @@ export class TarifasImpuestosService {
     return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/tarifasimpuestos'), tarifaImpuesto);
   }
 
-  update(tarifaImpuesto: TarifaImpuesto): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/tarifasimpuestos/${tarifaImpuesto.idEmpresa}/${tarifaImpuesto.remdes}/${tarifaImpuesto.remhas}/${tarifaImpuesto.frecue}/${tarifaImpuesto.tipreg}?anomes=${tarifaImpuesto.anomes}`), tarifaImpuesto);
+  update(parametrosConsulta: TarifaImpuesto, tarifaImpuestoUpdate: TarifaImpuestoUpdate): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/tarifasimpuestos/${parametrosConsulta.idEmpresa}/${parametrosConsulta.remdes}/${parametrosConsulta.remhas}/${parametrosConsulta.frecue}/${parametrosConsulta.tipreg}?anomes=${parametrosConsulta.anomes}`), tarifaImpuestoUpdate);
   }
 
   delete(tarImp: TarifaImpuesto): Observable<any> {
