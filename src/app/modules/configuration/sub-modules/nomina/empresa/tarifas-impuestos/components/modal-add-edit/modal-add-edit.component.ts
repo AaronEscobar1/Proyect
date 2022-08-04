@@ -5,12 +5,16 @@ import { TarifasImpuestosService } from '../../services/tarifas-impuestos.servic
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { Company } from '../../../empresas/interfaces/compania.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
   templateUrl: './modal-add-edit.component.html'
 })
 export class ModalAddEditComponent implements OnInit {
+
+  // Objeto para obtener el id de la empresa
+  @Input() empresaRow!: Company;
 
   // Objetos Input()
   @Input() tarifasImpuestos!    : TarifaImpuesto[];
@@ -67,14 +71,12 @@ export class ModalAddEditComponent implements OnInit {
     // Obtener formulario
     let data: TarifaImpuesto = this.form.getRawValue();
     // Transformar la data que viene del formulario
-    data.destar.trim();
 
     this.spinner.show();
 
     if(this.isEdit) {
       // Editar
       console.log('editar', data);
-      this.tarifasImpuestos[this.findIndexById(this.form.getRawValue().codtar)] = this.form.getRawValue();
       this.spinner.hide();
       this.closeModal();
       return;
@@ -87,21 +89,9 @@ export class ModalAddEditComponent implements OnInit {
     this.closeModal();
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.tarifasImpuestos.length; i++) {
-      if (this.tarifasImpuestos[i].codtar === id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
-  }
-
   closeModal(): void {
     this.onCloseModal.emit();
     this.form.reset();
-    this.selectRowService.selectRow$.emit(null);
   }
 
   /**

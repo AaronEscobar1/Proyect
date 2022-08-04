@@ -16,7 +16,7 @@
                     <th>
                         <p-columnFilter [field]="columns[0].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + columns[0].field + '...'">
+                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + columns[0].header + '...'">
                             </ng-template>
                         </p-columnFilter>
                     </th>

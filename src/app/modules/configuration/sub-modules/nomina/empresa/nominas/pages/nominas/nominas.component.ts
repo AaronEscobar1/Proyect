@@ -115,7 +115,7 @@ export class NominasComponent {
    */
   deleteRow(nomina: Nomina): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta centro de trabajo <b>${nomina.desnom}</b>?`,
+      message: `¿Desea eliminar esta nomina <b>${nomina.desnom}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',

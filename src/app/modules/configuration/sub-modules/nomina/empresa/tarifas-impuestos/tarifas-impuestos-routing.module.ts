@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components
-import { TarifasImpuestosComponent } from './pages/tarifas-impuestos/tarifas-impuestos.component';
+import { EmpresasComponent } from './pages/empresas/empresas.component';
 
 const routes: Routes = [
   {
-    path: '', component: TarifasImpuestosComponent
+    path: '', component: EmpresasComponent
   },
   {
     path: '**', redirectTo: ''
