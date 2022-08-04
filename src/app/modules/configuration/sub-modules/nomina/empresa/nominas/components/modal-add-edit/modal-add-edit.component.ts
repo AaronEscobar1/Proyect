@@ -93,6 +93,7 @@ export class ModalAddEditComponent {
     if( !this.isEdit ) {
       const initForm = { clanom: '2', frenom: 7, valred: 0.1, pgmrec: 'NM3185H', tipfec: '1' };
       this.form.reset(initForm);
+      this.tabIndex = 0;
       this.form.controls['tipnom'].enable();
       return;
     }
