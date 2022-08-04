@@ -15,7 +15,7 @@ import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfac
 export class DistribucionNominaComponent implements OnInit {
 
   // Objeto para obtener el id de la empresa
-  @Input() empresa!: Company;
+  @Input() empresaRow!: Company;
 
   // Objeto de distribuciones de nominas por empresa
   distribucionesNomina: DistribucionNomina[] = [];
@@ -42,11 +42,11 @@ export class DistribucionNominaComponent implements OnInit {
 
   ngOnChanges() {
     // Validar si empresa existe y tiene id
-    if ( this.empresa && this.empresa.id ) {
+    if ( this.empresaRow && this.empresaRow.id ) {
       // Limpia el row de la tabla de distribucion nomina
       this.selectRowService.selectRowAlterno$.emit(null);
       // Realizar peticion al backend asociada a la empresa seleccionada
-      this.loadDistribucionNomina(this.empresa.id);
+      this.loadDistribucionNomina(this.empresaRow.id);
     }
   }
 
@@ -70,8 +70,8 @@ export class DistribucionNominaComponent implements OnInit {
 
   refresh(): void {
     this.distribucionesNomina = [];
-    if ( this.empresa && this.empresa.id ) {
-      this.loadDistribucionNomina(this.empresa.id);
+    if ( this.empresaRow && this.empresaRow.id ) {
+      this.loadDistribucionNomina(this.empresaRow.id);
     }
   }
 

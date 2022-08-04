@@ -5,36 +5,48 @@
 <div class="grid">
     <div class="col-12">
             
-        <!-- Componente de botones -->
-        <app-buttons-distribucion (onRefresh)="refresh()"
-                                  (onOpenModalPrint)="openModalPrint()"
-                                  (onOpenModalCreate)="openModalCreate()"
-                                  (onEditRow)="editRow($event)"
-                                  (onDeleteRow)="deleteRow($event)">
-        </app-buttons-distribucion>
+        <div class="grid">
 
-        <!-- Inputs de nombre de empresa -->
-        <div class="formgrid grid mt-3">
+            <div class="col-12 md:col-6">
+
+                <!-- Componente de botones -->
+                <app-buttons-distribucion (onRefresh)="refresh()"
+                                        (onOpenModalPrint)="openModalPrint()"
+                                        (onOpenModalCreate)="openModalCreate()"
+                                        (onEditRow)="editRow($event)"
+                                        (onDeleteRow)="deleteRow($event)">
+                </app-buttons-distribucion>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa -->
+                <div class="formgrid grid">
                             
-            <div class="field col-3 md:col-3 text-right mt-2">
-                <label for="codemp">Empresa:</label>
-            </div>
-            <div class="field col-3 md:col-2">
-                <input  type="text"
-                        id="codemp" 
-                        class="w-full"
-                        pInputText
-                        [value]="empresa ? empresa.id : '' "
-                        disabled/>
-            </div>
-        
-            <div class="field col-5 md:col-4">
-                <input  type="text"
-                        id="desemp" 
-                        class="w-full"
-                        pInputText
-                        [value]="empresa ? empresa.nombre : '' "
-                        disabled/>
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+                    <div class="field col-3 md:col-3 lg:col-3">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                
+                    <div class="field col-5 md:col-6 lg:col-7">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : ''"
+                                disabled/>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -53,7 +65,7 @@
 
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
-    [empresa]="empresa"
+    [empresaRow]="empresaRow"
     [distribucionesNomina]="distribucionesNomina"
     [distribucionNominaSelect]="distribucionNominaSelect"
     [createModal]="createModal" 
