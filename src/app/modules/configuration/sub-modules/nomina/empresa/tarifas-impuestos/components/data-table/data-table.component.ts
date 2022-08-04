@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
+import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { TarifaImpuesto } from '../../interfaces/tarifas-impuestos.interfaces';
 
@@ -10,25 +11,48 @@ import { TarifaImpuesto } from '../../interfaces/tarifas-impuestos.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() tarifasImpuestos!: TarifaImpuesto[];
+  // Datos para mostrar en la tabla
+  @Input() tarifasImpuestos: TarifaImpuesto[] = [];
 
-  // Table
+  // Objeto de tipos tarifas de impuesto
+  @Input() tiposTarifasFilter: dropdownType[] = [];
+  
+  // Objeto de frecuencia de impuesto
+  @Input() frecuenciasImpuestoFilter: dropdownType[] = [];
+
+  // Objeto para mostrar las columnas de la tabla
   columns: TableHead[] = [];
 
   constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codtar', header: 'Código'      },
-      { field: 'destar', header: 'Descripción' }
-    ];
+      { field: 'remdes', header: 'Desde'            },
+      { field: 'remhas', header: 'Hasta'            },
+      { field: 'tipreg', header: 'Tipo impuesto'    },
+      { field: 'frecue', header: 'Frecuencia'       },
+      { field: 'tasim1', header: 'Nro. 1'           },
+      { field: 'tasim2', header: 'Nro. 2'           },
+      { field: 'valsus', header: 'Valor sustraendo' },
+    ];    
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRow$.emit(event.data);
+    this.selectRowService.selectRowAlterno$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.selectRowService.selectRow$.emit(null);
+    this.selectRowService.selectRowAlterno$.emit(null);
   }
+
+  tipoImpuestoString(value: string): string {
+    const tipoTarifa = this.tiposTarifasFilter.find(tipo => tipo.value === value);
+    return tipoTarifa ? tipoTarifa.label : '-';
+  }
+
+  frecuenciaImpuestoString(value: number): string {
+    const frecuenciaImpuesto = this.frecuenciasImpuestoFilter.find(frec => frec.value === value);
+    return frecuenciaImpuesto ? frecuenciaImpuesto.label : '-';
+  }
+
 }

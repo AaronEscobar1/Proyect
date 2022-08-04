@@ -1,52 +1,76 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Nominas } from '../../interfaces/nominas.interfaces';
+import { Nomina } from '../../interfaces/nominas.interfaces';
 import { NominasService } from '../../services/nominas.service';
-import { empresasData } from '../../interfaces/nominas-data';
+import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 
 @Component({
   selector: 'app-nominas',
   templateUrl: './nominas.component.html',
-  styleUrls: ['./nominas.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
-export class NominasComponent implements OnInit {
+export class NominasComponent {
 
-  // Objetos
-  nominas      : Nominas[] = [];
-  nominaSelect!: Nominas | undefined;
+  // Objeto para obtener el id de la empresa
+  @Input() empresaRow!: Company;
+
+  // Objeto de nóminas por empresa
+  nominas: Nomina[] = [];
+
+  // Objeto seleccionado para editar
+  nominaSelect!: Nomina | undefined;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar nominas';
+  titleForm  : string = 'Agregar nómina';
   createModal: boolean = false;
   printModal : boolean = false;
 
   constructor(private nominasService: NominasService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) { }
-
-  ngOnInit(): void {
-    this.loadData();
+              private spinner: NgxSpinnerService,
+              private selectRowService: SelectRowService) { }
+  
+  ngOnChanges() {
+    // Validar si empresa existe y tiene id
+    if ( this.empresaRow && this.empresaRow.id ) {
+      // Limpia el row de la tabla de nóminas
+      this.selectRowService.selectRowAlterno$.emit(null);
+      // Realizar peticion al backend asociada a la empresa seleccionada
+      this.loadNominas(this.empresaRow.id);
+    }
   }
 
-  loadData(): void {
-    this.spinner.show();
-    setTimeout(() => {
-      this.nominas = empresasData;
-      this.spinner.hide();
-    }, 500);
+  /**
+   * Obtener datos de centro trabajo asignado a la empresa
+   * @param id: string id empresa
+   */
+  loadNominas( idEmpresa: string ): void {
+    this.spinner.show(undefined, spinnerLight);
+    this.nominasService.getAllNominasByEmpresa(idEmpresa)
+      .subscribe({
+        next: (res) => {
+          this.nominas = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
     this.nominas = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    if ( this.empresaRow && this.empresaRow.id ) {
+      this.loadNominas(this.empresaRow.id);
+    }
   }
 
   openModalPrint(): void {
@@ -57,12 +81,16 @@ export class NominasComponent implements OnInit {
     this.printModal = false;
   }
 
+  /**
+   * Abre modal para crear
+   * @returns void
+   */
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar nóminas' : 'Agregar nóminas';
+    this.titleForm = 'Agregar nómina';
     this.createModal = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.isEdit = false;
     this.createModal = false;
     this.nominaSelect = undefined;
@@ -73,11 +101,11 @@ export class NominasComponent implements OnInit {
    * @param nomina row de la tabla
    * @returns void
    */
-  editRow(nomina: Nominas): void {
+  editRow(nomina: Nomina): void {
     this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar nóminas' : 'Agregar nóminas';
+    this.titleForm = 'Editar nómina';
     this.nominaSelect = nomina;
-    this.openModalCreate();
+    this.createModal = true;
   }
 
   /**
@@ -85,9 +113,9 @@ export class NominasComponent implements OnInit {
    * @param nomina row de la tabla
    * @returns void
    */
-  deleteRow(nomina: Nominas): void {
+  deleteRow(nomina: Nomina): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar este tipo de nómina <b>${nomina.desemp}</b>?`,
+      message: `¿Desea eliminar esta nomina <b>${nomina.desnom}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -95,8 +123,26 @@ export class NominasComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.nominas = this.nominas.filter(val => val.codemp !== nomina.codemp);
-        this.spinner.hide();
+        this.nominasService.delete(nomina)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.selectRowService.selectRowAlterno$.emit(null);
+              this.refresh();
+              return true;
+            },
+            error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar el centro de trabajo, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la nómina.', life: 3000});
+              return false;
+            }
+          });
       }
     });
   }

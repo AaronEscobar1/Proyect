@@ -5,7 +5,7 @@ export interface TypesFile {
 
 export interface dropdownType {
     label    : string;
-    value    : string;
+    value    : string | number;
     inactive?: boolean;
 }
 

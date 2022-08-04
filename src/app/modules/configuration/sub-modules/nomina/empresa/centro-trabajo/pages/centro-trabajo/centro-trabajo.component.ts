@@ -118,7 +118,7 @@ export class CentroTrabajoComponent implements OnInit {
    */
   deleteRow(centroTrabajo: CentroTrabajo): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta centro de trabajo <b>${centroTrabajo.descen}</b>?`,
+      message: `¿Desea eliminar este centro de trabajo <b>${centroTrabajo.descen}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',

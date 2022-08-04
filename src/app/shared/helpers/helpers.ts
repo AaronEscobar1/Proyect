@@ -76,4 +76,16 @@ export class Helpers {
         };
     }
 
+    /**
+     * Formatear fecha con día por defecto en 01, YYYY/MM/01
+     * @param date: Date
+     * @returns string
+     */
+    formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+        const day = '01';
+        return `${year}-${month}-${day}`;
+    }
+
 }

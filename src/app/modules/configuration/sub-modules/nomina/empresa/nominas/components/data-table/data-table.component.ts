@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Nominas } from '../../interfaces/nominas.interfaces';
+import { Nomina } from '../../interfaces/nominas.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -10,7 +10,7 @@ import { Nominas } from '../../interfaces/nominas.interfaces';
 })
 export class DataTableComponent implements OnInit {
   
-  @Input() nominas!: Nominas[];
+  @Input() nominas!: Nomina[];
 
   // Table
   columns: TableHead[] = [];
@@ -19,17 +19,17 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codemp', header: 'Código'      },
-      { field: 'desemp', header: 'Descripción' }
+      { field: 'tipnom', header: 'Código'      },
+      { field: 'desnom', header: 'Descripción' }
     ];
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRow$.emit(event.data);
+    this.selectRowService.selectRowAlterno$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.selectRowService.selectRow$.emit(null);
+    this.selectRowService.selectRowAlterno$.emit(null);
   }
 
 }

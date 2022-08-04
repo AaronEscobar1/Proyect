@@ -17,26 +17,215 @@
 
             <form [formGroup]="form" autocomplete="off">
 
+                <div class="formgrid grid mb-3">
+
+                    <div class="field col-12 md:col-4">
+                        <label for="anomes">Año / Mes: *</label>
+                        <p-calendar inputId="anomes" 
+                                    view="month"
+                                    dateFormat="yy/mm"
+                                    appendTo="body"
+                                    formControlName="anomes"
+                                    placeholder="yyyy/mm">
+                        </p-calendar>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('anomes')" >
+                            {{ anomesMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
                 <div class="formgrid grid">
-                    
-                    <div class="field col-12 md:col-3">
-                        <label for="codtar">Código *</label>
-                        <input  type="text"
-                                id="codtar" 
-                                pInputText
-                                formControlName="codtar"
-                                placeholder="Ingrese el código"/>
+                    <div class="col-12">
+                        <p-panel header="Remuneración">
+                            
+                            <div class="grid">
+                                
+                                <div class="col-12 md:col-6">
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-3 md:col-3 lg:col-2 mt-2">
+                                            <label for="remdes">Desde:</label>
+                                        </div>
+        
+                                        <div class="field col-9 md:col-9 lg:col-10">
+                                            <input  type="text"
+                                                    id="remdes"
+                                                    pInputText
+                                                    formControlName="remdes"/>
+                                            <span class="form-text text-danger -mt-2 mb-2"
+                                                  *ngIf="campoInvalid('remdes')">
+                                                {{ remdesMsgError }}
+                                            </span> 
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                
+                                <div class="col-12 md:col-6">
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-3 md:col-3 lg:col-2 mt-2">
+                                            <label for="remhas">Hasta:</label>
+                                        </div>
+        
+                                        <div class="field col-9 md:col-9 lg:col-10">
+                                            <input  type="text"
+                                                    id="remhas"
+                                                    pInputText
+                                                    formControlName="remhas"/>
+                                            <span class="form-text text-danger -mt-2 mb-2"
+                                                  *ngIf="campoInvalid('remhas')">
+                                                {{ remhasMsgError }}
+                                            </span> 
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+
+                        </p-panel>
+                    </div>
+                </div>
+
+                <div class="formgrid grid mt-5 mb-3">
+
+                    <div class="col-12 md:col-6">
+                        <div class="formgrid grid">
+                                
+                            <div class="field col-3 md:col-5 lg:col-4 mt-2">
+                                <label for="tipreg">Tipo impuesto:</label>
+                            </div>
+
+                            <div class="field col-9 md:col-7 lg:col-8">
+                                <p-dropdown [options]="tiposTarifas"
+                                            inputId="tipreg"
+                                            appendTo="body"
+                                            optionLabel="descripcion"
+                                            optionValue="tipreg"
+                                            formControlName="tipreg">
+                                </p-dropdown>
+                                <span class="form-text text-danger -mt-2 mb-2"
+                                     *ngIf="campoInvalid('tipreg')">
+                                    El tipo impuesto es obligatorio.
+                                </span>
+                            </div>
+
+                        </div>
                     </div>
 
-                    <div class="field col-12 md:col-9">
-                        <label for="codtar">Empresa *</label>
-                        <input  type="text" 
-                                id="codtar"
-                                pInputText
-                                formControlName="destar" 
-                                placeholder="Ingrese la descripción"/>
+                    <div class="col-12 md:col-6">
+                        <div class="formgrid grid">
+
+                            <div class="field col-3 md:col-4 lg:col-3 mt-2">
+                                <label for="frecue">Frecuencia:</label>
+                            </div>
+
+                            <div class="field col-9 md:col-8 lg:col-9">
+                                <p-dropdown [options]="frecuenciasImpuesto"
+                                            inputId="frecue"
+                                            appendTo="body"
+                                            optionLabel="descripcion"
+                                            optionValue="frecue"
+                                            formControlName="frecue">
+                                </p-dropdown>
+                                <span class="form-text text-danger -mt-2 mb-2"
+                                     *ngIf="campoInvalid('frecue')">
+                                    La frecuencia es obligatoria.
+                                </span>
+                            </div>
+
+                        </div>
                     </div>
 
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="col-12">
+                        <p-panel header="Tasa imponible">
+
+                            <div class="grid">
+                                
+                                <div class="col-12 md:col-6">
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-3 md:col-4 lg:col-4 mt-2">
+                                            <label for="tasim1">Número 1:</label>
+                                        </div>
+        
+                                        <div class="field col-9 md:col-8 lg:col-8">
+                                            <input  type="text"
+                                                    id="tasim1"
+                                                    pInputText
+                                                    formControlName="tasim1"/>
+                                            <span class="form-text text-danger mb-2"
+                                                  *ngIf="campoInvalid('tasim1')">
+                                                El número 1 es de longitud máxima de 3 enteros y 2 decimales, formato numérico.
+                                            </span>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                                
+                                <div class="col-12 md:col-6">
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-3 md:col-4 lg:col-4 mt-2">
+                                            <label for="tasim2">Número 2:</label>
+                                        </div>
+        
+                                        <div class="field col-9 md:col-8 lg:col-8">
+                                            <input  type="text"
+                                                    id="tasim2"
+                                                    pInputText
+                                                    formControlName="tasim2"/>
+                                            <span class="form-text text-danger mb-2"
+                                                  *ngIf="campoInvalid('tasim2')">
+                                                El número 2 es de longitud máxima de 3 enteros y 2 decimales, formato numérico.
+                                            </span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            
+                        </p-panel>
+                    </div>
+                </div>
+
+                <div class="formgrid grid mt-4">
+
+                    <div class="col-12 md:col-6">
+                        <div class="formgrid grid mt-4">
+
+                            <div class="field col-5 md:col-6 lg:col-5 mt-2">
+                                <label for="valsus">Valor sustraendo: </label>
+                            </div>
+        
+                            <div class="field col-7 md:col-6 lg:col-7">
+                                <input  type="text"
+                                        id="valsus"
+                                        pInputText
+                                        formControlName="valsus"/>
+                                <span class="form-text text-danger mb-2"
+                                      *ngIf="campoInvalid('valsus')">
+                                    El valor sustraendo es de longitud máxima de 12 enteros y 2 decimales, formato numérico.
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
             </form>

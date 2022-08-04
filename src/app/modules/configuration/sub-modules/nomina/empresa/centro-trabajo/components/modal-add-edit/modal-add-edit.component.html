@@ -10,9 +10,9 @@
                 <h5>{{titleForm}}</h5>
                 <div class="p-dialog-header-icons">
                     <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-secondary p-button-text"
+                            class="p-button-rounded p-button-secondary p-button-text"
                             (click)="closeModal()">
-                        </button>
+                    </button>
                     </div>
                 </div>
                 
@@ -27,7 +27,7 @@
                         <input  type="text"
                                 id="codemp" 
                                 pInputText
-                                [value]="empresaRow.id"
+                                [value]="empresaRow ? empresaRow.id : ''"
                                 disabled/>
                     </div>
 
@@ -35,7 +35,7 @@
                         <input  type="text"
                                 id="desemp" 
                                 pInputText
-                                [value]="empresaRow.nombre"
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : ''"
                                 disabled/>
                     </div>
 
