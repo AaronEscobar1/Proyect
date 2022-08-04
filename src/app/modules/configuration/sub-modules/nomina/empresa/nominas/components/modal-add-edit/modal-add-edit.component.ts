@@ -40,6 +40,9 @@ export class ModalAddEditComponent {
   // Objetos
   days:     any = daysData;
   redondeo: any = redondeoData;
+
+  // Variable para mover pestaña de la vista por si existe un error
+  tabIndex = 0;
   
   constructor(private nominasService: NominasService,
               private spinner: NgxSpinnerService,
@@ -124,6 +127,7 @@ export class ModalAddEditComponent {
    */
   save(): void {
     if(this.form.invalid) {
+      this.tabIndex = 0;
       this.form.markAllAsTouched();
       return;
     }
@@ -142,6 +146,7 @@ export class ModalAddEditComponent {
     if ( (data.asifon && !data.dedfon) || (data.asifon && !data.valfon) ||
             (data.dedfon && !data.asifon) || (data.dedfon && !data.valfon) ||
               (data.valfon && !data.asifon) || (data.valfon && !data.dedfon) ) {
+      this.tabIndex = 1;
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Si selecciona al menos un campo en la sección sencillo en fondo, debe seleccionar todos los campos.', life: 5000});
       return;
     }
