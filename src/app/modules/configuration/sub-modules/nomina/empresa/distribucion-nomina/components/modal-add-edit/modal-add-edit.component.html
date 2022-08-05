@@ -27,7 +27,7 @@
                         <input  type="text"
                                 id="codemp" 
                                 pInputText
-                                [value]="empresa.id"
+                                [value]="empresaRow ? empresaRow.id : ''"
                                 disabled/>
                     </div>
 
@@ -35,7 +35,7 @@
                         <input  type="text"
                                 id="desemp" 
                                 pInputText
-                                [value]="empresa.nombre"
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : ''"
                                 disabled/>
                     </div>
 

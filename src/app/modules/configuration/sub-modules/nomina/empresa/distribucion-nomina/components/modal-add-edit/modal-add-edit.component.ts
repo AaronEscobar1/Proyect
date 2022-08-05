@@ -14,7 +14,7 @@ import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.inter
 export class ModalAddEditComponent implements OnInit {
 
   // Objeto para obtener el id para registrar la distribucion de nomina a la empresa asociada
-  @Input() empresa!: Company;
+  @Input() empresaRow!: Company;
 
   // Objeto para validaciones de valores duplicados 
   @Input() distribucionesNomina: DistribucionNomina[] = [];
@@ -79,7 +79,7 @@ export class ModalAddEditComponent implements OnInit {
     
     if (this.isEdit) {
       // Editar
-      this.distribucionNominaService.update(this.empresa.id, data)
+      this.distribucionNominaService.update(this.empresaRow.id, data)
       .subscribe({
         next: (resp) => {
           this.closeModal();
@@ -97,7 +97,7 @@ export class ModalAddEditComponent implements OnInit {
     }
 
     // Crear
-    this.distribucionNominaService.create(this.empresa.id, data)
+    this.distribucionNominaService.create(this.empresaRow.id, data)
       .subscribe({
         next: (resp) => {
           this.closeModal();

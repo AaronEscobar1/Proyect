@@ -1,6 +1,3 @@
-<!-- Spinner -->
-<app-spinner></app-spinner>
-
 <!-- Mensajes de alertas para usuarios -->
 <p-toast></p-toast>
 <p-confirmDialog ></p-confirmDialog>
@@ -8,22 +5,58 @@
 <div class="grid">
     <div class="col-12">
 
-        <div class="header-card bg-gray-600 text-white p-2">Tarifas de impuestos</div>
-        <div class="card-table">
+        <div class="grid">
+
+            <div class="col-12 md:col-6">
             
-            <!-- Componente de botones -->
-            <app-buttons (onRefresh)="refresh()"
-                         (onOpenModalPrint)="openModalPrint()"
-                         (onOpenModalCreate)="openModalCreate()"
-                         (onEditRow)="editRow($event)"
-                         (onDeleteRow)="deleteRow($event)">
-            </app-buttons>
+                <!-- Componente de botones -->
+                <app-buttons-tarifas (onRefresh)="refresh()"
+                                    (onOpenModalPrint)="openModalPrint()"
+                                    (onOpenModalCreate)="openModalCreate()"
+                                    (onEditRow)="editRow($event)"
+                                    (onDeleteRow)="deleteRow($event)">
+                </app-buttons-tarifas>
+                
+            </div>
+            
+            <div class="col-12 md:col-6">
 
-            <!-- Componente table -->
-            <app-data-table [tarifasImpuestos]="tarifasImpuestos"></app-data-table>
-   
+                <!-- Inputs de nombre de empresa -->
+                <div class="formgrid grid">
+                                    
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+                    <div class="field col-3 md:col-3 lg:col-3">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                
+                    <div class="field col-5 md:col-6 lg:col-7">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+
+            </div>
+            
         </div>
-
+        
+        <!-- Componente table -->
+        <app-data-table [tarifasImpuestos]="tarifasImpuestos"
+                        [tiposTarifasFilter]="tiposTarifasFilter"
+                        [frecuenciasImpuestoFilter]="frecuenciasImpuestoFilter">
+        </app-data-table>
+        
     </div>
 </div>
 
@@ -34,12 +67,15 @@
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
-<app-modal-add-edit 
+<app-modal-add-edit
+    [empresaRow]="empresaRow"
     [tarifasImpuestos]="tarifasImpuestos" 
     [tarifaImpuestoSelect]="tarifaImpuestoSelect"
+    [tiposTarifas]="tiposTarifas"
+    [frecuenciasImpuesto]="frecuenciasImpuesto"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 
-    (onLoadData)="loadData()"
+    (onLoadData)="refresh()"
     [titleForm]="titleForm">
 </app-modal-add-edit>

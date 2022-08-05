@@ -1,68 +1,85 @@
-    <!-- Mensajes de alertas para usuarios -->
-    <p-toast></p-toast>
-    <p-confirmDialog ></p-confirmDialog>
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
 
-    <!-- Componente de botones -->
-    <app-buttons-grupos (onRefresh)="refresh()"
-                        (onOpenModalPrint)="openModalPrint()"
-                        (onOpenModalCreate)="openModalCreate()"
-                        (onEditRow)="editRow($event)"
-                        (onDeleteRow)="deleteRow($event)">
-    </app-buttons-grupos>
+<div class="grid">
+    <div class="col-12">
 
-    <!-- Inputs de nombre de empresa y nomina  -->
-    <div class="formgrid grid mt-3">
+        <div class="grid">
+
+            <div class="col-12 md:col-6">
+
+                <!-- Componente de botones -->
+                <app-buttons-grupos (onRefresh)="refresh()"
+                                    (onOpenModalPrint)="openModalPrint()"
+                                    (onOpenModalCreate)="openModalCreate()"
+                                    (onEditRow)="editRow($event)"
+                                    (onDeleteRow)="deleteRow($event)">
+                </app-buttons-grupos>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa y nomina  -->
+                <div class="formgrid grid">
+                                
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Nómina:</label>
+                    </div>
+                    <div class="field col-2 md:col-2 lg:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
                     
-        <div class="field col-3 md:col-3 text-right mt-2">
-            <label for="codemp">Nómina:</label>
-        </div>
-        <div class="field col-2 md:col-2">
-            <input  type="text"
-                    id="codemp" 
-                    class="w-full"
-                    pInputText
-                    [value]="empresaRow ? empresaRow.id : '' "
-                    disabled/>
-        </div>
-        
-        <div class="field col-2 md:col-2">
-            <input  type="text"
-                    id="codemp" 
-                    class="w-full"
-                    pInputText
-                    [value]="nominaRow ? nominaRow.tipnom : '' "
-                    disabled/>
+                    <div class="field col-2 md:col-2 lg:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="nominaRow ? nominaRow.tipnom : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-4 md:col-4 lg:col-6">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+            
         </div>
 
-        <div class="field col-4 md:col-3">
-            <input  type="text"
-                    id="desemp" 
-                    class="w-full"
-                    pInputText
-                    [value]="empresaRow ? empresaRow.nombre : '' "
-                    disabled/>
-        </div>
+        <!-- Componente table -->
+        <app-data-table-grupos [gruposTrabajo]="gruposTrabajo"></app-data-table-grupos>
 
     </div>
+</div>
 
-    <!-- Componente table -->
-    <app-data-table-grupos [gruposTrabajo]="gruposTrabajo"></app-data-table-grupos>
+<!-- Modal Imprimir -->
+<app-modal-print
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print>
 
-    <!-- Modal Imprimir -->
-    <app-modal-print
-        [printModal]="printModal"
-        (onCloseModalPrint)="closeModalPrintDialog()">
-    </app-modal-print>
-
-    <!-- Modal Agregar Editar-->
-    <app-modal-add-edit
-        [empresaRow]="empresaRow"
-        [nominaRow]="nominaRow"
-        [gruposTrabajo]="gruposTrabajo"
-        [grupoTrabajoSelect]="grupoTrabajoSelect"
-        [createModal]="createModal" 
-        [isEdit]="isEdit" 
-        (onCloseModal)="closeModal()"
-        (onLoadData)="refresh()"
-        [titleForm]="titleForm">
-    </app-modal-add-edit>
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit
+    [empresaRow]="empresaRow"
+    [nominaRow]="nominaRow"
+    [gruposTrabajo]="gruposTrabajo"
+    [grupoTrabajoSelect]="grupoTrabajoSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>

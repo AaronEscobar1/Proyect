@@ -4,39 +4,51 @@
 
 <div class="grid">
     <div class="col-12">
+
+        <div class="grid">
+
+            <div class="col-12 md:col-6"> 
+
+                <!-- Componente de botones -->
+                <app-buttons-centro-trabajo (onRefresh)="refresh()"
+                                            (onOpenModalPrint)="openModalPrint()"
+                                            (onOpenModalCreate)="openModalCreate()"
+                                            (onEditRow)="editRow($event)"
+                                            (onDeleteRow)="deleteRow($event)">
+                </app-buttons-centro-trabajo>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa -->
+                <div class="formgrid grid">
+                                    
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+                    <div class="field col-3 md:col-3 lg:col-3">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                
+                    <div class="field col-5 md:col-6 lg:col-7">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+
+            </div>
             
-        <!-- Componente de botones -->
-        <app-buttons-centro-trabajo (onRefresh)="refresh()"
-                                    (onOpenModalPrint)="openModalPrint()"
-                                    (onOpenModalCreate)="openModalCreate()"
-                                    (onEditRow)="editRow($event)"
-                                    (onDeleteRow)="deleteRow($event)">
-        </app-buttons-centro-trabajo>
-
-        <!-- Inputs de nombre de empresa -->
-        <div class="formgrid grid mt-3">
-                            
-            <div class="field col-3 md:col-3 text-right mt-2">
-                <label for="codemp">Empresa:</label>
-            </div>
-            <div class="field col-3 md:col-2">
-                <input  type="text"
-                        id="codemp" 
-                        class="w-full"
-                        pInputText
-                        [value]="empresaRow ? empresaRow.id : '' "
-                        disabled/>
-            </div>
-        
-            <div class="field col-5 md:col-4">
-                <input  type="text"
-                        id="desemp" 
-                        class="w-full"
-                        pInputText
-                        [value]="empresaRow ? empresaRow.nombre : '' "
-                        disabled/>
-            </div>
-
         </div>
 
         <!-- Componente table -->

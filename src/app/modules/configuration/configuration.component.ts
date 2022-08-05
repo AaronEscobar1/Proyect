@@ -106,17 +106,17 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   label: 'Grupos de trabajo',
                   routerLink: ['/main/config/empresa/grupos-trabajo']
                 },
-                // {
-                //   label: 'Tarifas de impuestos',
-                //   routerLink: ['/main/config/empresa/empresa-consultar/tarifas']
-                // },
+                {
+                  label: 'Nóminas',
+                  routerLink: ['/main/config/empresa/nominas']
+                },
+                {
+                  label: 'Tarifas de impuestos',
+                  routerLink: ['/main/config/empresa/empresa-consultar/tarifas']
+                },
                 // {
                 //   label: 'Localidades',
                 //   routerLink: ['/main/config/empresa/localidades']
-                // },
-                // {
-                //   label: 'Nóminas',
-                //   routerLink: ['/main/config/empresa/nominas']
                 // },
                 // {
                 //   label: 'Rotación de grupos',
