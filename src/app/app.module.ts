@@ -3,10 +3,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './guards/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from './auth/auth.module';
 import { HttpInterceptorModule } from './interceptors/http-interceptor.module';
+
+// Modulos para lenguaje en español
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Components
 import { AppComponent } from './app.component';
@@ -15,6 +19,10 @@ import { AppComponent } from './app.component';
 import localeEsVe from '@angular/common/locales/es-VE';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEsVe);
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json')
+}
 
 @NgModule({
   declarations: [
@@ -27,7 +35,16 @@ registerLocaleData(localeEsVe);
     BrowserAnimationsModule,
     HttpInterceptorModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // Lenguaje por defecto para la aplicación
+    TranslateModule.forRoot({
+      defaultLanguage: 'es',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      }
+    })
   ],
   providers: [
     AuthGuard,
