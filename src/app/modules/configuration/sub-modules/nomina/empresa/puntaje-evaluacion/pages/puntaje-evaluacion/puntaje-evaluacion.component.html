@@ -1,0 +1,86 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="grid">
+
+            <div class="col-12 md:col-6">
+
+                <!-- Componente de botones -->
+                <app-buttons-puntaje (onRefresh)="refresh()"
+                                     (onOpenModalPrint)="openModalPrint()"
+                                     (onOpenModalCreate)="openModalCreate()"
+                                     (onEditRow)="editRow($event)"
+                                     (onDeleteRow)="deleteRow($event)">
+                </app-buttons-puntaje>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa y nomina  -->
+                <div class="formgrid grid">
+                                
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Nómina:</label>
+                    </div>
+                    <div class="field col-2 md:col-2 lg:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                    
+                    <div class="field col-2 md:col-2 lg:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="nominaRow ? nominaRow.tipnom : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-4 md:col-4 lg:col-6">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Componente table -->
+        <app-data-table-puntaje [puntajesEvaluacion]="puntajesEvaluacion"></app-data-table-puntaje> 
+
+    </div>
+</div>
+
+<!-- Modal Imprimir -->
+<app-modal-print
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit
+    [empresaRow]="empresaRow"
+    [nominaRow]="nominaRow"
+    [puntajesEvaluacion]="puntajesEvaluacion"
+    [puntajeEvaluacionSelect]="puntajeEvaluacionSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>
+
