@@ -19,14 +19,8 @@ export interface TarifaImpuesto {
     valsus:    number;
 }
 
-export interface TarifaImpuestoUpdate {
-    // Tasa Imponible 1
-    tasim1:    number;
-    // Tasa Imponible 2
-    tasim2:    number;
-    // Valor  del sustraendo
-    valsus:    number;
-}
+// Interfaces con los datos necesarios para actualizar
+export type TarifaImpuestoUpdate = Pick<TarifaImpuesto, 'tasim1' | 'tasim2' | 'valsus'>
 
 export interface TipoTarifa {
     tipreg:      string;
