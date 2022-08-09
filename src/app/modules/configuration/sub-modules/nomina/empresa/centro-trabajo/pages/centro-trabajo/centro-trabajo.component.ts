@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { CentroTrabajo } from '../../interfaces/distribucion-impuesto.interfaces';
 import { CentroTrabajoService } from '../../services/centro-trabajo.service';
 
@@ -31,7 +32,8 @@ export class CentroTrabajoComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private centroTrabajoService: CentroTrabajoService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private centroTrabajoService: CentroTrabajoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
@@ -131,7 +133,7 @@ export class CentroTrabajoComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.selectRowService.selectRowAlterno$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },
