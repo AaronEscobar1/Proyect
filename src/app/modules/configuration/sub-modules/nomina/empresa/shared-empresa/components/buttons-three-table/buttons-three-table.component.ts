@@ -1,12 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
+import { CompanyNominaService } from '../../services/company-nomina.service';
 
 @Component({
-  selector: 'app-buttons-grupos',
-  templateUrl: './buttons-grupos.component.html'
+  selector: 'app-buttons-three-table',
+  templateUrl: './buttons-three-table.component.html'
 })
-export class ButtonsGruposComponent implements OnInit {
+export class ButtonsThreeTableComponent implements OnInit {
 
   @Output() onRefresh         = new EventEmitter();
   @Output() onOpenModalPrint  = new EventEmitter();
@@ -20,12 +20,12 @@ export class ButtonsGruposComponent implements OnInit {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor( private grupoTrabajoService: GrupoTrabajoService ) {
+  constructor( private companyNominaService: CompanyNominaService ) {
   }
   
   ngOnInit(): void {
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable
-    this.subscriber = this.grupoTrabajoService.selectRowGrupo$.subscribe( row => this.selectRow = row );
+    this.subscriber = this.companyNominaService.selectRowThirdTable$.subscribe( row => this.selectRow = row );
   }
 
   refresh(): void {
@@ -52,5 +52,6 @@ export class ButtonsGruposComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriber.unsubscribe();
   }
+
 
 }

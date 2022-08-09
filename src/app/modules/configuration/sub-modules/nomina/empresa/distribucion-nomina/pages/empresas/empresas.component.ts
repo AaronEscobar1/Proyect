@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { Subscription } from 'rxjs';
-import { CompaniaService } from '../../../empresas/services/compania.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-empresas',
@@ -30,7 +30,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor(private companiaService: CompaniaService,
+  constructor(private companyNominaService: CompanyNominaService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private selectRowServices: SelectRowService) { }
@@ -43,7 +43,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
 
   loadData(): void {
     this.spinner.show();
-    this.companiaService.getAll()
+    this.companyNominaService.getAll()
       .subscribe({
         next: (res) => {
           this.companias = res;

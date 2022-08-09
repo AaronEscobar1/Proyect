@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
-import { TipoNomina } from '../../../../grupo-trabajo/interfaces/nominas.interfaces';
+import { TipoNomina } from '../../../../shared-empresa/interfaces/nominas.interfaces';
 import { PuntajeEvaluacion, PuntajeEvaluacionUpdate } from '../../../interfaces/puntaje-evaluacion.interfaces';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { PuntajeEvaluacionService } from '../../../services/puntaje-evaluacion.service';

@@ -3,7 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Company } from '../../../../nomina/empresa/shared-empresa/interfaces/empresa.interfaces';
-import { CompaniaService } from '../../../../nomina/empresa/empresas/services/compania.service';
+import { CompanyNominaService } from '../../../../nomina/empresa/shared-empresa/services/company-nomina.service';
 import { Subscription } from 'rxjs';
 import { ParametrosInicialesService } from '../../services/parametros-iniciales.service';
 import { TipoVacaciones } from '../../interfaces/parametros-iniciales.interfaces';
@@ -36,7 +36,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor(private companiaService: CompaniaService,
+  constructor(private companyNominaService: CompanyNominaService,
               private parametrosInicialesService: ParametrosInicialesService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
@@ -51,7 +51,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
 
   loadData(): void {
     this.spinner.show();
-    this.companiaService.getAll()
+    this.companyNominaService.getAll()
       .subscribe({
         next: (res) => {
           this.companias = res;

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { TipoNomina } from '../../../grupo-trabajo/interfaces/nominas.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { PuntajeEvaluacionService } from '../../services/puntaje-evaluacion.service';
 

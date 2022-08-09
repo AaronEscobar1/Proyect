@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { TipoNomina } from '../../../grupo-trabajo/interfaces/nominas.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
 import { PuntajeEvaluacionService } from '../../services/puntaje-evaluacion.service';
 
 @Component({

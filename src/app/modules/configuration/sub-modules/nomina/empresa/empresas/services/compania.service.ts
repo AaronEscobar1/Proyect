@@ -12,10 +12,6 @@ export class CompaniaService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/empresas'));
-  }
-
   getById(id: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${id}`));
   }

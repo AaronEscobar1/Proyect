@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { TipoNomina } from '../../interfaces/nominas.interfaces';
-import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
+import { CompanyNominaService } from '../../services/company-nomina.service';
 
 @Component({
   selector: 'app-data-table-nomina',
@@ -11,14 +11,16 @@ import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
 })
 export class DataTableNominaComponent implements OnInit {
 
+  // shared
+  
+  // Objeto para mostrar las nominas en la tabla
   @Input() tiposNominas!: TipoNomina[];
-  @Input() tab: string = 'consultar';
 
-  // Table
+  // Columnas de la table
   columns: TableHead[] = [];
 
   constructor(private selectRowService: SelectRowService,
-              private grupoTrabajoService: GrupoTrabajoService) { }
+              private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -29,14 +31,15 @@ export class DataTableNominaComponent implements OnInit {
 
   onRowSelect(event: any): void {
     this.selectRowService.selectRowAlterno$.emit(event.data);
-    // Limpiar variable observable de tabla grupo de trabajo
-    this.grupoTrabajoService.selectRowGrupo$.emit(null);
+    // Limpiar variable observable de la tercera tabla 
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
 
   onRowUnselect(): void {
     this.selectRowService.selectRowAlterno$.emit(null);
-    // Limpiar variable observable de tabla grupo de trabajo
-    this.grupoTrabajoService.selectRowGrupo$.emit(null);
+    // Limpiar variable observable de la tercera tabla
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
+
 
 }

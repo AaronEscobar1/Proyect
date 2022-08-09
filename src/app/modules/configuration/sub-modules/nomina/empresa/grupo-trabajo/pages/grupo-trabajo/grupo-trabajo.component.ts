@@ -2,9 +2,10 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { TipoNomina } from '../../interfaces/nominas.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
 import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
 import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-grupo-trabajo',
@@ -36,7 +37,8 @@ export class GrupoTrabajoComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private grupoTrabajoService: GrupoTrabajoService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private grupoTrabajoService: GrupoTrabajoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
@@ -104,7 +106,7 @@ export class GrupoTrabajoComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.grupoTrabajoService.selectRowGrupo$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },
