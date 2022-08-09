@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TarifasImpuestosRoutingModule } from './tarifas-impuestos-routing.module';
-import { CompaniaModule } from '../empresas/compania.module';
+import { SharedEmpresaModule } from '../shared-empresa/shared-empresa.module';
 
 // Components
-import { ButtonsTarifasComponent } from './components/buttons-tarifas/buttons-tarifas.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { EmpresasComponent } from './pages/empresas/empresas.component';
 import { ModalAddEditComponent } from './components/modal-add-edit/modal-add-edit.component';
@@ -15,7 +14,6 @@ import { TarifasImpuestosComponent } from './pages/tarifas-impuestos/tarifas-imp
 
 @NgModule({
   declarations: [
-    ButtonsTarifasComponent,
     DataTableComponent,
     EmpresasComponent,
     ModalAddEditComponent,
@@ -25,7 +23,7 @@ import { TarifasImpuestosComponent } from './pages/tarifas-impuestos/tarifas-imp
   imports: [
     SharedModule,
     TarifasImpuestosRoutingModule,
-    CompaniaModule
+    SharedEmpresaModule
   ]
 })
 export class TarifasImpuestosModule { }

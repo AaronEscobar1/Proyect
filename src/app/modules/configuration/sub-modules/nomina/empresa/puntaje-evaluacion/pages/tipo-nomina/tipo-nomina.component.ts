@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -31,7 +32,8 @@ export class TipoNominaComponent implements OnInit {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor(private puntajeEvaluacionService: PuntajeEvaluacionService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private puntajeEvaluacionService: PuntajeEvaluacionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private selectRowServices: SelectRowService) { }
@@ -57,7 +59,7 @@ export class TipoNominaComponent implements OnInit {
 
   loadNominas(id: string): void {
     this.spinner.show(undefined, spinnerLight);
-    this.puntajeEvaluacionService.getAllNominasByEmpresa(id)
+    this.companyNominaService.getAllNominasByEmpresa(id)
       .subscribe({
         next: (res: TipoNomina[]) => {
           this.tiposNominas = res;

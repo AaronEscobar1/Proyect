@@ -125,10 +125,6 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 // {
                 //   label: 'Localidades',
                 //   routerLink: ['/main/config/empresa/localidades']
-                // },
-                // {
-                //   label: 'Rotación de grupos',
-                //   routerLink: ['/main/config/empresa/grupos/rotacion']
                 // }
               ]
             }

@@ -3,10 +3,9 @@ import { NgModule } from '@angular/core';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CentroTrabajoRoutingModule } from './centro-trabajo-routing.module';
-import { CompaniaModule } from '../empresas/compania.module';
+import { SharedEmpresaModule } from '../shared-empresa/shared-empresa.module';
 
 // Components
-import { ButtonsCentroTrabajoComponent } from './components/buttons-centro-trabajo/buttons-centro-trabajo.component';
 import { CentroTrabajoComponent } from './pages/centro-trabajo/centro-trabajo.component';
 import { DataTableCentroTrabajoComponent } from './components/data-table-centro-trabajo/data-table-centro-trabajo.component';
 import { EmpresasComponent } from './pages/empresas/empresas.component';
@@ -16,7 +15,6 @@ import { ModalPrintComponent } from './components/modal-print/modal-print.compon
 
 @NgModule({
   declarations: [
-    ButtonsCentroTrabajoComponent,
     CentroTrabajoComponent,
     DataTableCentroTrabajoComponent,
     EmpresasComponent,
@@ -26,7 +24,7 @@ import { ModalPrintComponent } from './components/modal-print/modal-print.compon
   imports: [
     SharedModule,
     CentroTrabajoRoutingModule,
-    CompaniaModule
+    SharedEmpresaModule
   ]
 })
 export class CentroTrabajoModule { }

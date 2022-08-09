@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { PuntajeEvaluacionService } from '../../services/puntaje-evaluacion.service';
 
@@ -36,7 +37,8 @@ export class PuntajeEvaluacionComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private puntajeEvaluacionService: PuntajeEvaluacionService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private puntajeEvaluacionService: PuntajeEvaluacionService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
@@ -104,7 +106,7 @@ export class PuntajeEvaluacionComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.puntajeEvaluacionService.selectRowPuntaje$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },

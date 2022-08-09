@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { SituacionService } from '../../../services/situacion.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-data-table-situacion',
@@ -21,7 +21,7 @@ export class DataTableSituacionComponent implements OnInit {
   esquemaFilter: dropdownType[] = [];
   clasificacionFilter: dropdownType[] = [];
 
-  constructor(private situacionService: SituacionService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -47,11 +47,11 @@ export class DataTableSituacionComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.situacionService.selectRowSituacion$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.situacionService.selectRowSituacion$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
 
 }

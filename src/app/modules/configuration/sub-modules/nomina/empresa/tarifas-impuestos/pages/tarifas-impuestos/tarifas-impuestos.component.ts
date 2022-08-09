@@ -4,7 +4,7 @@ import { TarifasImpuestosService } from '../../services/tarifas-impuestos.servic
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FrecuenciaImpuesto, TarifaImpuesto, TipoTarifa } from '../../interfaces/tarifas-impuestos.interfaces';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
 
@@ -42,11 +42,11 @@ export class TarifasImpuestosComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private tarifasImpuestosService: TarifasImpuestosService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private tarifasImpuestosService: TarifasImpuestosService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService,
-              private selectRowService: SelectRowService) { }
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.loadTiposTarifas();
@@ -56,8 +56,6 @@ export class TarifasImpuestosComponent implements OnInit {
   ngOnChanges() {
     // Validar si empresa existe y tiene id
     if ( this.empresaRow && this.empresaRow.id ) {
-      // Limpia el row de la tabla de nóminas
-      this.selectRowService.selectRowAlterno$.emit(null);
       // Realizar peticion al backend asociada a la empresa seleccionada
       this.loadTarifas(this.empresaRow.id);
     }
@@ -174,7 +172,7 @@ export class TarifasImpuestosComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.selectRowService.selectRowAlterno$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },

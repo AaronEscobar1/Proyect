@@ -19,24 +19,13 @@
                 /*********************** -->
                 <p-tabPanel header="Consultar empresas">
 
-                    <!-- Componente de botones -->
-                    <!-- TODO: Realizar si hace falta agregar, modificar y eliminar empresas en este modulo -->
-                    <!-- <app-buttons (onRefresh)="refresh()"
-                                 (onOpenModalPrint)="openModalPrint()"
-                                 (onOpenModalCreate)="openModalCreate()"
-                                 (onEditRow)="editRow($event)"
-                                 (onDeleteRow)="deleteRow($event)">
-                    </app-buttons> -->
-
                     <!-- Componente table -->
-                    <app-data-table-empresa [companias]="companias"
-                                            [tab]="'consultar'">
-                    </app-data-table-empresa>
+                    <app-data-table-empresa [companias]="companias"></app-data-table-empresa>
 
                 </p-tabPanel>
 
                 <!--/*************************
-                /*    Parametros iniciales   *
+                /*    Distribución nómina    *
                 /***************************** -->
                 <p-tabPanel header="Distribución nómina" [disabled]="empresaRow == null">
                     

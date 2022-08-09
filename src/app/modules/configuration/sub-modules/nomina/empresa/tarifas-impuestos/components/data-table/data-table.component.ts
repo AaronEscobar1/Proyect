@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { TarifaImpuesto } from '../../interfaces/tarifas-impuestos.interfaces';
 
 @Component({
@@ -23,7 +23,7 @@ export class DataTableComponent implements OnInit {
   // Objeto para mostrar las columnas de la tabla
   columns: TableHead[] = [];
 
-  constructor(private selectRowService: SelectRowService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -38,11 +38,11 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRowAlterno$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.selectRowService.selectRowAlterno$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
 
   tipoImpuestoString(value: string): string {

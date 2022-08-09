@@ -6,6 +6,7 @@ import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-distribucion-nomina',
@@ -31,7 +32,8 @@ export class DistribucionNominaComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private distribucionNominaService: DistribucionNominaService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private distribucionNominaService: DistribucionNominaService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
@@ -54,9 +56,9 @@ export class DistribucionNominaComponent implements OnInit {
    * Obtener datos de parametros asignado a la empresa
    * @param id: string id empresa
    */
-  loadDistribucionNomina( id: string ) {
+  loadDistribucionNomina( idEmpresa: string ) {
     this.spinner.show(undefined, spinnerLight);
-    this.distribucionNominaService.getAllDistribuciones(id)
+    this.distribucionNominaService.getAllDistribuciones(idEmpresa)
       .subscribe({
         next: (res) => {
           this.distribucionesNomina = res;          
@@ -130,7 +132,7 @@ export class DistribucionNominaComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.selectRowService.selectRowAlterno$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 
 @Component({
@@ -17,7 +17,7 @@ export class DataTableDistribucionComponent implements OnInit {
   // Table
   columns: TableHead[] = [];
 
-  constructor(private selectRowService: SelectRowService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -28,11 +28,11 @@ export class DataTableDistribucionComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRowAlterno$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.selectRowService.selectRowAlterno$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
   
 }

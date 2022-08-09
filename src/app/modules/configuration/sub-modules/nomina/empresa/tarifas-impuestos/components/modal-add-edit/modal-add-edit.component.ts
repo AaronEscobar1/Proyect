@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, AbstractControl, ValidationErrors, Validators }
 import { TarifasImpuestosService } from '../../services/tarifas-impuestos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 
@@ -44,11 +44,11 @@ export class ModalAddEditComponent implements OnInit {
   // Objeto de frecuencia de impuesto
   @Input() frecuenciasImpuesto: FrecuenciaImpuesto[] = [];
 
-  constructor(private tarifasImpuestosService: TarifasImpuestosService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private tarifasImpuestosService: TarifasImpuestosService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder,
-              private selectRowService: SelectRowService,
               private helpers: Helpers) {
     this.form = this.fb.group({
       idEmpresa: [  ],
@@ -126,7 +126,7 @@ export class ModalAddEditComponent implements OnInit {
             this.closeModal();
             this.spinner.hide();
             this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-            this.selectRowService.selectRowAlterno$.emit(null);
+            this.companyNominaService.selectRowThirdTable$.emit(null);
             this.onLoadData.emit();
           },
           error: (err) => {
@@ -146,7 +146,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.selectRowService.selectRowAlterno$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {

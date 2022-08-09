@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
@@ -9,16 +9,8 @@ import { PuntajeEvaluacion, PuntajeEvaluacionUpdate } from '../interfaces/puntaj
 })
 export class PuntajeEvaluacionService {
 
-  // Variable para obtener el row desde la tabla
-  public selectRowPuntaje$ = new EventEmitter<any | null>();
-
   constructor(private http: HttpService,
               private helpers: Helpers) { }
-
-  // Obtener todas las nominas por empresa
-  getAllNominasByEmpresa(idEmpresa: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas`));
-  }
 
   // Endpoints de puntaje de evaluacion  
   getAllPuntajesByEmpresaNomina(idEmpresa: string, idNomina: string): Observable<any> {

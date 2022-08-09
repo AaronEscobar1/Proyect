@@ -9,12 +9,12 @@
             <div class="col-12 md:col-6">
 
             <!-- Componente de botones -->
-            <app-buttons-nomina (onRefresh)="refresh()"
-                                (onOpenModalPrint)="openModalPrint()"
-                                (onOpenModalCreate)="openModalCreate()"
-                                (onEditRow)="editRow($event)"
-                                (onDeleteRow)="deleteRow($event)">
-            </app-buttons-nomina>
+            <app-buttons-three-table (onRefresh)="refresh()"
+                                     (onOpenModalPrint)="openModalPrint()"
+                                     (onOpenModalCreate)="openModalCreate()"
+                                     (onEditRow)="editRow($event)"
+                                     (onDeleteRow)="deleteRow($event)">
+            </app-buttons-three-table>
 
             </div>
             <div class="col-12 md:col-6">
@@ -48,8 +48,8 @@
 
         </div>
 
-            <!-- Componente table -->
-            <app-data-table [nominas]="nominas"></app-data-table>
+        <!-- Componente table -->
+        <app-data-table [nominas]="nominas"></app-data-table>
    
     </div>
 </div>

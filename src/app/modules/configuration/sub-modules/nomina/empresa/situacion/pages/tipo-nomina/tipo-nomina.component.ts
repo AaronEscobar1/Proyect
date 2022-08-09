@@ -7,6 +7,7 @@ import { SituacionService } from '../../services/situacion.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -30,7 +31,8 @@ export class TipoNominaComponent implements OnInit {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor(private situacionService: SituacionService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private situacionService: SituacionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private selectRowServices: SelectRowService) { }
@@ -56,7 +58,7 @@ export class TipoNominaComponent implements OnInit {
 
   loadNominas(id: string): void {
     this.spinner.show(undefined, spinnerLight);
-    this.situacionService.getAllNominasByEmpresa(id)
+    this.companyNominaService.getAllNominasByEmpresa(id)
       .subscribe({
         next: (res: TipoNomina[]) => {
           this.tiposNominas = res;

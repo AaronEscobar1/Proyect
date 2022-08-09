@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { PuntajeEvaluacion } from '../../../interfaces/puntaje-evaluacion.interfaces';
-import { PuntajeEvaluacionService } from '../../../services/puntaje-evaluacion.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 
 @Component({
   selector: 'app-data-table-puntaje',
@@ -20,7 +20,7 @@ export class DataTablePuntajeComponent implements OnInit {
   // Filtro dropdown
   aumentoFilter: dropdownType[] = [];
 
-  constructor(private puntajeEvaluacionService: PuntajeEvaluacionService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -35,11 +35,11 @@ export class DataTablePuntajeComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.puntajeEvaluacionService.selectRowPuntaje$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.puntajeEvaluacionService.selectRowPuntaje$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
 
 }
