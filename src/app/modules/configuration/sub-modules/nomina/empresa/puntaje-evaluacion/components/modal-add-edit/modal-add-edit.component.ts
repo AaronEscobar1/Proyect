@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
-import { TipoNomina } from '../../../../shared-empresa/interfaces/nominas.interfaces';
-import { PuntajeEvaluacion, PuntajeEvaluacionUpdate } from '../../../interfaces/puntaje-evaluacion.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
+import { PuntajeEvaluacion, PuntajeEvaluacionUpdate } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { PuntajeEvaluacionService } from '../../../services/puntaje-evaluacion.service';
+import { PuntajeEvaluacionService } from '../../services/puntaje-evaluacion.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -39,7 +40,8 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
-  constructor(private puntajeEvaluacionService: PuntajeEvaluacionService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private puntajeEvaluacionService: PuntajeEvaluacionService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -94,7 +96,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.puntajeEvaluacionService.selectRowPuntaje$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -115,7 +117,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.puntajeEvaluacionService.selectRowPuntaje$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
