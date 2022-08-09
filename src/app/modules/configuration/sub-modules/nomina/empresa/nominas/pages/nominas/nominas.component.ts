@@ -3,7 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Nomina } from '../../interfaces/nominas.interfaces';
 import { NominasService } from '../../services/nominas.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 

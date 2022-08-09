@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
-import { TipoNomina } from '../../../grupo-trabajo/interfaces/nominas.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
 import { Subscription } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PuntajeEvaluacionService } from '../../services/puntaje-evaluacion.service';

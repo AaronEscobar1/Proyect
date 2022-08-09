@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';

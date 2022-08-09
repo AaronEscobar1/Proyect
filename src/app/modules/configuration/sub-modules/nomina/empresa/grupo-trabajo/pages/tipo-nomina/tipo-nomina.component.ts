@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
-import { TipoNomina } from '../../interfaces/nominas.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Subscription } from 'rxjs';
 import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -31,10 +32,10 @@ export class TipoNominaComponent implements OnInit {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  constructor(private grupoTrabajoService: GrupoTrabajoService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private grupoTrabajoService: GrupoTrabajoService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private confirmationService: ConfirmationService,
               private selectRowServices: SelectRowService) { }
 
   ngOnInit(): void {
@@ -58,7 +59,7 @@ export class TipoNominaComponent implements OnInit {
 
   loadNominas(id: string): void {
     this.spinner.show(undefined, spinnerLight);
-    this.grupoTrabajoService.getAllNominasByEmpresa(id)
+    this.companyNominaService.getAllNominasByEmpresa(id)
       .subscribe({
         next: (res: TipoNomina[]) => {
           this.tiposNominas = res;

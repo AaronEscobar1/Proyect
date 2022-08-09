@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { CompaniaService } from '../../services/compania.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class CompaniaComponent implements OnInit {
   printModal : boolean = false;
 
   constructor(private companiaService: CompaniaService,
+              private companyNominaService: CompanyNominaService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -36,7 +38,7 @@ export class CompaniaComponent implements OnInit {
 
   loadData(){
     this.spinner.show();
-    this.companiaService.getAll()
+    this.companyNominaService.getAll()
       .subscribe({
         next: (res) => {
           this.companias = res;

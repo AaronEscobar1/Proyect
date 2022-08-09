@@ -4,7 +4,7 @@ import { DistribucionNominaService } from '../../services/distribucion-nomina.se
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
 
 @Component({

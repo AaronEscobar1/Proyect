@@ -118,6 +118,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   label: 'Puntaje de evaluación',
                   routerLink: ['/main/config/empresa/puntaje-evaluacion']
                 },
+                {
+                  label: 'Situación',
+                  routerLink: ['/main/config/empresa/situacion']
+                },
                 // {
                 //   label: 'Localidades',
                 //   routerLink: ['/main/config/empresa/localidades']

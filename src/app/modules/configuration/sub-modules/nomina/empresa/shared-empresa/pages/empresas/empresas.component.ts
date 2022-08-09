@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
-import { CompaniaService } from '../../../empresas/services/compania.service';
+import { Company } from '../../interfaces/empresa.interfaces';
+import { CompanyNominaService } from '../../services/company-nomina.service';
 
 @Component({
-  selector: 'app-empresa',
-  templateUrl: './empresa.component.html',
+  selector: 'app-empresas',
+  templateUrl: './empresas.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class EmpresaComponent implements OnInit {
+export class EmpresasComponent implements OnInit {
 
-  // Objetos
+  // Objetos para cargar todas las empresas
   companias: Company[] = [];
+
+  // Variable para seleccionar la empresa
   companiaSelect!: Company | undefined;
 
-  constructor(private companiaService: CompaniaService,
+  constructor(private companyNominaService: CompanyNominaService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService) { }
 
@@ -23,9 +25,9 @@ export class EmpresaComponent implements OnInit {
     this.loadData();
   }
 
-  loadData() {
+  loadData(): void {
     this.spinner.show();
-    this.companiaService.getAll()
+    this.companyNominaService.getAll()
       .subscribe({
         next: (res) => {
           this.companias = res;

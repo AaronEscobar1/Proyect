@@ -3,7 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { TarifasImpuestosService } from '../../services/tarifas-impuestos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FrecuenciaImpuesto, TarifaImpuesto, TipoTarifa } from '../../interfaces/tarifas-impuestos.interfaces';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';

@@ -48,6 +48,11 @@ const routes: Routes = [
     loadChildren: () => import('./puntaje-evaluacion/puntaje-evaluacion.module').then( m => m.PuntajeEvaluacionModule),
   },
   {
+    path: 'situacion',
+    // LazyLoad
+    loadChildren: () => import('./situacion/situacion.module').then( m => m.SituacionModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];

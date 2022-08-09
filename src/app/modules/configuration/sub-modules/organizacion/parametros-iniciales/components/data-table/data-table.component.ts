@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../../nomina/empresa/empresas/interfaces/compania.interfaces';
+import { Company } from '../../../../nomina/empresa/shared-empresa/interfaces/empresa.interfaces';
 
 @Component({
   selector: 'app-data-table',

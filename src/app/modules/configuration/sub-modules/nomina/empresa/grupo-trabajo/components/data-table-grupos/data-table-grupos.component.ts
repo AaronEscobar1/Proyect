@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
-import { GrupoTrabajo } from '../../../interfaces/grupo-trabajo.interfaces';
+import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-data-table-grupos',
@@ -20,7 +20,7 @@ export class DataTableGruposComponent implements OnInit {
   // Filtro dropdown
   diaLaborableFilter: dropdownType[] = [];
 
-  constructor(private grupoTrabajoService: GrupoTrabajoService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -37,11 +37,11 @@ export class DataTableGruposComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.grupoTrabajoService.selectRowGrupo$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.grupoTrabajoService.selectRowGrupo$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
 
 }

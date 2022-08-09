@@ -1,12 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { GrupoTrabajo, tipoJornadaData } from '../../../interfaces/grupo-trabajo.interfaces';
+import { GrupoTrabajo, tipoJornadaData } from '../../interfaces/grupo-trabajo.interfaces';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
+import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { Company } from '../../../../empresas/interfaces/compania.interfaces';
-import { TipoNomina } from '../../../interfaces/nominas.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -48,7 +49,8 @@ export class ModalAddEditComponent implements OnInit {
     return this.form.controls['tipoJornada'] as FormGroup;
   }
 
-  constructor(private grupoTrabajoService: GrupoTrabajoService, 
+  constructor(private companyNominaService: CompanyNominaService, 
+              private grupoTrabajoService: GrupoTrabajoService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -104,7 +106,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.grupoTrabajoService.selectRowGrupo$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -122,7 +124,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.grupoTrabajoService.selectRowGrupo$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
