@@ -1,34 +1,62 @@
 export interface TipoNomina {
-    tipnom:    string;
-    desnom:    string;
-    clanom:    string;
-    frenom:    number;
-    codpai:    any;
-    fecto1:    Date;
-    fecto2:    Date;
-    fecto3:    any;
-    fecto4:    any;
-    fecto5:    any;
-    topgua:    any;
-    canmin:    any;
-    facgua:    any;
-    asifon:    any;
-    dedfon:    any;
-    valfon:    number;
-    fecabo:    Date;
-    tipmon:    any;
-    tasmon:    any;
-    valred:    number;
-    tipfec:    number;
-    reghab:    string;
-    anocom:    string;
-    pgmrec:    any;
-    fresue:    string;
-    codcon:    any;
-    fecto6:    any;
-    fecto7:    any;
-    fecto8:    any;
-    fecto9:    any;
-    fecto10:   any;
-    idEmpresa: string;
+    /**** Básica ****/
+        idEmpresa: string;
+        tipnom:    string;
+        desnom:    string;
+        /* Frecuencia */
+            // Días
+            frenom:    number;
+            // No considerar en sueldo
+            fresue:    string;
+            // Año comercial
+            anocom:    string;
+        /* Fechas topes */
+            fecto1:    Date | null;
+            fecto2:    Date | null;
+            fecto3:    Date | null;
+            fecto4:    Date | null;
+            fecto5:    Date | null;
+            fecto6:    Date | null;
+            fecto7:    Date | null;
+            fecto8:    Date | null;
+            fecto9:    Date | null;
+            fecto10:   Date | null;
+        // Redondeo
+        valred:    number;
+        // Recibo
+        pgmrec:    string;
+        /* Guardería */
+            // Cantidad de salarios minimos
+            canmin:    number;
+            // Salario tope de guarderia
+            topgua:    number;
+            // Factor guarderia
+            facgua:    number;
+    /**** Miscelanea ****/
+        /* Sencillo en fondo */
+            // Asignacion
+            asifon:    number;
+            // Deduccion
+            dedfon:    number;
+            // valor
+            valfon:    number;
+        /* Vacación */
+            // Tipo de fecha
+            tipfec:    number;
+            // Fecha de control
+            fecabo:    Date | null;
+            // Regreso habil
+            reghab:    string;
+    
+    /* Otros atributos */
+        // Tipo de moneda
+        tipmon:    any;
+        // Tasa de conversion de moneda
+        tasmon:    any;
+        // Clasificacion de nomina (1=Elegible, 2=Activo)
+        clanom:    string;
+        // Codigo del Pais donde ser  instalado el sistema
+        codpai:    any;
+        // Codigo contable, para considerar en la generacion del numero de comprobante
+        codcon:    any;
 }

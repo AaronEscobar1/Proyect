@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Nomina } from '../../interfaces/nominas.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-data-table',
@@ -10,12 +10,13 @@ import { Nomina } from '../../interfaces/nominas.interfaces';
 })
 export class DataTableComponent implements OnInit {
   
-  @Input() nominas!: Nomina[];
+  // Objeto para mostrar en la tabla
+  @Input() nominas!: TipoNomina[];
 
   // Table
   columns: TableHead[] = [];
 
-  constructor(private selectRowService: SelectRowService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -25,11 +26,11 @@ export class DataTableComponent implements OnInit {
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRowAlterno$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.selectRowService.selectRowAlterno$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
 
 }
