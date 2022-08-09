@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors }
 import { DistribucionNominaService } from '../../services/distribucion-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { DistribucionNomina } from '../../interfaces/distribucion-impuesto.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -36,11 +36,11 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
-  constructor(private distribucionNominaService: DistribucionNominaService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private distribucionNominaService: DistribucionNominaService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private fb: FormBuilder,
-              private selectRowService: SelectRowService) {
+              private fb: FormBuilder) {
     this.form = this.fb.group({
       codsuc: [  , [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
       dessuc: [  , [ Validators.required, Validators.maxLength(30) ]],
@@ -85,7 +85,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.selectRowService.selectRowAlterno$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -103,7 +103,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.selectRowService.selectRowAlterno$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
