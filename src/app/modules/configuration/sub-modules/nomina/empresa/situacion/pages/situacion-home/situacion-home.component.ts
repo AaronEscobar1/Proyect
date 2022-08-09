@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../../grupo-trabajo/interfaces/nominas.interfaces';
 import { Subscription } from 'rxjs';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../../nomina/empresa/empresas/interfaces/compania.interfaces';
+import { Company } from '../../../../nomina/empresa/shared-empresa/interfaces/empresa.interfaces';
 import { CompaniaService } from '../../../../nomina/empresa/empresas/services/compania.service';
 import { Subscription } from 'rxjs';
 import { ParametrosInicialesService } from '../../services/parametros-iniciales.service';

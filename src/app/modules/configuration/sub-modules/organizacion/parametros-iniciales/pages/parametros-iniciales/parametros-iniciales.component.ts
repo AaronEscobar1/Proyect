@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Company } from '../../../../nomina/empresa/empresas/interfaces/compania.interfaces';
+import { Company } from '../../../../nomina/empresa/shared-empresa/interfaces/empresa.interfaces';
 import { TipoVacaciones, ParametrosIniciales } from '../../interfaces/parametros-iniciales.interfaces';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ParametrosInicialesService } from '../../services/parametros-iniciales.service';

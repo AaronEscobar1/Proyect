@@ -3,7 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { CentroTrabajo } from '../../interfaces/distribucion-impuesto.interfaces';
 import { CentroTrabajoService } from '../../services/centro-trabajo.service';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../../grupo-trabajo/interfaces/nominas.interfaces';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { TipoNominaComponent } from '../tipo-nomina/tipo-nomina.component';

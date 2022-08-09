@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { Subscription } from 'rxjs';
 import { CompaniaService } from '../../../empresas/services/compania.service';
 import { NgxSpinnerService } from 'ngx-spinner';

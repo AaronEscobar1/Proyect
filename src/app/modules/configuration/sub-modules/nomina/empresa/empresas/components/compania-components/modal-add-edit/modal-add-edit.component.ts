@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Company, conceptoEconomicoData, SectorEmpresas } from '../../../interfaces/compania.interfaces';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
+import { conceptoEconomicoData, SectorEmpresas } from '../../../interfaces/compania.interfaces';
 import { Validators, FormGroup, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CompaniaService } from '../../../services/compania.service';
 import { NgxSpinnerService } from 'ngx-spinner';

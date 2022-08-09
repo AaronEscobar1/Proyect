@@ -5,7 +5,7 @@ import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { Company } from '../../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../../interfaces/nominas.interfaces';
 
 @Component({

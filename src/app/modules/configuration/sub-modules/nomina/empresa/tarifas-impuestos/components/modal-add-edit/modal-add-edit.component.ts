@@ -5,7 +5,7 @@ import { TarifasImpuestosService } from '../../services/tarifas-impuestos.servic
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({

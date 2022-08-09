@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { OtrosDatosEmpresa } from '../../../interfaces/otros-datos-empresa.interfaces';
-import { Company } from '../../../interfaces/compania.interfaces';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
 
 @Component({
   selector: 'app-buttons-od',

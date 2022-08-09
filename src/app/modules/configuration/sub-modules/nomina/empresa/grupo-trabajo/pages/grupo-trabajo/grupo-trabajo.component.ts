@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../interfaces/nominas.interfaces';
 import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
 import { GrupoTrabajo } from '../../interfaces/grupo-trabajo.interfaces';
