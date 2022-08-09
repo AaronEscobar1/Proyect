@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { SituacionService } from '../../services/situacion.service';
 
 @Component({
@@ -35,7 +36,8 @@ export class SituacionComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private situacionService: SituacionService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private situacionService: SituacionService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
@@ -103,7 +105,7 @@ export class SituacionComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.situacionService.selectRowSituacion$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },

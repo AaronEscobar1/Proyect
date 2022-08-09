@@ -6,6 +6,7 @@ import { NominasService } from '../../services/nominas.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-nominas',
@@ -31,7 +32,8 @@ export class NominasComponent {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private nominasService: NominasService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private nominasService: NominasService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
@@ -53,7 +55,7 @@ export class NominasComponent {
    */
   loadNominas( idEmpresa: string ): void {
     this.spinner.show(undefined, spinnerLight);
-    this.nominasService.getAllNominasByEmpresa(idEmpresa)
+    this.companyNominaService.getAllNominasByEmpresa(idEmpresa)
       .subscribe({
         next: (res) => {
           this.nominas = res;

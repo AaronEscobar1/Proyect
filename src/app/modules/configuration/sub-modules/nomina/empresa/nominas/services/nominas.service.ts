@@ -12,10 +12,6 @@ export class NominasService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAllNominasByEmpresa(idEmpresa: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas`));
-  }
-
   getNominaByEmpresa(idEmpresa: string, idNomina: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas/${idNomina}`));
   }
