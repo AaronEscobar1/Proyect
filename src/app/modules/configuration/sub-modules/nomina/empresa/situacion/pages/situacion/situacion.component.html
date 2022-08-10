@@ -60,7 +60,11 @@
         </div>
 
         <!-- Componente table -->
-        <app-data-table-situacion [situaciones]="situaciones"></app-data-table-situacion> 
+        <app-data-table-situacion [situaciones]="situaciones"
+                                  [estatusVacacionesFilter]="estatusVacacionesFilter"
+                                  [esquemasTrabajoFilter]="esquemasTrabajoFilter"
+                                  [claseSituacionesFilter]="claseSituacionesFilter">
+        </app-data-table-situacion> 
 
     </div>
 </div>

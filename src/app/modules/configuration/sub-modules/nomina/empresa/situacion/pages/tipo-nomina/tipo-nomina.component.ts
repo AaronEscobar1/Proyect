@@ -82,7 +82,6 @@ export class TipoNominaComponent implements OnInit {
     this.situacionService.getAllSituacionesByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.onGetDataGrupo.emit(res);
           this.spinner.hide();
         },

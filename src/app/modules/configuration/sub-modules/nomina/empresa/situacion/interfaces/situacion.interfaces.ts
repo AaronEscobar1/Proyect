@@ -67,7 +67,7 @@ export interface PrimaryKeyCFClaseSituacion {
 }
 
 // Interfaces para clasificacion de la situacion
-export type ClasesSituaciones = Omit<CFClaseSituacionTB, 'primaryKey'>;
+export type ClaseSituaciones = Omit<CFClaseSituacionTB, 'primaryKey'>;
 
 /**
  * Grupo Rotacion

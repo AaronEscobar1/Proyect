@@ -13,13 +13,17 @@ export class DataTableSituacionComponent implements OnInit {
   // Objeto para mostrar todos las situaciones por empresa y tipo nomina
   @Input() situaciones: any[] = [];
 
+  // Objeto de estatus vacaciones para filtrar en tabla
+  @Input() estatusVacacionesFilter: dropdownType[] = [];
+  
+  // Objeto de esquemas de trabajo para filtrar en tabla
+  @Input() esquemasTrabajoFilter: dropdownType[] = [];
+
+  // Objeto de clases situaciones para filtrar en tabla
+  @Input() claseSituacionesFilter: dropdownType[] = [];
+
   // Table
   columns: TableHead[] = [];
-
-  // Filtro dropdown
-  vacacionFilter: dropdownType[] = [];
-  esquemaFilter: dropdownType[] = [];
-  clasificacionFilter: dropdownType[] = [];
 
   constructor(private companyNominaService: CompanyNominaService) { }
 
@@ -33,17 +37,6 @@ export class DataTableSituacionComponent implements OnInit {
       { field: 'nmTipoEsquTrabCalcVacaTb.conesq', header: 'Esquema'       },
       { field: 'cfClaseSituacionTb.clasta', header: 'Clasificación' }
     ];
-    // Objeto para filtrar los dias laborables en la tabla
-    this.vacacionFilter = [
-      { label: 'Si',    value: '1' },
-      { label: 'No',    value: '0' }
-    ];
-    this.esquemaFilter = [
-      { label: 'No aplica',    value: '0' },
-    ];
-    this.clasificacionFilter = [
-      { label: 'No aplica',    value: '0' },
-    ]
   }
 
   onRowSelect(event: any): void {
@@ -52,6 +45,17 @@ export class DataTableSituacionComponent implements OnInit {
 
   onRowUnselect(): void {
     this.companyNominaService.selectRowThirdTable$.emit(null);
+  }
+
+  /**
+   * Devolver valor de la descripción del campo
+   * @param value string
+   * @param objFilter: dropdownType[]
+   * @returns string
+   */
+  getDescripcion(value: string, objFilter: dropdownType[]): string {
+    const descripcion = objFilter.find(val => val.value === value);
+    return descripcion ? descripcion.label : '-';
   }
 
 }
