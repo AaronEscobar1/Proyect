@@ -21,6 +21,9 @@ export interface Situacion {
     nmGrupoRotacionTb:        NmGrupoRotacionTB;
 }
 
+// Interface para actualizar situación
+export type SituacionUpdate = Omit<Situacion, 'idEmpresa' | 'idNomina' | 'codsta' >;
+
 /**
  * Interface para esstatus es de vacación
  */

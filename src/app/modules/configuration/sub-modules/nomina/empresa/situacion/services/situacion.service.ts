@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
-import { Situacion } from '../interfaces/situacion.interfaces';
+import { Situacion, SituacionUpdate } from '../interfaces/situacion.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class SituacionService {
     return this.http.post(this.helpers.getBasicEndPoint(`/configuraciones/nominas/situaciones`), situacion);
   }
 
-  update(situacion: Situacion, situacionUptate: any): Observable<any> {
+  update(situacion: Situacion, situacionUptate: SituacionUpdate): Observable<any> {
     return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/situaciones/${situacion.idEmpresa}/${situacion.idNomina}/${situacion.codsta}`), situacionUptate);
   }
 
