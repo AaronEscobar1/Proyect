@@ -25,13 +25,13 @@ export class DataTableSituacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codeva', header: 'Código'        },
-      { field: 'deseva', header: 'Descripción'   },
-      { field: 'vaceva', header: 'Vacación'      },
-      { field: 'grueva', header: 'Grupo'         },
-      { field: 'coneva', header: 'Cons.'         },
-      { field: 'esqeva', header: 'Esquema'       },
-      { field: 'claeva', header: 'Clasificación' }
+      { field: 'codsta', header: 'Código'        },
+      { field: 'dessta', header: 'Descripción'   },
+      { field: 'nmVacacionStatusTb.vacsta', header: 'Vacación'      },
+      { field: 'idGrupo', header: 'Grupo'         },
+      { field: 'idRotacion', header: 'Cons.'         },
+      { field: 'nmTipoEsquTrabCalcVacaTb.conesq', header: 'Esquema'       },
+      { field: 'cfClaseSituacionTb.clasta', header: 'Clasificación' }
     ];
     // Objeto para filtrar los dias laborables en la tabla
     this.vacacionFilter = [

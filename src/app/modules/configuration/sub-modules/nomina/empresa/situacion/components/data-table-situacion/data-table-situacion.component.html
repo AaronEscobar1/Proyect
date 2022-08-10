@@ -79,9 +79,13 @@
 
             <ng-template pTemplate="body" let-puntaje>
                 <tr [pSelectableRow]="puntaje">
-                    <td>{{ puntaje.codpun }}</td>
-                    <td>{{ puntaje.despun  | titlecase }}</td>
-                    <td>{{ puntaje.aumpun == "1" ? 'Si' : 'No' }}</td>
+                    <td>{{ puntaje.codsta }}</td>
+                    <td>{{ puntaje.dessta  | titlecase }}</td>
+                    <td>{{ puntaje.nmVacacionStatusTb.vacsta }}</td>
+                    <td>{{ puntaje.idGrupo }}</td>
+                    <td>{{ puntaje.idRotacion }}</td>
+                    <td>{{ puntaje.nmTipoEsquTrabCalcVacaTb.conesq }}</td>
+                    <td>{{ puntaje.cfClaseSituacionTb.clasta }}</td>
                 </tr>
             </ng-template>
 

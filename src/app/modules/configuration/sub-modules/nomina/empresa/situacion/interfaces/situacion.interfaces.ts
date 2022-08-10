@@ -21,10 +21,12 @@ export interface Situacion {
     nmGrupoRotacionTb:        NmGrupoRotacionTB;
 }
 
-// Interface para status es de Vacacion
+/**
+ * Interface para esstatus es de vacación
+ */
 export interface NmVacacionStatusTB {
     vacsta:      string;
-    descripcion: null;
+    descripcion: string;
     primaryKey:  PrimaryKeyNmVacacion;
 }
 
@@ -32,10 +34,15 @@ export interface PrimaryKeyNmVacacion {
     vacsta: string;
 }
 
-// Interface para Considerar el esquema de trabajo en calculo de vacacion
+// Interfaces para estatus vacación
+export type EstatusVacacion = Omit<NmVacacionStatusTB, 'primaryKey'>;
+
+/**
+ * Interface para Considerar el esquema de trabajo en calculo de vacacion
+ */
 export interface NmTipoEsquTrabCalcVacaTB {
     conesq:      string;
-    descripcion: null;
+    descripcion: string;
     primaryKey:  PrimaryKeyNmTipoEsquTrabCalcVaca;
 }
 
@@ -43,10 +50,15 @@ export interface PrimaryKeyNmTipoEsquTrabCalcVaca {
     conesq: string;
 }
 
-// Interface para Clasificacion de la situacion
+// Interfaces para esquema de trabajo
+export type EsquemaTrabajo = Omit<NmTipoEsquTrabCalcVacaTB, 'primaryKey'>;
+
+/**
+ * Interface para clasificacion de la situacion
+ */
 export interface CFClaseSituacionTB {
     clasta:      string;
-    descripcion: null;
+    descripcion: string;
     primaryKey:  PrimaryKeyCFClaseSituacion;
 }
 
@@ -54,7 +66,12 @@ export interface PrimaryKeyCFClaseSituacion {
     clasta: string;
 }
 
-// Grupo Rotacion
+// Interfaces para clasificacion de la situacion
+export type ClasesSituaciones = Omit<CFClaseSituacionTB, 'primaryKey'>;
+
+/**
+ * Grupo Rotacion
+ */
 export interface NmGrupoRotacionTB {
     idEmpresa:  string;
     idNomina:   string;
@@ -90,47 +107,47 @@ export interface NmGrupoRotacionTB {
     diag28:     string;
     diag29:     string;
     diag30:     string;
-    diag31:     null;
-    diav01:     null;
-    diav02:     null;
-    diav03:     null;
-    diav04:     null;
-    diav05:     null;
-    diav06:     null;
-    diav07:     null;
-    diav08:     null;
-    diav09:     null;
-    diav10:     null;
-    diav11:     null;
-    diav12:     null;
-    diav13:     null;
-    diav14:     null;
-    diav15:     null;
-    diav16:     null;
-    diav17:     null;
-    diav18:     null;
-    diav19:     null;
-    diav20:     null;
-    diav21:     null;
-    diav22:     null;
-    diav23:     null;
-    diav24:     null;
-    diav25:     null;
-    diav26:     null;
-    diav27:     null;
-    diav28:     null;
-    diav29:     null;
-    diav30:     null;
-    diav31:     null;
+    diag31:     any;
+    diav01:     any;
+    diav02:     any;
+    diav03:     any;
+    diav04:     any;
+    diav05:     any;
+    diav06:     any;
+    diav07:     any;
+    diav08:     any;
+    diav09:     any;
+    diav10:     any;
+    diav11:     any;
+    diav12:     any;
+    diav13:     any;
+    diav14:     any;
+    diav15:     any;
+    diav16:     any;
+    diav17:     any;
+    diav18:     any;
+    diav19:     any;
+    diav20:     any;
+    diav21:     any;
+    diav22:     any;
+    diav23:     any;
+    diav24:     any;
+    diav25:     any;
+    diav26:     any;
+    diav27:     any;
+    diav28:     any;
+    diav29:     any;
+    diav30:     any;
+    diav31:     any;
     canlim:     number;
-    diaga1:     null;
-    diaga2:     null;
-    diaga3:     null;
-    diaga4:     null;
-    diava1:     null;
-    diava2:     null;
-    diava3:     null;
-    diava4:     null;
+    diaga1:     any;
+    diaga2:     any;
+    diaga3:     any;
+    diaga4:     any;
+    diava1:     any;
+    diava2:     any;
+    diava3:     any;
+    diava4:     any;
     primaryKey: PrimaryKeyNmGrupoRotacion;
 }
 

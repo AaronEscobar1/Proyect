@@ -31,5 +31,20 @@ export class SituacionService {
   delete(situacion: any): Observable<any> {
     return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/situaciones/${situacion.idEmpresa}/${situacion.idNomina}/${situacion.codpun}`));
   }
+
+  // Estatus vacaciones
+  getEstatusVacaciones(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/estatusvacaciones`));
+  }
+
+  // Esquema de trabajos
+  getEsquemaTrabajo(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/esquemastrabajos`));
+  }
+
+  // Clases de situaciones
+  getClasesSituaciones(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/clasessituaciones`));
+  }
   
 }
