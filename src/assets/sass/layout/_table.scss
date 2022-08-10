@@ -1,6 +1,10 @@
 @import "./variables";
 
 // Estilos para la tabla
+:host ::ng-deep .p-datatable .p-datatable-header {
+    background: $primary-color !important;
+}
+
 :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
     background: $primary-color !important;
     color: $white-color !important;
