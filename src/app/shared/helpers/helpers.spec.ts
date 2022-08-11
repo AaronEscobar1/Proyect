@@ -69,4 +69,9 @@ describe('HelpersServices', () => {
     expect(buttonOk.innerHTML).toEqual('OK');    
   });
 
+  it('Format Date correctamente', () => {
+    service.formatDate(new Date("Fri Dic 10 2022 18:34:06 GMT-0400 (hora de Venezuela)"));
+    service.formatDate(new Date());
+  });
+
 });
