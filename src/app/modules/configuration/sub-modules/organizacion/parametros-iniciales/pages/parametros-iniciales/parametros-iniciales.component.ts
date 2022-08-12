@@ -70,9 +70,9 @@ export class ParametrosInicialesComponent implements OnInit {
    * Obtener datos de parametros asignado a la empresa
    * @param id: string id empresa
    */
-  loadParametroInicial( id: string ) {
+  loadParametroInicial( idEmpresa: string ) {
     this.spinner.show(undefined, spinnerLight);
-    this.parametrosInicialesService.getById(id)
+    this.parametrosInicialesService.getById(idEmpresa)
       .subscribe({
         next: (res) => {
           this.parametrosIniciales = res;

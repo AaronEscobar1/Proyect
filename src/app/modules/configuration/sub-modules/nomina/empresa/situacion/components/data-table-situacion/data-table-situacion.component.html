@@ -7,7 +7,7 @@
     
             <ng-template pTemplate="header">
                 <tr>
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-center">
                         {{ col.header }}
                         <p-sortIcon [field]="col.field"></p-sortIcon>
                     </th>
@@ -28,9 +28,9 @@
                         </p-columnFilter>
                     </th>
                     <th>
-                        <p-columnFilter field="vaceva" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                        <p-columnFilter [field]="columns[2].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="vacacionFilter" appendTo="body" (onChange)="filter($event.value)" [showClear]="true" [placeholder]="'Filtrar vacación...'">
+                                <p-dropdown [ngModel]="value" [options]="estatusVacacionesFilter" appendTo="body" (onChange)="filter($event.value)" [showClear]="true" [placeholder]="'Filtrar ' + columns[2].header + '...'">
                                     <ng-template let-option pTemplate="item">
                                         <span>{{option.label}}</span>
                                     </ng-template>
@@ -53,9 +53,9 @@
                         </p-columnFilter>
                     </th>
                     <th>
-                        <p-columnFilter field="esqeva" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                        <p-columnFilter [field]="columns[5].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="esquemaFilter" appendTo="body" (onChange)="filter($event.value)" [showClear]="true" [placeholder]="'Filtrar esquema...'">
+                                <p-dropdown [ngModel]="value" [options]="esquemasTrabajoFilter" appendTo="body" (onChange)="filter($event.value)" [showClear]="true" [placeholder]="'Filtrar ' + columns[5].header + '...'">
                                     <ng-template let-option pTemplate="item">
                                         <span>{{option.label}}</span>
                                     </ng-template>
@@ -64,9 +64,9 @@
                         </p-columnFilter>
                     </th>
                     <th>
-                        <p-columnFilter field="claeva" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                        <p-columnFilter [field]="columns[6].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="clasificacionFilter" appendTo="body" (onChange)="filter($event.value)" [showClear]="true" [placeholder]="'Filtrar clasificación...'">
+                                <p-dropdown [ngModel]="value" [options]="claseSituacionesFilter" appendTo="body" (onChange)="filter($event.value)" [showClear]="true" [placeholder]="'Filtrar ' + columns[6].header + '...'">
                                     <ng-template let-option pTemplate="item">
                                         <span>{{option.label}}</span>
                                     </ng-template>
@@ -77,11 +77,15 @@
                 </tr>
             </ng-template>
 
-            <ng-template pTemplate="body" let-puntaje>
-                <tr [pSelectableRow]="puntaje">
-                    <td>{{ puntaje.codpun }}</td>
-                    <td>{{ puntaje.despun  | titlecase }}</td>
-                    <td>{{ puntaje.aumpun == "1" ? 'Si' : 'No' }}</td>
+            <ng-template pTemplate="body" let-situacion>
+                <tr [pSelectableRow]="situacion">
+                    <td>{{ situacion.codsta }}</td>
+                    <td>{{ situacion.dessta  | titlecase }}</td>
+                    <td>{{ situacion.nmVacacionStatusTb.descripcion }}</td>
+                    <td>{{ situacion.idGrupo }}</td>
+                    <td>{{ situacion.idRotacion }}</td>
+                    <td>{{ situacion.nmTipoEsquTrabCalcVacaTb.descripcion }}</td>
+                    <td>{{ situacion.cfClaseSituacionTb.descripcion }}</td>
                 </tr>
             </ng-template>
 

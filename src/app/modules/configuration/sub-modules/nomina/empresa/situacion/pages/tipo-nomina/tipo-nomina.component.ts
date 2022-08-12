@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { Situacion } from '../../interfaces/situacion.interfaces';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -20,13 +21,14 @@ export class TipoNominaComponent implements OnInit {
   @Input() empresaRow!: Company;
 
   // Fila seleccionada de tipos de nominas
-  tipoNominaRow!: TipoNomina | null;
+  nominaRow!: TipoNomina | null;
 
   // Variable para obtener los tipos de nomina por empresa
   tiposNominas: TipoNomina[] = [];
 
-  // Emisión de evento (cargar data de evaluacion)
-  @Output() onGetDataGrupo = new EventEmitter();
+  // Emisión de evento (cargar data de situación y rotacion de grupos)
+  @Output() onGetDataSituacion     = new EventEmitter();
+  @Output() onGetDataRotacionGrupo = new EventEmitter();
 
   // Variable para manejar la suscripción
   subscriber!: Subscription;
@@ -40,14 +42,14 @@ export class TipoNominaComponent implements OnInit {
   ngOnInit(): void {
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable tipo nomina
     this.subscriber = this.selectRowServices.selectRowAlterno$.subscribe( (row: TipoNomina) => {
-      this.tipoNominaRow = row;
+      this.nominaRow = row;
       this.loadSituaciones();
     });
   }
 
   ngOnChanges(): void {
     // Realizar peticion al backend al seleccionar una empresa
-    if ( this.empresaRow && this.empresaRow.id) {
+    if ( this.empresaRow && this.empresaRow.id ) {
       this.loadNominas(this.empresaRow.id);
     } 
     // Vaciar los tipos de nominas cuando la empresa se deselecciona
@@ -56,9 +58,9 @@ export class TipoNominaComponent implements OnInit {
     }
   }
 
-  loadNominas(id: string): void {
+  loadNominas( idEmpresa: string ): void {
     this.spinner.show(undefined, spinnerLight);
-    this.companyNominaService.getAllNominasByEmpresa(id)
+    this.companyNominaService.getAllNominasByEmpresa(idEmpresa)
       .subscribe({
         next: (res: TipoNomina[]) => {
           this.tiposNominas = res;
@@ -72,18 +74,44 @@ export class TipoNominaComponent implements OnInit {
   }
 
   /**
-   * Obtener los puntajes de evaluacion relacionadas con una empresa y un tipo de nomina
+   * Obtener las situaciones relacionadas con una empresa y tipo de nomina
    */
-   loadSituaciones(): void {
-    if ( !this.tipoNominaRow ) {
+  loadSituaciones(isRefresh: boolean = false): void {
+    if ( !this.nominaRow ) {
       return;
     }
     this.spinner.show(undefined, spinnerLight);
-    this.situacionService.getAllSituacionesByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
+    this.situacionService.getAllSituacionesByEmpresaNomina(this.empresaRow.id, this.nominaRow.tipnom)
+      .subscribe({
+        next: (res: Situacion[]) => {
+          this.onGetDataSituacion.emit(res);
+          this.spinner.hide();
+          // Realizar peticion al backend para buscar los grupos de rotacion cuando no es por metodo refresh
+          if (!isRefresh) {
+            // Vaciar lista de rotacion de grupos
+            this.onGetDataRotacionGrupo.emit([]);
+            this.loadRotacionGruposByEmpresaNomina();
+          }
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+  
+  /**
+   * Cargar rotacion de grupos por empresa y nomina para el listado del formulario
+   */
+  loadRotacionGruposByEmpresaNomina(): void {
+    if ( !this.nominaRow ) {
+      return;
+    }
+    this.spinner.show(undefined, spinnerLight);
+    this.companyNominaService.getAllRotacionGruposByEmpresaNomina(this.empresaRow.id, this.nominaRow.tipnom)
       .subscribe({
         next: (res) => {
-          console.log(res);
-          this.onGetDataGrupo.emit(res);
+          this.onGetDataRotacionGrupo.emit(res);
           this.spinner.hide();
         },
         error: (err) => {
@@ -93,7 +121,7 @@ export class TipoNominaComponent implements OnInit {
       });
   }
 
-  /** Destrucción del observable*/
+  /** Destrucción del observable */
   ngOnDestroy(): void {
     this.subscriber.unsubscribe();
   }

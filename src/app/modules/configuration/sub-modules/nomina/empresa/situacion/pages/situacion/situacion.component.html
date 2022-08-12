@@ -60,7 +60,11 @@
         </div>
 
         <!-- Componente table -->
-        <app-data-table-situacion [situaciones]="situaciones"></app-data-table-situacion> 
+        <app-data-table-situacion [situaciones]="situaciones"
+                                  [estatusVacacionesFilter]="estatusVacacionesFilter"
+                                  [esquemasTrabajoFilter]="esquemasTrabajoFilter"
+                                  [claseSituacionesFilter]="claseSituacionesFilter">
+        </app-data-table-situacion> 
 
     </div>
 </div>
@@ -72,15 +76,20 @@
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
-<!-- <app-modal-add-edit
+<app-modal-add-edit
     [empresaRow]="empresaRow"
     [nominaRow]="nominaRow"
-    [puntajesEvaluacion]="puntajesEvaluacion"
-    [puntajeEvaluacionSelect]="puntajeEvaluacionSelect"
+    [situaciones]="situaciones" 
+    [situacionSelect]="situacionSelect"
+    [estatusVacaciones]="estatusVacaciones"
+    [esquemasTrabajo]="esquemasTrabajo"
+    [claseSituaciones]="claseSituaciones"
+    [rotacionGrupos]="rotacionGrupos"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()"
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
-</app-modal-add-edit> -->
+</app-modal-add-edit>
+
 

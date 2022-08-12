@@ -1,15 +1,33 @@
-<div class="mt-3" >
-    <p-table [value]="tarifasImpuestos" [columns]="columns"
+<div class="mt-3">
+    <p-table [value]="tarifasImpuestos" [columns]="columns" #dt1
             selectionMode="single" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()"
             [paginator]="true" [rows]="10"
             [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
             [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} registros de {totalRecords} entradas." [rowsPerPageOptions]="[5,10,25,50]">
     
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <span class="p-input-icon-left mr-auto">
+                        <p-calendar view="month"
+                                    dateFormat="yy-mm"
+                                    appendTo="body"
+                                    [(ngModel)]="dateFilter"
+                                    (onSelect)="applyFilterGlobal($event)"
+                                    todayButtonStyleClass="p-button-rounded p-button-danger"
+                                    placeholder="Filtrar por año/mes">
+                        </p-calendar>
+                        <button pButton
+                                pRipple
+                                label="Limpiar"
+                                class="p-button-raised p-button-secondary mx-1"
+                                icon="pi pi-filter-slash"
+                                (click)="clear(dt1)">
+                        </button>
+                    </span>
+                </div>
+            </ng-template>
+
             <ng-template pTemplate="header">
-                <!-- <tr>
-                    <th [attr.colspan]="3"> TODO: Filtrar por fecha </th>
-                    <th [attr.colspan]="4"></th>
-                </tr> -->
                 <tr>
                     <th [attr.colspan]="2" style="text-align: center; padding: 0px;">  Remuneración  </th>
                     <th [attr.colspan]="2"></th>
@@ -17,10 +35,13 @@
                     <th [attr.colspan]="1"></th>
                 </tr>
                 <tr>
-                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-center">
-                        {{ col.header }}
-                        <p-sortIcon [field]="col.field"></p-sortIcon>
-                    </th>
+                    <th [pSortableColumn]="columns[0].field" class="text-center"> {{ columns[0].header }} <p-sortIcon [field]="columns[0].field"></p-sortIcon></th>
+                    <th [pSortableColumn]="columns[1].field" class="text-center"> {{ columns[1].header }} <p-sortIcon [field]="columns[1].field"></p-sortIcon></th>
+                    <th [pSortableColumn]="columns[2].field" class="text-center"> {{ columns[2].header }} <p-sortIcon [field]="columns[2].field"></p-sortIcon></th>
+                    <th [pSortableColumn]="columns[3].field" class="text-center"> {{ columns[3].header }} <p-sortIcon [field]="columns[3].field"></p-sortIcon></th>
+                    <th [pSortableColumn]="columns[4].field" class="text-center"> {{ columns[4].header }} <p-sortIcon [field]="columns[4].field"></p-sortIcon></th>
+                    <th [pSortableColumn]="columns[5].field" class="text-center"> {{ columns[5].header }} <p-sortIcon [field]="columns[5].field"></p-sortIcon></th>
+                    <th [pSortableColumn]="columns[6].field" class="text-center"> {{ columns[6].header }} <p-sortIcon [field]="columns[6].field"></p-sortIcon></th>
                 </tr> 
                 <tr>
                     <th>
@@ -87,8 +108,8 @@
                 <tr [pSelectableRow]="tarifa">
                     <td class="text-right">{{ tarifa.remdes }}</td>
                     <td class="text-right">{{ tarifa.remhas }}</td>
-                    <td class="text-center">{{ tipoImpuestoString(tarifa.tipreg) }}</td>
-                    <td class="text-center">{{ frecuenciaImpuestoString(tarifa.frecue) }}</td>
+                    <td class="text-center">{{ getDescripcion(tarifa.tipreg, tiposTarifasFilter) }}</td>
+                    <td class="text-center">{{ getDescripcion(tarifa.frecue, frecuenciasImpuestoFilter) }}</td>
                     <td class="text-right">{{ tarifa.tasim1 }}</td>
                     <td class="text-right">{{ tarifa.tasim2 }}</td>
                     <td class="text-right">{{ tarifa.valsus }}</td>
