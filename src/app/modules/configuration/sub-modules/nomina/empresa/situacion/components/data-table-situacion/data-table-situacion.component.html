@@ -81,11 +81,11 @@
                 <tr [pSelectableRow]="situacion">
                     <td>{{ situacion.codsta }}</td>
                     <td>{{ situacion.dessta  | titlecase }}</td>
-                    <td>{{ getDescripcion(situacion.nmVacacionStatusTb.vacsta, estatusVacacionesFilter) }}</td>
+                    <td>{{ situacion.nmVacacionStatusTb.descripcion }}</td>
                     <td>{{ situacion.idGrupo }}</td>
                     <td>{{ situacion.idRotacion }}</td>
-                    <td>{{ getDescripcion(situacion.nmTipoEsquTrabCalcVacaTb.conesq, esquemasTrabajoFilter) }}</td>
-                    <td>{{ getDescripcion(situacion.cfClaseSituacionTb.clasta, claseSituacionesFilter) }}</td>
+                    <td>{{ situacion.nmTipoEsquTrabCalcVacaTb.descripcion }}</td>
+                    <td>{{ situacion.cfClaseSituacionTb.descripcion }}</td>
                 </tr>
             </ng-template>
 

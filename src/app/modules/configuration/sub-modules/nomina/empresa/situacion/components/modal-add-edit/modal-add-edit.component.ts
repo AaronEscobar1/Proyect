@@ -2,11 +2,13 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
-import { ClaseSituaciones, EsquemaTrabajo, EstatusVacacion, Situacion } from '../../interfaces/situacion.interfaces';
+import { ClaseSituaciones, EsquemaTrabajo, EstatusVacacion, Situacion, SituacionUpdate } from '../../interfaces/situacion.interfaces';
 import { SituacionService } from '../../services/situacion.service';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { GrupoRotacion } from '../../../shared-empresa/interfaces/grupo-rotacion.interfaces';
+import { ObjectEventChange } from 'src/app/shared/interfaces/country-entity.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -45,6 +47,22 @@ export class ModalAddEditComponent implements OnInit {
     return this.form.controls['nmVacacionStatusTb'] as FormGroup;
   }
 
+  // Variable para obtener el form group de Considerar el esquema de trabajo y a su vez validar si el campo de los controles tiene errores
+  get nmTipoEsquTrabFormGroup(): FormGroup {
+    return this.form.controls['nmTipoEsquTrabCalcVacaTb'] as FormGroup;
+  }
+
+  // Variable para obtener el form group de Clasificacion de la situación y a su vez validar si el campo de los controles tiene errores
+  get cfClaseSituacionFormGroup(): FormGroup {
+    return this.form.controls['cfClaseSituacionTb'] as FormGroup;
+  }
+
+  // Grupos rotación por empresa y nomina
+  @Input() rotacionGrupos: GrupoRotacion[] = [];
+
+  // Objeto de consecutivos para mostrar en la lista del formulario
+  consecutivos: GrupoRotacion[] = [];
+
   // Objeto de estatus vacaciones
   @Input() estatusVacaciones: EstatusVacacion[] = [];  
 
@@ -75,11 +93,11 @@ export class ModalAddEditComponent implements OnInit {
       }),
       // Considerar el esquema de trabajo
       nmTipoEsquTrabCalcVacaTb : this.fb.group({
-        conesq:  [  ]
+        conesq:  [   , [ Validators.required] ]
       }),
       // Clasificacion de la situación
       cfClaseSituacionTb: this.fb.group({
-        clasta:  [  ]
+        clasta:  [   , [ Validators.required] ]
       }),
       /**
        * Formulario con grupo rotacion
@@ -87,14 +105,7 @@ export class ModalAddEditComponent implements OnInit {
       // Código del Grupo de Trabajo
       idGrupo:    [  , [ Validators.maxLength(2) ] ],            
       // Consecutivo del Grupo
-      idRotacion: [  , [ Validators.pattern('[0-9]{1,2}') ] ],
-      // Grupo Rotacion
-      nmGrupoRotacionTb: this.fb.group({
-        idEmpresa: [  ],
-        idNomina:  [  ],
-        idGrupo:   [  ],
-        congru:    [  ]
-      })
+      idRotacion: [  , [ Validators.pattern('[0-9]{1,2}') ] ]
     });
   }
 
@@ -103,15 +114,67 @@ export class ModalAddEditComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
-      const formInit = { nmVacacionStatusTb: { vacsta: '0' } }
+      const formInit = { nmVacacionStatusTb: { vacsta: '0' }, nmTipoEsquTrabCalcVacaTb: { conesq: '0' }, cfClaseSituacionTb: { clasta: '0' } };
       this.form.reset(formInit);
       this.form.controls['codsta'].enable();
+      this.form.controls['idRotacion'].disable();
       return;
     }
     // Deshabilitamos los campos que no se pueden editar
     this.form.controls['codsta'].disable();
+    // Cargar grupos y consecutivos si existen
+    if ( this.situacionSelect && this.situacionSelect.idGrupo ) {
+      this.loadRotacionGrupos(this.situacionSelect.idGrupo);
+    }
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.situacionSelect);
+  }
+
+  /**
+   * Realiza petición al backend para buscar los consecutivos relacionadas con el grupo rotación
+   * @param event: ObjectEventChange
+   */
+  rotacionGrupoSelectChange(event: ObjectEventChange): void {
+    const idGrupo = event.value;
+    if (idGrupo == null) { return; }
+    // Limpiamos el campo consecutivo
+    this.form.controls['idRotacion'];
+    // Peticion al backend para buscar los consecutivos
+    this.loadRotacionGrupos(idGrupo);
+  }
+
+  /**
+   * Carga los consecutivos relacionadas con el grupo rotación
+   * @param idGrupo: string código del grupo
+   */
+  loadRotacionGrupos(idGrupo: string): void {
+    this.consecutivos = [];
+    this.spinner.show();
+    this.companyNominaService.getAllRotacionGruposByEmpresaNominaRotacionGrupo(this.empresaRow.id, this.nominaRow.tipnom, idGrupo)
+      .subscribe({
+        next: (resp: GrupoRotacion[]) => {
+          // Transformar el atributo congru que viene number a string para poder mostrar en la lista cuando se vaya a editar
+          this.consecutivos = resp.map(data => {
+            data.congru = data.congru.toString()
+            return data;
+          })
+          this.form.controls['idRotacion'].enable();
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Limpiar data de consecutivos
+   */
+  clearRotacionGrupoSelect() {
+    this.form.controls['idRotacion'].reset();
+    this.consecutivos = [];
+    this.form.controls['idRotacion'].disable();
   }
 
   /**
@@ -119,7 +182,6 @@ export class ModalAddEditComponent implements OnInit {
    * @returns void
    */
    save(): void {
-    // return;
     if(this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -134,13 +196,18 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
 
-    // this.spinner.show();
+    // Validar grupo y consecutivos posean datos
+    if ( data.idGrupo && !data.idRotacion ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el grupo como el consecutivo.', life: 3000});
+      return;
+    }
+
+    this.spinner.show();
 
     if(this.isEdit) {
       // Editar
-      // TODO: QUITAR RETURN
-      return;
-      this.situacionService.update(data, data)
+      const dataUpdate = this.structureJsonUpdate(data);
+      this.situacionService.update(data, dataUpdate)
         .subscribe({
           next: (resp) => {
             this.closeModal();
@@ -158,12 +225,9 @@ export class ModalAddEditComponent implements OnInit {
     }
     
     // Crear
-    // Asignar el id empresa al centro de trabajo para crear
-    data.idEmpresa = this.empresaRow ? this.empresaRow.id: '';
-    data.idNomina = this.nominaRow ? this.nominaRow.tipnom: '';
-    console.log(data);
-    // TODO: QUITAR RETURN
-    return;
+    // Asignar el idEmpresa e idNomina para crear situación
+    data.idEmpresa = this.empresaRow.id;
+    data.idNomina = this.nominaRow.tipnom;
     this.situacionService.create(data)
       .subscribe({
         next: (resp) => {
@@ -178,6 +242,43 @@ export class ModalAddEditComponent implements OnInit {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la situación.', life: 3000});
         }
       });
+  }
+
+  /**
+   * Armar objeto para actualizar situación
+   * @param data: Situacion, data original que viene desde el formulario
+   * @returns SituacionUpdate, data para actualizar
+   */
+  structureJsonUpdate(data: Situacion): SituacionUpdate {
+    let dataUpdate: SituacionUpdate = { 
+      dessta: data.dessta, 
+      idGrupo: data.idGrupo,
+      idRotacion: data.idRotacion,
+      // Status es de Vacacion
+      nmVacacionStatusTb: { 
+        vacsta: data.nmVacacionStatusTb.vacsta 
+      },
+      // Considerar el esquema de trabajo
+      nmTipoEsquTrabCalcVacaTb: { 
+        conesq: data.nmTipoEsquTrabCalcVacaTb.conesq 
+      },
+      // Clasificacion de la situacion
+      cfClaseSituacionTb: { 
+        clasta: data.cfClaseSituacionTb.clasta
+      }
+    };
+    // Si existe data en grupo y rotación se arma un objeto nuevo
+    if ( data.idGrupo || data.idRotacion ) {
+      const nmGrupoRotacionTb = { 
+        idEmpresa: data.idEmpresa,
+        idNomina:  data.idNomina,
+        idGrupo:   data.idGrupo,
+        congru:    data.idRotacion
+      }
+      // Agregar el nuevo objeto 'nmGrupoRotacionTb' al objeto original 
+      dataUpdate = { ...dataUpdate, nmGrupoRotacionTb };
+    }
+    return dataUpdate;
   }
 
   closeModal(): void {

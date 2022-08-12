@@ -1,3 +1,5 @@
+import { GrupoRotacion } from "../../shared-empresa/interfaces/grupo-rotacion.interfaces";
+
 export interface Situacion {
     // Código de la Compañia                        (Requerido)
     idEmpresa:                string;
@@ -18,11 +20,26 @@ export interface Situacion {
     // Clasificacion de la situacion
     cfClaseSituacionTb:       CFClaseSituacionTB;
     // Grupo Rotacion
-    nmGrupoRotacionTb:        NmGrupoRotacionTB;
+    nmGrupoRotacionTb:        GrupoRotacion;
 }
 
 // Interface para actualizar situación
-export type SituacionUpdate = Omit<Situacion, 'idEmpresa' | 'idNomina' | 'codsta' >;
+export interface SituacionUpdate {
+    // Descripcion de la situación                  (Requerido)
+    dessta:                   string;
+    // Consecutivo del Grupo
+    idGrupo:                  string | null;
+    // Considerar el esquema de trabajo en calculo de vacacion (0= No, 1=Generar, 2= Cargar)
+    idRotacion:               string | null;
+    // Status es de Vacacion (0=No, 1..4=Si)        (Requerido)
+    nmVacacionStatusTb:       PrimaryKeyNmVacacion;
+    // Considerar el esquema de trabajo en calculo de vacacion (0= No, 1=Generar, 2= Cargar)
+    nmTipoEsquTrabCalcVacaTb: PrimaryKeyNmTipoEsquTrabCalcVaca;
+    // Clasificacion de la situacion
+    cfClaseSituacionTb:       PrimaryKeyCFClaseSituacion;
+    // Grupo Rotacion
+    nmGrupoRotacionTb?:       PrimaryKeyNmGrupoRotacion;
+}
 
 /**
  * Interface para esstatus es de vacación
@@ -30,7 +47,7 @@ export type SituacionUpdate = Omit<Situacion, 'idEmpresa' | 'idNomina' | 'codsta
 export interface NmVacacionStatusTB {
     vacsta:      string;
     descripcion: string;
-    primaryKey:  PrimaryKeyNmVacacion;
+    primaryKey?:  PrimaryKeyNmVacacion;
 }
 
 export interface PrimaryKeyNmVacacion {
@@ -46,7 +63,7 @@ export type EstatusVacacion = Omit<NmVacacionStatusTB, 'primaryKey'>;
 export interface NmTipoEsquTrabCalcVacaTB {
     conesq:      string;
     descripcion: string;
-    primaryKey:  PrimaryKeyNmTipoEsquTrabCalcVaca;
+    primaryKey?:  PrimaryKeyNmTipoEsquTrabCalcVaca;
 }
 
 export interface PrimaryKeyNmTipoEsquTrabCalcVaca {
@@ -62,7 +79,7 @@ export type EsquemaTrabajo = Omit<NmTipoEsquTrabCalcVacaTB, 'primaryKey'>;
 export interface CFClaseSituacionTB {
     clasta:      string;
     descripcion: string;
-    primaryKey:  PrimaryKeyCFClaseSituacion;
+    primaryKey?:  PrimaryKeyCFClaseSituacion;
 }
 
 export interface PrimaryKeyCFClaseSituacion {
@@ -73,90 +90,11 @@ export interface PrimaryKeyCFClaseSituacion {
 export type ClaseSituaciones = Omit<CFClaseSituacionTB, 'primaryKey'>;
 
 /**
- * Grupo Rotacion
+ * Interface para Grupo Rotacion
  */
-export interface NmGrupoRotacionTB {
-    idEmpresa:  string;
-    idNomina:   string;
-    idGrupo:    string;
-    congru:     number;
-    diag01:     string;
-    diag02:     string;
-    diag03:     string;
-    diag04:     string;
-    diag05:     string;
-    diag06:     string;
-    diag07:     string;
-    diag08:     string;
-    diag09:     string;
-    diag10:     string;
-    diag11:     string;
-    diag12:     string;
-    diag13:     string;
-    diag14:     string;
-    diag15:     string;
-    diag16:     string;
-    diag17:     string;
-    diag18:     string;
-    diag19:     string;
-    diag20:     string;
-    diag21:     string;
-    diag22:     string;
-    diag23:     string;
-    diag24:     string;
-    diag25:     string;
-    diag26:     string;
-    diag27:     string;
-    diag28:     string;
-    diag29:     string;
-    diag30:     string;
-    diag31:     any;
-    diav01:     any;
-    diav02:     any;
-    diav03:     any;
-    diav04:     any;
-    diav05:     any;
-    diav06:     any;
-    diav07:     any;
-    diav08:     any;
-    diav09:     any;
-    diav10:     any;
-    diav11:     any;
-    diav12:     any;
-    diav13:     any;
-    diav14:     any;
-    diav15:     any;
-    diav16:     any;
-    diav17:     any;
-    diav18:     any;
-    diav19:     any;
-    diav20:     any;
-    diav21:     any;
-    diav22:     any;
-    diav23:     any;
-    diav24:     any;
-    diav25:     any;
-    diav26:     any;
-    diav27:     any;
-    diav28:     any;
-    diav29:     any;
-    diav30:     any;
-    diav31:     any;
-    canlim:     number;
-    diaga1:     any;
-    diaga2:     any;
-    diaga3:     any;
-    diaga4:     any;
-    diava1:     any;
-    diava2:     any;
-    diava3:     any;
-    diava4:     any;
-    primaryKey: PrimaryKeyNmGrupoRotacion;
-}
-
 export interface PrimaryKeyNmGrupoRotacion {
     idEmpresa: string;
     idGrupo:   string;
     idNomina:  string;
-    congru:    number;
+    congru:    string;
 }

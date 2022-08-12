@@ -7,6 +7,7 @@ import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interface
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { ClaseSituaciones, EsquemaTrabajo, EstatusVacacion, Situacion } from '../../interfaces/situacion.interfaces';
 import { SituacionService } from '../../services/situacion.service';
+import { GrupoRotacion } from '../../../shared-empresa/interfaces/grupo-rotacion.interfaces';
 
 @Component({
   selector: 'app-situacion',
@@ -23,6 +24,9 @@ export class SituacionComponent implements OnInit {
 
   // Objeto de situaciones por empresa y nomina
   @Input() situaciones: Situacion[] = [];
+
+  // Objeto Grupos rotación para mostrar en el formulario
+  @Input() rotacionGrupos: GrupoRotacion[] = [];
 
   // Objeto seleccionado para editar
   situacionSelect!: Situacion | undefined;
@@ -64,7 +68,10 @@ export class SituacionComponent implements OnInit {
     this.loadEsquemaTrabajo();
     this.loadClasesSituaciones();
   }
-
+  
+  /**
+   * Cargar estatus de vacaciones para el listado del formulario
+   */
   loadEstatusVacaciones(): void {
     this.spinner.show();
     this.situacionService.getEstatusVacaciones()
@@ -82,6 +89,9 @@ export class SituacionComponent implements OnInit {
       });
   }
 
+  /**
+   * Cargar esquema de trabajo para el listado del formulario
+   */
   loadEsquemaTrabajo(): void {
     this.spinner.show();
     this.situacionService.getEsquemaTrabajo()
@@ -99,6 +109,9 @@ export class SituacionComponent implements OnInit {
       });
   }
 
+  /**
+   * Cargar clases situaciones para el listado del formulario
+   */
   loadClasesSituaciones(): void {
     this.spinner.show();
     this.situacionService.getClasesSituaciones()

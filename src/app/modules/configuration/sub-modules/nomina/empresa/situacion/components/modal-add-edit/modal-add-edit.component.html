@@ -52,7 +52,7 @@
                     <div class="col-12 md:col-4">
                         
                         <div class="field" formGroupName="nmVacacionStatusTb">
-                            <label for="vacsta">Vacación *</label>
+                            <label for="vacsta">Vacación: *</label>
                             <p-dropdown [options]="estatusVacaciones" 
                                         inputId="vacsta"
                                         appendTo="body" 
@@ -80,16 +80,26 @@
                             <div class="col-12 md:col-6">
 
                                 <div class="field">
-                                    <label for="idGrupo">Grupo:</label>
-                                    <input  type="text"
-                                            id="idGrupo" 
-                                            pInputText
-                                            formControlName="idGrupo"
-                                            placeholder="Ingrese el grupo"/>
+                                    
+                                    <label for="idGrupo">Grupo: *</label>
+                                    <p-dropdown [options]="rotacionGrupos" 
+                                                inputId="idGrupo"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="idGrupo"
+                                                formControlName="idGrupo"
+                                                optionLabel="idGrupo"
+                                                optionValue="idGrupo"
+                                                (onChange)="rotacionGrupoSelectChange($event)"
+                                                [showClear]="true"
+                                                (onClear)="clearRotacionGrupoSelect()"
+                                                placeholder="Seleccione el grupo">
+                                    </p-dropdown>
                                     <span class="form-text text-danger -mt-2 mb-2"
-                                        *ngIf="campoInvalid('idGrupo')">
+                                          *ngIf="campoInvalid('idGrupo')">
                                         El grupo es de longitud máxima de 2 dígitos, formato alfanumérico.
                                     </span>
+
                                 </div>
 
                             </div>
@@ -98,11 +108,17 @@
 
                                 <div class="field">
                                     <label for="idRotacion">Consecutivo:</label>
-                                    <input  type="text"
-                                            id="idRotacion" 
-                                            pInputText
-                                            formControlName="idRotacion"
-                                            placeholder="Ingrese el consecutivo"/>
+                                    <p-dropdown [options]="consecutivos"
+                                                inputId="idRotacion"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="congru"
+                                                formControlName="idRotacion"
+                                                optionLabel="congru"
+                                                optionValue="congru"
+                                                [showClear]="true"
+                                                placeholder="Seleccione el consecutivo">
+                                    </p-dropdown>
                                     <span class="form-text text-danger -mt-2 mb-2"
                                           *ngIf="campoInvalid('idRotacion')">
                                         El consecutivo es de longitud máxima de 2 dígitos, formato númerico.
@@ -127,9 +143,15 @@
                                     formControlName="conesq"
                                     optionLabel="descripcion"
                                     optionValue="conesq"
-                                    [showClear]="true"
                                     placeholder="Seleccione el esquema">
                         </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="nmTipoEsquTrabFormGroup.controls['conesq'].errors
+                                    && nmTipoEsquTrabFormGroup.controls['conesq'].touched
+                                    && nmTipoEsquTrabFormGroup.controls['conesq'].dirty 
+                                    && form.invalid">
+                            El esquema es obligatorio.
+                        </span>
                     </div>
 
                     <div class="field col-12 md:col-6" formGroupName="cfClaseSituacionTb">
@@ -140,9 +162,15 @@
                                     formControlName="clasta"
                                     optionLabel="descripcion"
                                     optionValue="clasta"
-                                    [showClear]="true"
                                     placeholder="Seleccione la clasificación">
                         </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="cfClaseSituacionFormGroup.controls['clasta'].errors
+                                    && cfClaseSituacionFormGroup.controls['clasta'].touched
+                                    && cfClaseSituacionFormGroup.controls['clasta'].dirty 
+                                    && form.invalid">
+                            La clasificación es obligatoria.
+                        </span>
                     </div>
 
                 </div>

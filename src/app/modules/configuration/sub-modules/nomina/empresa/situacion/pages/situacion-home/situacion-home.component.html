@@ -22,7 +22,8 @@
                     
                         <div class="col-12 md:col-6">
                             <app-tipo-nomina [empresaRow]="empresaRow"
-                                             (onGetDataGrupo)="getDataGrupo($event)">
+                                             (onGetDataSituacion)="getDataSituacion($event)"
+                                             (onGetDataRotacionGrupo)="getDataRotacionGrupo($event)">
                             </app-tipo-nomina>
                         </div>
                     </div>
@@ -37,6 +38,7 @@
                     <app-situacion  [empresaRow]="empresaRow"
                                     [nominaRow]="nominaRow"
                                     [situaciones]="situaciones"
+                                    [rotacionGrupos]="rotacionGrupos"
                                     (onRefresh)="refresh()">
                     </app-situacion>
 
