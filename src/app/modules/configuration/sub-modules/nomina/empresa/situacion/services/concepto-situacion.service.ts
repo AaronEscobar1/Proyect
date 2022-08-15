@@ -34,4 +34,8 @@ export class ConceptoSituacionService {
     return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${situacion.idEmpresa}/nominas/${situacion.idNomina}/situaciones/${situacion.codsta}/conceptos/${concepto.idConcepto}`));
   }
 
+  // Suspension por vacación
+  getSuspensionVacacion(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/suspencionesvacaciones`));
+  }
 }

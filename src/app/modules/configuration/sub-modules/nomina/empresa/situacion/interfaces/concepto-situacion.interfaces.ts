@@ -34,3 +34,9 @@ export interface ConceptoSituacionCreate {
 
 
 export type ConceptoSituacionUpdate = Omit<ConceptoSituacionCreate, 'idConcepto'>;
+
+// Interfaces de suspenciones por vacacion
+export interface SuspencionVacacion {
+    susvac:      string;
+    descripcion: string;
+}
