@@ -1,1 +1,200 @@
-<p>modal-add-edit works!</p>
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-4">
+                        <label for="codsta">Código *</label>
+                        <input  type="text"
+                                id="codsta" 
+                                pInputText
+                                formControlName="codsta"
+                                placeholder="Ingrese el código"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('codsta')">
+                            {{ codstaMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-8">
+                        <label for="dessta">Descripción *</label>
+                        <input  type="text" 
+                                id="dessta"
+                                pInputText
+                                formControlName="dessta"
+                                placeholder="Ingrese la descripción"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('dessta')">
+                            {{ desstaMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="col-12 md:col-4">
+                        
+                        <div class="field" formGroupName="nmVacacionStatusTb">
+                            <label for="vacsta">Vacación: *</label>
+                            <p-dropdown [options]="estatusVacaciones" 
+                                        inputId="vacsta"
+                                        appendTo="body" 
+                                        formControlName="vacsta"
+                                        optionLabel="descripcion"
+                                        optionValue="vacsta"
+                                        placeholder="Seleccione la vacación">
+                            </p-dropdown>
+                            <span class="form-text text-danger"
+                                    *ngIf="nmVacacionFormGroup.controls['vacsta'].errors
+                                           && nmVacacionFormGroup.controls['vacsta'].touched
+                                           && nmVacacionFormGroup.controls['vacsta'].dirty 
+                                           && form.invalid">
+                                La vacación es obligatoria.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 md:col-8">
+
+                        <div class="formgrid grid">
+
+                            <div class="col-12 md:col-6">
+
+                                <div class="field">
+                                    
+                                    <label for="idGrupo">Grupo: *</label>
+                                    <p-dropdown [options]="rotacionGrupos" 
+                                                inputId="idGrupo"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="idGrupo"
+                                                formControlName="idGrupo"
+                                                optionLabel="idGrupo"
+                                                optionValue="idGrupo"
+                                                (onChange)="rotacionGrupoSelectChange($event)"
+                                                [showClear]="true"
+                                                (onClear)="clearRotacionGrupoSelect()"
+                                                placeholder="Seleccione el grupo">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger -mt-2 mb-2"
+                                          *ngIf="campoInvalid('idGrupo')">
+                                        El grupo es de longitud máxima de 2 dígitos, formato alfanumérico.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 md:col-6">
+
+                                <div class="field">
+                                    <label for="idRotacion">Consecutivo:</label>
+                                    <p-dropdown [options]="consecutivos"
+                                                inputId="idRotacion"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="congru"
+                                                formControlName="idRotacion"
+                                                optionLabel="congru"
+                                                optionValue="congru"
+                                                [showClear]="true"
+                                                placeholder="Seleccione el consecutivo">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger -mt-2 mb-2"
+                                          *ngIf="campoInvalid('idRotacion')">
+                                        El consecutivo es de longitud máxima de 2 dígitos, formato númerico.
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- Fin de grid -->
+
+                    </div> <!-- Fin de columns -->
+
+                </div> <!-- Fin de grid -->
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-6" formGroupName="nmTipoEsquTrabCalcVacaTb">
+                        <label for="conesq">Esquema: </label>
+                        <p-dropdown [options]="esquemasTrabajo" 
+                                    appendTo="body" 
+                                    inputId="conesq"
+                                    formControlName="conesq"
+                                    optionLabel="descripcion"
+                                    optionValue="conesq"
+                                    placeholder="Seleccione el esquema">
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="nmTipoEsquTrabFormGroup.controls['conesq'].errors
+                                    && nmTipoEsquTrabFormGroup.controls['conesq'].touched
+                                    && nmTipoEsquTrabFormGroup.controls['conesq'].dirty 
+                                    && form.invalid">
+                            El esquema es obligatorio.
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6" formGroupName="cfClaseSituacionTb">
+                        <label for="clasta">Clasificación: </label>
+                        <p-dropdown [options]="claseSituaciones" 
+                                    appendTo="body" 
+                                    inputId="clasta"
+                                    formControlName="clasta"
+                                    optionLabel="descripcion"
+                                    optionValue="clasta"
+                                    placeholder="Seleccione la clasificación">
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="cfClaseSituacionFormGroup.controls['clasta'].errors
+                                    && cfClaseSituacionFormGroup.controls['clasta'].touched
+                                    && cfClaseSituacionFormGroup.controls['clasta'].dirty 
+                                    && form.invalid">
+                            La clasificación es obligatoria.
+                        </span>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar"  
+                        class="p-button-secondary my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-save"
+                        class="btn-infocent my-1" 
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

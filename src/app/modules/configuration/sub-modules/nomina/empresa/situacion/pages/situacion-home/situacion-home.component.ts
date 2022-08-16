@@ -4,6 +4,8 @@ import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interface
 import { Subscription } from 'rxjs';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { TipoNominaComponent } from '../tipo-nomina/tipo-nomina.component';
+import { Situacion } from '../../interfaces/situacion.interfaces';
+import { GrupoRotacion } from '../../../shared-empresa/interfaces/grupo-rotacion.interfaces';
 
 @Component({
   selector: 'app-situacion-home',
@@ -18,8 +20,11 @@ export class SituacionHomeComponent implements OnInit {
   nominaRow!: TipoNomina;
 
   // Objeto para mostrar en la tabla de situacion
-  situaciones: any[] = [];
+  situaciones: Situacion[] = [];
   
+  // Objeto Grupos rotación para mostrar en el formulario
+  rotacionGrupos: GrupoRotacion[] = [];
+
   // Emisión de evento de padre a hijo (cargar data de situacion)
   @ViewChild(TipoNominaComponent) tipoNominaComponent!: TipoNominaComponent;
 
@@ -36,18 +41,26 @@ export class SituacionHomeComponent implements OnInit {
   }
 
   /**
-   * Cargar evaluaciones
+   * Cargar situaciones
    */
   refresh(): void {
-    this.tipoNominaComponent.loadSituaciones();
+    this.tipoNominaComponent.loadSituaciones(true);
   }
 
   /**
-   * Obtener todos los evaluaciones por empresa y tipo de nomina
-   * @param situacionesEvent: any[] lista de evaluaciones
+   * Obtener todas las situaciones por empresa y tipo de nomina
+   * @param situacionesEvent: Situacion[] lista de situaciones
    */
-  getDataGrupo(situacionesEvent: any[]): void {
+  getDataSituacion(situacionesEvent: Situacion[]): void {
     this.situaciones = situacionesEvent;
+  }
+
+  /**
+   * Obtener todas las situaciones por empresa y tipo de nomina
+   * @param gruposRotacionesEvent: Situacion[] lista de situaciones
+   */
+   getDataRotacionGrupo(gruposRotacionesEvent: GrupoRotacion[]): void {
+    this.rotacionGrupos = gruposRotacionesEvent;
   }
 
   /** Destrucción del observable*/

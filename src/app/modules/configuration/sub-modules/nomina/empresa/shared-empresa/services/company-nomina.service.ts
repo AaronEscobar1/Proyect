@@ -31,5 +31,25 @@ export class CompanyNominaService {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas`));
   }
 
+  /**
+   * Obtener todas rotaciones de grupos por empresa y nomina
+   * @param idEmpresa: string
+   * @param idNomina: string
+   * @returns Observable<any>
+   */
+  getAllRotacionGruposByEmpresaNomina(idEmpresa: string, idNomina: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas/${idNomina}/rotaciongrupos`));
+  }
+
+  /**
+   * Obtener todas rotaciones de grupos por empresa, nomina y rotacion de grupo
+   * @param idEmpresa: string
+   * @param idNomina: string
+   * @param idRotacionGrupo: string
+   * @returns Observable<any>
+   */
+  getAllRotacionGruposByEmpresaNominaRotacionGrupo(idEmpresa: string, idNomina: string, idRotacionGrupo: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas/${idNomina}/rotaciongrupos/${idRotacionGrupo}`));
+  }
   
 }
