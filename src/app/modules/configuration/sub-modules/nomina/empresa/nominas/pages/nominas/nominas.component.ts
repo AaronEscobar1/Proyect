@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Nomina } from '../../interfaces/nominas.interfaces';
 import { NominasService } from '../../services/nominas.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
 
 @Component({
   selector: 'app-nominas',
@@ -18,10 +19,10 @@ export class NominasComponent {
   @Input() empresaRow!: Company;
 
   // Objeto de nóminas por empresa
-  nominas: Nomina[] = [];
+  nominas: TipoNomina[] = [];
 
   // Objeto seleccionado para editar
-  nominaSelect!: Nomina | undefined;
+  nominaSelect!: TipoNomina | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -31,17 +32,15 @@ export class NominasComponent {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private nominasService: NominasService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private nominasService: NominasService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService,
-              private selectRowService: SelectRowService) { }
+              private spinner: NgxSpinnerService) { }
   
   ngOnChanges() {
     // Validar si empresa existe y tiene id
     if ( this.empresaRow && this.empresaRow.id ) {
-      // Limpia el row de la tabla de nóminas
-      this.selectRowService.selectRowAlterno$.emit(null);
       // Realizar peticion al backend asociada a la empresa seleccionada
       this.loadNominas(this.empresaRow.id);
     }
@@ -49,11 +48,11 @@ export class NominasComponent {
 
   /**
    * Obtener datos de centro trabajo asignado a la empresa
-   * @param id: string id empresa
+   * @param idEmpresa: string id empresa
    */
   loadNominas( idEmpresa: string ): void {
     this.spinner.show(undefined, spinnerLight);
-    this.nominasService.getAllNominasByEmpresa(idEmpresa)
+    this.companyNominaService.getAllNominasByEmpresa(idEmpresa)
       .subscribe({
         next: (res) => {
           this.nominas = res;
@@ -101,7 +100,7 @@ export class NominasComponent {
    * @param nomina row de la tabla
    * @returns void
    */
-  editRow(nomina: Nomina): void {
+  editRow(nomina: TipoNomina): void {
     this.isEdit = true;
     this.titleForm = 'Editar nómina';
     this.nominaSelect = nomina;
@@ -113,7 +112,7 @@ export class NominasComponent {
    * @param nomina row de la tabla
    * @returns void
    */
-  deleteRow(nomina: Nomina): void {
+  deleteRow(nomina: TipoNomina): void {
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta nomina <b>${nomina.desnom}</b>?`,
       header: 'Eliminar',
@@ -128,7 +127,7 @@ export class NominasComponent {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.selectRowService.selectRowAlterno$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },

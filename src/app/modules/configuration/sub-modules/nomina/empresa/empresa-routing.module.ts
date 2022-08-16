@@ -33,14 +33,19 @@ const routes: Routes = [
     loadChildren: () => import('./grupo-trabajo/grupo-trabajo.module').then( m => m.GrupoTrabajoModule),
   },
   {
-    path: 'grupos/rotacion',
-    // LazyLoad
-    loadChildren: () => import('./rotacion-grupo/rotacion-grupo.module').then( m => m.RotacionGrupoModule),
-  },
-  {
     path: 'centro-trabajo',
     // LazyLoad
     loadChildren: () => import('./centro-trabajo/centro-trabajo.module').then( m => m.CentroTrabajoModule),
+  },
+  {
+    path: 'puntaje-evaluacion',
+    // LazyLoad
+    loadChildren: () => import('./puntaje-evaluacion/puntaje-evaluacion.module').then( m => m.PuntajeEvaluacionModule),
+  },
+  {
+    path: 'situacion',
+    // LazyLoad
+    loadChildren: () => import('./situacion/situacion.module').then( m => m.SituacionModule),
   },
   {
     path: '**', redirectTo: '/main/config'

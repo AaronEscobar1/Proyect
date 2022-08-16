@@ -9,15 +9,8 @@ import { GrupoTrabajo } from '../interfaces/grupo-trabajo.interfaces';
 })
 export class GrupoTrabajoService {
 
-  // Variable para obtener el row desde la tabla
-  public selectRowGrupo$ = new EventEmitter<any | null>();
-
   constructor(private http: HttpService,
               private helpers: Helpers) { }
-
-  getAllNominasByEmpresa(idEmpresa: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas`));
-  }
 
   getAllGruposByEmpresaNomina(idEmpresa: string, idNomina: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas/${idNomina}/grupos`));

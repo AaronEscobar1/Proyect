@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
-import { Company } from '../interfaces/compania.interfaces';
+import { Company } from '../../shared-empresa/interfaces/empresa.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,6 @@ export class CompaniaService {
 
   constructor(private http: HttpService,
               private helpers: Helpers) { }
-
-  getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/nominas/empresas'));
-  }
 
   getById(id: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${id}`));

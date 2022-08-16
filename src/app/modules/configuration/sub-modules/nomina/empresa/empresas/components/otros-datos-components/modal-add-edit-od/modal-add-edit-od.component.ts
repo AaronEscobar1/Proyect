@@ -6,7 +6,7 @@ import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { agentType, identificatioType, OtrosDatosEmpresa } from '../../../interfaces/otros-datos-empresa.interfaces';
 import { OtroDatosAdicionalesService } from '../../../services/otro-datos-adicionales.service';
-import { Company } from '../../../interfaces/compania.interfaces';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit-od',

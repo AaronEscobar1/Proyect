@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../empresas/interfaces/compania.interfaces';
-import { Nomina, daysData, redondeoData } from '../../interfaces/nominas.interfaces';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { daysData, redondeoData } from '../../interfaces/nominas.interfaces';
 import { NominasService } from '../../services/nominas.service';
 
 @Component({
@@ -18,10 +19,10 @@ export class ModalAddEditComponent {
   @Input() empresaRow!: Company;
 
   // Objeto para validaciones de valores duplicados 
-  @Input() nominas: Nomina[] = [];
+  @Input() nominas: TipoNomina[] = [];
 
   // Variable de seleccion para editar
-  @Input() nominaSelect!: Nomina | undefined;
+  @Input() nominaSelect!: TipoNomina | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -44,11 +45,11 @@ export class ModalAddEditComponent {
   // Variable para mover pestaña de la vista por si existe un error
   tabIndex = 0;
   
-  constructor(private nominasService: NominasService,
+  constructor(private companyNominaService: CompanyNominaService, 
+              private nominasService: NominasService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private fb: FormBuilder,
-              private selectRowService: SelectRowService) {
+              private fb: FormBuilder) {
     this.form = this.fb.group({
       /**** Basica ****/
         idEmpresa: [ ],
@@ -133,7 +134,7 @@ export class ModalAddEditComponent {
       return;
     }
     // Obtener formulario
-    let data: Nomina = this.form.getRawValue();
+    let data: TipoNomina = this.form.getRawValue();
 
     // Si el campo Tipo fecha esta vacio, colocar 1 por defecto
     data.tipfec ? data.tipfec : data.tipfec = 1 ;
@@ -152,7 +153,6 @@ export class ModalAddEditComponent {
       return;
     }
 
-    console.log(data);
     this.spinner.show();
 
     if (this.isEdit) {
@@ -162,7 +162,7 @@ export class ModalAddEditComponent {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.selectRowService.selectRowAlterno$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -183,7 +183,7 @@ export class ModalAddEditComponent {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.selectRowService.selectRowAlterno$.emit(null);
+          this.companyNominaService.selectRowThirdTable$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors }
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Company } from '../../../../nomina/empresa/empresas/interfaces/compania.interfaces';
+import { Company } from '../../../../nomina/empresa/shared-empresa/interfaces/empresa.interfaces';
 import { InformacionAdicional, TipoInformacionAdicional } from '../../interfaces/informacion-adicional.interfaces';
 import { InformacionAdicionalService } from '../../services/informacion-adicional.service';
 
