@@ -1,6 +1,18 @@
 <div class="mt-3">
+    
+    <!-- Agregar fila -->
+    <div class="grid flex-row-reverse">
+        <div class="col-12 md:col-4 lg:col-3 text-right">
+            <button pButton 
+                    pRipple 
+                    label="Agregar fila" 
+                    class="p-button-secondary"
+                    (click)="addNewRow()">
+            </button>
+        </div>
+    </div>
 
-    <p-table [value]="conceptoSituacion" [columns]="columns"
+    <p-table [value]="conceptoSituacion" [columns]="columns" #dt
              dataKey="idConcepto" editMode="row"
              [paginator]="true" [rows]="rows"
              styleClass="p-datatable-scrollable" responsiveLayout="scroll"
@@ -25,7 +37,7 @@
                                        type="text"
                                        class="text-right"
                                        [(ngModel)]="conceptoSituacion.idConcepto"
-                                       [disabled]="editing">
+                                       [disabled]="isEdit">
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{ conceptoSituacion.idConcepto }}
@@ -70,12 +82,20 @@
                                 (click)="onRowEditInit(conceptoSituacion)"
                                 class="p-button-rounded p-button-text">
                         </button>
+                        <button *ngIf="!editing" 
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-trash"
+                                (click)="onRowDelete(conceptoSituacion)"
+                                class="p-button-rounded p-button-text">
+                        </button>
                         <button *ngIf="editing" 
                                 pButton
                                 pRipple
                                 type="button"
                                 pSaveEditableRow 
-                                icon="pi pi-check"
+                                icon="pi pi-save"
                                 class="p-button-rounded p-button-text p-button-success mr-2"
                                 (click)="onRowEditSave(conceptoSituacion)">
                         </button>

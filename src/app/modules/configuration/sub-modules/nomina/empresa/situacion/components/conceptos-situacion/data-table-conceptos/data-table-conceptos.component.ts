@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { ConceptoSituacion, SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
+import { Table } from 'primeng/table';
+import { Situacion } from '../../../interfaces/situacion.interfaces';
 
 @Component({
   selector: 'app-data-table-conceptos',
@@ -10,6 +12,9 @@ import { ConceptoSituacion, SuspencionVacacion } from '../../../interfaces/conce
   providers: [ MessageService, ConfirmationService ]
 })
 export class DataTableConceptosComponent implements OnInit {
+
+  // Variable del registro de la tabla
+  @Input() situacionRow!: Situacion;
 
   // Objeto para mostrar conceptos por situación
   @Input() conceptoSituacion: ConceptoSituacion[] = [];
@@ -24,13 +29,19 @@ export class DataTableConceptosComponent implements OnInit {
   pageNumber: number = 0;
 
   // Cantidad de registros por página
-  rows: number = 1;
+  rows: number = 5;
+
+  // Bandera para deshabilitar campo concepto
+  isEdit: boolean = false;
 
   // Variables para almacenar registros en memoria de la fila seleccionada
   clonedDataRow:  { [idConcepto: string]: ConceptoSituacion; } = {};
   clonedIdSusvac: { [idConcepto: string]: string; }            = {};
 
-  constructor() { }
+  // Obtener el elemento de la tabla mediante el DOM
+  @ViewChild('dt') dataTable!: Table;
+
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -40,13 +51,50 @@ export class DataTableConceptosComponent implements OnInit {
     ];
   }
 
-  golastPage(): void {
-    console.log('cantidad de conceptos', this.conceptoSituacion.length);
-    console.log('row', this.rows);
-    console.log('total = ', this.conceptoSituacion.length - this.rows);
-    this.pageNumber = this.conceptoSituacion.length - this.rows;
-    console.log(this.pageNumber);
-    // return this.customers ? this.first === (this.customers.length - this.rows): true;
+  /**
+   * Agregar fila e ir a la última página de la tabla
+   */
+  goLastPage(): void {
+    this.conceptoSituacion.length - this.rows < 0 ? this.pageNumber = 0 : this.pageNumber = this.conceptoSituacion.length - this.rows;
+  }
+
+  /**
+   * Agregar un nuevo row vacio con valores por defecto
+   */
+  addNewRow(): void {
+    if ( !this.situacionRow ) { return; }
+    if ( this.validatedSaveAndNewRow() ) { return; }
+    const newDataRow: ConceptoSituacion = { 
+      // Valores para crear concepto por empresa, nomina y situacion
+      idEmpresa: this.situacionRow.idEmpresa,
+      idNomina: this.situacionRow.idNomina,
+      codStat: this.situacionRow.codsta,
+      // Data necesaria para crear
+      idConcepto: '',
+      dialim: null,
+      nmTipoSuspencionVacacTb: {
+        susvac: '0',
+        descripcion: 'No aplica' 
+      }
+    };
+    this.conceptoSituacion.push(newDataRow);
+    // Asignar el total de registros de la tabla con el fin de actualizar automaticamente el número de páginas
+    this.dataTable._totalRecords = this.conceptoSituacion.length;
+    // this.goLastPage();
+    this.dataTable.editingRowKeys = { '': true };
+    console.log((this.conceptoSituacion.length - this.rows) <= 0 ? 0 : (this.conceptoSituacion.length - this.rows) + 1);
+    this.dataTable._first = this.conceptoSituacion.length - this.rows < 0 ? 0 : (this.conceptoSituacion.length - this.rows) + 1;
+    console.log(this.dataTable);
+  }
+
+  validatedSaveAndNewRow(): boolean {
+    const checkArray = this.conceptoSituacion.filter(value => value.idConcepto == '');
+    if ( checkArray.length > 0 ) {
+      console.error('error');
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Debe guardar el registro nuevo.', life: 3000});
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -54,6 +102,8 @@ export class DataTableConceptosComponent implements OnInit {
    * @param dataRow: ConceptoSituacion
    */
   onRowEditInit(dataRow: ConceptoSituacion): void {
+    console.log(dataRow);
+    this.isEdit = true;
     // Clonamos el registro para mantenerlo en memoria y tomar acciones si se guarda o se cancela el registro
     this.clonedDataRow[dataRow.idConcepto] = {...dataRow};
     this.clonedIdSusvac[dataRow.idConcepto] = this.clonedDataRow[dataRow.idConcepto].nmTipoSuspencionVacacTb.susvac;
@@ -65,6 +115,16 @@ export class DataTableConceptosComponent implements OnInit {
    */
   onRowEditSave(dataRow: ConceptoSituacion): void {
     console.log('data Create', dataRow);
+    this.resetValores();
+  }
+
+  /**
+   * Elimina un registro
+   * @param dataRow row de la tabla
+   * @returns void
+   */
+  onRowDelete(dataRow: ConceptoSituacion): void {
+    console.log(dataRow);
   }
 
   /**
@@ -79,6 +139,11 @@ export class DataTableConceptosComponent implements OnInit {
     // Eliminar objeto clonado para limpiar variables
     delete this.clonedDataRow[dataRow.idConcepto];
     delete this.clonedIdSusvac[dataRow.idConcepto];
+    this.resetValores();
+  }
+
+  resetValores() {
+    this.isEdit = false;
   }
 
 }

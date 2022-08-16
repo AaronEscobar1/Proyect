@@ -8,15 +8,15 @@ export interface ConceptoSituacion {
     // Codigo de Concepto
     idConcepto:              string;
     // Cantidad limite, en dias, para desactivar el Concepto
-    dialim:                  number;
+    dialim:                  number | null;
     // No suspender si la Situacion de Vacacion (0=No, 1=Salida, 2=Regreso)
     nmTipoSuspencionVacacTb: NmTipoSuspencionVacacTB;
 }
 
 export interface NmTipoSuspencionVacacTB {
     susvac:      string;
-    descripcion: string;
-    primaryKey:  PrimaryKey;
+    descripcion?: string;
+    primaryKey?:  PrimaryKey;
 }
 
 export interface PrimaryKey {

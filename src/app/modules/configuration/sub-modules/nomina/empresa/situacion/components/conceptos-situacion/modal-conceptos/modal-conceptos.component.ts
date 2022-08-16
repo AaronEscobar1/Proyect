@@ -15,6 +15,9 @@ export class ModalConceptosComponent implements OnInit {
   // Ver modal
   @Input() dataTableModal!: boolean;
 
+  // Variable del registro de la tabla
+  situacionRow!: Situacion;
+  
   // Titulo del modal
   title: string = 'Conceptos a desactivar por situación';
 
@@ -40,6 +43,7 @@ export class ModalConceptosComponent implements OnInit {
    * @param situacion: Situacion
    */
   loadConceptosSituacion(situacion: Situacion): void {
+    this.situacionRow = situacion;
     this.conceptoSituacion = [];
     this.spinner.show();
     this.conceptoSituacionService.getAllConceptosSituacion(situacion)

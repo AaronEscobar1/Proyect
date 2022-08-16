@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
@@ -8,7 +9,8 @@ import { ModalConceptosComponent } from '../../conceptos-situacion/modal-concept
 @Component({
   selector: 'app-data-table-situacion',
   templateUrl: './data-table-situacion.component.html',
-  styleUrls: ['./data-table-situacion.component.scss']
+  styleUrls: ['./data-table-situacion.component.scss'],
+  providers: [ MessageService, ConfirmationService ]
 })
 export class DataTableSituacionComponent implements OnInit {
 
