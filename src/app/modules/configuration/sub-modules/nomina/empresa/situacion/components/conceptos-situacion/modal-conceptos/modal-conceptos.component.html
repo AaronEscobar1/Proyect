@@ -17,7 +17,8 @@
 
             <app-data-table-conceptos [situacionRow]="situacionRow"
                                       [conceptoSituacion]="conceptoSituacion"
-                                      [noSuspender]="noSuspender"></app-data-table-conceptos>
+                                      [noSuspender]="noSuspender"
+                                      (onLoadData)="loadConceptosSituacion($event)"></app-data-table-conceptos>
 
         </ng-template>
         

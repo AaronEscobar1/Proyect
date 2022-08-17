@@ -22,16 +22,16 @@ export class ConceptoSituacionService {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${situacion.idEmpresa}/nominas/${situacion.idNomina}/situaciones/${situacion.codsta}/conceptos/${concepto.idConcepto}`));
   }
 
-  create(situacion: Situacion, concepto: ConceptoSituacionCreate): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${situacion.idEmpresa}/nominas/${situacion.idNomina}/situaciones/${situacion.codsta}/conceptos`), concepto);
+  create(conceptoSituacion: ConceptoSituacion, conceptoCreate: ConceptoSituacionCreate): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${conceptoSituacion.idEmpresa}/nominas/${conceptoSituacion.idNomina}/situaciones/${conceptoSituacion.codStat}/conceptos`), conceptoCreate);
   }
 
-  update(situacion: Situacion, idConcepto: string, conceptoUptate: ConceptoSituacionUpdate): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${situacion.idEmpresa}/nominas/${situacion.idNomina}/situaciones/${situacion.codsta}/conceptos/${idConcepto}`), conceptoUptate);
+  update(conceptoSituacion: ConceptoSituacion, conceptoUptate: ConceptoSituacionUpdate): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${conceptoSituacion.idEmpresa}/nominas/${conceptoSituacion.idNomina}/situaciones/${conceptoSituacion.codStat}/conceptos/${conceptoSituacion.idConcepto}`), conceptoUptate);
   }
 
-  delete(situacion: Situacion, concepto: ConceptoSituacion): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${situacion.idEmpresa}/nominas/${situacion.idNomina}/situaciones/${situacion.codsta}/conceptos/${concepto.idConcepto}`));
+  delete(conceptoSituacion: ConceptoSituacion): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${conceptoSituacion.idEmpresa}/nominas/${conceptoSituacion.idNomina}/situaciones/${conceptoSituacion.codStat}/conceptos/${conceptoSituacion.idConcepto}`));
   }
 
   // Suspension por vacación

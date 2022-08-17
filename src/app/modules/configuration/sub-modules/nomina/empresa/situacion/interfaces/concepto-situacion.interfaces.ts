@@ -11,6 +11,8 @@ export interface ConceptoSituacion {
     dialim:                  number | null;
     // No suspender si la Situacion de Vacacion (0=No, 1=Salida, 2=Regreso)
     nmTipoSuspencionVacacTb: NmTipoSuspencionVacacTB;
+    // Id temporal para [dataKey] de tabla edit
+    idTableTemporal:        number;
 }
 
 export interface NmTipoSuspencionVacacTB {
@@ -23,6 +25,7 @@ export interface PrimaryKey {
     susvac: string;
 }
 
+// Interfaces para crear registros
 export interface ConceptoSituacionCreate {
     // Codigo de Concepto
     idConcepto: string;
@@ -32,7 +35,7 @@ export interface ConceptoSituacionCreate {
     susvac:     string;
 }
 
-
+// Interfaces para actualizar registros omitiendo el idConcepto
 export type ConceptoSituacionUpdate = Omit<ConceptoSituacionCreate, 'idConcepto'>;
 
 // Interfaces de suspenciones por vacacion

@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { ConceptoSituacion, SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
+import { ConceptoSituacion, SuspencionVacacion, ConceptoSituacionCreate } from '../../../interfaces/concepto-situacion.interfaces';
 import { Table } from 'primeng/table';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
+import { ConceptoSituacionService } from '../../../services/concepto-situacion.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-data-table-conceptos',
@@ -25,23 +27,28 @@ export class DataTableConceptosComponent implements OnInit {
   // Columnas de la table
   columns: TableHead[] = [];
 
-  // Número de página por defecto
-  pageNumber: number = 0;
-
   // Cantidad de registros por página
   rows: number = 5;
 
   // Bandera para deshabilitar campo concepto
   isEdit: boolean = false;
+  // Bandera para agregar un nuevo registro
+  isAddNewRow: boolean = false;
 
   // Variables para almacenar registros en memoria de la fila seleccionada
   clonedDataRow:  { [idConcepto: string]: ConceptoSituacion; } = {};
   clonedIdSusvac: { [idConcepto: string]: string; }            = {};
 
-  // Obtener el elemento de la tabla mediante el DOM
-  @ViewChild('dt') dataTable!: Table;
+  // Emisión de eventos (loadData)
+  @Output() onLoadData = new EventEmitter();
 
-  constructor(private messageService: MessageService) { }
+  // Obtener el elemento de la tabla mediante el DOM
+  @ViewChild('dt') table!: Table;
+
+  constructor(private conceptoSituacionService: ConceptoSituacionService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -50,21 +57,32 @@ export class DataTableConceptosComponent implements OnInit {
       { field: 'nmTipoSuspencionVacacTb.descripcion', header: 'No suspender' },
     ];
   }
-
+  
   /**
-   * Agregar fila e ir a la última página de la tabla
+   * Agregar una nueva fila vacia con valores por defecto
    */
-  goLastPage(): void {
-    this.conceptoSituacion.length - this.rows < 0 ? this.pageNumber = 0 : this.pageNumber = this.conceptoSituacion.length - this.rows;
+  addNewRow(): void {
+    this.isAddNewRow = true;
+    // Crear un nuevo objeto
+    const newDataRow = this.newRow();
+    // Redondear el número con el fin de posicionar la página correspondiente cuando se agrega una fila
+    this.table.first = Math.floor(this.conceptoSituacion.length / this.rows) * this.rows;
+    // Actualizar el total de los registros de la tabla con la nueva fila agregada.
+    this.table.totalRecords = this.conceptoSituacion.length + 1;
+    // Agregar un nuevo objeto a los valores de la tabla
+    this.table.value.push(newDataRow);
+    // Iniciar la edición para agregar el registro
+    this.table.initRowEdit(newDataRow);
+    // Reiniciar la cantidad de rows que pueden ver en la tabla cuando se crea una nueva fila
+    this.table._rows = this.rows;
   }
 
   /**
-   * Agregar un nuevo row vacio con valores por defecto
+   * Establecer un nuevo objeto con los valores por defecto
+   * @returns ConceptoSituacion
    */
-  addNewRow(): void {
-    if ( !this.situacionRow ) { return; }
-    if ( this.validatedSaveAndNewRow() ) { return; }
-    const newDataRow: ConceptoSituacion = { 
+  newRow(): ConceptoSituacion {
+    return { 
       // Valores para crear concepto por empresa, nomina y situacion
       idEmpresa: this.situacionRow.idEmpresa,
       idNomina: this.situacionRow.idNomina,
@@ -75,75 +93,156 @@ export class DataTableConceptosComponent implements OnInit {
       nmTipoSuspencionVacacTb: {
         susvac: '0',
         descripcion: 'No aplica' 
-      }
+      },
+      // Colocar un id temporal en el registro para el [dataKey] de la tabla
+      idTableTemporal: this.getIdTemporalMax()
     };
-    this.conceptoSituacion.push(newDataRow);
-    // Asignar el total de registros de la tabla con el fin de actualizar automaticamente el número de páginas
-    this.dataTable._totalRecords = this.conceptoSituacion.length;
-    // this.goLastPage();
-    this.dataTable.editingRowKeys = { '': true };
-    console.log((this.conceptoSituacion.length - this.rows) <= 0 ? 0 : (this.conceptoSituacion.length - this.rows) + 1);
-    this.dataTable._first = this.conceptoSituacion.length - this.rows < 0 ? 0 : (this.conceptoSituacion.length - this.rows) + 1;
-    console.log(this.dataTable);
-  }
-
-  validatedSaveAndNewRow(): boolean {
-    const checkArray = this.conceptoSituacion.filter(value => value.idConcepto == '');
-    if ( checkArray.length > 0 ) {
-      console.error('error');
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Debe guardar el registro nuevo.', life: 3000});
-      return true;
-    }
-    return false;
   }
 
   /**
-   * 
+   * Obtener el valor máximo del arreglo y retornar el siguiente valor.
+   * @returns number
+   */
+  getIdTemporalMax(): number {
+    return this.conceptoSituacion.length == 0 ? 0 : Math.max(...this.conceptoSituacion.map(data => data.idTableTemporal + 1 ));
+  }
+
+  /**
+   * Activar formulario del row
    * @param dataRow: ConceptoSituacion
    */
   onRowEditInit(dataRow: ConceptoSituacion): void {
-    console.log(dataRow);
     this.isEdit = true;
     // Clonamos el registro para mantenerlo en memoria y tomar acciones si se guarda o se cancela el registro
-    this.clonedDataRow[dataRow.idConcepto] = {...dataRow};
-    this.clonedIdSusvac[dataRow.idConcepto] = this.clonedDataRow[dataRow.idConcepto].nmTipoSuspencionVacacTb.susvac;
+    this.clonedDataRow[dataRow.idTableTemporal] = {...dataRow};
+    this.clonedIdSusvac[dataRow.idTableTemporal] = this.clonedDataRow[dataRow.idTableTemporal].nmTipoSuspencionVacacTb.susvac;
   }
 
   /**
-   * 
-   * @param dataRow: ConceptoSituacion
+   * Crear y editar registros
+   * @param conceptoSituacion: ConceptoSituacion
    */
-  onRowEditSave(dataRow: ConceptoSituacion): void {
-    console.log('data Create', dataRow);
-    this.resetValores();
+  onRowEditSave(conceptoSituacion: ConceptoSituacion): void {
+
+    let dataForm: ConceptoSituacionCreate = {
+      idConcepto: conceptoSituacion.idConcepto,
+      dialim: Number(conceptoSituacion.dialim),
+      susvac: conceptoSituacion.nmTipoSuspencionVacacTb.susvac
+    };
+    
+    this.spinner.show();
+
+    // Editar
+    if ( this.isEdit ) {
+      // Destructuración de objeto mediante spread (ecmascript 6)
+      const { idConcepto, ...dataUpdate} = dataForm;
+      this.conceptoSituacionService.update(conceptoSituacion, dataUpdate)
+        .subscribe({
+          next: (resp) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.onLoadEmit();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la situación.', life: 3000});
+            this.onLoadEmit();
+          } 
+        });
+      return;
+    }
+
+    // Crear conceptos
+    this.conceptoSituacionService.create(conceptoSituacion, dataForm)
+      .subscribe({
+        next: (resp) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+          this.onLoadEmit();
+        },
+        error: (err) => {
+          if (err.error.detail.includes("ya existente") ) {
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear, concepto por situacion ya existente.', life: 3000});
+            this.onLoadEmit();
+            return false;
+          }
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la situación.', life: 3000});
+          this.onLoadEmit();
+          return false;
+        }
+      });
   }
 
   /**
    * Elimina un registro
-   * @param dataRow row de la tabla
+   * @param conceptoSituacion: ConceptoSituacion row de la tabla
    * @returns void
    */
-  onRowDelete(dataRow: ConceptoSituacion): void {
-    console.log(dataRow);
+  onRowDelete(conceptoSituacion: ConceptoSituacion): void {
+    this.confirmationService.confirm({
+      message: `¿Desea eliminar este concepto de situación?`,
+      header: 'Eliminar',
+      icon: 'pi pi-trash',
+      acceptLabel: 'Si, eliminar',
+      acceptButtonStyleClass: 'btn-infocent',
+      rejectButtonStyleClass: 'p-button-secondary',
+      accept: () => {
+        this.spinner.show();
+        this.conceptoSituacionService.delete(conceptoSituacion)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.onLoadEmit();
+              return true;
+            },
+            error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar el concepto de situación, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el concepto de situación.', life: 3000});
+              return false;
+            }
+          });
+      }
+    });
   }
 
   /**
-   * 
+   * Cancelar edición del registro
    * @param dataRow: ConceptoSituacion
    * @param index: number, indice del row
    */
   onRowEditCancel(dataRow: ConceptoSituacion, index: number): void {
+    if( this.isAddNewRow ) { 
+      this.table.value.splice(index, 1);
+      // Redondear el número con el fin de posicionar la página correspondiente cuando se agrega una fila
+      this.table.first = Math.floor(this.conceptoSituacion.length / this.rows) * this.rows;
+      // Actualizar el total de los registros de la tabla.
+      this.table.totalRecords = this.conceptoSituacion.length;
+      this.isAddNewRow = false;
+      return;
+    }
     // Mantener registro original sin la modificacion del usuario
-    this.conceptoSituacion[index].nmTipoSuspencionVacacTb.susvac = this.clonedIdSusvac[dataRow.idConcepto];
-    this.conceptoSituacion[index] = this.clonedDataRow[dataRow.idConcepto];
+    this.conceptoSituacion[index].nmTipoSuspencionVacacTb.susvac = this.clonedIdSusvac[dataRow.idTableTemporal];
+    this.conceptoSituacion[index] = this.clonedDataRow[dataRow.idTableTemporal];
     // Eliminar objeto clonado para limpiar variables
-    delete this.clonedDataRow[dataRow.idConcepto];
-    delete this.clonedIdSusvac[dataRow.idConcepto];
-    this.resetValores();
+    delete this.clonedDataRow[dataRow.idTableTemporal];
+    delete this.clonedIdSusvac[dataRow.idTableTemporal];
+    this.isEdit = false;
   }
 
-  resetValores() {
+  /**
+   * Cargar data y restaurar banderas Edit y AddNewRow
+   */
+  onLoadEmit(): void {
+    this.onLoadData.emit(this.situacionRow);
     this.isEdit = false;
+    this.isAddNewRow = false;
   }
 
 }

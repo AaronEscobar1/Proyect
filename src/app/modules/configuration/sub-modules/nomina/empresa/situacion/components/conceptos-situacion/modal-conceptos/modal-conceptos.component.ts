@@ -50,6 +50,10 @@ export class ModalConceptosComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.conceptoSituacion = res;
+          // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
+          this.conceptoSituacion = this.conceptoSituacion.map((data, index) => { 
+            return {...data, idTableTemporal: index }
+          });
           this.spinner.hide();
         },
         error: (err) => {
