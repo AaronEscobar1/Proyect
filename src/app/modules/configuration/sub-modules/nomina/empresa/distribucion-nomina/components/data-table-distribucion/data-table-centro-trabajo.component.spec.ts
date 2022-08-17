@@ -1,12 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 
 import { DataTableDistribucionComponent } from './data-table-distribucion.component';
 
 describe('DataTableComponent', () => {
   let httpTestingController: HttpTestingController;
-  let service: SelectRowService;
+  let service: CompanyNominaService;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -20,7 +20,7 @@ describe('DataTableComponent', () => {
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
-    service = TestBed.inject(SelectRowService);
+    service = TestBed.inject(CompanyNominaService);
   }));
 
   it('Crear componente de Motivos Finiquito DataTable Component correctamente', () => {
@@ -42,7 +42,7 @@ describe('DataTableComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRow$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
@@ -62,7 +62,7 @@ describe('DataTableComponent', () => {
     }
 
     app.onRowSelect(log)
-    expect(service.selectRow$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
 
   });
 
@@ -71,7 +71,7 @@ describe('DataTableComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRow$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     const nativeElement = fixture.nativeElement;
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
@@ -84,7 +84,7 @@ describe('DataTableComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowAlterno$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
@@ -104,7 +104,7 @@ describe('DataTableComponent', () => {
     }
 
     app.onRowSelect(log)
-    expect(service.selectRowAlterno$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
 
   });
 
@@ -113,13 +113,13 @@ describe('DataTableComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowAlterno$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     const nativeElement = fixture.nativeElement;
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
     app.onRowUnselect()
-    expect(service.selectRowAlterno$.emit).toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).toHaveBeenCalledWith(null);
 
   });
 
@@ -128,7 +128,7 @@ describe('DataTableComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowAlterno$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
@@ -148,7 +148,7 @@ describe('DataTableComponent', () => {
     }
 
     app.onRowSelect(log)
-    expect(service.selectRowAlterno$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
 
   });
 

@@ -1,13 +1,13 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { CompanyNominaService } from '../../services/company-nomina.service';
 
-import { ButtonsDistribucionComponent } from './buttons-distribucion.component';
+import { ButtonsThreeTableComponent } from './buttons-three-table.component';
 
 describe('ButtonsComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  let service: SelectRowService;
+  let service: CompanyNominaService;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -15,23 +15,23 @@ describe('ButtonsComponent', () => {
         HttpClientTestingModule,
       ],
       declarations: [
-        ButtonsDistribucionComponent
+        ButtonsThreeTableComponent
       ]
     }).compileComponents();
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
-    service = TestBed.inject(SelectRowService);
+    service = TestBed.inject(CompanyNominaService);
   }));
 
   it('Crear componente de Niveles Educativos Buttons Component correctamente', () => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
     fixture.detectChanges();
   })
   it('edit Row Seleccionada ', () => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
     spyOn(app.onEditRow, 'emit').and.callThrough();
@@ -60,7 +60,7 @@ describe('ButtonsComponent', () => {
     fixture.detectChanges();
   });
   it('delete Row Seleccionada ', () => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
     spyOn(app.onDeleteRow, 'emit').and.callThrough();
@@ -88,7 +88,7 @@ describe('ButtonsComponent', () => {
     expect(app.onDeleteRow.emit).toHaveBeenCalledWith(app.selectRow);
   });
   it('refresh', () => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
     spyOn(app.onRefresh, 'emit').and.callThrough();
@@ -98,7 +98,7 @@ describe('ButtonsComponent', () => {
     fixture.detectChanges();   
   });
   it('print', () => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
     spyOn(app.onRefresh, 'emit').and.callThrough();
@@ -108,7 +108,7 @@ describe('ButtonsComponent', () => {
     fixture.detectChanges();    
   });
   it('add', () => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
     spyOn(app.onRefresh, 'emit').and.callThrough();
@@ -117,8 +117,8 @@ describe('ButtonsComponent', () => {
     nativeElement.dispatchEvent(new Event('click'));    
     fixture.detectChanges();
   });
-  it('ngOnInit row', inject([SelectRowService], (service: SelectRowService) => {
-    const fixture = TestBed.createComponent(ButtonsDistribucionComponent);
+  it('ngOnInit row', inject([CompanyNominaService], (service: CompanyNominaService) => {
+    const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     const log = {
       "originalEvent": {
@@ -135,14 +135,14 @@ describe('ButtonsComponent', () => {
       "type": "row"
     }
 
-    spyOn(service.selectRow$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
     
     app.ngOnInit();
     
-    service.selectRowAlterno$.emit(log.data);
-    const response = service.selectRowAlterno$.subscribe(row => app.selectRow = row);
+    service.selectRowThirdTable$.emit(log.data);
+    const response = service.selectRowThirdTable$.subscribe(row => app.selectRow = row);
 
-    expect(service.selectRow$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
     
   }));
 

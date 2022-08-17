@@ -4,12 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
 // Servicios y componentes requeridos
-import { CompaniaService } from './compania.service';
-import { Company } from '../../shared-empresa/interfaces/empresa.interfaces';
+import { CompanyNominaService } from './company-nomina.service';
+import { Company } from '../interfaces/empresa.interfaces';
 
 describe('NivelesEducativosServices', () => {
 
-  let sindicatosService   : CompaniaService;
+  let sindicatosService   : CompanyNominaService;
   let httpClientSpy : { post: jasmine.Spy };
   let getHttpClientSpy : { get: jasmine.Spy };
   let putHttpClientSpy : { put: jasmine.Spy };
@@ -21,10 +21,10 @@ describe('NivelesEducativosServices', () => {
         HttpClientTestingModule,
       ],
       declarations: [],
-      providers: [ CompaniaService ]
+      providers: [ CompanyNominaService ]
     });
 
-    sindicatosService = TestBed.inject(CompaniaService);
+    sindicatosService = TestBed.inject(CompanyNominaService);
 
     // Peticiones mock
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
@@ -35,7 +35,7 @@ describe('NivelesEducativosServices', () => {
   });
 
   it('Debe crearse el servicio correctamente', () => {
-    expect(CompaniaService).toBeTruthy();
+    expect(CompanyNominaService).toBeTruthy();
   });
 
   it('Deberia retornar Nivel Educativo (Id Existente)', waitForAsync( (done: DoneFn) => {
@@ -50,7 +50,7 @@ describe('NivelesEducativosServices', () => {
 
     getHttpClientSpy.get.and.returnValue(of(mockResult));
 
-    sindicatosService.getById(id)
+    sindicatosService.getAll()
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -70,7 +70,7 @@ describe('NivelesEducativosServices', () => {
 
     getHttpClientSpy.get.and.returnValue(throwError(error404));
 
-    sindicatosService.getById(id)
+    sindicatosService.getAll()
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -121,7 +121,7 @@ describe('NivelesEducativosServices', () => {
 
     httpClientSpy.post.and.returnValue(of(mockResult));
 
-    sindicatosService.create(query)
+    sindicatosService.getAllNominasByEmpresa(query.id)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -172,7 +172,7 @@ describe('NivelesEducativosServices', () => {
 
     httpClientSpy.post.and.returnValue(throwError(mockResult));
 
-    sindicatosService.create(query)
+    sindicatosService.getAllNominasByEmpresa(query.id)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -224,7 +224,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    sindicatosService.update(query)
+    sindicatosService.getAllRotacionGruposByEmpresaNomina(query.id, query.id)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -275,7 +275,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(throwError(mockResult));
 
-    sindicatosService.update(query)
+    sindicatosService.getAllRotacionGruposByEmpresaNomina(query.id, query.id)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -327,7 +327,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    sindicatosService.delete(query.id)
+    sindicatosService.getAllRotacionGruposByEmpresaNominaRotacionGrupo(query.id, query.id, query.id)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -378,109 +378,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    sindicatosService.delete(query.id)
-      .subscribe((resp) => {
-        expect(resp).toEqual(mockResult);
-        done();
-      });
-  }));
-
-  it('Obtener todos los paises (Caso exitoso)', waitForAsync ((done: DoneFn) => {
-    
-    const token = 'xxxxx'
-    const query: Company = {
-      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
-      "clave": "F195J9FDN520AJ0SC953",
-      "nombreAbrev": "FEDEX CORPORATION",
-      "sectorEmp": "11",
-      "publica": "2",
-      "capitalPag": 3,
-      "capitalSub": 3,
-      "rif1": "J-00301656-0",
-      "rif2": null,
-      "direccion": "CARACAS",
-      "ciudad": "CARACAS",
-      "idEntfe": "DC",
-      "idPais": "VEN",
-      "codPostal": "1070",
-      "telefono1": "582122053152",
-      "telefono2": null,
-      "fax": "02010201",
-      "paginaWeb": "www.algo.com",
-      "eMail": "correo@gmail.com",
-      "feFunda": new Date(),
-      "feInicio": new Date(),
-      "filemail": "www.gold",
-      "subprocesoRnet": 175993,
-      "id": "93",
-      "links": [
-        {
-          "rel": "datosadicionales",
-          "href": "/empresas/93/datosadicionales"
-        }
-      ]
-    }
-
-    const mockResult: any = {
-      response: true,
-    };
-    
-    expect(token).toContain('xxxxx')
-
-    putHttpClientSpy.put.and.returnValue(of(mockResult));
-
-    sindicatosService.getAllCountry()
-      .subscribe((resp) => {
-        expect(resp).toEqual(mockResult);
-        done();
-      });
-  }));
-
-  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
-    
-    const token = 'xxxxx'
-    const query: Company = {
-      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
-      "clave": "F195J9FDN520AJ0SC953",
-      "nombreAbrev": "FEDEX CORPORATION",
-      "sectorEmp": "11",
-      "publica": "2",
-      "capitalPag": 3,
-      "capitalSub": 3,
-      "rif1": "J-00301656-0",
-      "rif2": null,
-      "direccion": "CARACAS",
-      "ciudad": "CARACAS",
-      "idEntfe": "DC",
-      "idPais": "VEN",
-      "codPostal": "1070",
-      "telefono1": "582122053152",
-      "telefono2": null,
-      "fax": "02010201",
-      "paginaWeb": "www.algo.com",
-      "eMail": "correo@gmail.com",
-      "feFunda": new Date(),
-      "feInicio": new Date(),
-      "filemail": "www.gold",
-      "subprocesoRnet": 175993,
-      "id": "93",
-      "links": [
-        {
-          "rel": "datosadicionales",
-          "href": "/empresas/93/datosadicionales"
-        }
-      ]
-    }
-
-    const mockResult: any = {
-      response: false,
-    };
-    
-    expect(token).toContain('xxxxx')
-
-    putHttpClientSpy.put.and.returnValue(of(mockResult));
-
-    sindicatosService.getEntitiesByCountry("VEN")
+    sindicatosService.getAllRotacionGruposByEmpresaNominaRotacionGrupo(query.id, query.id, query.id)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
