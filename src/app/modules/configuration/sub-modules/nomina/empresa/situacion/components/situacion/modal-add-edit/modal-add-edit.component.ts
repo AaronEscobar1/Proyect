@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
-import { ClaseSituaciones, EsquemaTrabajo, EstatusVacacion, Situacion, SituacionUpdate } from '../../interfaces/situacion.interfaces';
-import { SituacionService } from '../../services/situacion.service';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { TipoNomina } from '../../../../shared-empresa/interfaces/nominas.interfaces';
+import { ClaseSituaciones, EsquemaTrabajo, EstatusVacacion, Situacion, SituacionUpdate } from '../../../interfaces/situacion.interfaces';
+import { SituacionService } from '../../../services/situacion.service';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { GrupoRotacion } from '../../../shared-empresa/interfaces/grupo-rotacion.interfaces';
+import { GrupoRotacion } from '../../../../shared-empresa/interfaces/grupo-rotacion.interfaces';
 import { ObjectEventChange } from 'src/app/shared/interfaces/country-entity.interfaces';
 
 @Component({
