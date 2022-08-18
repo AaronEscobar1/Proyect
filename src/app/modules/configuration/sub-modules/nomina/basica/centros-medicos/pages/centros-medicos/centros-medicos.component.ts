@@ -53,9 +53,7 @@ export class CentrosMedicosComponent implements OnInit {
 
   refresh(): void {
     this.centrosMedicos = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {

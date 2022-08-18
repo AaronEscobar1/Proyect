@@ -52,9 +52,7 @@ export class MotivosFiniquitoComponent implements OnInit {
 
   refresh(): void {
     this.motivosFiniquito = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {
