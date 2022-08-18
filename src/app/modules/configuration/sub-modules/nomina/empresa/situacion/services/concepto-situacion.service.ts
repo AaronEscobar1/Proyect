@@ -13,7 +13,7 @@ export class ConceptoSituacionService {
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  // Endpoints de situaciones
+  // Endpoints de concepto situaciones
   getAllConceptosSituacion(situacion: Situacion): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${situacion.idEmpresa}/nominas/${situacion.idNomina}/situaciones/${situacion.codsta}/conceptos`));
   }

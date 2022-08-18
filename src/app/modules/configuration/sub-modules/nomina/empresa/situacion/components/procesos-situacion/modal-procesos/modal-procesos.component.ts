@@ -1,28 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ConceptoSituacion, SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
-import { ConceptoSituacionService } from '../../../services/concepto-situacion.service';
+import { ProcesoSituacion } from '../../../interfaces/proceso-situacion.interfaces';
+import { SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
+import { ProcesoSituacionService } from '../../../services/proceso-situacion.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-modal-conceptos',
-  templateUrl: './modal-conceptos.component.html',
+  selector: 'app-modal-procesos',
+  templateUrl: './modal-procesos.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class ModalConceptosComponent implements OnInit {
+export class ModalProcesosComponent implements OnInit {
 
-  // Ver modal
-  @Input() dataTableConceptosModal!: boolean;
+  // Ver modal procesos
+  @Input() dataTableProcesosModal!: boolean;
 
   // Variable del registro de la tabla
   situacionRow!: Situacion;
-  
-  // Titulo del modal
-  title: string = 'Conceptos a desactivar por situación';
 
-  // Objeto de conceptos de situacion
-  conceptoSituacion: ConceptoSituacion[] = [];
+  // Titulo del modal
+  title: string = 'Procesos a desactivar por situación';
+
+  // Objeto de procesos de situacion
+  procesosSituaciones: ProcesoSituacion[] = [];
 
   // Objeto para mostrar lista de noSuspender
   noSuspender: SuspencionVacacion[] = [];
@@ -30,7 +31,7 @@ export class ModalConceptosComponent implements OnInit {
   // Emisión de eventos (cerrar)
   @Output() onCloseDataTableModal = new EventEmitter();
 
-  constructor(private conceptoSituacionService: ConceptoSituacionService,
+  constructor(private procesosSituacionService: ProcesoSituacionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService) { }
 
@@ -39,21 +40,22 @@ export class ModalConceptosComponent implements OnInit {
   }
 
   /**
-   * Cargar concepto por situacion
+   * Cargar procesos por situacion
    * @param situacion: Situacion
    */
-  loadConceptosSituacion(situacion: Situacion): void {
+   loadProcesosSituacion(situacion: Situacion): void {
     this.situacionRow = situacion;
-    this.conceptoSituacion = [];
+    this.procesosSituaciones = [];
     this.spinner.show();
-    this.conceptoSituacionService.getAllConceptosSituacion(situacion)
+    this.procesosSituacionService.getAllProcesosSituacion(situacion)
       .subscribe({
         next: (res) => {
-          this.conceptoSituacion = res;
+          this.procesosSituaciones = res;
           // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
-          this.conceptoSituacion = this.conceptoSituacion.map((data, index) => { 
-            return {...data, idTableTemporal: index }
+          this.procesosSituaciones = this.procesosSituaciones.map((data, index) => { 
+            return {...data, idTableTemporal: index, idEmpresa: situacion.idEmpresa, idNomina: situacion.idNomina, idConcepto: situacion.codsta }
           });
+          console.log(this.procesosSituaciones);
           this.spinner.hide();
         },
         error: (err) => {
@@ -68,7 +70,7 @@ export class ModalConceptosComponent implements OnInit {
    */
   loadSuspensionVacacion(): void {
     this.spinner.show();
-    this.conceptoSituacionService.getSuspensionVacacion()
+    this.procesosSituacionService.getSuspensionVacacion()
       .subscribe({
         next: (res) => {
           this.noSuspender = res;
