@@ -43,7 +43,7 @@ export class ModalProcesosComponent implements OnInit {
    * Cargar procesos por situacion
    * @param situacion: Situacion
    */
-   loadProcesosSituacion(situacion: Situacion): void {
+  loadProcesosSituacion(situacion: Situacion): void {
     this.situacionRow = situacion;
     this.procesosSituaciones = [];
     this.spinner.show();
@@ -53,9 +53,8 @@ export class ModalProcesosComponent implements OnInit {
           this.procesosSituaciones = res;
           // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
           this.procesosSituaciones = this.procesosSituaciones.map((data, index) => { 
-            return {...data, idTableTemporal: index, idEmpresa: situacion.idEmpresa, idNomina: situacion.idNomina, idConcepto: situacion.codsta }
+            return {...data, idTableTemporal: index, idEmpresa: situacion.idEmpresa, idNomina: situacion.idNomina, codStat: situacion.codsta }
           });
-          console.log(this.procesosSituaciones);
           this.spinner.hide();
         },
         error: (err) => {
