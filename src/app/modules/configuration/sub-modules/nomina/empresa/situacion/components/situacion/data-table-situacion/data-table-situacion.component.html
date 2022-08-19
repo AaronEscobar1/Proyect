@@ -14,7 +14,8 @@
                                 pRipple
                                 label="Procesos"
                                 class="p-button-secondary mx-1"
-                                disabled>
+                                (click)="showProcesosModal()"
+                                [disabled]="!situacionSelectRow">
                         </button>
                         <button pButton
                                 pRipple
@@ -129,6 +130,11 @@
 
 
 <!-- modal conceptos por situación -->
-<app-modal-conceptos [dataTableModal]="dataTableModal"
-                     (onCloseDataTableModal)="closeDataTableModal()">
+<app-modal-conceptos [dataTableConceptosModal]="dataTableConceptosModal"
+                     (onCloseDataTableModal)="dataTableConceptosModal = false">
 </app-modal-conceptos>
+
+<!-- modal procesos por situación -->
+<app-modal-procesos [dataTableProcesosModal]="dataTableProcesosModal"
+                    (onCloseDataTableModal)="dataTableProcesosModal = false">
+</app-modal-procesos>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { ConceptoSituacion, SuspencionVacacion, ConceptoSituacionCreate } from '../../../interfaces/concepto-situacion.interfaces';
@@ -48,7 +48,8 @@ export class DataTableConceptosComponent implements OnInit {
   constructor(private conceptoSituacionService: ConceptoSituacionService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.columns = [
@@ -56,6 +57,14 @@ export class DataTableConceptosComponent implements OnInit {
       { field: 'dialim',                              header: 'Días'         },
       { field: 'nmTipoSuspencionVacacTb.descripcion', header: 'No suspender' },
     ];
+  }
+
+  /**
+   * Método de Angular para comprobar expresiones y deteccion de cambios en la vista antes cambiar valores
+   */
+  ngAfterContentChecked() {
+    // Eliminar errores de [ExpressionChangedAfterItHasBeenCheckedError]
+    this.changeDetectorRef.detectChanges();
   }
   
   /**

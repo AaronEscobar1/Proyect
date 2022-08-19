@@ -1,5 +1,5 @@
 <!-- Modal agregar -->
-<p-dialog [(visible)]="dataTableConceptosModal" [modal]="true" [showHeader]="false" [closable]="false" 
+<p-dialog [(visible)]="dataTableProcesosModal" [modal]="true" [showHeader]="false" [closable]="false" 
           class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '80vw'}"
           [draggable]="false" [resizable]="false">
 
@@ -15,10 +15,11 @@
                 </div>
             </div>
 
-            <app-data-table-conceptos [situacionRow]="situacionRow"
-                                      [conceptoSituacion]="conceptoSituacion"
-                                      [noSuspender]="noSuspender"
-                                      (onLoadData)="loadConceptosSituacion($event)"></app-data-table-conceptos>
+            <app-data-table-procesos [situacionRow]="situacionRow"
+                                     [procesosSituaciones]="procesosSituaciones"
+                                     [noSuspender]="noSuspender"
+                                     (onLoadData)="loadProcesosSituacion($event)">
+            </app-data-table-procesos>
 
         </ng-template>
         
