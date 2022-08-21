@@ -5,6 +5,7 @@ import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
 import { ModalConceptosComponent } from '../../conceptos-situacion/modal-conceptos/modal-conceptos.component';
+import { ModalProcesosComponent } from '../../procesos-situacion/modal-procesos/modal-procesos.component';
 
 @Component({
   selector: 'app-data-table-situacion',
@@ -33,10 +34,16 @@ export class DataTableSituacionComponent implements OnInit {
   situacionSelectRow!: Situacion | null;
 
   // Variable para abrir el data table de conceptos
-  dataTableModal: boolean = false;
+  dataTableConceptosModal: boolean = false;
+
+  // Variable para abrir el data table de procesos
+  dataTableProcesosModal: boolean = false;
 
   // Emisión de evento de padre a hijo (cargar data de conceptos por situación)
   @ViewChild(ModalConceptosComponent) conceptosComponent!: ModalConceptosComponent;
+
+  // Emisión de evento de padre a hijo (cargar data de procesos por situación)
+  @ViewChild(ModalProcesosComponent) procesosComponent!: ModalProcesosComponent;
 
   constructor(private companyNominaService: CompanyNominaService) { }
 
@@ -67,16 +74,19 @@ export class DataTableSituacionComponent implements OnInit {
    */
   showConceptosModal(): void {
     if ( this.situacionSelectRow ) {
-      this.dataTableModal = true;
+      this.dataTableConceptosModal = true;
       this.conceptosComponent.loadConceptosSituacion(this.situacionSelectRow);
     }
   }
 
   /**
-   * Cerrar modal de conceptos por situación
+   * Mostrar modal de procesos por situación
    */
-  closeDataTableModal(): void {
-    this.dataTableModal = false;
+  showProcesosModal(): void {
+    if ( this.situacionSelectRow ) {
+      this.dataTableProcesosModal = true;
+      this.procesosComponent.loadProcesosSituacion(this.situacionSelectRow);
+    }
   }
 
 }
