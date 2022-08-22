@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { Message } from 'primeng/api';
 import { environment } from '../../../environments/environment';
+import { SortEventOrder } from '../interfaces/tableHead.interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -86,6 +87,29 @@ export class Helpers {
         const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
         const day = '01';
         return `${year}-${month}-${day}`;
+    }
+
+    /**
+     * Método para ordenar de manera ascendente y descendente los datos en la tabla usando formulario reactivos
+     * @param event: SortEventOrder
+     */
+    customSort(event: SortEventOrder) {
+      event.data.sort((data1, data2) => {
+        let value1 = data1.value[event.field];
+        let value2 = data2.value[event.field];
+        let result = 0;
+        if (value1 == null && value2 != null)
+          result = -1;
+        else if (value1 != null && value2 == null)
+          result = 1;
+        else if (value1 == null && value2 == null)
+          result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+          result = value1.localeCompare(value2);
+        else
+          result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+        return (event.order * result);
+      })
     }
 
 }
