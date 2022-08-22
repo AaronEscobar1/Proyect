@@ -1,13 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild, Renderer2, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProcesoSituacionService } from '../../../services/proceso-situacion.service';
 import { SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
-import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
+import { SortEventOrder, TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { ProcesoSituacion, ProcesoSituacionCreate } from '../../../interfaces/proceso-situacion.interfaces';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({
   selector: 'app-data-table-procesos',
@@ -61,7 +62,8 @@ export class DataTableProcesosComponent implements OnInit {
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              private helpers: Helpers) {
     this.form = this.fb.group({
       procesos: this.fb.array([]),
     });
@@ -313,4 +315,11 @@ export class DataTableProcesosComponent implements OnInit {
     return form.errors && form.touched || form.dirty && form.status == 'INVALID';
   }
 
+  /**
+   * Método para ordenar de manera ascendente y descendente los datos en la tabla usando formulario reactivos
+   * @param event: SortEventOrder
+   */
+  customSort(event: SortEventOrder): void {
+    this.helpers.customSort(event);
+  }
 }

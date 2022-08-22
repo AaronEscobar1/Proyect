@@ -8,6 +8,7 @@
         <div formArrayName="procesos">
             
             <p-table [value]="procesosFormArray.controls" [columns]="columns" #dt
+                     (sortFunction)="customSort($event)" [customSort]="true"
                      dataKey="controls.idTableTemporal.value" editMode="row"
                      [paginator]="true" [rows]="rows"
                      styleClass="p-datatable-scrollable" responsiveLayout="scroll"
@@ -28,15 +29,13 @@
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <!-- [pSortableColumn]="col.field" -->
-                        <th *ngFor="let col of columns"  class="text-center">
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-center">
                             {{ col.header }}
                             <p-sortIcon [field]="col.field"></p-sortIcon>
                         </th>
                         <th style="width:8rem"></th>
                     </tr>
                     <!-- <tr>
-                        <th></th>
                         <th *ngFor="let col of columns">
                             <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
