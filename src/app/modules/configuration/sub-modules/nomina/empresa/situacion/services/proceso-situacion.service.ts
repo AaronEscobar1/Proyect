@@ -25,15 +25,15 @@ export class ProcesoSituacionService {
   }
 
   create(procesoSituacion: ProcesoSituacion, procesoCreate: ProcesoSituacionCreate): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${procesoSituacion.idEmpresa}/nominas/${procesoSituacion.idNomina}/situaciones/${procesoSituacion.codStat}/procesos`), procesoCreate);
+    return this.http.post(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${procesoSituacion.idEmpresa}/nominas/${procesoSituacion.idNomina}/situaciones/${procesoSituacion.statCodsta}/procesos`), procesoCreate);
   }
 
   update(procesoSituacion: ProcesoSituacion, procesoUpdate: ProcesoSituacionUpdate): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${procesoSituacion.idEmpresa}/nominas/${procesoSituacion.idNomina}/situaciones/${procesoSituacion.codStat}/procesos/${procesoSituacion.procTippro}/${procesoSituacion.tipsub}`), procesoUpdate);
+    return this.http.put(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${procesoSituacion.idEmpresa}/nominas/${procesoSituacion.idNomina}/situaciones/${procesoSituacion.statCodsta}/procesos/${procesoSituacion.procTippro}/${procesoSituacion.tipsub}`), procesoUpdate);
   }
 
   delete(procesoSituacion: ProcesoSituacion): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${procesoSituacion.idEmpresa}/nominas/${procesoSituacion.idNomina}/situaciones/${procesoSituacion.codStat}/procesos/${procesoSituacion.procTippro}/${procesoSituacion.tipsub}`));
+    return this.http.delete(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${procesoSituacion.idEmpresa}/nominas/${procesoSituacion.idNomina}/situaciones/${procesoSituacion.statCodsta}/procesos/${procesoSituacion.procTippro}/${procesoSituacion.tipsub}`));
   }
 
   // Suspension por vacación
