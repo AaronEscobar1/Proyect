@@ -14,12 +14,22 @@
                     </th>
                 </tr> 
                 <tr>
-                    <th *ngFor="let col of columns">
-                        <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                    <th>
+                        <p-columnFilter [field]="columns[0].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '...'">
+                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + columns[0].header + '...'">
                             </ng-template>
                         </p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter [field]="columns[1].field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + columns[1].header + '...'">
+                            </ng-template>
+                        </p-columnFilter>
+                    </th>
+                    <th class="text-center">
+                        <p-columnFilter type="boolean" [field]="columns[2].field" [showClearButton]="false"></p-columnFilter>
                     </th>
                 </tr>
             </ng-template>
@@ -29,7 +39,7 @@
                     <td>{{ sueldo.id }}</td>
                     <td>{{ sueldo.nombre | titlecase }}</td>
                     <td class="text-center">
-                        <p-checkbox [binary]="true" [(ngModel)]="sueldo.sueldoUno" [disabled]="true"></p-checkbox>
+                        <i class="pi" [ngClass]="{'true-icon pi-check-square': sueldo.sueldoUno, 'false-icon pi-stop': !sueldo.sueldoUno}"></i>
                     </td>
                 </tr>
             </ng-template>
