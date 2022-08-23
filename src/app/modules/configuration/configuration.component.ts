@@ -126,6 +126,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   label: 'Tipos de sueldos',
                   routerLink: ['/main/config/empresa/tipos-sueldos']
                 },
+                {
+                  label: 'Niveles de excepción',
+                  routerLink: ['/main/config/empresa/niveles-excepcion']
+                },
                 // {
                 //   label: 'Localidades',
                 //   routerLink: ['/main/config/empresa/localidades']
