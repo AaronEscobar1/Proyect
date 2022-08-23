@@ -122,6 +122,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   label: 'Situación',
                   routerLink: ['/main/config/empresa/situacion']
                 },
+                {
+                  label: 'Tipos de sueldos',
+                  routerLink: ['/main/config/empresa/tipos-sueldos']
+                },
                 // {
                 //   label: 'Localidades',
                 //   routerLink: ['/main/config/empresa/localidades']
