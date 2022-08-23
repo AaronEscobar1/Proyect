@@ -53,6 +53,11 @@ const routes: Routes = [
     loadChildren: () => import('./tipo-sueldo/tipo-sueldo.module').then( m => m.TipoSueldoModule),
   },
   {
+    path: 'niveles-excepcion',
+    // LazyLoad
+    loadChildren: () => import('./niveles-excepcion/niveles-excepcion.module').then( m => m.NivelesExcepcionModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
