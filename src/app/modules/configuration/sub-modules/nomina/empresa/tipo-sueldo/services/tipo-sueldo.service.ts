@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
-import { TipoSueldo, TipoSueldoCreate, TipoSueldoUpdate } from '../interfaces/tipo-sueldo.interfaces';
+import { TipoSueldo, TipoSueldoUpdate } from '../interfaces/tipo-sueldo.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class TipoSueldoService {
     return this.http.get(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/tipossalarios/${idEmpresa}`));
   }
 
-  create(tipoSueldo: TipoSueldoCreate): Observable<any> {
+  create(tipoSueldo: TipoSueldo): Observable<any> {
     return this.http.post(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/tipossalarios`), tipoSueldo);
   }
 
