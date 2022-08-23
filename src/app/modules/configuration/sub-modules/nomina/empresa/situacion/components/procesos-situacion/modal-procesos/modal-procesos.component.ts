@@ -53,7 +53,7 @@ export class ModalProcesosComponent implements OnInit {
           this.procesosSituaciones = res;
           // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
           this.procesosSituaciones = this.procesosSituaciones.map((data, index) => { 
-            return {...data, idTableTemporal: index, idEmpresa: situacion.idEmpresa, idNomina: situacion.idNomina, codStat: situacion.codsta }
+            return {...data, idTableTemporal: index }
           });
           this.spinner.hide();
         },
