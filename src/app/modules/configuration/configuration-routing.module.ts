@@ -23,6 +23,11 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/empresa/empresa.module').then( m => m.EmpresaModule)
       },
       {
+        path: 'deposito',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/depositos/depositos.module').then( m => m.DepositosModule)
+      },
+      {
         path: 'organizacion',
         // LazyLoad
         loadChildren: () => import('./sub-modules/organizacion/organizacion.module').then( m => m.OrganizacionModule)
