@@ -130,6 +130,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   label: 'Niveles de excepción',
                   routerLink: ['/main/config/empresa/niveles-excepcion']
                 },
+                {
+                  label: 'Motivo horas extras',
+                  routerLink: ['/main/config/empresa/motivo-horas-extras']
+                },
                 // {
                 //   label: 'Localidades',
                 //   routerLink: ['/main/config/empresa/localidades']

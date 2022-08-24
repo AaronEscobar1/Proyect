@@ -58,6 +58,11 @@ const routes: Routes = [
     loadChildren: () => import('./niveles-excepcion/niveles-excepcion.module').then( m => m.NivelesExcepcionModule),
   },
   {
+    path: 'motivo-horas-extras',
+    // LazyLoad
+    loadChildren: () => import('./motivo-horas-extras/motivo-horas-extras.module').then( m => m.MotivoHorasExtrasModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
