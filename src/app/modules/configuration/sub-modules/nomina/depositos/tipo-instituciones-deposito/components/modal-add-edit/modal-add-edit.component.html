@@ -1,1 +1,91 @@
-<p>modal-add-edit works!</p>
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-4">
+                        <label for="codtip">Código *</label>
+                        <input  type="text"
+                                id="codtip" 
+                                pInputText
+                                formControlName="codtip"
+                                placeholder="Ingrese el código"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('codtip')">
+                            {{ codtipMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-8">
+                        <label for="destip">Descripción *</label>
+                        <input  type="text" 
+                                id="destip"
+                                pInputText
+                                formControlName="destip" 
+                                placeholder="Ingrese la descripción"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('destip')">
+                            {{ destipMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-12" formGroupName="nmClaseTipoInstitucionTb">
+                        <label for="clatip">Clasificación *</label>
+                        <p-dropdown [options]="clasificaciones" 
+                                    inputId="clatip"
+                                    appendTo="body"
+                                    optionLabel="descripcion"
+                                    optionValue="clatip"
+                                    formControlName="clatip">
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="nmClaseTipoInstitucionTbFormGroup.controls['clatip'].errors
+                                    && nmClaseTipoInstitucionTbFormGroup.controls['clatip'].touched
+                                    && nmClaseTipoInstitucionTbFormGroup.controls['clatip'].dirty
+                                    && this.form.invalid">
+                            La clasificación es obligatoria.
+                        </span>
+                    </div>
+                    
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    class="p-button-secondary my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-save"
+                    class="btn-infocent my-1" 
+                    (click)="save()">
+            </button>
+        </ng-template>
+</p-dialog>
