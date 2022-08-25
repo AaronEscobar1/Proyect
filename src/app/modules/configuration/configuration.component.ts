@@ -141,7 +141,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               items: [
                 {
                   label: 'Tipo instituciones',
-                  routerLink: ['/main/config/deposito/tipo-instituciones-deposito']
+                  routerLink: ['/main/config/deposito/tipo-instituciones']
+                },
+                {
+                  label: 'Tipo cuenta',
+                  routerLink: ['/main/config/deposito/tipo-cuenta']
                 }
               ]
             }
