@@ -1,0 +1,71 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-4">
+                        <label for="id">Código *</label>
+                        <input  type="text"
+                                id="id" 
+                                pInputText
+                                formControlName="id"
+                                placeholder="Ingrese el código"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('id')">
+                            {{ idMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-8">
+                        <label for="nombre">Descripción *</label>
+                        <textarea id="nombre" 
+                                  pInputTextarea 
+                                  formControlName="nombre" 
+                                  rows="3"
+                                  placeholder="Ingrese la descripción">
+                        </textarea>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('nombre')">
+                            {{ nombreMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    class="p-button-secondary my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-save"
+                    class="btn-infocent my-1" 
+                    (click)="save()">
+            </button>
+        </ng-template>
+</p-dialog>

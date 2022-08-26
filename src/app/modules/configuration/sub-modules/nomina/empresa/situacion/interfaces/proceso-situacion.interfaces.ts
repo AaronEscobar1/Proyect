@@ -3,8 +3,8 @@ export interface ProcesoSituacion {
     idEmpresa:               string;
     // Tipo de Nomina
     idNomina:                string;
-    // Codigo de Status
-    codStat:                 string;
+    // Codigo de situacion
+    statCodsta: string;
     // Tipo de Proceso
     procTippro: number;
     // Tipo de Subproceso (0..9)
@@ -18,12 +18,7 @@ export interface ProcesoSituacion {
 }
 
 // Interfaces para crear registros
-export interface ProcesoSituacionCreate {
-    procTippro: string;
-    tipsub:     string;
-    dialim:     number;
-    susvac:     string;
-}
+export type ProcesoSituacionCreate = Omit<ProcesoSituacion, 'idTableTemporal'>;
 
 // Interfaces para actualizar registros omitiendo [procTippro, tipsub]
-export type ProcesoSituacionUpdate = Omit<ProcesoSituacionCreate, 'procTippro' | 'tipsub'>;
+export type ProcesoSituacionUpdate = Pick<ProcesoSituacion, 'dialim' | 'susvac'>;

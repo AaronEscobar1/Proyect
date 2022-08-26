@@ -1,0 +1,50 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Empresas / Niveles de excepción </div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/***********************
+                /*   Consultar empresas    *
+                /*************************** -->
+                <p-tabPanel header="Consultar empresas">
+
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <app-empresas></app-empresas>
+                        </div>
+                    
+                        <div class="col-12 md:col-6">
+                            <app-tipo-nomina [empresaRow]="empresaRow"
+                                             (onGetDataGrupo)="getDataGrupo($event)">
+                            </app-tipo-nomina>
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+
+                <!--/*****************************
+                /*    Niveles de excepción       *
+                /********************************* -->
+                <p-tabPanel header="Niveles de excepción" [disabled]="empresaRow == null || nominaRow == null">
+
+                    <app-niveles-excepcion [empresaRow]="empresaRow"
+                                           [nominaRow]="nominaRow"
+                                           [nivelesExcepcion]="nivelesExcepcion"
+                                           (onRefresh)="refresh()">
+                    </app-niveles-excepcion>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>

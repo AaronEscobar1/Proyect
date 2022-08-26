@@ -48,6 +48,21 @@ const routes: Routes = [
     loadChildren: () => import('./situacion/situacion.module').then( m => m.SituacionModule),
   },
   {
+    path: 'tipos-sueldos',
+    // LazyLoad
+    loadChildren: () => import('./tipo-sueldo/tipo-sueldo.module').then( m => m.TipoSueldoModule),
+  },
+  {
+    path: 'niveles-excepcion',
+    // LazyLoad
+    loadChildren: () => import('./niveles-excepcion/niveles-excepcion.module').then( m => m.NivelesExcepcionModule),
+  },
+  {
+    path: 'motivo-horas-extras',
+    // LazyLoad
+    loadChildren: () => import('./motivo-horas-extras/motivo-horas-extras.module').then( m => m.MotivoHorasExtrasModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];

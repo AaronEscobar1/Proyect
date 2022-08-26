@@ -122,10 +122,31 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                   label: 'Situación',
                   routerLink: ['/main/config/empresa/situacion']
                 },
-                // {
-                //   label: 'Localidades',
-                //   routerLink: ['/main/config/empresa/localidades']
-                // }
+                {
+                  label: 'Tipos de sueldos',
+                  routerLink: ['/main/config/empresa/tipos-sueldos']
+                },
+                {
+                  label: 'Niveles de excepción',
+                  routerLink: ['/main/config/empresa/niveles-excepcion']
+                },
+                {
+                  label: 'Motivo horas extras',
+                  routerLink: ['/main/config/empresa/motivo-horas-extras']
+                }
+              ]
+            },
+            {
+              label: 'Deposito',
+              items: [
+                {
+                  label: 'Tipo instituciones',
+                  routerLink: ['/main/config/deposito/tipo-instituciones']
+                },
+                {
+                  label: 'Tipo cuenta',
+                  routerLink: ['/main/config/deposito/tipo-cuenta']
+                }
               ]
             }
           ]

@@ -1,13 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild, Renderer2, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProcesoSituacionService } from '../../../services/proceso-situacion.service';
 import { SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
-import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { ProcesoSituacion, ProcesoSituacionCreate } from '../../../interfaces/proceso-situacion.interfaces';
+import { SortEventOrder, TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
+import { ProcesoSituacion } from '../../../interfaces/proceso-situacion.interfaces';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({
   selector: 'app-data-table-procesos',
@@ -61,7 +62,8 @@ export class DataTableProcesosComponent implements OnInit {
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              private helpers: Helpers) {
     this.form = this.fb.group({
       procesos: this.fb.array([]),
     });
@@ -133,7 +135,7 @@ export class DataTableProcesosComponent implements OnInit {
       // Valores para crear concepto por empresa, nomina y situacion
       idEmpresa:       new FormControl(this.situacionRow?.idEmpresa),
       idNomina:        new FormControl(this.situacionRow?.idNomina),
-      codStat:         new FormControl(this.situacionRow?.codsta),
+      statCodsta:      new FormControl(this.situacionRow?.codsta),
       // Data necesaria para crear
       procTippro:      new FormControl(null, [ Validators.required, Validators.maxLength(2) ] ),
       tipsub:          new FormControl(null, [ Validators.required, Validators.pattern('[0-9]{1,1}') ] ),
@@ -170,19 +172,15 @@ export class DataTableProcesosComponent implements OnInit {
    */
   onRowEditSave(procesoSituacion: ProcesoSituacion): void {
 
-    let dataForm: ProcesoSituacionCreate = {
-      procTippro: procesoSituacion.procTippro.toString(),
-      tipsub: procesoSituacion.tipsub.toString(),
-      dialim: procesoSituacion.dialim,
-      susvac: procesoSituacion.susvac
-    };
+    // Destructuración de objeto mediante spread (ecmascript 6)
+    const { idTableTemporal, ...dataCreate } = procesoSituacion;
 
     this.spinner.show();
 
     // Editar
     if ( this.isEdit ) {
       // Destructuración de objeto mediante spread (ecmascript 6)
-      const { procTippro, tipsub,...dataUpdate} = dataForm;
+      const { idEmpresa, idNomina, procTippro, statCodsta, tipsub, ...dataUpdate } = dataCreate;
       this.procesosSituacionService.update(procesoSituacion, dataUpdate)
         .subscribe({
           next: (resp) => {
@@ -200,7 +198,7 @@ export class DataTableProcesosComponent implements OnInit {
     }
 
     // Crear conceptos
-    this.procesosSituacionService.create(procesoSituacion, dataForm)
+    this.procesosSituacionService.create(procesoSituacion, dataCreate)
       .subscribe({
         next: (resp) => {
           this.spinner.hide();
@@ -313,4 +311,11 @@ export class DataTableProcesosComponent implements OnInit {
     return form.errors && form.touched || form.dirty && form.status == 'INVALID';
   }
 
+  /**
+   * Método para ordenar de manera ascendente y descendente los datos en la tabla usando formulario reactivos
+   * @param event: SortEventOrder
+   */
+  customSort(event: SortEventOrder): void {
+    this.helpers.customSort(event);
+  }
 }
