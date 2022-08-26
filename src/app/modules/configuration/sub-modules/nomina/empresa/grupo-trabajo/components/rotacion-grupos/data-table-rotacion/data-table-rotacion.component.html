@@ -1,0 +1,1561 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="mt-3">
+    
+    <form #form="ngForm">
+        <p-table [value]="rotacionesGrupoTrabajo" [columns]="columns" #dt
+                dataKey="idTableTemporal" editMode="row"
+                [paginator]="true" [rows]="rows"
+                styleClass="p-datatable-scrollable" responsiveLayout="scroll"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} registros de {totalRecords} entradas." [rowsPerPageOptions]="[5, 10, 25, 50]" > 
+
+                <ng-template pTemplate="caption">
+                    <div class="grid flex-row-reverse">
+                        <div class="col-12 md:col-4 lg:col-3">
+                            <button pButton
+                                    label="Agregar concepto" 
+                                    class="p-button-secondary"
+                                    (click)="addNewRow()"
+                                    [disabled]="isEdit || isAddNewRow">
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-center">
+                            {{ col.header }}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                        <th style="width:8rem"></th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '...'">
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+
+                
+
+                <ng-template pTemplate="body" let-rotacion let-editing="editing" let-index="rowIndex">
+                    <tr [pEditableRow]="rotacion">
+                        <td>
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off"
+                                        name="congru" #congru="ngModel" [(ngModel)]="rotacion.congru"
+                                        maxlength="4" required
+                                        [disabled]="isEdit">
+                                    <div *ngIf="congru.invalid && (congru.dirty || congru.touched)" class="form-text text-danger">
+                                        <span *ngIf="congru.errors?.['required']"> 
+                                            El código es obligatorio. 
+                                        </span>
+                                        <div *ngIf="congru.errors?.['maxlength']"> 
+                                            El código es de longitud máxima de 4 dígitos. 
+                                        </div>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.congru }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag01" #diag01="ngModel" [(ngModel)]="rotacion.diag01"
+                                        maxlength="1" > <!-- Validaciones -->
+                                    <div *ngIf="diag01.invalid && (diag01.dirty || diag01.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag01.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígito.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag01 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag02" #diag02="ngModel" [(ngModel)]="rotacion.diag02"
+                                        maxlength="1" [disabled]="rotacion.diag01 == '' || rotacion.diag01 == null || rotacion.diag01 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag02.invalid && (diag02.dirty || diag02.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag02.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígito.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag02 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag03" #diag03="ngModel" [(ngModel)]="rotacion.diag03"
+                                        maxlength="1" [disabled]="rotacion.diag02 == '' || rotacion.diag02 == null || rotacion.diag02 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag03.invalid && (diag03.dirty || diag03.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag03.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag03 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag04" #diag04="ngModel" [(ngModel)]="rotacion.diag04"
+                                        maxlength="1" [disabled]="rotacion.diag03 == '' || rotacion.diag03 == null || rotacion.diag03 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag04.invalid && (diag04.dirty || diag04.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag04.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag04 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag05" #diag05="ngModel" [(ngModel)]="rotacion.diag05"
+                                        maxlength="1"  [disabled]="rotacion.diag04 == '' || rotacion.diag04 == null || rotacion.diag04 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag05.invalid && (diag05.dirty || diag05.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag05.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag05 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag06" #diag06="ngModel" [(ngModel)]="rotacion.diag06"
+                                        maxlength="1" [disabled]="rotacion.diag05 == '' || rotacion.diag05 == null || rotacion.diag05 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag06.invalid && (diag06.dirty || diag06.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag06.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag06 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag07" #diag07="ngModel" [(ngModel)]="rotacion.diag07"
+                                        maxlength="1" [disabled]="rotacion.diag06 == '' || rotacion.diag06 == null || rotacion.diag06 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag07.invalid && (diag07.dirty || diag07.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag07.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag07 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag08" #diag08="ngModel" [(ngModel)]="rotacion.diag08"
+                                        maxlength="1" [disabled]="rotacion.diag07 == '' || rotacion.diag07 == null || rotacion.diag07 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag08.invalid && (diag08.dirty || diag08.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag08.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag08 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag09" #diag09="ngModel" [(ngModel)]="rotacion.diag09"
+                                        maxlength="1" [disabled]="rotacion.diag08 == '' || rotacion.diag08 == null || rotacion.diag08 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag09.invalid && (diag09.dirty || diag09.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag09.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag09 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag10" #diag10="ngModel" [(ngModel)]="rotacion.diag10"
+                                        maxlength="1" [disabled]="rotacion.diag09 == '' || rotacion.diag09 == null || rotacion.diag09 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag10.invalid && (diag10.dirty || diag10.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag10.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag10 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag11" #diag11="ngModel" [(ngModel)]="rotacion.diag11"
+                                        maxlength="1" [disabled]="rotacion.diag10 == '' || rotacion.diag10 == null || rotacion.diag10 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag11.invalid && (diag11.dirty || diag11.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag11.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag11 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag12" #diag12="ngModel" [(ngModel)]="rotacion.diag12"
+                                        maxlength="1" [disabled]="rotacion.diag11 == '' || rotacion.diag11 == null || rotacion.diag11 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag12.invalid && (diag12.dirty || diag12.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag12.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag12 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag13" #diag13="ngModel" [(ngModel)]="rotacion.diag13"
+                                        maxlength="1" [disabled]="rotacion.diag12 == '' || rotacion.diag12 == null || rotacion.diag12 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag13.invalid && (diag13.dirty || diag13.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag13.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag13 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag14" #diag14="ngModel" [(ngModel)]="rotacion.diag14"
+                                        maxlength="1" [disabled]="rotacion.diag13 == '' || rotacion.diag13 == null || rotacion.diag13 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag14.invalid && (diag14.dirty || diag14.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag14.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag14 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag15" #diag15="ngModel" [(ngModel)]="rotacion.diag15"
+                                        maxlength="1" [disabled]="rotacion.diag14 == '' || rotacion.diag14 == null || rotacion.diag14 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag15.invalid && (diag15.dirty || diag15.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag15.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag15 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag16" #diag16="ngModel" [(ngModel)]="rotacion.diag16"
+                                        maxlength="1" [disabled]="rotacion.diag15 == '' || rotacion.diag15 == null || rotacion.diag15 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag16.invalid && (diag16.dirty || diag16.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag16.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag16 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag17" #diag17="ngModel" [(ngModel)]="rotacion.diag17"
+                                        maxlength="1" [disabled]="rotacion.diag16 == '' || rotacion.diag16 == null || rotacion.diag16 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag17.invalid && (diag17.dirty || diag17.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag17.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag17 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag18" #diag18="ngModel" [(ngModel)]="rotacion.diag18"
+                                        maxlength="1" [disabled]="rotacion.diag17 == '' || rotacion.diag17 == null || rotacion.diag17 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag18.invalid && (diag18.dirty || diag18.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag18.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag18 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag19" #diag19="ngModel" [(ngModel)]="rotacion.diag19"
+                                        maxlength="1" [disabled]="rotacion.diag18 == '' || rotacion.diag18 == null || rotacion.diag18 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag19.invalid && (diag19.dirty || diag19.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag19.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag19 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag20" #diag20="ngModel" [(ngModel)]="rotacion.diag20"
+                                        maxlength="1" [disabled]="rotacion.diag19 == '' || rotacion.diag19 == null || rotacion.diag19 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag20.invalid && (diag20.dirty || diag20.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag20.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag20 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag21" #diag21="ngModel" [(ngModel)]="rotacion.diag21"
+                                        maxlength="1" [disabled]="rotacion.diag20 == '' || rotacion.diag20 == null || rotacion.diag20 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag21.invalid && (diag21.dirty || diag21.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag21.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag21 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag22" #diag22="ngModel" [(ngModel)]="rotacion.diag22"
+                                        maxlength="1" [disabled]="rotacion.diag21 == '' || rotacion.diag21 == null || rotacion.diag21 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag22.invalid && (diag22.dirty || diag22.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag22.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag22 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag23" #diag23="ngModel" [(ngModel)]="rotacion.diag23"
+                                        maxlength="1" [disabled]="rotacion.diag22 == '' || rotacion.diag22 == null || rotacion.diag22 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag23.invalid && (diag23.dirty || diag23.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag23.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag23 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag24" #diag24="ngModel" [(ngModel)]="rotacion.diag24"
+                                        maxlength="1" [disabled]="rotacion.diag23 == '' || rotacion.diag23 == null || rotacion.diag23 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag24.invalid && (diag24.dirty || diag24.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag24.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag24 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag25" #diag25="ngModel" [(ngModel)]="rotacion.diag25"
+                                        maxlength="1" [disabled]="rotacion.diag24 == '' || rotacion.diag24 == null || rotacion.diag24 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag25.invalid && (diag25.dirty || diag25.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag25.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag25 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag26" #diag26="ngModel" [(ngModel)]="rotacion.diag26"
+                                        maxlength="1" [disabled]="rotacion.diag25 == '' || rotacion.diag25 == null || rotacion.diag25 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag26.invalid && (diag26.dirty || diag26.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag26.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag26 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag27" #diag27="ngModel" [(ngModel)]="rotacion.diag27"
+                                        maxlength="1" [disabled]="rotacion.diag26 == '' || rotacion.diag26 == null || rotacion.diag26 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag27.invalid && (diag27.dirty || diag27.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag27.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag27 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag28" #diag28="ngModel" [(ngModel)]="rotacion.diag28"
+                                        maxlength="1" [disabled]="rotacion.diag27 == '' || rotacion.diag27 == null || rotacion.diag27 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag28.invalid && (diag28.dirty || diag28.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag28.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag28 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag29" #diag29="ngModel" [(ngModel)]="rotacion.diag29"
+                                        maxlength="1" [disabled]="rotacion.diag28 == '' || rotacion.diag28 == null || rotacion.diag28 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag29.invalid && (diag29.dirty || diag29.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag29.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag29 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag30" #diag30="ngModel" [(ngModel)]="rotacion.diag30"
+                                        maxlength="1" [disabled]="rotacion.diag29 == '' || rotacion.diag29 == null || rotacion.diag29 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag30.invalid && (diag30.dirty || diag30.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag30.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag30 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diag31" #diag31="ngModel" [(ngModel)]="rotacion.diag31"
+                                        maxlength="1" [disabled]="rotacion.diag30 == '' || rotacion.diag30 == null || rotacion.diag30 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diag31.invalid && (diag31.dirty || diag31.touched)" class="form-text text-danger">
+                                        <span *ngIf="diag31.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diag31 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav01" #diav01="ngModel" [(ngModel)]="rotacion.diav01"
+                                        maxlength="1" [disabled]="rotacion.diag31 == '' || rotacion.diag31 == null || rotacion.diag31 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav01.invalid && (diav01.dirty || diav01.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav01.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav01 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav02" #diav02="ngModel" [(ngModel)]="rotacion.diav02"
+                                        maxlength="1" [disabled]="rotacion.diav01 == '' || rotacion.diav01 == null || rotacion.diav01 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav02.invalid && (diav02.dirty || diav02.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav02.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav02 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav03" #diav03="ngModel" [(ngModel)]="rotacion.diav03"
+                                        maxlength="1" [disabled]="rotacion.diav02 == '' || rotacion.diav02 == null || rotacion.diav02 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav03.invalid && (diav03.dirty || diav03.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav03.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav03 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav04" #diav04="ngModel" [(ngModel)]="rotacion.diav04"
+                                        maxlength="1" [disabled]="rotacion.diav03 == '' || rotacion.diav03 == null || rotacion.diav03 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav04.invalid && (diav04.dirty || diav04.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav04.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav04 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav05" #diav05="ngModel" [(ngModel)]="rotacion.diav05"
+                                        maxlength="1" [disabled]="rotacion.diav04 == '' || rotacion.diav04 == null || rotacion.diav04 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav05.invalid && (diav05.dirty || diav05.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav05.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav05 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav06" #diav06="ngModel" [(ngModel)]="rotacion.diav06"
+                                        maxlength="1" [disabled]="rotacion.diav05 == '' || rotacion.diav05 == null || rotacion.diav05 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav06.invalid && (diav06.dirty || diav06.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav06.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav06 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav07" #diav07="ngModel" [(ngModel)]="rotacion.diav07"
+                                        maxlength="1" [disabled]="rotacion.diav06 == '' || rotacion.diav06 == null || rotacion.diav06 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav07.invalid && (diav07.dirty || diav07.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav07.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav07 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav08" #diav08="ngModel" [(ngModel)]="rotacion.diav08"
+                                        maxlength="1" [disabled]="rotacion.diav07 == '' || rotacion.diav07 == null || rotacion.diav07 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav08.invalid && (diav08.dirty || diav08.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav08.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav08 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav09" #diav09="ngModel" [(ngModel)]="rotacion.diav09"
+                                        maxlength="1" [disabled]="rotacion.diav08 == '' || rotacion.diav08 == null || rotacion.diav08 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav09.invalid && (diav09.dirty || diav09.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav09.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav09 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav10" #diav10="ngModel" [(ngModel)]="rotacion.diav10"
+                                        maxlength="1"  [disabled]="rotacion.diav09 == '' || rotacion.diav09 == null || rotacion.diav09 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav10.invalid && (diav10.dirty || diav10.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav10.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav10 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav11" #diav11="ngModel" [(ngModel)]="rotacion.diav11"
+                                        maxlength="1"  [disabled]="rotacion.diav10 == '' || rotacion.diav10 == null || rotacion.diav10 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav11.invalid && (diav11.dirty || diav11.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav11.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav11 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav12" #diav12="ngModel" [(ngModel)]="rotacion.diav12"
+                                        maxlength="1"  [disabled]="rotacion.diav11 == '' || rotacion.diav11 == null || rotacion.diav11 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav12.invalid && (diav12.dirty || diav12.touched)" class="form-text text-danger">
+                                        <span *ngIf="diav12.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav12 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav13" #diav13="ngModel" [(ngModel)]="rotacion.diav13"
+                                        maxlength="1"  [disabled]="rotacion.diav12 == '' || rotacion.diav12 == null || rotacion.diav12 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav13.invalid && (diav13.dirty || diav13.touched)" class="form-text text-danger">
+  
+                                        <span *ngIf="diav13.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav13 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav14" #diav14="ngModel" [(ngModel)]="rotacion.diav14"
+                                        maxlength="1"  [disabled]="rotacion.diav13 == '' || rotacion.diav13 == null || rotacion.diav13 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav14.invalid && (diav14.dirty || diav14.touched)" class="form-text text-danger">
+                               
+                                        <span *ngIf="diav14.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav14 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav15" #diav15="ngModel" [(ngModel)]="rotacion.diav15"
+                                        maxlength="1"  [disabled]="rotacion.diav14 == '' || rotacion.diav14 == null || rotacion.diav14 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav15.invalid && (diav15.dirty || diav15.touched)" class="form-text text-danger">
+                          
+                                        <span *ngIf="diav15.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav15 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav16" #diav16="ngModel" [(ngModel)]="rotacion.diav16"
+                                        maxlength="1"  [disabled]="rotacion.diav15 == '' || rotacion.diav15 == null || rotacion.diav15 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav16.invalid && (diav16.dirty || diav16.touched)" class="form-text text-danger">
+                                   
+                                        <span *ngIf="diav16.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav16 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav17" #diav17="ngModel" [(ngModel)]="rotacion.diav17"
+                                        maxlength="1"  [disabled]="rotacion.diav16 == '' || rotacion.diav16 == null || rotacion.diav16 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav17.invalid && (diav17.dirty || diav17.touched)" class="form-text text-danger">
+                         
+                                        <span *ngIf="diav17.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav17 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav18" #diav18="ngModel" [(ngModel)]="rotacion.diav18"
+                                        maxlength="1"  [disabled]="rotacion.diav17 == '' || rotacion.diav17 == null || rotacion.diav17 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav18.invalid && (diav18.dirty || diav18.touched)" class="form-text text-danger">
+                        
+                                        <span *ngIf="diav18.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav18 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav19" #diav19="ngModel" [(ngModel)]="rotacion.diav19"
+                                        maxlength="1"  [disabled]="rotacion.diav18 == '' || rotacion.diav18 == null || rotacion.diav18 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav19.invalid && (diav19.dirty || diav19.touched)" class="form-text text-danger">
+                              
+                                        <span *ngIf="diav19.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav19 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav20" #diav20="ngModel" [(ngModel)]="rotacion.diav20"
+                                        maxlength="1"  [disabled]="rotacion.diav19 == '' || rotacion.diav19 == null || rotacion.diav19 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav20.invalid && (diav20.dirty || diav20.touched)" class="form-text text-danger">
+                         
+                                        <span *ngIf="diav20.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav20 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav21" #diav21="ngModel" [(ngModel)]="rotacion.diav21"
+                                        maxlength="1"  [disabled]="rotacion.diav20 == '' || rotacion.diav20 == null || rotacion.diav20 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav21.invalid && (diav21.dirty || diav21.touched)" class="form-text text-danger">
+                         
+                                        <span *ngIf="diav21.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav21 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav22" #diav22="ngModel" [(ngModel)]="rotacion.diav22"
+                                        maxlength="1"  [disabled]="rotacion.diav21 == '' || rotacion.diav21 == null || rotacion.diav21 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav22.invalid && (diav22.dirty || diav22.touched)" class="form-text text-danger">
+                              
+                                        <span *ngIf="diav22.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav22 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav23" #diav23="ngModel" [(ngModel)]="rotacion.diav23"
+                                        maxlength="1"  [disabled]="rotacion.diav22 == '' || rotacion.diav22 == null || rotacion.diav22 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav23.invalid && (diav23.dirty || diav23.touched)" class="form-text text-danger">
+                                
+                                        <span *ngIf="diav23.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav23 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav24" #diav24="ngModel" [(ngModel)]="rotacion.diav24"
+                                        maxlength="1"  [disabled]="rotacion.diav23 == '' || rotacion.diav23 == null || rotacion.diav23 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav24.invalid && (diav24.dirty || diav24.touched)" class="form-text text-danger">
+                                 
+                                        <span *ngIf="diav24.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav24 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav25" #diav25="ngModel" [(ngModel)]="rotacion.diav25"
+                                        maxlength="1"  [disabled]="rotacion.diav24 == '' || rotacion.diav24 == null || rotacion.diav24 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav25.invalid && (diav25.dirty || diav25.touched)" class="form-text text-danger">
+                                
+                                        <span *ngIf="diav25.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav25 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav26" #diav26="ngModel" [(ngModel)]="rotacion.diav26"
+                                        maxlength="1"  [disabled]="rotacion.diav25 == '' || rotacion.diav25 == null || rotacion.diav25 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav26.invalid && (diav26.dirty || diav26.touched)" class="form-text text-danger">
+                                 
+                                        <span *ngIf="diav26.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav26 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav27" #diav27="ngModel" [(ngModel)]="rotacion.diav27"
+                                        maxlength="1"  [disabled]="rotacion.diav26 == '' || rotacion.diav26 == null || rotacion.diav26 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav27.invalid && (diav27.dirty || diav27.touched)" class="form-text text-danger">
+                                 
+                                        <span *ngIf="diav27.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav27 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav28" #diav28="ngModel" [(ngModel)]="rotacion.diav28"
+                                        maxlength="1"  [disabled]="rotacion.diav27 == '' || rotacion.diav27 == null || rotacion.diav27 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav28.invalid && (diav28.dirty || diav28.touched)" class="form-text text-danger">
+                              
+                                        <span *ngIf="diav28.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav28 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav29" #diav29="ngModel" [(ngModel)]="rotacion.diav29"
+                                        maxlength="1"  [disabled]="rotacion.diav28 == '' || rotacion.diav28 == null || rotacion.diav28 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav29.invalid && (diav29.dirty || diav29.touched)" class="form-text text-danger">
+                                   
+                                        <span *ngIf="diav29.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav29 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav30" #diav30="ngModel" [(ngModel)]="rotacion.diav30"
+                                        maxlength="1"  [disabled]="rotacion.diav29 == '' || rotacion.diav29 == null || rotacion.diav29 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav30.invalid && (diav30.dirty || diav30.touched)" class="form-text text-danger">
+                             
+                                        <span *ngIf="diav30.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav30 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diav31" #diav31="ngModel" [(ngModel)]="rotacion.diav31"
+                                        maxlength="1"  [disabled]="rotacion.diav30 == '' || rotacion.diav30 == null || rotacion.diav30 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diav31.invalid && (diav31.dirty || diav31.touched)" class="form-text text-danger">
+                             
+                                        <span *ngIf="diav31.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diav31 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diaga1" #diaga1="ngModel" [(ngModel)]="rotacion.diaga1"
+                                        maxlength="1"  [disabled]="rotacion.diav31 == '' || rotacion.diav31 == null || rotacion.diav31 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diaga1.invalid && (diaga1.dirty || diaga1.touched)" class="form-text text-danger">
+                        
+                                        <span *ngIf="diaga1.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diaga1 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diaga2" #diaga2="ngModel" [(ngModel)]="rotacion.diaga2"
+                                        maxlength="1"  [disabled]="rotacion.diaga1 == '' || rotacion.diaga1 == null || rotacion.diaga1 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diaga2.invalid && (diaga2.dirty || diaga2.touched)" class="form-text text-danger">
+                           
+                                        <span *ngIf="diaga2.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diaga2 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diaga3" #diaga3="ngModel" [(ngModel)]="rotacion.diaga3"
+                                        maxlength="1"  [disabled]="rotacion.diaga2 == '' || rotacion.diaga2 == null || rotacion.diaga2 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diaga3.invalid && (diaga3.dirty || diaga3.touched)" class="form-text text-danger">
+                       
+                                        <span *ngIf="diaga3.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diaga3 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diaga4" #diaga4="ngModel" [(ngModel)]="rotacion.diaga4"
+                                        maxlength="1"  [disabled]="rotacion.diaga3 == '' || rotacion.diaga3 == null || rotacion.diaga3 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diaga4.invalid && (diaga4.dirty || diaga4.touched)" class="form-text text-danger">
+                    
+                                        <span *ngIf="diaga4.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diaga4 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diava1" #diava1="ngModel" [(ngModel)]="rotacion.diava1"
+                                        maxlength="1"  [disabled]="rotacion.diaga4 == '' || rotacion.diaga4 == null || rotacion.diaga4 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diava1.invalid && (diava1.dirty || diava1.touched)" class="form-text text-danger">
+                
+                                        <span *ngIf="diava1.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diava1 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diava2" #diava2="ngModel" [(ngModel)]="rotacion.diava2"
+                                        maxlength="1"  [disabled]="rotacion.diava1 == '' || rotacion.diava1 == null || rotacion.diava1 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diava2.invalid && (diava2.dirty || diava2.touched)" class="form-text text-danger">
+                            
+                                        <span *ngIf="diava2.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diava2 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diava3" #diava3="ngModel" [(ngModel)]="rotacion.diava3"
+                                        maxlength="1"  [disabled]="rotacion.diava2 == '' || rotacion.diava2 == null || rotacion.diava2 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diava3.invalid && (diava3.dirty || diava3.touched)" class="form-text text-danger">
+                    
+                                        <span *ngIf="diava3.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diava3 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-right">
+                            <p-cellEditor>
+
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" autocomplete="off" class="text-right"
+                                        name="diava4" #diava4="ngModel" [(ngModel)]="rotacion.diava4"
+                                        maxlength="1"  [disabled]="rotacion.diava3 == '' || rotacion.diava3 == null || rotacion.diava3 == undefined"> <!-- Validaciones -->
+                                    <div *ngIf="diava4.invalid && (diava4.dirty || diava4.touched)" class="form-text text-danger">
+            
+                                        <span *ngIf="diava4.errors?.['maxlength']">
+                                            El día es de longitud máxima de 1 dígitos.
+                                        </span>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="output">
+                                    {{ rotacion.diava4 }}
+                                </ng-template>
+
+                            </p-cellEditor>
+                        </td>
+                        <td class="text-center">
+                            <button *ngIf="!editing" 
+                                    pButton
+                                    pInitEditableRow 
+                                    icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-text"
+                                    pTooltip="Editar"
+                                    tooltipPosition="bottom"
+                                    (click)="onRowEditInit(rotacion)"
+                                    [disabled]="isEdit || isAddNewRow">
+                            </button>
+                            <button *ngIf="!editing" 
+                                    pButton
+                                    icon="pi pi-trash"
+                                    class="p-button-rounded p-button-text"
+                                    pTooltip="Eliminar"
+                                    tooltipPosition="bottom"
+                                    (click)="onRowDelete(rotacion)"
+                                    [disabled]="isEdit || isAddNewRow">
+                            </button>
+                            <button *ngIf="editing" 
+                                    pButton
+                                    pSaveEditableRow 
+                                    icon="pi pi-save"
+                                    class="p-button-rounded p-button-text p-button-success mr-2"
+                                    pTooltip="Guardar"
+                                    tooltipPosition="bottom"
+                                    (click)="onRowEditSave(rotacion)"
+                                    [disabled]="form.invalid">
+                            </button>
+                            <button *ngIf="editing" 
+                                    pButton
+                                    pCancelEditableRow 
+                                    icon="pi pi-times"
+                                    class="p-button-rounded p-button-text p-button-danger"
+                                    pTooltip="Cancelar"
+                                    tooltipPosition="bottom"
+                                    (click)="onRowEditCancel(rotacion, index)">
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+                
+
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                        <td [attr.colspan]="columns.length + 1">
+                            <div class="div-center">
+                                <div>
+                                    <div class="div-round"></div>
+                                    <h5 class="no-data-message-1">Sin datos para mostrar</h5>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+        </p-table>
+    </form>
+</div>

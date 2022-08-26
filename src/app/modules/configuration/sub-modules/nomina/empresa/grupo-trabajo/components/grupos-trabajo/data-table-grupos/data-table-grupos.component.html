@@ -5,6 +5,22 @@
             [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
             [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} registros de {totalRecords} entradas." [rowsPerPageOptions]="[5,10,25,50]">
     
+            <!-- Rotacion de Grupos de Trabajo -->
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <span class="p-input-icon-left ml-auto">
+                        <button pButton pRipple 
+                            class="p-button-secondary mx-1"
+                            icon="pi pi-history"
+                            iconPos="right"
+                            label="Rotacion"
+                            (click)="showRotacionModal()"
+                            [disabled]="!gruposTrabajoSelectRow">
+                        </button>
+                    </span>
+                </div>
+            </ng-template>
+
             <ng-template pTemplate="header">
                 <tr>
                     <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -62,3 +78,8 @@
 
     </p-table>
 </div>
+
+<!-- modal rotaciones por grupos trabajo -->
+<app-modal-rotaciones [dataTableRotacionesModal]="dataTableRotacionesModal"
+                     (onCloseDataTableModal)="dataTableRotacionesModal = false">
+</app-modal-rotaciones>

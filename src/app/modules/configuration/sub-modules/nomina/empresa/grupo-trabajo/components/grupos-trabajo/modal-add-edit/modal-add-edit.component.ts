@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { GrupoTrabajo, tipoJornadaData } from '../../interfaces/grupo-trabajo.interfaces';
+import { GrupoTrabajo, tipoJornadaData } from '../../../interfaces/grupo-trabajo.interfaces';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { GrupoTrabajoService } from '../../services/grupo-trabajo.service';
+import { GrupoTrabajoService } from '../../../services/grupo-trabajo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interfaces';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
+import { TipoNomina } from '../../../../shared-empresa/interfaces/nominas.interfaces';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-modal-add-edit',

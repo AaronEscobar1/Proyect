@@ -11,7 +11,7 @@ import { By } from '@angular/platform-browser';
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/configuraciones/nominas/puntajesevaluaciones`;
+  const URL = `${environment.api}/configuraciones/nominas/tarifasimpuestos`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -53,7 +53,7 @@ describe('ModalAddEditComponent', () => {
 
     // validamos que no exista el nivelSelect
 
-    expect(app.puntajeEvaluacionSelect).toEqual(undefined);
+    expect(app.tarifaImpuestoSelect).toEqual(undefined);
   
   });
   
@@ -64,57 +64,30 @@ describe('ModalAddEditComponent', () => {
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
 
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ]
-
-    app.nominaRow = {
-      "tipnom": "0002",
-      "desnom": "EMPLEADOS INDIRECTOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": new Date,
-      "fecto4": new Date,
-      "fecto5": new Date,
-      "topgua": 0.00027,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 0.5,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": new Date,
-      "fecto7": new Date,
-      "fecto8": new Date,
-      "fecto9": new Date,
-      "fecto10": new Date,
-      "idEmpresa": "93"
-    };
 
     app.empresaRow = {
       "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
@@ -149,25 +122,18 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.puntajeEvaluacionSelect = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "03",
+    app.tarifaImpuestoSelect = {
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-02-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     }
     
-    // Se simula que hubo un cambio en los inputs
-    app.ngOnChanges();
-
-    app.puntajeEvaluacionSelect = {
-      "despun": "descripcion",
-      "aumpun": "0",
-      "codpun": "03",
-      "idEmpresa": "93",
-      "idNomina": "0001"
-    }
-
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
   });
@@ -219,65 +185,42 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
     // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     const resp = {"message":"Nivel Educativo creado."}
@@ -285,7 +228,9 @@ describe('ModalAddEditComponent', () => {
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.setValue(data)
     expect(app.form.valid).toEqual(true)
-    app.codpunMsgError;
+    app.anomesMsgError;
+    app.remhasMsgError;
+    app.remdesMsgError;
     
     // Llamamos a la funcion de Guardado
     app.save()
@@ -336,65 +281,42 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
     // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     const error = new ErrorEvent('', {
@@ -457,80 +379,57 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
     // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     const resp = {"message":"Nivel Educativo creado."}
     
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['codpun'].disable();
+    app.form.controls['anomes'].disable();
     app.form.reset(data)
     console.log(app.form.valid)
     expect(app.form.valid).toEqual(true)
-    app.despunMsgError;
+    app.anomesMsgError;
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.idEmpresa}/${data.idNomina}/${data.codpun}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.idEmpresa}/${data.remdes}/${data.remhas}/${data.frecue}/${data.tipreg}?anomes=2022-04-01T00:00:00`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('PUT');
   });
@@ -575,75 +474,50 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
-    // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669000,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     const resp = {"message":"Nivel Educativo creado."}
     
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['codpun'].disable();
+    app.form.controls['anomes'].disable();
     app.form.reset(data)
     console.log(app.form.valid)
     expect(app.form.valid).toEqual(true)
-    app.despunMsgError;
 
     // Llamamos a la funcion de Guardado
     app.save()
@@ -689,65 +563,41 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
-    // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     const error = new ErrorEvent('', {
@@ -758,15 +608,14 @@ describe('ModalAddEditComponent', () => {
     });
 
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['codpun'].disable();
+    app.form.controls['anomes'].disable();
     app.form.reset(data)
     expect(app.form.valid).toEqual(true)
-    app.despunMsgError;
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.idEmpresa}/${data.idNomina}/${data.codpun}`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}/${data.idEmpresa}/${data.remdes}/${data.remhas}/${data.frecue}/${data.tipreg}?anomes=2022-04-01T00:00:00`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('PUT');
   });
@@ -810,91 +659,60 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
-    // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['codpun'].setValue("03")
+    app.form.controls['anomes'].setValue(new Date("2022-02-01T00:00:00"))
     expect(app.form.valid).toEqual(false)
-    app.codpunMsgError;
+    app.anomesMsgError;
 
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['codpun'].setValue("155244")
+    app.form.controls['anomes'].setValue("")
     expect(app.form.valid).toEqual(false)
-    app.codpunMsgError;
+    app.anomesMsgError;
     
-    // caso vacio
-    // Guardamos los datos en el formulario y lo comprobamos
-    app.form.reset(data)
-    app.form.controls['codpun'].setValue("")
-    expect(app.form.valid).toEqual(false)
-    app.codpunMsgError;
-
     // Llamamos a la funcion de Guardado
     app.save()
 
-    app.campoInvalid('codpun');
+    app.campoInvalid('anomes');
 
   });
   it('Validando el formulario (Caso Editado)', () => {
@@ -937,85 +755,156 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
-    app.nominaRow = {
-      "tipnom": "0005",
-      "desnom": "EMPLEADOS DISCAPACITADOS",
-      "clanom": "2",
-      "frenom": 30,
-      "codpai": null,
-      "fecto1": new Date,
-      "fecto2": new Date,
-      "fecto3": null,
-      "fecto4": null,
-      "fecto5": null,
-      "topgua": 12,
-      "canmin": 12,
-      "facgua": 12,
-      "asifon": 12,
-      "dedfon": 12,
-      "valfon": 12,
-      "fecabo": new Date,
-      "tipmon": null,
-      "tasmon": null,
-      "valred": 0.01,
-      "tipfec": 1,
-      "reghab": "0",
-      "anocom": "0",
-      "pgmrec": "US0633",
-      "fresue": "0",
-      "codcon": null,
-      "fecto6": null,
-      "fecto7": null,
-      "fecto8": null,
-      "fecto9": null,
-      "fecto10": null,
-      "idEmpresa": "93"
-    }
-
-    app.puntajesEvaluacion = [
+    app.tarifasImpuestos = [
       {
-        "despun": "descripcion 01",
-        "aumpun": "0",
-        "codpun": "01",
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
       },
       {
-        "despun": "descripcion",
-        "aumpun": "1",
-        "codpun": "03",
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
         "idEmpresa": "93",
-        "idNomina": "0001"
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
       }
     ];
 
-    // datos del formulario
     const data = {
-      "despun": "descripcion",
-      "aumpun": "1",
-      "codpun": "02",
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
       "idEmpresa": "93",
-      "idNomina": "0001"
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
     };
 
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['codpun'].disable();
     app.form.reset(data)
-    app.form.controls['despun'].setValue("444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444")
+    app.form.controls['remdes'].setValue("444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444")
     expect(app.form.valid).toEqual(false)
-    app.despunMsgError
+    app.remdesMsgError
 
     // caso vacio
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['codpun'].disable();
     app.form.reset(data)
-    app.form.controls['despun'].setValue("")
+    app.form.controls['remdes'].setValue("")
     expect(app.form.valid).toEqual(false)
-    app.despunMsgError
+    app.remdesMsgError
 
     app.save();
 
-    app.campoInvalid('despun');
+    app.campoInvalid('remdes');
   });
+  
+  it('Validando el formulario (Caso Editado)', () => {
+    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    // Variables de los inputs
+    app.isEdit = false;
+
+    app.empresaRow = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "1",
+      "capitalPag": 21,
+      "capitalSub": 12,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": 'null',
+      "paginaWeb": 'null',
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date,
+      "feInicio": new Date,
+      "filemail": 'null',
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+          {
+              "rel": "datosadicionales",
+              "href": "/configuraciones/nominas/empresas/93/datosadicionales"
+          }
+      ]
+    }
+
+    app.tarifasImpuestos = [
+      {
+        "tasim1": 444,
+        "tasim2": 4,
+        "valsus": 44,
+        "idEmpresa": "93",
+        "anomes": new Date("2022-01-01T00:00:00"),
+        "remdes": 12,
+        "remhas": 33,
+        "frecue": 0,
+        "tipreg": "0"
+      },
+      {
+        "tasim1": 14,
+        "tasim2": 14,
+        "valsus": 14,
+        "idEmpresa": "93",
+        "anomes": new Date("2022-02-01T00:00:00"),
+        "remdes": 669,
+        "remhas": 6600,
+        "frecue": 360,
+        "tipreg": "2"
+      }
+    ];
+
+    const data = {
+      "tasim1": 14,
+      "tasim2": 14,
+      "valsus": 14,
+      "idEmpresa": "93",
+      "anomes": new Date("2022-04-01T00:00:00"),
+      "remdes": 669,
+      "remhas": 6600,
+      "frecue": 360,
+      "tipreg": "2"
+    };
+
+    // caso length
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.reset(data)
+    app.form.controls['remhas'].setValue("444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444")
+    expect(app.form.valid).toEqual(false)
+    app.remhasMsgError
+
+    // caso vacio
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.reset(data)
+    app.form.controls['remhas'].setValue("")
+    expect(app.form.valid).toEqual(false)
+    app.remhasMsgError
+
+    app.save();
+
+    app.campoInvalid('remhas');
+  });
+
 });
