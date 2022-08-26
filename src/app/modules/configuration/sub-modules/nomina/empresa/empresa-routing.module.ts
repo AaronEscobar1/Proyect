@@ -58,6 +58,11 @@ const routes: Routes = [
     loadChildren: () => import('./motivo-horas-extras/motivo-horas-extras.module').then( m => m.MotivoHorasExtrasModule),
   },
   {
+    path: 'localidades',
+    // LazyLoad
+    loadChildren: () => import('./localidades/localidades.module').then( m => m.LocalidadesModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
