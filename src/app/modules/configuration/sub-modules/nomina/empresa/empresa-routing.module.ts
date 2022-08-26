@@ -13,11 +13,6 @@ const routes: Routes = [
     loadChildren: () => import('./tarifas-impuestos/tarifas-impuestos.module').then( m => m.TarifasImpuestosModule),
   },
   {
-    path: 'localidades',
-    // LazyLoad
-    loadChildren: () => import('./localidades/localidades.module').then( m => m.LocalidadesModule),
-  },
-  {
     path: 'nominas',
     // LazyLoad
     loadChildren: () => import('./nominas/nominas.module').then( m => m.NominasModule),
