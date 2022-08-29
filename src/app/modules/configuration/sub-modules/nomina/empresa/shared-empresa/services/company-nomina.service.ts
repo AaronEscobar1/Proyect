@@ -51,5 +51,22 @@ export class CompanyNominaService {
   getAllRotacionGruposByEmpresaNominaRotacionGrupo(idEmpresa: string, idNomina: string, idRotacionGrupo: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/empresas/${idEmpresa}/nominas/${idNomina}/rotaciongrupos/${idRotacionGrupo}`));
   }
+
+  /**
+   * Obtener todos los paises
+   * @returns Observable<any>
+   */
+  getAllCountry(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint('/configuraciones/organizaciones/paises'));
+  }
+
+  /**
+   * Obtener todos las entidades por pais
+   * @param codCountry: codigo pais
+   * @returns Observable<any>
+   */
+  getEntitiesByCountry(codCountry: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/entidadesfederales/${codCountry}`));
+  }
   
 }

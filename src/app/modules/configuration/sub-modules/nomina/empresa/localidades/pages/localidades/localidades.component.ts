@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
@@ -6,13 +6,14 @@ import { LocalidadesService } from '../../services/localidades.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Localidad } from '../../interfaces/localidades.interfaces';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { Countrys } from 'src/app/shared/interfaces/country-entity.interfaces';
 
 @Component({
   selector: 'app-localidades',
   templateUrl: './localidades.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class LocalidadesComponent {
+export class LocalidadesComponent implements OnInit {
 
   // Objeto para obtener el id de la empresa
   @Input() empresaRow!: Company;
@@ -22,6 +23,9 @@ export class LocalidadesComponent {
 
   // Objeto seleccionado para editar
   localidadSelect!: Localidad | undefined;
+
+  // Objeto para cargar paises
+  countrys: Countrys[]        = [];
 
   // Banderas
   isEdit: boolean = false;
@@ -37,12 +41,34 @@ export class LocalidadesComponent {
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
 
+  ngOnInit(): void {
+    this.loadCountrysData();
+  }
+
   ngOnChanges() {
     // Validar si empresa existe y tiene id
     if ( this.empresaRow && this.empresaRow.id ) {
       // Realizar peticion al backend asociada a la empresa seleccionada
       this.loadLocalidades(this.empresaRow.id);
     }
+  }
+
+  /**
+   * Carga todos los países
+   */
+  loadCountrysData(): void {
+    this.spinner.show();
+    this.companyNominaService.getAllCountry()
+      .subscribe({
+        next: (resp) => {
+          this.countrys = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   /**
@@ -55,7 +81,6 @@ export class LocalidadesComponent {
       .subscribe({
         next: (res) => {
           this.localidades = res;
-          console.log(this.localidades);
           this.spinner.hide();
         },
         error: (err) => {

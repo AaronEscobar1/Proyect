@@ -1,1 +1,772 @@
-<p>modal-add-edit works!</p>
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+
+                    <div class="field col-3 md:col-3 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+
+                    <div class="field col-3 md:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : ''"
+                                disabled/>
+                    </div>
+                
+                    <div class="field col-6 md:col-6">
+                        <input  type="text"
+                                id="desemp" 
+                                pInputText
+                                [value]="empresaRow ? empresaRow.nombre : ''"
+                                disabled>
+                    </div>
+
+                </div>
+
+                <p-tabView [(activeIndex)]="tabIndex">
+
+                    <!--/****************************
+                        /*          Basico          *
+                        /****************************-->
+                    <p-tabPanel header="Básico" >
+
+                        <div class="formgrid grid mt-3">
+
+                            <div class="field col-4 md:col-2 lg:col-1 text-right mt-2">
+                                <label for="codloc">Código:</label>
+                            </div>
+                            <div class="field col-8 md:col-2 lg:col-2">
+                                <input  type="text"
+                                        id="codloc"
+                                        formControlName="codloc"
+                                        pInputText/>
+                                <span class="form-text text-danger"
+                                    *ngIf="campoInvalid('codloc')">
+                                    {{ codlocMsgError }}
+                                </span>
+                            </div>
+
+                            <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
+                                <label for="deslo1">Descripción:</label>
+                            </div>
+                            <div class="field col-8 md:col-6 lg:col-7">
+                                <textarea id="descat" 
+                                          pInputTextarea 
+                                          rows="1"
+                                          formControlName="deslo1">
+                                </textarea>
+                                <span class="form-text text-danger"
+                                    *ngIf="campoInvalid('deslo1')">
+                                    {{ deslo1MsgError }}
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <p-panel header="">
+
+                            <div class="formgrid grid">
+
+                                <div class="col-12 md:col-6">
+
+                                    <div class="formgrid grid -mt-3">
+                                        <div class="field col-4 text-right mt-2">
+                                            <label for="siglas">Siglas: </label>
+                                        </div>
+                                        <div class="field col-8">
+                                            <input  type="text"
+                                                    id="siglas"
+                                                    pInputText
+                                                    formControlName="siglas"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('siglas')">
+                                                Las siglas es de longitud máxima de 20 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 text-right mt-2">
+                                            <label for="numrif">RIF: </label>
+                                        </div>
+                                        <div class="field col-8">
+                                            <input  type="text"
+                                                    id="numrif"
+                                                    pInputText
+                                                    formControlName="numrif"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('numrif')">
+                                                El rif es de longitud máxima de 15 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 text-right mt-2">
+                                            <label for="numnit">NIT: </label>
+                                        </div>
+                                        <div class="field col-8">
+                                            <input  type="text"
+                                                    id="numnit"
+                                                    pInputText
+                                                    formControlName="numnit"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('numnit')">
+                                                El nit es de longitud máxima de 14 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 text-right">
+                                            <label for="nroord">Número orden: </label>
+                                        </div>
+                                        <div class="field col-8">
+                                            <input  type="text"
+                                                    id="nroord"
+                                                    form
+                                                    pInputText
+                                                    formControlName="nroord"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('nroord')">
+                                                El orden es de longitud máxima de 6 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 text-right">
+                                            <label for="turnos">Turnos diarios: </label>
+                                        </div>
+                                        <div class="field col-8">
+                                            <input  type="text"
+                                                    id="turnos"
+                                                    pInputText
+                                                    formControlName="turnos"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('turnos')">
+                                                El campo turno es de longitud máxima de 3 dígitos, formato numérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 text-right mt-2">
+                                            <label for="nilcia">N.I.L: </label>
+                                        </div>
+                                        <div class="field col-8">
+                                            <input  type="text"
+                                                    id="nilcia"
+                                                    pInputText
+                                                    formControlName="nilcia"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('nilcia')">
+                                                El N.I.L. es de longitud máxima de 10 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12 md:col-6">
+
+                                    <div class="formgrid grid -mt-3">
+                                        <div class="field col-4 md:col-6 text-right">
+                                            <label for="nrosso">Número S.S.O.: </label>
+                                        </div>
+                                        <div class="field col-8 md:col-6">
+                                            <input  type="text"
+                                                    id="nrosso"
+                                                    pInputText
+                                                    formControlName="nrosso"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('nrosso')">
+                                                El número S.S.O. es de longitud máxima de 12 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 md:col-6 text-right">
+                                            <label for="riesso">Nivel riesgo S.S.O.: </label>
+                                        </div>
+                                        <div class="field col-8 md:col-6">
+                                            <input  type="text"
+                                                    id="riesso"
+                                                    pInputText
+                                                    formControlName="riesso"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('riesso')">
+                                                El nivel S.S.O. es de longitud máxima de 2 dígitos, formato numérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 md:col-6 text-right">
+                                            <label for="fecto1">Fecha registro S.S.O.:</label>
+                                        </div>
+                                        <div class="field col-8 md:col-6">
+                                            <p-calendar inputId="fecto1" 
+                                                        dateFormat="dd/mm/yy"
+                                                        appendTo="body"
+                                                        formControlName="fecsso">
+                                            </p-calendar>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 md:col-6 text-right">
+                                            <label for="regsso">Regimen total o parcial:</label>
+                                        </div>
+                                        <div class="field col-8 md:col-6">
+                                            <input  type="text"
+                                                    id="regsso"
+                                                    pInputText
+                                                    formControlName="regsso"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('regsso')">
+                                                El regimen es de longitud máxima de 20 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 md:col-6 text-right">
+                                            <label for="regmin">Número registro:</label>
+                                        </div>
+                                        <div class="field col-8 md:col-6">
+                                            <input  type="text"
+                                                    id="regmin"
+                                                    pInputText
+                                                    formControlName="regmin"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('regmin')">
+                                                El registro es de longitud máxima de 9 dígitos, formato alfanumérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="formgrid grid -mt-2">
+                                        <div class="field col-4 md:col-6 text-right">
+                                            <label for="horsem">Horas semanales:</label>
+                                        </div>
+                                        <div class="field col-8 md:col-6">
+                                            <input  type="text"
+                                                    id="horsem"
+                                                    pInputText
+                                                    formControlName="horsem"/>
+                                            <span class="form-text text-danger"
+                                                  *ngIf="campoInvalid('horsem')">
+                                                El campo hora semanal es de longitud máxima de 8 dígitos, formato numérico.
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </p-panel>
+
+                        <p-panel header="Informante" styleClass="mt-3">
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
+                                    <label for="nominf">Nombre:</label>
+                                </div>
+                                <div class="field col-8 md:col-9 lg:col-10">
+                                    <input  type="text"
+                                            id="nominf"
+                                            pInputText
+                                            formControlName="nominf"/>
+                                    <span class="form-text text-danger"
+                                            *ngIf="campoInvalid('nominf')">
+                                        El nombre es de longitud máxima de 30 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
+                                    <label for="cgoinf">Cargo:</label>
+                                </div>
+                                <div class="field col-8 md:col-9 lg:col-10">
+                                    <input  type="text"
+                                            id="cgoinf"
+                                            pInputText
+                                            formControlName="cgoinf"/>
+                                    <span class="form-text text-danger"
+                                            *ngIf="campoInvalid('cgoinf')">
+                                        El cargo es de longitud máxima de 30 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
+                                    <label for="ideinf">Identificación:</label>
+                                </div>
+                                <div class="field col-8 md:col-9 lg:col-10">
+                                    <input  type="text"
+                                            id="ideinf"
+                                            pInputText
+                                            formControlName="ideinf"/>
+                                    <span class="form-text text-danger"
+                                            *ngIf="campoInvalid('ideinf')">
+                                        La identificación es de longitud máxima de 20 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 lg:col-2 text-right mt-2">
+                                    <label for="nacional">Nacionalidad:</label>
+                                </div>
+                                <div class="field col-8 md:col-9 lg:col-10">
+                                    <input  type="text"
+                                            id="nacional"
+                                            pInputText
+                                            formControlName="nacional"/>
+                                    <span class="form-text text-danger"
+                                            *ngIf="campoInvalid('nacional')">
+                                        El campo nacional es de longitud máxima de 50 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                        </p-panel>
+
+                    </p-tabPanel>
+
+                    <!--/****************************
+                        /*       Dirección         *
+                        /****************************-->
+                    <p-tabPanel header="Dirección">
+
+                        <p-panel header="">
+
+                            <div class="formgrid grid -mt-3">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="direc1">Descripción:</label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input type="text"
+                                           id="direc1" 
+                                           pInputText 
+                                           formControlName="direc1">
+                                    <span class="form-text text-danger"
+                                            *ngIf="campoInvalid('direc1')">
+                                        {{ direc1MsgError }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input type="text"
+                                           id="direc2" 
+                                           pInputText 
+                                           formControlName="direc2">
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('direc2')">
+                                        El dirección 2 es de longitud máxima de 60 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codPais">País: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <p-dropdown [options]="countrys"
+                                                inputId="codPais"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="codigo"
+                                                optionLabel="codigo"
+                                                optionValue="codigo"
+                                                formControlName="codPais"
+                                                #dropdownElement
+                                                (onChange)="countrySelectChange($event, dropdownElement)"
+                                                [showClear]="true"
+                                                (onClear)="clearCountrySelect()"
+                                                placeholder="Seleccione un país">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('codPais')">
+                                        El país es de longitud máxima de 3 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input type="text"
+                                           pInputText
+                                           [value]="countrySelect"
+                                           [disabled]="true"/>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codEntidad">Entidad federal: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <p-dropdown [options]="federalEntities"
+                                                inputId="codEntidad"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="codEntidad"
+                                                formControlName="codEntidad"
+                                                optionLabel="codEntidad"
+                                                optionValue="codEntidad"
+                                                #dropdownElementEntity
+                                                (onChange)="entitySelectChange(dropdownElementEntity)"
+                                                [showClear]="true"
+                                                (onClear)="clearEntitySelect()"
+                                                placeholder="Seleccione una entidad">
+                                    </p-dropdown>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('codEntidad')">
+                                        La entidad federal es de longitud máxima de 3 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text" 
+                                            pInputText
+                                            [value]="federalEntitySelect"
+                                            [disabled]="true"/>
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="cdadCodciu">Ciudad: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="cdadCodciu" 
+                                            pInputText/>
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="numtlf">Teléfono: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input type="text"
+                                           id="numtlf"
+                                           pInputText
+                                           formControlName="numtlf">       
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('numtlf')">
+                                        El teléfono es de longitud máxima de 14 dígitos, formato numérico.
+                                    </span>             
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="numfax">Fax: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input type="text"
+                                           id="numfax"
+                                           pInputText
+                                           formControlName="numfax">  
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('numfax')">
+                                        El fax es de longitud máxima de 14 dígitos, formato numérico.
+                                    </span>  
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="eMail">E-mail: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="eMail" 
+                                            pInputText
+                                            formControlName="eMail"/>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('eMail')">
+                                        {{ eMailMsgError }}
+                                    </span>  
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codpos">Código postal:</label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="codpos" 
+                                            pInputText
+                                            formControlName="codpos"/>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('codpos')">
+                                        El código postal es de longitud máxima de 10 dígitos, formato numérico.
+                                    </span>  
+                                </div>
+                            </div>
+
+                        </p-panel>
+
+                    </p-tabPanel>  
+
+                    <!--/****************************
+                        /*       Ubicación          *
+                        /****************************-->
+                    <p-tabPanel header="Ubicación">
+
+                        <p-panel header="">
+
+                            <div class="formgrid grid -mt-3">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codMunicipio">Municipio: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <input  type="text"
+                                            id="codMunicipio" 
+                                            pInputText
+                                            formControlName="codMunicipio"/>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text"
+                                            pInputText
+                                            [disabled]="true"/>
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codParroquia">Parroquia: </label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="codParroquia" 
+                                            pInputText
+                                            formControlName="codParroquia">
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('codParroquia')">
+                                        La parroquia es de longitud máxima de 20 dígitos, formato alfanumérico.
+                                    </span> 
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="entidadfedubi">Entidad. federal: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <input  type="text"
+                                            id="entidadfedubi" 
+                                            pInputText/>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text" 
+                                            pInputText
+                                            [disabled]="true"/>
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="distrito">Distrito: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <input  type="text"
+                                            id="distrito" 
+                                            pInputText/>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text" 
+                                            pInputText
+                                            [disabled]="true"/>
+                                </div>
+                            </div>
+                        
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="sector">Sector: </label>
+                                </div>
+                                <div class="field col-8 md:col-2">
+                                    <input  type="text"
+                                            id="sector" 
+                                            pInputText/>
+                                </div>
+                            </div>
+                            
+                        </p-panel>
+
+                    </p-tabPanel> 
+                    
+                    <!--/*********************************
+                        /*   Actividad económica         *
+                        /*********************************-->
+                    <p-tabPanel header="Actividad económica">
+
+                        <p-panel header="">
+
+                            <div class="formgrid grid -mt-3">
+                                <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
+                                    <label for="acteco">Código: </label>
+                                </div>
+                                <div class="field col-8 md:col-2 lg:col-2">
+                                    <input  type="text"
+                                            id="acteco" 
+                                            pInputText
+                                            formControlName="acteco"/>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('acteco')">
+                                        La código es de longitud máxima de 4 dígitos, formato alfanumérico.
+                                    </span> 
+                                </div>
+
+                                <div class="field col-4 md:col-2 lg:col-1 text-right mt-2">
+                                    <label for="caploc">Capital: </label>
+                                </div>
+                                <div class="field col-8 md:col-2 lg:col-3">
+                                    <input  type="text"
+                                            id="caploc" 
+                                            pInputText
+                                            formControlName="caploc"/>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('caploc')">
+                                        La capital es de longitud máxima de 5 enteros y 2 decimales, formato numérico.
+                                    </span> 
+                                </div>
+
+                                <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
+                                    <label for="fecfun">Fundación: </label>
+                                </div>
+                                <div class="field col-8 md:col-2 lg:col-2">
+                                    <p-calendar inputId="fecfun" 
+                                                dateFormat="dd/mm/yy"
+                                                appendTo="body"
+                                                formControlName="fecfun">
+                                    </p-calendar>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-2 text-right mt-2">
+                                    <label for="des">Descripción: </label>
+                                </div>
+                                <div class="field col-8 md:col-6">
+                                    <input  type="text"
+                                            id="des" 
+                                            pInputText/>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+
+                                <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
+                                    <label for="proloc">Propietario: </label>
+                                </div>
+                                <div class="field col-8 md:col-4 lg:col-6 ">
+                                    <input  type="text"
+                                            id="proloc" 
+                                            pInputText
+                                            formControlName="proloc"/>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('proloc')">
+                                        El propietario es de longitud máxima de 30 dígitos, formato alfanumérico.
+                                    </span> 
+                                </div>
+                               
+                                <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
+                                    <label for="idepro">Identificación: </label>
+                                </div>
+                                <div class="field col-8 md:col-4 lg:col-2">
+                                    <input  type="text"
+                                            id="idepro" 
+                                            pInputText
+                                            formControlName="idepro"/>
+                                    <span class="form-text text-danger"
+                                          *ngIf="campoInvalid('idepro')">
+                                        La identificación es de longitud máxima de 20 dígitos, formato alfanumérico.
+                                    </span> 
+                                </div>
+    
+                            </div>
+
+                        </p-panel>
+
+                        <p-panel header="Establecimiento anterior" styleClass="mt-3">
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="nombreAct">Nombre:</label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="nombreAct" 
+                                            pInputText/>
+                                </div>
+                            </div>
+    
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="dirAct">Dirección:</label>
+                                </div>
+                                <div class="field col-8 md:col-7">
+                                    <input  type="text"
+                                            id="dirAct" 
+                                            pInputText/>
+                                </div>
+                            </div>
+
+                        </p-panel>
+
+                    </p-tabPanel> 
+
+                </p-tabView>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    class="p-button-secondary my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-save"
+                    class="btn-infocent my-1" 
+                    (click)="save()">
+            </button>
+        </ng-template>
+</p-dialog>
