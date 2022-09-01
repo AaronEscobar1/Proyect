@@ -13,11 +13,6 @@ const routes: Routes = [
     loadChildren: () => import('./tarifas-impuestos/tarifas-impuestos.module').then( m => m.TarifasImpuestosModule),
   },
   {
-    path: 'localidades',
-    // LazyLoad
-    loadChildren: () => import('./localidades/localidades.module').then( m => m.LocalidadesModule),
-  },
-  {
     path: 'nominas',
     // LazyLoad
     loadChildren: () => import('./nominas/nominas.module').then( m => m.NominasModule),
@@ -61,6 +56,16 @@ const routes: Routes = [
     path: 'motivo-horas-extras',
     // LazyLoad
     loadChildren: () => import('./motivo-horas-extras/motivo-horas-extras.module').then( m => m.MotivoHorasExtrasModule),
+  },
+  {
+    path: 'localidades',
+    // LazyLoad
+    loadChildren: () => import('./localidades/localidades.module').then( m => m.LocalidadesModule),
+  },
+  {
+    path: 'clase-informacion',
+    // LazyLoad
+    loadChildren: () => import('./clase-informacion/clase-informacion.module').then( m => m.ClaseInformacionModule),
   },
   {
     path: '**', redirectTo: '/main/config'

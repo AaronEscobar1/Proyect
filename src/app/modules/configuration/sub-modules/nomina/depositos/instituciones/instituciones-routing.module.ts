@@ -21,4 +21,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class LocalidadesRoutingModule { }
+export class InstitucionesRoutingModule { }

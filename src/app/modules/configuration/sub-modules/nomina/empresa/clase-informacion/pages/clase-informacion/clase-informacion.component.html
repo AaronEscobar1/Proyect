@@ -49,7 +49,7 @@
         </div>
 
         <!-- Componente table -->
-        <app-data-table [localidades]="localidades"></app-data-table>
+        <app-data-table [clasesInformacion]="clasesInformacion"></app-data-table>
    
     </div>
 </div>
@@ -63,9 +63,9 @@
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
     [empresaRow]="empresaRow"
-    [localidades]="localidades"
-    [localidadSelect]="localidadSelect"
-    [countrys]="countrys"
+    [clasesInformacion]="clasesInformacion"
+    [claseInformacionSelect]="claseInformacionSelect"
+    [equivalencias]="equivalencias"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 

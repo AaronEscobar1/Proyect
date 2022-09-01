@@ -49,7 +49,7 @@
         </div>
 
         <!-- Componente table -->
-        <app-data-table [localidades]="localidades"></app-data-table>
+        <app-data-table [instituciones]="instituciones"></app-data-table>
    
     </div>
 </div>
@@ -63,8 +63,10 @@
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
     [empresaRow]="empresaRow"
-    [localidades]="localidades"
-    [localidadSelect]="localidadSelect"
+    [instituciones]="instituciones"
+    [institucionSelect]="institucionSelect"
+    [tiposInstituciones]="tiposInstituciones"
+    [tiposCuentas]="tiposCuentas"
     [countrys]="countrys"
     [createModal]="createModal" 
     [isEdit]="isEdit" 

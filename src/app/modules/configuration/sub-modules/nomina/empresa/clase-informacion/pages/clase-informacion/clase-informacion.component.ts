@@ -1,67 +1,66 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { LocalidadesService } from '../../services/localidades.service';
+import { ClaseInformacionService } from '../../services/clase-informacion.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Localidad } from '../../interfaces/localidades.interfaces';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
-import { Countrys } from 'src/app/shared/interfaces/country-entity.interfaces';
+import { ClaseInformacion, Equivalencia } from '../../interfaces/clase-informacion.interfaces';
 
 @Component({
-  selector: 'app-localidades',
-  templateUrl: './localidades.component.html',
+  selector: 'app-clase-informacion',
+  templateUrl: './clase-informacion.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class LocalidadesComponent implements OnInit {
+export class ClaseInformacionComponent implements OnInit {
 
   // Objeto para obtener el id de la empresa
   @Input() empresaRow!: Company;
 
-  // Objeto de localidades por empresa
-  localidades: Localidad[] = [];
+  // Objeto de clases de informaciones por empresa
+  clasesInformacion: ClaseInformacion[] = [];
 
   // Objeto seleccionado para editar
-  localidadSelect!: Localidad | undefined;
+  claseInformacionSelect!: ClaseInformacion | undefined;
 
-  // Objeto para cargar paises
-  countrys: Countrys[]        = [];
+  // Objeto de equivalencias
+  equivalencias: Equivalencia[] = [];
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar localidad';
+  titleForm  : string = 'Agregar clase de información';
   createModal: boolean = false;
   printModal : boolean = false;
 
   constructor(private companyNominaService: CompanyNominaService,
-              private localidadesService: LocalidadesService, 
+              private claseInformacionService: ClaseInformacionService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.loadCountrysData();
+    this.loadEquivalencias();
   }
 
   ngOnChanges() {
     // Validar si empresa existe y tiene id
     if ( this.empresaRow && this.empresaRow.id ) {
       // Realizar peticion al backend asociada a la empresa seleccionada
-      this.loadLocalidades(this.empresaRow.id);
+      this.loadClasesInformacion(this.empresaRow.id);
     }
   }
 
   /**
-   * Carga todos los países
+   * Carga todas las equivalencias
    */
-  loadCountrysData(): void {
+   loadEquivalencias(): void {
     this.spinner.show();
-    this.companyNominaService.getAllCountry()
+    this.claseInformacionService.getEquivalencias()
       .subscribe({
         next: (resp) => {
-          this.countrys = resp;
+          this.equivalencias = resp;
           this.spinner.hide();
         },
         error: (err) => {
@@ -72,15 +71,15 @@ export class LocalidadesComponent implements OnInit {
   }
 
   /**
-   * Obtener datos de localidades asignada a la empresa
+   * Obtener datos de clases de informacion asignada a la empresa
    * @param idEmpresa: string id empresa
    */
-  loadLocalidades( idEmpresa: string ): void {
+  loadClasesInformacion( idEmpresa: string ): void {
     this.spinner.show(undefined, spinnerLight);
-    this.localidadesService.getLocalidadesByEmpresa(idEmpresa)
+    this.claseInformacionService.getClasesInformacionByEmpresa(idEmpresa)
       .subscribe({
         next: (res) => {
-          this.localidades = res;
+          this.clasesInformacion = res;
           this.spinner.hide();
         },
         error: (err) => {
@@ -91,9 +90,9 @@ export class LocalidadesComponent implements OnInit {
   }
 
   refresh(): void {
-    this.localidades = [];
+    this.clasesInformacion = [];
     if ( this.empresaRow && this.empresaRow.id ) {
-      this.loadLocalidades(this.empresaRow.id);
+      this.loadClasesInformacion(this.empresaRow.id);
     }
   }
 
@@ -110,36 +109,36 @@ export class LocalidadesComponent implements OnInit {
    * @returns void
    */
   openModalCreate(): void {
-    this.titleForm = 'Agregar localidad';
+    this.titleForm = 'Agregar clase de información';
     this.createModal = true;
   }
 
   closeModal(): void {
     this.isEdit = false;
     this.createModal = false;
-    this.localidadSelect = undefined;
+    this.claseInformacionSelect = undefined;
   }
 
   /**
    * Carga la data en el formulario para editar
-   * @param localidad row de la tabla
+   * @param claseInformacion row de la tabla
    * @returns void
    */
-  editRow(localidad: Localidad): void {
+  editRow(claseInformacion: ClaseInformacion): void {
     this.isEdit = true;
-    this.titleForm = 'Editar localidad';
-    this.localidadSelect = localidad;
+    this.titleForm = 'Editar clase de información';
+    this.claseInformacionSelect = claseInformacion;
     this.createModal = true;
   }
 
   /**
    * Elimina un registro
-   * @param localidad row de la tabla
+   * @param claseInformacion row de la tabla
    * @returns void
    */
-  deleteRow(localidad: Localidad): void {
+  deleteRow(claseInformacion: ClaseInformacion): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta localidad <b>${localidad.codloc}</b>?`,
+      message: `¿Desea eliminar esta clase de Informacion <b>${claseInformacion.nombre}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -147,7 +146,7 @@ export class LocalidadesComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.localidadesService.delete(this.empresaRow.id, localidad)
+        this.claseInformacionService.delete(claseInformacion)
           .subscribe({
             next: (resp) => {
               this.spinner.hide();
@@ -158,17 +157,18 @@ export class LocalidadesComponent implements OnInit {
             },
             error: (err) => {
               if ( err.error.message === 'Error en solicitud.' ) {
-                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la localidad, posee dependencia de registros.', life: 3000});
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la clase de Informacion, posee dependencia de registros.', life: 3000});
                 this.spinner.hide();
                 return false;
               }
               this.spinner.hide();
-              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la localidad.', life: 3000});
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la clase de Informacion.', life: 3000});
               return false;
             }
           });
       }
     });
   }
+
 
 }

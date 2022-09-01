@@ -133,6 +133,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Motivo horas extras',
                   routerLink: ['/main/config/empresa/motivo-horas-extras']
+                },
+                {
+                  label: 'Localidades',
+                  routerLink: ['/main/config/empresa/localidades']
+                },
+                {
+                  label: 'Clase de información',
+                  routerLink: ['/main/config/empresa/clase-informacion']
                 }
               ]
             },
@@ -146,6 +154,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Tipo cuenta',
                   routerLink: ['/main/config/deposito/tipo-cuenta']
+                },
+                {
+                  label: 'Instituciones',
+                  routerLink: ['/main/config/deposito/instituciones']
                 }
               ]
             }

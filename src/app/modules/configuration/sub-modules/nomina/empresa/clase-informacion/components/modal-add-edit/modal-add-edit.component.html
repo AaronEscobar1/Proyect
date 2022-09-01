@@ -34,12 +34,11 @@
 
                     <div class="field col-12 md:col-8">
                         <label for="nombre">Descripción *</label>
-                        <textarea id="nombre" 
-                                  pInputTextarea 
-                                  formControlName="nombre" 
-                                  rows="3"
-                                  placeholder="Ingrese la descripción">
-                        </textarea>
+                        <input  type="text" 
+                                id="nombre"
+                                pInputText
+                                formControlName="nombre"
+                                placeholder="Ingrese la descripción"/>
                         <span class="form-text text-danger"
                               *ngIf="campoInvalid('nombre')">
                             {{ nombreMsgError }}
@@ -48,24 +47,43 @@
 
                 </div>
 
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-12" formGroupName="equivalencia">
+                        <label for="equivalencia">Equivalencia</label>
+                        <p-dropdown [options]="equivalencias" 
+                                    inputId="equivalencia"
+                                    appendTo="body"
+                                    optionLabel="nombre"
+                                    optionValue="id"
+                                    [showClear]="true"
+                                    formControlName="id"
+                                    placeholder="Seleccione equivalencia">
+                        </p-dropdown>
+                    </div>
+                    
+                </div>
+
             </form>
 
         </ng-template>
         
         <ng-template pTemplate="footer">
-            <button pButton 
-                    pRipple 
-                    label="Cancelar" 
-                    class="p-button-secondary my-1" 
-                    (click)="closeModal()">
-            </button>
-            <button pButton 
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar"
+                        class="p-button-secondary my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
                     pRipple 
                     type="submit" 
                     label="Guardar" 
                     icon="pi pi-save"
                     class="btn-infocent my-1" 
                     (click)="save()">
-            </button>
+                </button>
+            </div>
         </ng-template>
 </p-dialog>

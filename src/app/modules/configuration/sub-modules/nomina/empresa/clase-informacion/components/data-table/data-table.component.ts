@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { Localidad } from '../../interfaces/localidades.interfaces';
+import { ClaseInformacion } from '../../interfaces/clase-informacion.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -11,7 +11,7 @@ import { Localidad } from '../../interfaces/localidades.interfaces';
 export class DataTableComponent implements OnInit {
 
   // Objeto para mostrar en la tabla
-  @Input() localidades!: Localidad[];
+  @Input() clasesInformacion!: ClaseInformacion[];
 
   // Table
   columns: TableHead[] = [];
@@ -20,9 +20,9 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codloc', header: 'Código'      },
-      { field: 'deslo1', header: 'Descripción' },
-      { field: 'direc1', header: 'Dirección'   }
+      { field: 'nmInformacionClaseTbId.id', header: 'Código'       },
+      { field: 'nombre',                    header: 'Descripción'  },
+      { field: 'equivalencia.nombre',       header: 'Equivalencia' }
     ];
   }
 
@@ -33,5 +33,5 @@ export class DataTableComponent implements OnInit {
   onRowUnselect(): void {
     this.companyNominaService.selectRowThirdTable$.emit(null);
   }
-  
+
 }

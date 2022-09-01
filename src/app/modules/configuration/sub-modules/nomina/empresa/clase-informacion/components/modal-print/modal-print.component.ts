@@ -53,5 +53,4 @@ export class ModalPrintComponent implements OnInit {
              && this.form.invalid;
   }
 
-
 }
