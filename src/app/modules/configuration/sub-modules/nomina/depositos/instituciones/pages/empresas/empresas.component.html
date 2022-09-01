@@ -1,0 +1,41 @@
+<!-- Spinner -->
+<app-spinner ></app-spinner>
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Empresas / Institución</div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/*******************
+                /*  Consultar empresas *
+                /*********************** -->
+                <p-tabPanel header="Consultar empresas">
+
+                    <!-- Componente table -->
+                    <app-data-table-empresa [companias]="companias"></app-data-table-empresa>
+                                            
+                </p-tabPanel>
+
+                <!--/********************
+                /*    Institución       *
+                /************************ -->
+                <p-tabPanel header="Institución" [disabled]="empresaRow == null">
+
+                    <app-instituciones [empresaRow]="empresaRow"></app-instituciones>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>
