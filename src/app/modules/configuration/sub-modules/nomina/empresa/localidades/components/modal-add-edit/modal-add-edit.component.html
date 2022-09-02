@@ -276,7 +276,7 @@
                                                     formControlName="horsem"/>
                                             <span class="form-text text-danger"
                                                   *ngIf="campoInvalid('horsem')">
-                                                El campo hora semanal es de longitud máxima de 8 dígitos, formato numérico.
+                                                El campo hora semanal es de longitud máxima de 4 dígitos, formato numérico.
                                             </span>
                                         </div>
                                     </div>
@@ -366,7 +366,7 @@
 
                             <div class="formgrid grid -mt-3">
                                 <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="direc1">Descripción:</label>
+                                    <label for="direc1">Dirección 1: </label>
                                 </div>
                                 <div class="field col-8 md:col-7">
                                     <input type="text"
@@ -382,7 +382,7 @@
 
                             <div class="formgrid grid -mt-2">
                                 <div class="field col-4 md:col-3 text-right mt-2">
-
+                                    <label for="direc1">Dirección 2: </label>
                                 </div>
                                 <div class="field col-8 md:col-7">
                                     <input type="text"
@@ -423,7 +423,7 @@
                                 <div class="field col-6 md:col-5">
                                     <input type="text"
                                            pInputText
-                                           [value]="countrySelect"
+                                           [value]="direccionDisabled.pais ? direccionDisabled.pais : ''"
                                            [disabled]="true"/>
                                 </div>
                             </div>
@@ -438,36 +438,77 @@
                                                 appendTo="body"
                                                 [filter]="true"
                                                 filterBy="codEntidad"
-                                                formControlName="codEntidad"
                                                 optionLabel="codEntidad"
                                                 optionValue="codEntidad"
+                                                formControlName="codEntidad"
                                                 #dropdownElementEntity
-                                                (onChange)="entitySelectChange(dropdownElementEntity)"
+                                                (onChange)="entitySelectChange($event, dropdownElementEntity)"
                                                 [showClear]="true"
                                                 (onClear)="clearEntitySelect()"
                                                 placeholder="Seleccione una entidad">
                                     </p-dropdown>
-                                    <span class="form-text text-danger"
-                                          *ngIf="campoInvalid('codEntidad')">
-                                        La entidad federal es de longitud máxima de 3 dígitos, formato alfanumérico.
-                                    </span>
                                 </div>
                                 <div class="field col-6 md:col-5">
                                     <input  type="text" 
                                             pInputText
-                                            [value]="federalEntitySelect"
+                                            [value]="direccionDisabled.entidad ? direccionDisabled.entidad : ''"
+                                            [disabled]="true"/>
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid -mt-2">
+                                <div class="field col-4 md:col-3 text-right mt-2">
+                                    <label for="codMunicipio">Municipio: </label>
+                                </div>
+                                <div class="field col-2 md:col-2">
+                                    <p-dropdown [options]="municipalities"
+                                                inputId="codMunicipio"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="codMunicipio"
+                                                optionLabel="codMunicipio"
+                                                optionValue="codMunicipio"
+                                                formControlName="codMunicipio"
+                                                #dropdownElementMunicipality
+                                                (onChange)="municipalitySelectChange($event, dropdownElementMunicipality)"
+                                                [showClear]="true"
+                                                (onClear)="clearMunicipalitySelect()" 
+                                                placeholder="Seleccione un municipio">
+                                    </p-dropdown>
+                                </div>
+                                <div class="field col-6 md:col-5">
+                                    <input  type="text"
+                                            pInputText
+                                            [value]="direccionDisabled.municipio ? direccionDisabled.municipio : ''"
                                             [disabled]="true"/>
                                 </div>
                             </div>
                         
                             <div class="formgrid grid -mt-2">
                                 <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="cdadCodciu">Ciudad: </label>
+                                    <label for="codParroquia">Parroquia: </label>
                                 </div>
-                                <div class="field col-8 md:col-7">
+                                <div class="field col-2 md:col-2">
+                                    <p-dropdown [options]="parishes"
+                                                inputId="codParroquia"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="codParroquia"
+                                                optionLabel="codParroquia"
+                                                optionValue="codParroquia"
+                                                formControlName="codParroquia"
+                                                #dropdownElementParish
+                                                (onChange)="parishSelectChange(dropdownElementParish)"
+                                                [showClear]="true"
+                                                (onClear)="clearParishesSelect()" 
+                                                placeholder="Seleccione una parroquia">
+                                    </p-dropdown>
+                                </div>
+                                <div class="field col-6 md:col-5">
                                     <input  type="text"
-                                            id="cdadCodciu" 
-                                            pInputText/>
+                                            pInputText
+                                            [value]="direccionDisabled.parroquia ? direccionDisabled.parroquia : ''"
+                                            [disabled]="true"/>
                                 </div>
                             </div>
                         
@@ -539,93 +580,6 @@
 
                     </p-tabPanel>  
 
-                    <!--/****************************
-                        /*       Ubicación          *
-                        /****************************-->
-                    <p-tabPanel header="Ubicación">
-
-                        <p-panel header="">
-
-                            <div class="formgrid grid -mt-3">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="codMunicipio">Municipio: </label>
-                                </div>
-                                <div class="field col-2 md:col-2">
-                                    <input  type="text"
-                                            id="codMunicipio" 
-                                            pInputText
-                                            formControlName="codMunicipio"/>
-                                </div>
-                                <div class="field col-6 md:col-5">
-                                    <input  type="text"
-                                            pInputText
-                                            [disabled]="true"/>
-                                </div>
-                            </div>
-                        
-                            <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="codParroquia">Parroquia: </label>
-                                </div>
-                                <div class="field col-8 md:col-7">
-                                    <input  type="text"
-                                            id="codParroquia" 
-                                            pInputText
-                                            formControlName="codParroquia">
-                                    <span class="form-text text-danger"
-                                          *ngIf="campoInvalid('codParroquia')">
-                                        La parroquia es de longitud máxima de 20 dígitos, formato alfanumérico.
-                                    </span> 
-                                </div>
-                            </div>
-                        
-                            <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="entidadfedubi">Entidad. federal: </label>
-                                </div>
-                                <div class="field col-2 md:col-2">
-                                    <input  type="text"
-                                            id="entidadfedubi" 
-                                            pInputText/>
-                                </div>
-                                <div class="field col-6 md:col-5">
-                                    <input  type="text" 
-                                            pInputText
-                                            [disabled]="true"/>
-                                </div>
-                            </div>
-                        
-                            <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="distrito">Distrito: </label>
-                                </div>
-                                <div class="field col-2 md:col-2">
-                                    <input  type="text"
-                                            id="distrito" 
-                                            pInputText/>
-                                </div>
-                                <div class="field col-6 md:col-5">
-                                    <input  type="text" 
-                                            pInputText
-                                            [disabled]="true"/>
-                                </div>
-                            </div>
-                        
-                            <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="sector">Sector: </label>
-                                </div>
-                                <div class="field col-8 md:col-2">
-                                    <input  type="text"
-                                            id="sector" 
-                                            pInputText/>
-                                </div>
-                            </div>
-                            
-                        </p-panel>
-
-                    </p-tabPanel> 
-                    
                     <!--/*********************************
                         /*   Actividad económica         *
                         /*********************************-->
@@ -675,17 +629,6 @@
                             </div>
 
                             <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-2 text-right mt-2">
-                                    <label for="des">Descripción: </label>
-                                </div>
-                                <div class="field col-8 md:col-6">
-                                    <input  type="text"
-                                            id="des" 
-                                            pInputText/>
-                                </div>
-                            </div>
-
-                            <div class="formgrid grid -mt-2">
 
                                 <div class="field col-4 md:col-2 lg:col-2 text-right mt-2">
                                     <label for="proloc">Propietario: </label>
@@ -715,32 +658,6 @@
                                     </span> 
                                 </div>
     
-                            </div>
-
-                        </p-panel>
-
-                        <p-panel header="Establecimiento anterior" styleClass="mt-3">
-
-                            <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="nombreAct">Nombre:</label>
-                                </div>
-                                <div class="field col-8 md:col-7">
-                                    <input  type="text"
-                                            id="nombreAct" 
-                                            pInputText/>
-                                </div>
-                            </div>
-    
-                            <div class="formgrid grid -mt-2">
-                                <div class="field col-4 md:col-3 text-right mt-2">
-                                    <label for="dirAct">Dirección:</label>
-                                </div>
-                                <div class="field col-8 md:col-7">
-                                    <input  type="text"
-                                            id="dirAct" 
-                                            pInputText/>
-                                </div>
                             </div>
 
                         </p-panel>

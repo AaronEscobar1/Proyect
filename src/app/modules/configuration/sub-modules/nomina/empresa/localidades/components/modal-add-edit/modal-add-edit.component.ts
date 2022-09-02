@@ -6,7 +6,7 @@ import { CompanyNominaService } from '../../../shared-empresa/services/company-n
 import { LocalidadesService } from '../../services/localidades.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { Countrys, Dropdown, FederalEntities, ObjectEventChange } from 'src/app/shared/interfaces/country-entity.interfaces';
+import { Countrys, DireccionDisabled, Dropdown, FederalEntities, Municipality, ObjectEventChange, Parishes } from 'src/app/shared/interfaces/country-entity.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -28,11 +28,16 @@ export class ModalAddEditComponent implements OnInit {
   @Input() countrys!: Countrys[] ;
 
   // Objeto para Entidades federales
-  federalEntities!   : FederalEntities[];
+  federalEntities!: FederalEntities[];
+
+  // Objeto para Municipios
+  municipalities!: Municipality[];
+
+  // Objeto para Parroquias
+  parishes!: Parishes[];
 
   // Campos no editables, solo para mostrar
-  countrySelect      : string = '';
-  federalEntitySelect: string = '';
+  direccionDisabled!: DireccionDisabled;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -72,37 +77,29 @@ export class ModalAddEditComponent implements OnInit {
         fecsso: [  ],
         regsso: [  , [ Validators.maxLength(20) ]],
         regmin: [  , [ Validators.maxLength(9) ]],
-        horsem: [  , [ Validators.pattern('[0-9]{1,8}') ]],
+        horsem: [  , [ Validators.pattern('[0-9]{1,4}') ]],
         /* Informante */
         nominf:   [  , [ Validators.maxLength(30) ]],
         cgoinf:   [  , [ Validators.maxLength(30) ]],
         ideinf:   [  , [ Validators.maxLength(20) ]],
         nacional: [  , [ Validators.maxLength(50) ]],
       /**** Dirección ****/
-        direc1:     [  , [ Validators.required, Validators.maxLength(60) ]],
-        direc2:     [  , [ Validators.maxLength(60) ]],
-        codPais:    [  , [ Validators.maxLength(3) ]],
-        codEntidad: [  , [ Validators.maxLength(3) ]],
-        // <-- Falta ciudad --> //
-        numtlf:     [  , [ Validators.pattern('[0-9]{1,14}') ]],
-        numfax:     [  , [ Validators.pattern('[0-9]{1,14}') ]],
-        eMail:      [  , [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]],
-        codpos:     [  , [ Validators.pattern('[0-9]{1,10}') ]],
-      /**** Ubicación ****/
-        codMunicipio: [  ],
-        codParroquia: [  , [ Validators.maxLength(20) ]],
-        // <-- Falta entidad federal --> //
-        // <-- Falta distrito --> //
-        // <-- Falta sector --> //
+        direc1:       [  , [ Validators.required, Validators.maxLength(60) ]],
+        direc2:       [  , [ Validators.maxLength(60) ]],
+        codPais:      [  , [ Validators.maxLength(3) ]],
+        codEntidad:   [  , [ Validators.maxLength(3) ]],
+        codMunicipio: [  , [ Validators.maxLength(4) ]],
+        codParroquia: [  , [ Validators.maxLength(4) ]],
+        numtlf:       [  , [ Validators.pattern('[0-9]{1,14}') ]],
+        numfax:       [  , [ Validators.pattern('[0-9]{1,14}') ]],
+        eMail:        [  , [ Validators.maxLength(30), Validators.pattern(this.emailPattern) ]],
+        codpos:       [  , [ Validators.pattern('[0-9]{1,10}') ]],
       /**** Actividad económica ****/
-        // <-- Falta codigo actividad economica --> //
         acteco: [  , [ Validators.maxLength(4) ]],
         caploc: [  , [ this.validateCapital.bind(this) ]],
         fecfun: [  ],
         proloc: [  , [ Validators.maxLength(30) ]],
-        idepro: [  , [ Validators.maxLength(20) ]],
-        // <-- Falta nombre de Establecimiento anterior --> //
-        // <-- Falta direccion de Establecimiento anterior --> //
+        idepro: [  , [ Validators.maxLength(20) ]]
     });
   }
 
@@ -111,11 +108,13 @@ export class ModalAddEditComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
-      // const initForm = { clanom: '2', frenom: 7, valred: 0.1, pgmrec: 'NM3185H', tipfec: '1' };
+      this.direccionDisabled = {};
       this.form.reset();
       this.tabIndex = 0;
       this.form.controls['codloc'].enable();
       this.form.controls['codEntidad'].disable();
+      this.form.controls['codMunicipio'].disable();
+      this.form.controls['codParroquia'].disable();
       return;
     }
     // Comprobar si la localidad tiene fecha registro S.S.O. para establecerlo en el formulario y poder editar
@@ -126,9 +125,17 @@ export class ModalAddEditComponent implements OnInit {
     if ( this.localidadSelect && this.localidadSelect.fecfun ) {
       this.localidadSelect.fecfun = new Date(this.localidadSelect.fecfun);
     }
-    // Cargar pais y entidades si existen
+    // Cargar pais, entidades, municipios y parroquias si existen
     if ( this.localidadSelect && this.localidadSelect.codPais ) {
       this.loadEntitiesByCountry(this.localidadSelect.codPais, this.localidadSelect.codEntidad);
+      // Cargar municipios
+      if ( this.localidadSelect.codEntidad ) {
+        this.loadMunicipalitiesByCountryEntity(this.localidadSelect.codPais, this.localidadSelect.codEntidad, this.localidadSelect.codMunicipio);
+      }
+      // Carga parroquias
+      if ( this.localidadSelect.codMunicipio ) {
+        this.loadParishesByCountryEntityMunicipality(this.localidadSelect.codPais, this.localidadSelect.codEntidad, this.localidadSelect.codMunicipio, this.localidadSelect.codParroquia);
+      }
     }
     this.form.controls['codloc'].disable();
     // Seteamos los valores del row seleccionado al formulario
@@ -152,11 +159,6 @@ export class ModalAddEditComponent implements OnInit {
     let data: Localidad = this.form.getRawValue();
     // Comprobamos que el email se envie un correo valido o un null
     data.eMail == '' ? data.eMail = null : data.eMail;
-    if ( data.codPais && !data.codEntidad ) {
-      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Debe seleccionar tanto el país como la entidad federal.', life: 3000});
-      this.tabIndex = 1;
-      return;
-    }
 
     this.spinner.show();
 
@@ -199,26 +201,60 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   closeModal(): void {
+    this.federalEntities = [];
+    this.municipalities = [];
+    this.parishes = [];
     this.onCloseModal.emit();
     this.form.reset();
   }
 
   /**
-   * Limpia el campo país que se muestra en el formulario
+   * Limpia todos los campos relacionados con pais, entidad, municipio y parroquia
    */
   clearCountrySelect() {
     this.clearEntitySelect();
     this.federalEntities = [];
     this.form.controls['codEntidad'].disable();
-    this.countrySelect = '';
+    this.clearMunicipalitySelect();
+    this.municipalities = [];
+    this.form.controls['codMunicipio'].disable();
+    this.clearParishesSelect();
+    this.parishes = [];
+    this.form.controls['codParroquia'].disable();
+    this.direccionDisabled.pais = '';
   }
 
   /**
    * Limpia el campo entidad federal que se muestra en el formulario
    */
   clearEntitySelect() {
+    this.clearMunicipalitySelect();
+    this.municipalities = [];
+    this.form.controls['codMunicipio'].disable();
+    this.clearParishesSelect();
+    this.parishes = [];
+    this.form.controls['codParroquia'].disable();
     this.form.controls['codEntidad'].reset();
-    this.federalEntitySelect = '';
+    this.direccionDisabled.entidad = '';
+  }
+
+  /**
+   * Limpia el campo municipio que se muestra en el formulario
+   */
+  clearMunicipalitySelect() {
+    this.clearParishesSelect();
+    this.parishes = [];
+    this.form.controls['codParroquia'].disable();
+    this.form.controls['codMunicipio'].reset();
+    this.direccionDisabled.municipio = '';
+  }
+
+  /**
+   * Limpia el campo parroquia que se muestra en el formulario
+   */
+  clearParishesSelect() {
+    this.form.controls['codParroquia'].reset();
+    this.direccionDisabled.parroquia = '';
   }
 
   /**
@@ -231,7 +267,7 @@ export class ModalAddEditComponent implements OnInit {
     const codCountry = event.value;
     if (codCountry == null) { return; }
     // Asignamos el país al campo en el formulario
-    this.countrySelect = dropdownElement.selectedOption.nombre;
+    this.direccionDisabled.pais = dropdownElement.selectedOption.nombre;
     // Limpiamos el campo entidad federal
     this.clearEntitySelect();
     // Peticion al backend para buscar las entidades
@@ -239,7 +275,7 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   /**
-   * Carga las entidades relacionadas con el país
+   * Cargar entidades relacionadas con el país
    * @param codCountry: string código país a buscar
    * @param codEntity: string (opcional) código entidad para mostrar en el formulario
    */
@@ -253,8 +289,8 @@ export class ModalAddEditComponent implements OnInit {
           this.form.controls['codEntidad'].enable();
           // Colocar el nombre del pais y la entidad en el campo del formulario
           if (this.isEdit) {
-            this.countrys.find(country => country.codigo === codCountry ? this.countrySelect = country.nombre : '');
-            this.federalEntities.find(entity => entity.codEntidad === codEntity ? this.federalEntitySelect = entity.nombre : '');
+            this.countrys.find(country => country.codigo === codCountry ? this.direccionDisabled.pais = country.nombre : '');
+            this.federalEntities.find(entity => entity.codEntidad === codEntity ? this.direccionDisabled.entidad = entity.nombre : '');
           }
           this.spinner.hide();
         },
@@ -266,11 +302,108 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   /**
-   * Asigna la entidad federal seleccionada en el campo que se muestra en el formulario
-   * @param dropdownElement: Dropdown
+   * Asigna la entidad federal seleccionada en el campo que se muestra en el formulario y
+   * realiza petición al backend para buscar los municipios relacionados con país y entidad
+   * @param event: ObjectEventChange
+   * @param dropdownElementEntity: Dropdown
    */
-  entitySelectChange(dropdownElementEntity: Dropdown): void {
-    this.federalEntitySelect = dropdownElementEntity.selectedOption.nombre;
+  entitySelectChange(event: ObjectEventChange, dropdownElementEntity: Dropdown): void {
+    const codEntity = event.value;
+    if (codEntity == null) { return; }
+    // Buscar la entidad seleccionada de la lista para obtener el codigo de país
+    const entidad = this.federalEntities.find(entity => entity.codEntidad == codEntity);
+    // Asignamos el nombre de la entidad al campo del formulario
+    this.direccionDisabled.entidad = dropdownElementEntity.selectedOption.nombre;
+    // Limpiamos el campo municipio
+    this.clearMunicipalitySelect();
+    // Verificar que exista la entidad
+    if ( !entidad ) { return; }
+    // Peticion al backend para buscar los municipios
+    this.loadMunicipalitiesByCountryEntity(entidad.codPais, codEntity);
+  }
+
+  /**
+   * Cargar municipios relacionados por pais y entidad
+   * @param codCountry: string código país a buscar
+   * @param codEntity: string código entidad a buscar
+   * @param codMunicipality: string (opcional) código municipio para mostrar en el formulario
+   */
+  loadMunicipalitiesByCountryEntity(codCountry: string, codEntity: string, codMunicipality?: string | null) {
+    this.municipalities = [];
+    this.spinner.show();
+    this.companyNominaService.getMunicipalitiesByCountryEntity(codCountry, codEntity)
+      .subscribe({
+        next: (resp) => {
+          this.municipalities = resp;
+          this.form.controls['codMunicipio'].enable();
+          // Colocar el nombre del municipio en el campo del formulario
+          if (this.isEdit && codMunicipality) {
+            this.municipalities.find(municipality => municipality.codMunicipio === codMunicipality ? this.direccionDisabled.municipio = municipality.nombre : '');
+          }
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Asigna el municipio seleccionado en el campo que se muestra en el formulario y
+   * realiza petición al backend para buscar las parroquias relacionados con país, entidad y municipio
+   * @param event: ObjectEventChange
+   * @param dropdownElementMunicipality: Dropdown
+   */
+  municipalitySelectChange(event: ObjectEventChange, dropdownElementMunicipality: Dropdown): void {
+    const codMunicipio = event.value;
+    if (codMunicipio == null) { return; }
+    // Buscar el municipio seleccionado de la lista para obtener el codigo de país y entidad
+    const municipio = this.municipalities.find(entity => entity.codMunicipio == codMunicipio);
+    // Asignamos el nombre del municipio al campo del formulario
+    this.direccionDisabled.municipio = dropdownElementMunicipality.selectedOption.nombre;
+    // Limpiamos el campo parroquia
+    this.clearParishesSelect();
+    // Verificar que exista la entidad
+    if ( !municipio ) { return; }
+    // Peticion al backend para buscar las parroquias
+    this.loadParishesByCountryEntityMunicipality(municipio.codPais, municipio.codEntidad, codMunicipio);
+  }
+
+  /**
+   * Cargar parroquias relacionados por pais, entidad y municipio
+   * @param codCountry: string código país a buscar
+   * @param codEntity: string código entidad a buscar
+   * @param codmunicipality: string código municipio a buscar
+   * @param codParroquia: string (opcional) código parroquia para mostrar en el formulario
+   */
+  loadParishesByCountryEntityMunicipality(codCountry: string, codEntity: string, codmunicipality: string, codParroquia?: string | null) {
+    this.parishes = [];
+    this.spinner.show();
+    this.companyNominaService.getParishesByCountryEntityMunicipality(codCountry, codEntity, codmunicipality)
+      .subscribe({
+        next: (resp) => {
+          this.parishes = resp;
+          this.form.controls['codParroquia'].enable();
+          // Colocar el nombre de la parroquia en el campo del formulario
+          if (this.isEdit && codParroquia) {
+            this.parishes.find(parish => parish.codParroquia === codParroquia ? this.direccionDisabled.parroquia = parish.nombre : '');
+          }
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+  
+  /**
+   * Asigna la parroquia seleccionada en el campo que se muestra en el formulario
+   * @param dropdownElementMunicipality: Dropdown
+   */
+  parishSelectChange(dropdownElementParish: Dropdown) {
+    this.direccionDisabled.parroquia = dropdownElementParish.selectedOption.nombre;
   }
 
   /**
