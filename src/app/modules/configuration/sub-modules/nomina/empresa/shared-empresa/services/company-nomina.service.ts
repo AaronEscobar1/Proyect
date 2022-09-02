@@ -68,5 +68,26 @@ export class CompanyNominaService {
   getEntitiesByCountry(codCountry: string): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/entidadesfederales/${codCountry}`));
   }
-  
+
+  /**
+   * Obtener todos los municipios por pais y entidad
+   * @param codCountry: codigo pais
+   * @param codEntity: codigo entidad
+   * @returns Observable<any>
+   */
+  getMunicipalitiesByCountryEntity(codCountry: string, codEntity: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/paises/${codCountry}/entidades/${codEntity}/municipios`));
+  }
+
+  /**
+   * Obtener todas las parroquias por pais, entidad y municipio
+   * @param codCountry: codigo pais 
+   * @param codEntity: codigo entidad
+   * @param codmunicipality: codigo municipio
+   * @returns Observable<any>
+   */
+  getParishesByCountryEntityMunicipality(codCountry: string, codEntity: string, codMunicipality: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/organizaciones/paises/${codCountry}/entidades/${codEntity}/municipios/${codMunicipality}/parroquias`));
+  }
+
 }
