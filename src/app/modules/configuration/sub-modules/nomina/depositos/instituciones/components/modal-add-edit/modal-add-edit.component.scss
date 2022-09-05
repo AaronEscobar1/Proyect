@@ -10,3 +10,14 @@
         border-bottom-left-radius: 15px !important;
     }
 }
+
+// Ocultar el tabView de primeNg
+:host ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    display: none !important;
+}
+
+// Quitar estilos del tabView de primeNg
+:host ::ng-deep .p-tabview .p-tabview-nav {
+    border: 0 !important;
+    border-width: 0 !important;
+}

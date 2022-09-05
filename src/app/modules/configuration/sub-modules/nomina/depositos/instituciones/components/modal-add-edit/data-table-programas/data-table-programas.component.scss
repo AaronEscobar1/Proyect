@@ -1,0 +1,12 @@
+@import "src/assets/sass/layout/_table";
+
+// Estilos configurados para abrir el dropdown hacia arriba manualmente
+:host ::ng-deep .p-dropdown-items {
+    background: #ffffff !important;
+    color: #495057 !important;
+    border: 0 none !important;
+    border-radius: 3px !important;
+    box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%) !important;
+    position: absolute !important;
+    bottom: 2.438rem !important;
+}

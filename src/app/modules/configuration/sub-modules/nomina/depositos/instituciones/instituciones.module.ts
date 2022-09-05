@@ -7,6 +7,7 @@ import { SharedEmpresaModule } from '../../empresa/shared-empresa/shared-empresa
 
 // Components
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { DataTableProgramasComponent } from './components/modal-add-edit/data-table-programas/data-table-programas.component';
 import { EmpresasComponent } from './pages/empresas/empresas.component';
 import { InstitucionesComponent } from './pages/instituciones/instituciones.component';
 import { ModalAddEditComponent } from './components/modal-add-edit/modal-add-edit.component';
@@ -15,6 +16,7 @@ import { ModalPrintComponent } from './components/modal-print/modal-print.compon
 @NgModule({
   declarations: [
     DataTableComponent,
+    DataTableProgramasComponent,
     EmpresasComponent,
     InstitucionesComponent,
     ModalAddEditComponent,
