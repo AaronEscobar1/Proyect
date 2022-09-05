@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Company } from '../../../../empresa/shared-empresa/interfaces/empresa.interfaces';
 import { Institucion } from '../../interfaces/instituciones.interfaces';
 import { TipoInstitucion } from '../../../tipo-instituciones-deposito/interfaces/tipo-instituciones-deposito.interfaces';
@@ -9,6 +9,9 @@ import { InstitucionesService } from '../../services/instituciones.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { TipoCuenta } from '../../../tipo-cuenta/interaces/tipo-cuenta.interfaces';
+import { ProgramasInstitucionService } from '../../services/programas-institucion.service';
+import { InstitucionPrograma, TipoPrograma } from '../../interfaces/instituciones-programas.interfaces';
+import { DataTableProgramasComponent } from './data-table-programas/data-table-programas.component';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -65,9 +68,22 @@ export class ModalAddEditComponent implements OnInit {
   get tctaTipctaFormGroup() {
     return this.form.controls['tctaTipcta'] as FormGroup;
   }
+
+  // Variables para mostrar los Tab del formulario, deposito a terceros o programas de deposito
+  tabIndex = 0;
   
+  // Objeto para programas por depositos
+  programasDepositos: InstitucionPrograma[] = [];
+
+  // Objeto para tipos de programas
+  tiposProgramas: TipoPrograma[] = [];
+
+  // Emisión de evento de padre a hijo (resetear valores de programas)
+  @ViewChild(DataTableProgramasComponent) dataTableProgramasComponent!: DataTableProgramasComponent;
+
   constructor(private companyNominaService: CompanyNominaService, 
               private institucionesService: InstitucionesService, 
+              private programasInstitucionService: ProgramasInstitucionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -101,6 +117,7 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadTiposProgramas();
   }
 
   ngOnChanges() {
@@ -187,8 +204,12 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   closeModal(): void {
+    this.tabIndex = 0;
     this.onCloseModal.emit();
     this.form.reset();
+    // Limpiar objeto y FormArray de programasDepositos por institucion
+    this.programasDepositos = [];
+    this.dataTableProgramasComponent.clearFormArray();
   }
 
   /**
@@ -313,4 +334,54 @@ export class ModalAddEditComponent implements OnInit {
                                         null;
   }
 
+  backFormulario(): void {
+    this.tabIndex = 0;
+    // Limpiar objeto y FormArray de programasDepositos por institucion
+    this.dataTableProgramasComponent.clearFormArray();
+  }
+
+  /****************************************************
+   *                  PROGRAMAS                       *
+   ****************************************************/
+  /**
+   * Cargar tipos de programas
+   */
+  loadTiposProgramas(): void {
+    this.spinner.show();
+    this.programasInstitucionService.getTiposProgramas()
+      .subscribe({
+        next: (resp) => {
+          this.tiposProgramas = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar programas por Institución de deposito
+   */
+  loadProgramas(): void {
+    if ( !this.institucionSelect ) { return; }
+    this.tabIndex = 2;
+    this.spinner.show();
+    this.programasInstitucionService.getProgramaInstitucionesByEmpresa(this.institucionSelect)
+      .subscribe({
+        next: (resp) => {
+          this.programasDepositos = resp;
+          // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
+          this.programasDepositos = this.programasDepositos.map((data, index) => { 
+            return {...data, idTableTemporal: index }
+          });
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
 }
