@@ -69,6 +69,20 @@ describe('HelpersServices', () => {
     expect(buttonOk.innerHTML).toEqual('OK');    
   });
 
+  it('Metodo para ordenar correctamente', () => {
+    service.openErrorAlert('No se pudo crear el usuario');
+    // Encontramos el botton del dialogo
+    const btnElementOk = document.getElementsByClassName('swal2-confirm')[0];
+    // Le asignamos un ID al boton
+    btnElementOk.setAttribute('id', 'buttonError');
+    // Encontramos el boton por ID para poder ejecutar la función click() del elemento
+    const buttonOk = <HTMLElement>document.getElementById('buttonError');
+    // Cerramos el dialogo con el boton OK
+    buttonOk.click();
+    // Validamos que exista el boton para comprobar que si abrio correctamente el dialogo
+    expect(buttonOk.innerHTML).toEqual('OK');    
+  });
+
   it('Format Date correctamente', () => {
     service.formatDate(new Date("Fri Dic 10 2022 18:34:06 GMT-0400 (hora de Venezuela)"));
     service.formatDate(new Date());

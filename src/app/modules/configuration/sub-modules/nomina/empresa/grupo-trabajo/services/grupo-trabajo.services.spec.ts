@@ -124,6 +124,109 @@ describe('NivelesEducativosServices', () => {
         done();
       });
   }));
+  
+  it('Deberia retornar Nivel Educativo (Id Existente)', waitForAsync( (done: DoneFn) => {
+    
+    const id = '1'
+    const mockResult: any = {
+      nivelEducativo1: true,
+      nivelEducativo2: true
+    };
+
+    expect(id).toContain('1')
+
+    getHttpClientSpy.get.and.returnValue(of(mockResult));
+
+    nivelesEducativosService.getAllRotacionesByEmpresaNomina("93", "0001")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  })); 
+
+  it('Deberia retornar mensaje de error: 404 (Id inexistente)', waitForAsync( (done: DoneFn) => {
+    
+    const id = '99'
+    const error404 = new HttpErrorResponse({
+      error: 'Bad Id',
+      status: 404,
+      statusText: 'Not Found'
+    });
+
+    expect(id).toContain('99')
+
+    getHttpClientSpy.get.and.returnValue(throwError(error404));
+
+    nivelesEducativosService.getAllRotacionesById("93", "0001", "A", "01")
+      .subscribe((resp) => {
+      }, (error) => {
+        expect(error.status).toEqual(500);
+        done();
+      });
+  }));
+
+  it('Deberia retornar mensaje de error: 404 (Id inexistente)', waitForAsync( (done: DoneFn) => {
+    
+    const id = '99'
+    const error404 = new HttpErrorResponse({
+      error: 'Bad Id',
+      status: 404,
+      statusText: 'Not Found'
+    });
+
+    expect(id).toContain('99')
+
+    getHttpClientSpy.get.and.returnValue(throwError(error404));
+
+    nivelesEducativosService.createRotacion("93", "0001", "A")
+      .subscribe((resp) => {
+      }, (error) => {
+        expect(error.status).toEqual(500);
+        done();
+      });
+  }));
+
+  it('Deberia retornar mensaje de error: 404 (Id inexistente)', waitForAsync( (done: DoneFn) => {
+    
+    const id = '99'
+    const error404 = new HttpErrorResponse({
+      error: 'Bad Id',
+      status: 404,
+      statusText: 'Not Found'
+    });
+
+    expect(id).toContain('99')
+
+    getHttpClientSpy.get.and.returnValue(throwError(error404));
+
+    nivelesEducativosService.updateRotacion("93", "0001", "A", "A", "A")
+      .subscribe((resp) => {
+      }, (error) => {
+        expect(error.status).toEqual(500);
+        done();
+      });
+  }));
+
+  it('Deberia retornar mensaje de error: 404 (Id inexistente)', waitForAsync( (done: DoneFn) => {
+    
+    const id = '99'
+    const error404 = new HttpErrorResponse({
+      error: 'Bad Id',
+      status: 404,
+      statusText: 'Not Found'
+    });
+
+    expect(id).toContain('99')
+
+    getHttpClientSpy.get.and.returnValue(throwError(error404));
+
+    nivelesEducativosService.deleteRotacion("93", "0001", "A", "A")
+      .subscribe((resp) => {
+      }, (error) => {
+        expect(error.status).toEqual(500);
+        done();
+      });
+  }));
 
 });
   

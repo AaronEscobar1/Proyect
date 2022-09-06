@@ -2,6 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
+import { ModalRotacionComponent } from '../../rotacion-grupos/modal-rotacion/modal-rotacion.component';
 
 import { DataTableGruposComponent } from './data-table-grupos.component';
 
@@ -16,7 +17,8 @@ describe('DataTableComponent', () => {
         HttpClientTestingModule,
       ],
       declarations: [
-        DataTableGruposComponent
+        DataTableGruposComponent,
+        ModalRotacionComponent
       ]
     }).compileComponents();
     
@@ -66,6 +68,62 @@ describe('DataTableComponent', () => {
 
     app.onRowSelect(log)
     expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
+
+  });
+
+  it('show modal rotaciones ', () => {
+    const fixture = TestBed.createComponent(DataTableGruposComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    spyOn(app.rotacionComponent, 'loadRotacion');
+
+    app.gruposTrabajoSelectRow = {
+      "desgru": "ADMINISTRATIVO 2",
+      "labdom": "1",
+      "tipoJornada": {
+          "id": "D",
+          "descripcion": "Diurna"
+      },
+      "codgru": "A"
+    }
+
+    app.nominaRow = {
+      "tipnom": "0001",
+      "desnom": "Empleados Directos",
+      "clanom": "2",
+      "frenom": 30,
+      "codpai": null,
+      "fecto1": null,
+      "fecto2": null,
+      "fecto3": null,
+      "fecto4": null,
+      "fecto5": null,
+      "topgua": 21,
+      "canmin": 12,
+      "facgua": 21,
+      "asifon": 12,
+      "dedfon": 21,
+      "valfon": 0.5,
+      "fecabo": null,
+      "tipmon": null,
+      "tasmon": null,
+      "valred": 0.01,
+      "tipfec": 1,
+      "reghab": "1",
+      "anocom": "0",
+      "pgmrec": "21",
+      "fresue": "0",
+      "codcon": null,
+      "fecto6": null,
+      "fecto7": null,
+      "fecto8": null,
+      "fecto9": null,
+      "fecto10": null,
+      "idEmpresa": "93"
+    }
+
+    app.showRotacionModal()
 
   });
 

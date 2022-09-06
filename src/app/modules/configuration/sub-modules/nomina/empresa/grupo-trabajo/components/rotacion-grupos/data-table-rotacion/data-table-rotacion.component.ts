@@ -238,7 +238,7 @@ export class DataTableRotacionComponent implements OnInit {
       diava3: null,
       diava4: null,
       canlim: 0,
-      congru: (this.getIdTemporalMax() + 1).toString(), 
+      congru: (this.getIdTemporalMax() + 2).toString(), 
 
       // Colocar un id temporal en el registro para el [dataKey] de la tabla
       idTableTemporal: this.getIdTemporalMax()
@@ -257,9 +257,7 @@ export class DataTableRotacionComponent implements OnInit {
    * Activar formulario del row
    * @param dataRow: RotacionRow
    */
-  onRowEditInit(dataRow: GrupoRotacion): void {
-    console.log("onRowEditInit", dataRow);
-    
+  onRowEditInit(dataRow: GrupoRotacion): void {    
     this.isEdit = true;
     // Clonamos el registro para mantenerlo en memoria y tomar acciones si se guarda o se cancela el registro
     this.clonedDataRow[dataRow.idTableTemporal] = {...dataRow};
@@ -270,8 +268,6 @@ export class DataTableRotacionComponent implements OnInit {
    * @param rotacionGrupo: ConceptoSituacion
    */
   onRowEditSave(rotacionGrupo: GrupoRotacion): void {
-    console.log("onRowEditSave", rotacionGrupo);
-
     let dataForm = {
         "idGrupo": rotacionGrupo.idGrupo,
         "congru": Number(rotacionGrupo.congru),
@@ -436,8 +432,6 @@ export class DataTableRotacionComponent implements OnInit {
    * @param index: number, indice del row
    */
   onRowEditCancel(dataRow: any, index: number): void {
-    console.log("onRowEditCancel", dataRow);
-    
     if( this.isAddNewRow ) { 
       this.table.value.splice(index, 1);
       // Redondear el número con el fin de posicionar la página correspondiente cuando se agrega una fila
@@ -457,9 +451,7 @@ export class DataTableRotacionComponent implements OnInit {
   /**
    * Cargar data y restaurar banderas Edit y AddNewRow
    */
-  onLoadEmit(): void {
-    console.log("onloadEmit");
-    
+  onLoadEmit(): void {    
     this.onLoadData.emit(this.gruposTrabajoSelectRow);
     this.isEdit = false;
     this.isAddNewRow = false;

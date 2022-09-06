@@ -51,13 +51,11 @@ export class ModalRotacionComponent implements OnInit {
     this.conceptoSituacionService.getAllRotacionesByGruposEmpresaNomina(this.nomina.idEmpresa, this.nomina.tipnom, grupoTrabajo.codgru)
       .subscribe({
         next: (res) => {
-          console.log(res)
           this.rotacionesGrupoTrabajo = res;
           // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
           this.rotacionesGrupoTrabajo = this.rotacionesGrupoTrabajo.map((data, index) => { 
             return {...data, idTableTemporal: index }
           });
-          console.log(this.rotacionesGrupoTrabajo);
           this.spinner.hide();
         },
         error: (err) => {
