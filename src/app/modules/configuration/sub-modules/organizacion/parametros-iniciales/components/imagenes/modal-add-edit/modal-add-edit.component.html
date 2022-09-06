@@ -1,0 +1,104 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+              <h5>{{titleForm}}</h5>
+              <div class="p-dialog-header-icons">
+                <button pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-secondary p-button-text"
+                        (click)="closeModal()">
+                </button>
+              </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+              <div class="formgrid grid mt-3">
+                <div class="col-12">
+
+                  <div class="field">
+                    <label for="tipo">Imagen para: </label>
+                    <p-dropdown [options]="tipoImagen"
+                                inputId="tipo"
+                                class="w-full"
+                                appendTo="body"
+                                [showClear]="true"
+                                formControlName="tipo"
+                                placeholder="Seleccione...">
+                    </p-dropdown>
+                    <span class="form-text text-danger -mt-2 mb-2"
+                          *ngIf="campoInvalid('tipo')">
+                      {{ tipoMsgError }}
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="formgrid grid mt-3">
+                  <div class="col-12">
+
+                    <div class="field">
+                      <p-fileUpload name="file"
+                                    [showUploadButton]="false"
+                                    accept="image/jpeg"
+                                    (onClear)="fileInit()"
+                                    (onRemove)="fileInit()"
+                                    (onSelect)="onChange($event)"
+                                    [previewWidth]="120"
+                                    [maxFileSize]="5000000"
+                                    chooseLabel="Seleccionar imagen..."
+                                    invalidFileSizeMessageSummary="Tamaño de archivo no válido,"
+                                    invalidFileSizeMessageDetail="tamaño máximo de carga es de 5 MB."
+                                    invalidFileTypeMessageSummary="Tipo de archivo no válido,"
+                                    invalidFileTypeMessageDetail="archivo permitido: jpg">
+                      </p-fileUpload>
+                    </div>
+
+                  </div>
+
+              </div>
+
+              <div class="formgrid grid mt-3">
+                  <div class="col-12">
+
+                      <div class="field">
+                          <label for="nombre">Nombre: </label>
+                          <input  type="text" 
+                                  id="nombre"
+                                  pInputText
+                                  formControlName="nombre">
+                          <span class="form-text text-danger -mt-2 mb-2"
+                                *ngIf="campoInvalid('nombre')">
+                            El nombre es obligatorio.
+                          </span>
+                      </div>
+
+                  </div>
+              </div>
+
+            </form>
+
+          </ng-template>
+        
+          <ng-template pTemplate="footer">
+            <button pButton 
+                    pRipple 
+                    label="Cancelar" 
+                    class="p-button-secondary my-1" 
+                    (click)="closeModal()">
+            </button>
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Guardar" 
+                    icon="pi pi-save"
+                    class="btn-infocent my-1" 
+                    (click)="save()">
+            </button>
+          </ng-template>
+</p-dialog>

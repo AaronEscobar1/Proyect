@@ -1,0 +1,65 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="grid">
+            <div class="col-12 md:col-6">
+
+            <!-- Componente de botones -->
+            <app-buttons-imagen (onRefresh)="refresh()"
+                                (onOpenModalCreate)="openModalCreate()"
+                                (onDeleteRow)="deleteRow($event)">
+            </app-buttons-imagen>
+
+            </div>
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa -->
+                <div class="formgrid grid">
+                                    
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+                    <div class="field col-3 md:col-3 lg:col-3">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                
+                    <div class="field col-5 md:col-6 lg:col-7">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.nombre : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Componente data table -->
+        <app-data-table-imagenes [imagenes]="imagenes"></app-data-table-imagenes>
+   
+    </div>
+</div>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit
+    [empresaRow]="empresaRow"
+    [imagenes]="imagenes"
+    [imagenSelect]="imagenSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>
