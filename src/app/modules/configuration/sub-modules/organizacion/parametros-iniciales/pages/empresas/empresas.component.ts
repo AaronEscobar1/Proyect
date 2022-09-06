@@ -15,8 +15,10 @@ import { TipoVacaciones } from '../../interfaces/parametros-iniciales.interfaces
 })
 export class EmpresasComponent implements OnInit, OnDestroy {
 
-  // Objetos
-  companias      : Company[] = [];
+  // Objetos para obtener las empresas
+  companias: Company[] = [];
+
+  // Objeto de empresa seleccionada
   companiaSelect!: Company | undefined;
 
   // Variable para llenar el campo select en el formulario
@@ -31,7 +33,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
   printModal : boolean = false;
 
   // Variable para seleccionar el registro
-  empresaRow!: Company | null;
+  empresaRow!: Company;
   
   // Variable para manejar la suscripción
   subscriber!: Subscription;
@@ -46,9 +48,12 @@ export class EmpresasComponent implements OnInit, OnDestroy {
     this.loadData();
     this.loadTiposVacaciones();
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable
-    this.subscriber = this.selectRowServices.selectRow$.subscribe( (row: Company) => this.empresaRow = row );
+    this.subscriber = this.selectRowServices.selectRow$.subscribe( (row: Company) => { this.empresaRow = row });
   }
 
+  /**
+   * Cargar empresas
+   */
   loadData(): void {
     this.spinner.show();
     this.companyNominaService.getAll()
@@ -64,6 +69,9 @@ export class EmpresasComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Cargar tipos de vacaciones para mostrar una lista en parametros iniciales
+   */
   loadTiposVacaciones(): void {
     this.spinner.show();
     this.parametrosInicialesService.getTiposVacacionesPorVender()

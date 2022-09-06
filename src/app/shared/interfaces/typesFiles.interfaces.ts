@@ -9,6 +9,12 @@ export interface dropdownType {
     inactive?: boolean;
 }
 
+export interface EventImage {
+    currentFiles: File[];
+    files: FileList;
+    originalEvent: Event;
+}
+
 export const typesFileData: TypesFile[] = [
     { label: 'PDF',  value: 'PDF'  },
     { label: 'CSV',  value: 'CSV'  },
