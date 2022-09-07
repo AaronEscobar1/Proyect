@@ -1,21 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, Input, OnInit } from '@angular/core';
+import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { empresasData } from '../../interfaces/localidades-data';
-import { Localidades } from '../../interfaces/localidades.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { LocalidadesService } from '../../services/localidades.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Localidad } from '../../interfaces/localidades.interfaces';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { Countrys } from 'src/app/shared/interfaces/country-entity.interfaces';
 
 @Component({
   selector: 'app-localidades',
   templateUrl: './localidades.component.html',
-  styleUrls: ['./localidades.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class LocalidadesComponent implements OnInit {
 
-  // Objetos
-  localidades     : Localidades[] = [];
-  localidadSelect!: Localidades | undefined;
+  // Objeto para obtener el id de la empresa
+  @Input() empresaRow!: Company;
+
+  // Objeto de localidades por empresa
+  localidades: Localidad[] = [];
+
+  // Objeto seleccionado para editar
+  localidadSelect!: Localidad | undefined;
+
+  // Objeto para cargar paises
+  countrys: Countrys[]        = [];
 
   // Banderas
   isEdit: boolean = false;
@@ -25,28 +35,66 @@ export class LocalidadesComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private localidadesService: LocalidadesService, 
+  constructor(private companyNominaService: CompanyNominaService,
+              private localidadesService: LocalidadesService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadCountrysData();
   }
 
-  loadData(): void {
+  ngOnChanges() {
+    // Validar si empresa existe y tiene id
+    if ( this.empresaRow && this.empresaRow.id ) {
+      // Realizar peticion al backend asociada a la empresa seleccionada
+      this.loadLocalidades(this.empresaRow.id);
+    }
+  }
+
+  /**
+   * Carga todos los países
+   */
+  loadCountrysData(): void {
     this.spinner.show();
-    setTimeout(() => {
-      this.localidades = empresasData;
-      this.spinner.hide();
-    }, 500);
+    this.companyNominaService.getAllCountry()
+      .subscribe({
+        next: (resp) => {
+          this.countrys = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Obtener datos de localidades asignada a la empresa
+   * @param idEmpresa: string id empresa
+   */
+  loadLocalidades( idEmpresa: string ): void {
+    this.spinner.show(undefined, spinnerLight);
+    this.localidadesService.getLocalidadesByEmpresa(idEmpresa)
+      .subscribe({
+        next: (res) => {
+          this.localidades = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   refresh(): void {
     this.localidades = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    if ( this.empresaRow && this.empresaRow.id ) {
+      this.loadLocalidades(this.empresaRow.id);
+    }
   }
 
   openModalPrint(): void {
@@ -57,27 +105,31 @@ export class LocalidadesComponent implements OnInit {
     this.printModal = false;
   }
 
+  /**
+   * Abre modal para crear
+   * @returns void
+   */
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar localidades' : 'Agregar localidades';
+    this.titleForm = 'Agregar localidad';
     this.createModal = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.isEdit = false;
     this.createModal = false;
     this.localidadSelect = undefined;
   }
 
   /**
-     * Carga la data en el formulario para editar
-     * @param localidad row de la tabla
-     * @returns void
-     */
-  editRow(localidad: Localidades): void {
+   * Carga la data en el formulario para editar
+   * @param localidad row de la tabla
+   * @returns void
+   */
+  editRow(localidad: Localidad): void {
     this.isEdit = true;
-    this.titleForm = this.isEdit ? 'Editar localidades' : 'Agregar localidades';
+    this.titleForm = 'Editar localidad';
     this.localidadSelect = localidad;
-    this.openModalCreate();
+    this.createModal = true;
   }
 
   /**
@@ -85,9 +137,9 @@ export class LocalidadesComponent implements OnInit {
    * @param localidad row de la tabla
    * @returns void
    */
-  deleteRow(localidad: Localidades): void {
+  deleteRow(localidad: Localidad): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar esta localidad <b>${localidad.desloc}</b>?`,
+      message: `¿Desea eliminar esta localidad <b>${localidad.codloc}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -95,11 +147,28 @@ export class LocalidadesComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.localidades = this.localidades.filter(val => val.codloc !== localidad.codloc);
-        this.spinner.hide();
+        this.localidadesService.delete(this.empresaRow.id, localidad)
+          .subscribe({
+            next: (resp) => {
+              this.spinner.hide();
+              this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
+              this.companyNominaService.selectRowThirdTable$.emit(null);
+              this.refresh();
+              return true;
+            },
+            error: (err) => {
+              if ( err.error.message === 'Error en solicitud.' ) {
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la localidad, posee dependencia de registros.', life: 3000});
+                this.spinner.hide();
+                return false;
+              }
+              this.spinner.hide();
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la localidad.', life: 3000});
+              return false;
+            }
+          });
       }
     });
   }
-  
 
 }

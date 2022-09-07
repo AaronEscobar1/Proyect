@@ -35,6 +35,15 @@
 
                 </p-tabPanel>
 
+                <!--/*************************
+                /*         Imágenes          *
+                /***************************** -->
+                <p-tabPanel header="Imágenes" [disabled]="empresaRow == null" >
+                    
+                    <app-imagenes [empresaRow]="empresaRow"></app-imagenes>
+
+                </p-tabPanel>
+
             </p-tabView>
    
         </div>

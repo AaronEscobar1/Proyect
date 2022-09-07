@@ -1,35 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
-import { Localidades } from '../interfaces/localidades.interfaces';
+import { Observable } from 'rxjs';
+import { Localidad } from '../interfaces/localidades.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalidadesService {
 
+  private url: string = '/configuraciones/nominas/empresas';
+
   constructor(private http: HttpService,
               private helpers: Helpers) { }
 
-  getAll(): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint('/localidades'));
+  getLocalidadesByEmpresa(idEmpresa: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/${idEmpresa}/localidades`));
   }
 
-  getById(id: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/localidades/${id}`));
+  create(idEmpresa: string, localidad: Localidad): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint(`${this.url}/${idEmpresa}/localidades`), localidad);
   }
 
-  create(localidades: Localidades): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint('/localidades'), localidades);
+  update(idEmpresa: string, localidad: Localidad): Observable<any> {
+    const { codloc, ...localidadUpdate } = localidad;
+    return this.http.put(this.helpers.getBasicEndPoint(`${this.url}/${idEmpresa}/localidades/${localidad.codloc}`), localidadUpdate);
   }
 
-  update(localidades: Localidades): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/localidades/${localidades.codloc}`), localidades);
+  delete(idEmpresa: string, localidad: Localidad): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`${this.url}/${idEmpresa}/localidades/${localidad.codloc}`));
   }
-
-  delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/localidades/${id}`));
-  }
-
+  
 }

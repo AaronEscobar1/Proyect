@@ -11,6 +11,11 @@ const routes: Routes = [
     path: 'tipo-cuenta',
     // LazyLoad
     loadChildren: () => import('./tipo-cuenta/tipo-cuenta.module').then( m => m.TipoCuentaModule),
+  },
+  {
+    path: 'instituciones',
+    // LazyLoad
+    loadChildren: () => import('./instituciones/instituciones.module').then( m => m.InstitucionesModule),
   }
 ];
 

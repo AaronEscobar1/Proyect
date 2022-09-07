@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Components
-import { LocalidadesComponent } from './pages/localidades/localidades.component';
+import { EmpresasComponent } from './pages/empresas/empresas.component';
 
 const routes: Routes = [
   {
-    path: '', component: LocalidadesComponent
+    path: '', component: EmpresasComponent
   },
   {
     path: '**', redirectTo: ''

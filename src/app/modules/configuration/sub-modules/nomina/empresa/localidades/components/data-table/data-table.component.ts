@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { Localidades } from '../../interfaces/localidades.interfaces';
+import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { Localidad } from '../../interfaces/localidades.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -10,26 +10,28 @@ import { Localidades } from '../../interfaces/localidades.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() localidades!: Localidades[];
+  // Objeto para mostrar en la tabla
+  @Input() localidades!: Localidad[];
 
   // Table
   columns: TableHead[] = [];
 
-  constructor(private selectRowService: SelectRowService) { }
+  constructor(private companyNominaService: CompanyNominaService) { }
 
   ngOnInit(): void {
     this.columns = [
       { field: 'codloc', header: 'Código'      },
-      { field: 'desloc', header: 'Descripción' }
+      { field: 'deslo1', header: 'Descripción' },
+      { field: 'direc1', header: 'Dirección'   }
     ];
   }
 
   onRowSelect(event: any): void {
-    this.selectRowService.selectRow$.emit(event.data);
+    this.companyNominaService.selectRowThirdTable$.emit(event.data);
   }
 
   onRowUnselect(): void {
-    this.selectRowService.selectRow$.emit(null);
+    this.companyNominaService.selectRowThirdTable$.emit(null);
   }
-
+  
 }

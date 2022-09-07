@@ -1,6 +1,3 @@
-<!-- Spinner -->
-<app-spinner></app-spinner>
-
 <!-- Mensajes de alertas para usuarios -->
 <p-toast></p-toast>
 <p-confirmDialog ></p-confirmDialog>
@@ -8,22 +5,52 @@
 <div class="grid">
     <div class="col-12">
 
-        <div class="header-card bg-gray-600 text-white p-2">Localidades</div>
-        <div class="card-table">
-            
-            <!-- Componente de botones -->
-            <app-buttons (onRefresh)="refresh()"
-                         (onOpenModalPrint)="openModalPrint()"
-                         (onOpenModalCreate)="openModalCreate()"
-                         (onEditRow)="editRow($event)"
-                         (onDeleteRow)="deleteRow($event)">
-            </app-buttons>
+        <div class="grid">
+            <div class="col-12 md:col-6">
 
-            <!-- Componente table -->
-            <app-data-table [localidades]="localidades"></app-data-table>
-   
+            <!-- Componente de botones -->
+            <app-buttons-three-table (onRefresh)="refresh()"
+                                     (onOpenModalPrint)="openModalPrint()"
+                                     (onOpenModalCreate)="openModalCreate()"
+                                     (onEditRow)="editRow($event)"
+                                     (onDeleteRow)="deleteRow($event)">
+            </app-buttons-three-table>
+
+            </div>
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa -->
+                <div class="formgrid grid">
+                                    
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+                    <div class="field col-3 md:col-3 lg:col-3">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                
+                    <div class="field col-5 md:col-6 lg:col-7">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.nombre : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
+        <!-- Componente table -->
+        <app-data-table [localidades]="localidades"></app-data-table>
+   
     </div>
 </div>
 
@@ -34,12 +61,14 @@
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
-<app-modal-add-edit 
-    [localidades]="localidades" 
+<app-modal-add-edit
+    [empresaRow]="empresaRow"
+    [localidades]="localidades"
     [localidadSelect]="localidadSelect"
+    [countrys]="countrys"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 
-    (onLoadData)="loadData()"
+    (onLoadData)="refresh()"
     [titleForm]="titleForm">
 </app-modal-add-edit>

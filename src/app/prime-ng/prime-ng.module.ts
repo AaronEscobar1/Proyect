@@ -9,11 +9,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { ImageModule } from 'primeng/image';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FieldsetModule } from 'primeng/fieldset';
+import { FileUploadModule } from 'primeng/fileupload';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
@@ -38,11 +40,13 @@ import { ToastModule } from 'primeng/toast';
     DialogModule,
     DividerModule,
     DropdownModule,
+    ImageModule,
     InputTextareaModule,
     InputTextModule,
     InputMaskModule,
     InputNumberModule,
     FieldsetModule,
+    FileUploadModule,
     MessagesModule,
     MessageModule,
     MenubarModule,

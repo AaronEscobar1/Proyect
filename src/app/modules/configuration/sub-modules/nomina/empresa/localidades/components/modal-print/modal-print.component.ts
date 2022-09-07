@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 
 @Component({
@@ -52,5 +52,6 @@ export class ModalPrintComponent implements OnInit {
             && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
              && this.form.invalid;
   }
+
 
 }
