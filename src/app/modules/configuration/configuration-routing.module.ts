@@ -18,14 +18,19 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/basica/basica.module').then( m => m.BasicaModule)
       },
       {
+        path: 'deposito',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/depositos/depositos.module').then( m => m.DepositosModule)
+      },
+      {
         path: 'empresa',
         // LazyLoad
         loadChildren: () => import('./sub-modules/nomina/empresa/empresa.module').then( m => m.EmpresaModule)
       },
       {
-        path: 'deposito',
+        path: 'monedas',
         // LazyLoad
-        loadChildren: () => import('./sub-modules/nomina/depositos/depositos.module').then( m => m.DepositosModule)
+        loadChildren: () => import('./sub-modules/nomina/monedas/monedas.module').then( m => m.MonedasModule)
       },
       {
         path: 'organizacion',
