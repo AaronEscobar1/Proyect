@@ -88,6 +88,23 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               ]
             },
             {
+              label: 'Deposito',
+              items: [
+                {
+                  label: 'Tipo instituciones',
+                  routerLink: ['/main/config/deposito/tipo-instituciones']
+                },
+                {
+                  label: 'Tipo cuenta',
+                  routerLink: ['/main/config/deposito/tipo-cuenta']
+                },
+                {
+                  label: 'Instituciones',
+                  routerLink: ['/main/config/deposito/instituciones']
+                }
+              ]
+            },
+            {
               label: 'Empresa',
               items: [
                 {
@@ -145,22 +162,14 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               ]
             },
             {
-              label: 'Deposito',
+              label: 'Monedas',
               items: [
                 {
-                  label: 'Tipo instituciones',
-                  routerLink: ['/main/config/deposito/tipo-instituciones']
-                },
-                {
-                  label: 'Tipo cuenta',
-                  routerLink: ['/main/config/deposito/tipo-cuenta']
-                },
-                {
-                  label: 'Instituciones',
-                  routerLink: ['/main/config/deposito/instituciones']
+                  label: 'Tipos de monedas',
+                  routerLink: ['/main/config/monedas/tipo-moneda'],
                 }
               ]
-            }
+            }            
           ]
         },
         {
