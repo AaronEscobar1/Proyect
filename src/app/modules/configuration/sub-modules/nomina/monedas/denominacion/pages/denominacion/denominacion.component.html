@@ -54,7 +54,8 @@
                     
                     <!-- Componente table tipos de monedas -->
                     <app-data-table-monedas [tiposMonedas]="tiposMonedas"
-                                            (onButtonDisabled)="disableButtons($event)">
+                                            (onButtonDisabled)="disableButtons($event)"
+                                            (onUnSelectRow)="resetTablaDenominacion()">
                     </app-data-table-monedas>
 
                 </p-panel>
@@ -91,14 +92,15 @@
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
-<!-- <app-modal-add-edit
+<app-modal-add-edit
     [empresaRow]="empresaRow"
     [nominaRow]="nominaRow"
-    [nivelesExcepcion]="nivelesExcepcion"
-    [nivelExcepcionSelect]="nivelExcepcionSelect"
+    [tipoMonedaRow]="tipoMonedaRow"
+    [denominacionesMonedas]="denominacionesMonedas"
+    [denominacionMonedaSelect]="denominacionMonedaSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()"
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
-</app-modal-add-edit> -->
+</app-modal-add-edit>

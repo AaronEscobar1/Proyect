@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { DenominacionMoneda } from '../../interfaces/denominacion-moneda.interfaces';
 import { CompanyNominaService } from '../../../../empresa/shared-empresa/services/company-nomina.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-data-table-denominacion',
@@ -15,6 +16,9 @@ export class DataTableDenominacionComponent implements OnInit {
 
   // Table
   columns: TableHead[] = [];
+
+  // Obtener el elemento de la tabla mediante el DOM
+  @ViewChild('dt') table!: Table;
 
   constructor(private companyNominaService: CompanyNominaService) { }
 

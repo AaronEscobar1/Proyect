@@ -10,6 +10,8 @@ import { DenominacionService } from '../../services/denominacion.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { DenominacionMoneda } from '../../interfaces/denominacion-moneda.interfaces';
 import { DataTableMonedasComponent } from '../../components/data-table-monedas/data-table-monedas.component';
+import { DataTableDenominacionComponent } from '../../components/data-table-denominacion/data-table-denominacion.component';
+import { CompanyNominaService } from '../../../../empresa/shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-denominacion',
@@ -29,7 +31,7 @@ export class DenominacionComponent implements OnInit {
   tiposMonedas: TipoMoneda[] = [];
 
   // Tipo moneda seleccionada desde la tabla
-  tipoMonedaRow!: TipoMoneda | null;
+  tipoMonedaRow!: TipoMoneda;
 
   // Objeto de denominaciones o familia de monedas
   denominacionesMonedas: DenominacionMoneda[] = [];
@@ -51,10 +53,13 @@ export class DenominacionComponent implements OnInit {
   // Variable para manejar la suscripción
   subscriber!: Subscription;
 
-  // Emisión de evento de padre a hijo (cargar data de denominación o famila de monedas)
+  // Emisión de evento de padre a hijo (resetear tabla tipo de moneda)
   @ViewChild(DataTableMonedasComponent) dataTableMonedasComponent!: DataTableMonedasComponent;
+  // Emisión de evento de padre a hijo (resetear tabla denominación)
+  @ViewChild(DataTableDenominacionComponent) dataTableDenominacionComponent!: DataTableDenominacionComponent;
 
-  constructor(private tipoMonedaService: TipoMonedaService,
+  constructor(private companyNominaService: CompanyNominaService,
+              private tipoMonedaService: TipoMonedaService,
               private denominacionService: DenominacionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
@@ -97,7 +102,6 @@ export class DenominacionComponent implements OnInit {
       .subscribe({
         next: (res: DenominacionMoneda[]) => {
           this.denominacionesMonedas = res;
-          // console.log(this.denominacionesMonedas);
           this.spinner.hide();
         },
         error: (err) => {
@@ -122,6 +126,13 @@ export class DenominacionComponent implements OnInit {
     this.denominacionesMonedas = [];
     this.dataTableMonedasComponent.table._selection = null;
     this.dataTableMonedasComponent.onRowUnselect();
+  }
+
+  /**
+   * Reestablecer tabla de denominaciones Monedas
+   */
+  resetTablaDenominacion() {
+    this.dataTableDenominacionComponent.table._selection = null;
   }
 
   refresh(): void {
@@ -157,7 +168,7 @@ export class DenominacionComponent implements OnInit {
    * @param denominacionMoneda row de la tabla
    * @returns void
    */
-   editRow(denominacionMoneda: DenominacionMoneda): void {
+  editRow(denominacionMoneda: DenominacionMoneda): void {
     this.isEdit = true;
     this.titleForm = 'Editar denominación de moneda';
     this.denominacionMonedaSelect = denominacionMoneda;
@@ -170,7 +181,7 @@ export class DenominacionComponent implements OnInit {
    * @returns void
    */
   deleteRow(denominacionMoneda: DenominacionMoneda): void {
-    denominacionMoneda.fvigencia = `${new Date(denominacionMoneda.fvigencia).toISOString().slice(0, 10)}T00:00:00`;
+    denominacionMoneda.fvigencia = `${new Date(denominacionMoneda.fvigencia).toISOString().slice(0, 10)}T10:10:10`;
     
     this.confirmationService.confirm({
       message: `¿Desea eliminar esta denominación de moneda <b>${denominacionMoneda.nombre}</b>?`,
@@ -186,7 +197,7 @@ export class DenominacionComponent implements OnInit {
             next: (resp) => {
               this.spinner.hide();
               this.messageService.add({severity:'success', summary: 'Éxito', detail: resp.message, life: 3000});
-              this.denominacionService.selectRowTipoMoneda$.emit(null);
+              this.companyNominaService.selectRowThirdTable$.emit(null);
               this.refresh();
               return true;
             },

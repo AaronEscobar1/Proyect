@@ -21,10 +21,12 @@ export class DataTableMonedasComponent implements OnInit {
   // Emision de evento para habilitar y deshabilitar botones
   @Output() onButtonDisabled = new EventEmitter();
   
+  // Emision de evento para quitar selección del registro de denominacion
+  @Output() onUnSelectRow = new EventEmitter();
+  
   // Obtener el elemento de la tabla mediante el DOM
   @ViewChild('dt') table!: Table;
 
-  // private renderer: Renderer2 
   constructor(private companyNominaService: CompanyNominaService,
               private denominacionService: DenominacionService) { }
 
@@ -39,21 +41,23 @@ export class DataTableMonedasComponent implements OnInit {
   onRowSelect(event: any): void {
     // Emitir valor para habilitar los botones
     this.onButtonDisabled.emit(false);
-    // console.log(this.table);
-    // this.renderer.addClass(this.bodyTable.nativeElement, 'p-highlight');
+    // Emitir valor select de Tipo de moneda
     this.denominacionService.selectRowTipoMoneda$.emit(event.data);
     // Limpiar select de denominaciones
     this.companyNominaService.selectRowThirdTable$.emit(null);
+    // Quitar selección del registro de denominacion
+    this.onUnSelectRow.emit();
   }
 
   onRowUnselect(): void {
     // Emitir valor para deshabilitar los botones
     this.onButtonDisabled.emit(true);
-    // console.log(this.table);
-    // this.renderer.removeClass(this.bodyTable.nativeElement, 'p-highlight');
+    // Limpiar select de Tipo de moneda
     this.denominacionService.selectRowTipoMoneda$.emit(null);
     // Limpiar select de denominaciones
     this.companyNominaService.selectRowThirdTable$.emit(null);
+    // Quitar selección del registro de denominacion
+    this.onUnSelectRow.emit();
   }
 
 }
