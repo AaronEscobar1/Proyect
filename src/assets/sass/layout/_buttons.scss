@@ -10,6 +10,17 @@
     background: $primary-color !important;
 }
 
+// Clase para quitar el sombreado del select de la tabla
+.p-highlight-none {
+    background: #ffffff !important;
+    color: #495057 !important;
+}
+
+.p-highlight-none:hover {
+    background: #e9ecef !important;
+    color: #495057 !important;
+}
+
 @media screen and (max-width: 450px) {
     .p-button {
         margin-bottom: .5rem !important;

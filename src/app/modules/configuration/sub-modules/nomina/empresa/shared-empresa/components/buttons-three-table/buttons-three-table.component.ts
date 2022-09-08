@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CompanyNominaService } from '../../services/company-nomina.service';
 
@@ -8,6 +8,10 @@ import { CompanyNominaService } from '../../services/company-nomina.service';
 })
 export class ButtonsThreeTableComponent implements OnInit {
 
+  // Habilitar y deshabilitar los botones
+  @Input() buttonDisabled: boolean = false;
+  
+  // Emision de eventos
   @Output() onRefresh         = new EventEmitter();
   @Output() onOpenModalPrint  = new EventEmitter();
   @Output() onOpenModalCreate = new EventEmitter();
