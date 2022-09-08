@@ -167,6 +167,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Tipos de monedas',
                   routerLink: ['/main/config/monedas/tipo-moneda'],
+                },
+                {
+                  label: 'Denominación',
+                  routerLink: ['/main/config/monedas/denominacion'],
                 }
               ]
             }            
