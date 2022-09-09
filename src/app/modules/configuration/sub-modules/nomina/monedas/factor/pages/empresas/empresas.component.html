@@ -1,0 +1,41 @@
+<!-- Spinner -->
+<app-spinner ></app-spinner>
+
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Monedas / Factor de conversión</div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/*******************
+                /*  Consultar empresas *
+                /*********************** -->
+                <p-tabPanel header="Consultar empresas">
+
+                    <!-- Componente table -->
+                    <app-data-table-empresa [companias]="companias"></app-data-table-empresa>
+                                            
+                </p-tabPanel>
+
+                <!--/*****************************
+                /*    Factor de conversión       *
+                /********************************* -->
+                <p-tabPanel header="Factor de conversión" [disabled]="empresaRow == null">
+
+                    <app-factor [empresaRow]="empresaRow"></app-factor>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>

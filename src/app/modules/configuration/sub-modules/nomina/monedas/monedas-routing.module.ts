@@ -12,6 +12,11 @@ const routes: Routes = [
     // LazyLoad
     loadChildren: () => import('./denominacion/denominacion.module').then( m => m.DenominacionModule),
   },
+  {
+    path: 'factor',
+    // LazyLoad
+    loadChildren: () => import('./factor/factor.module').then( m => m.FactorModule),
+  }
 ];
 
 @NgModule({
