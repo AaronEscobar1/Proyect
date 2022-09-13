@@ -16,6 +16,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
@@ -47,9 +48,10 @@ import { ToastModule } from 'primeng/toast';
     InputNumberModule,
     FieldsetModule,
     FileUploadModule,
-    MessagesModule,
-    MessageModule,
+    KeyFilterModule,
     MenubarModule,
+    MessageModule,
+    MessagesModule,
     PanelMenuModule,
     PanelModule,
     ProgressSpinnerModule,

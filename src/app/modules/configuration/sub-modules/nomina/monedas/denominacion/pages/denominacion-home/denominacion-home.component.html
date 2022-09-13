@@ -1,0 +1,48 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Denominación </div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/******************************
+                /*   Consultar empresas y nómina  *
+                /********************************** -->
+                <p-tabPanel header="Consultar empresas">
+
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <app-empresas></app-empresas>
+                        </div>
+                    
+                        <div class="col-12 md:col-6">
+                            <app-tipo-nomina [empresaRow]="empresaRow"
+                                             (onClearData)="clearDataDenominaciones()">
+                            </app-tipo-nomina>
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+
+                <!--/**************************************
+                /*    Denominación o famila de monedas    *
+                /****************************************** -->
+                <p-tabPanel header="Denominación o famila de monedas" [disabled]="empresaRow == null || nominaRow == null">
+
+                    <app-denominacion [empresaRow]="empresaRow"
+                                      [nominaRow]="nominaRow">
+                    </app-denominacion>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>

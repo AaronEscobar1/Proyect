@@ -78,6 +78,18 @@ export class Helpers {
     }
 
     /**
+     * Formatear fecha con formato YYYY/MM/DD
+     * @param date: Date
+     * @returns string
+     */
+    formatDateCompleta(date: Date): string {
+      const year = date.getFullYear();
+      const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+      const day = date.getDate() < 9 ? `0${date.getDate()}` : date.getDate();
+      return `${year}-${month}-${day}`;
+    }
+
+    /**
      * Formatear fecha con día por defecto en 01, YYYY/MM/01
      * @param date: Date
      * @returns string
