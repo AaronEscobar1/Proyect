@@ -9,6 +9,8 @@ import { SortEventOrder, TableHead } from 'src/app/shared/interfaces/tableHead.i
 import { ProcesoSituacion } from '../../../interfaces/proceso-situacion.interfaces';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
 import { Helpers } from 'src/app/shared/helpers/helpers';
+import { Procesos } from '../../../../../basica/procesos/interfaces/procesos.interfaces';
+import { ObjectEventChange } from 'src/app/shared/interfaces/country-entity.interfaces';
 
 @Component({
   selector: 'app-data-table-procesos',
@@ -23,8 +25,14 @@ export class DataTableProcesosComponent implements OnInit {
   // Objeto para mostrar procesos por situación
   @Input() procesosSituaciones: ProcesoSituacion[] = [];
 
-  // Variable para mostrar lista de noSuspender
+  // Objeto para mostrar lista de procesos
+  @Input() procesos: Procesos[] = [];
+
+  // Objeto para mostrar lista de noSuspender
   @Input() noSuspender: SuspencionVacacion[] = [];
+
+  // Objeto para sub procesos
+  subProcesos!: any[];
 
   // Formulario reactivo
   form!: FormGroup;
@@ -80,7 +88,7 @@ export class DataTableProcesosComponent implements OnInit {
   ngOnInit(): void {
     this.columns = [
       { field: 'procTippro',  header: 'Procesos'     },
-      { field: 'tipsub',      header: 'Sub.'         },
+      { field: 'tipsub',      header: 'Sub proceso'  },
       { field: 'dialim',      header: 'Días'         },
       { field: 'tipsub',      header: 'No suspender' },
     ];
@@ -90,6 +98,9 @@ export class DataTableProcesosComponent implements OnInit {
     if ( this.procesosSituaciones.length > 0 ) {
       this.procesosSituaciones.forEach((data, index) => {
         this.addControls();
+        // Agregar la descripcion del proceso
+        const procesoString = this.procesos.find(value => value.tippro == data.procTippro);
+        data = { ...data, procesoString: procesoString?.nompro};
         this.procesosFormArray.controls[index].setValue(data);
       });
     }
@@ -102,6 +113,8 @@ export class DataTableProcesosComponent implements OnInit {
     this.isAddNewRow = true;
     // Crear un nuevo form control en el array
     const newDataRow = this.newArrayControl();
+    // Deshabilitar el control del subproceso
+    newDataRow.controls['tipsub'].disable();
     // Redondear el número con el fin de posicionar la página correspondiente cuando se agrega una fila
     this.table.first = Math.floor(this.table.value.length / this.rows) * this.rows;
     // Actualizar el total de los registros de la tabla con la nueva fila agregada.
@@ -136,6 +149,7 @@ export class DataTableProcesosComponent implements OnInit {
       idEmpresa:       new FormControl(this.situacionRow?.idEmpresa),
       idNomina:        new FormControl(this.situacionRow?.idNomina),
       statCodsta:      new FormControl(this.situacionRow?.codsta),
+      procesoString:   new FormControl(null),
       // Data necesaria para crear
       procTippro:      new FormControl(null, [ Validators.required, Validators.maxLength(2) ] ),
       tipsub:          new FormControl(null, [ Validators.required, Validators.pattern('[0-9]{1,1}') ] ),
@@ -150,6 +164,70 @@ export class DataTableProcesosComponent implements OnInit {
    */
   getIdTemporalMax(): number {
     return this.procesosFormArray.value.length == 0 ? 0 : Math.max(...this.procesosFormArray.value.map((data: ProcesoSituacion) => data.idTableTemporal + 1 ));
+  }
+
+  
+  /**
+   * Asigna el proceso seleccionado en el campo que se muestra en el formulario y
+   * realiza petición al backend para buscar los subprocesos relacionadas con el proceso
+   * @param event: ObjectEventChange: valor seleccionado
+   * @param index: number: indice del proceso
+   * @returns void
+   */
+  procesoSelectChange(event: ObjectEventChange, index: number): void {
+    const codProceso = event.value;
+    if (codProceso == null) { return; }
+    // Obtener el formGroup del proceso 
+    const procesoFormGroup = this.procesosFormArray.controls[index] as FormGroup;
+    // Buscar la descripcion del proceso
+    const proceso = this.procesos.find(value => value.tippro == codProceso);
+    // Asignar la descripcion del proceso en el formulario
+    procesoFormGroup.controls['procesoString'].reset(proceso?.nompro);
+    // Limpiamos el campo subProceso
+    this.clearSubProcesoSelect(index);
+    // Peticion al backend para buscar los subProcesos
+    this.loadSubProcesosByProceso(codProceso, index);
+  }
+
+  /**
+   * Limpia la lista de los subprocesos
+   * @param index: number: indice del proceso
+   */
+  clearSubProcesoSelect(index: number) {
+    this.subProcesos = [];
+    // Obtener el formGroup del proceso 
+    const procesoFormGroup = this.procesosFormArray.controls[index] as FormGroup;
+    // Limpiar el control del subproceso
+    procesoFormGroup.controls['tipsub'].reset();
+  }
+
+  /**
+   * Cargar subprocesos relacionadas con el proceso
+   * @param codProceso: number codigo proceso a buscar
+   */
+  loadSubProcesosByProceso(codProceso: number, index: number) {
+    this.subProcesos = [
+      { value: 1, label: 1 },
+      { value: 2, label: 2 }
+    ];
+    // TODO: Pasar este codigo cuando se realice la peticion al backend
+      // Obtener el formGroup del proceso 
+      const procesoFormGroup = this.procesosFormArray.controls[index] as FormGroup;
+      // Habilitar el control del subproceso
+      procesoFormGroup.controls['tipsub'].enable();
+    // this.spinner.show();
+    // this.procesosSituacionService.getSubProcesosByProceso(codProceso)
+    //   .subscribe({
+    //     next: (resp) => {
+    //       this.subProcesos = resp;
+          
+    //       this.spinner.hide();
+    //     },
+    //     error: (err) => {
+    //       this.spinner.hide();
+    //       this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+    //     }
+    //   });
   }
 
   /**
@@ -318,4 +396,5 @@ export class DataTableProcesosComponent implements OnInit {
   customSort(event: SortEventOrder): void {
     this.helpers.customSort(event);
   }
+
 }

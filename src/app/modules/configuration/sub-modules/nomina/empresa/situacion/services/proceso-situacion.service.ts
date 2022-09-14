@@ -40,4 +40,15 @@ export class ProcesoSituacionService {
   getSuspensionVacacion(): Observable<any> {
     return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/suspencionesvacaciones`));
   }
+
+  // Obtener procesos
+  getProcesos(): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/procesos`));
+  }
+
+  // Obtener sub procesos
+  getSubProcesosByProceso(codProceso: number): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/subprocesos/${codProceso}`));
+  }
+
 }

@@ -15,6 +15,8 @@ export interface ProcesoSituacion {
     susvac:     string;
     // Id temporal para [dataKey] de tabla edit
     idTableTemporal:        number;
+    // Atributo adicional para mostrar la descripcion del codigo de proceso
+    procesoString: string | undefined;
 }
 
 // Interfaces para crear registros

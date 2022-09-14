@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, AbstractControl, ValidationErrors, FormBuilder } from '@angular/forms';
-import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { ClaseInformacion, Equivalencia, ClaseInformacionCreate } from '../../interfaces/clase-informacion.interfaces';
-import { ClaseInformacionService } from '../../services/clase-informacion.service';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
+import { ClaseInformacion, Equivalencia, ClaseInformacionCreate } from '../../../interfaces/clase-informacion.interfaces';
+import { ClaseInformacionService } from '../../../services/clase-informacion.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 
@@ -39,8 +39,7 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
   
-  constructor(private companyNominaService: CompanyNominaService, 
-              private claseInformacionService: ClaseInformacionService, 
+  constructor(private claseInformacionService: ClaseInformacionService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -107,7 +106,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.companyNominaService.selectRowThirdTable$.emit(null);
+          this.claseInformacionService.selectRowClaseInformacion$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -127,7 +126,7 @@ export class ModalAddEditComponent implements OnInit {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.companyNominaService.selectRowThirdTable$.emit(null);
+          this.claseInformacionService.selectRowClaseInformacion$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
