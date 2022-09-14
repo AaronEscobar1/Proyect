@@ -6,22 +6,11 @@
     <div class="col-12">
 
         <div class="grid">
-            <div class="col-12 md:col-6">
-
-            <!-- Componente de botones -->
-            <app-buttons-three-table (onRefresh)="refresh()"
-                                     (onOpenModalPrint)="openModalPrint()"
-                                     (onOpenModalCreate)="openModalCreate()"
-                                     (onEditRow)="editRow($event)"
-                                     (onDeleteRow)="deleteRow($event)">
-            </app-buttons-three-table>
-
-            </div>
-            <div class="col-12 md:col-6">
+            <div class="col-12">
 
                 <!-- Inputs de nombre de empresa -->
                 <div class="formgrid grid">
-                                    
+
                     <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
                         <label for="codemp">Empresa:</label>
                     </div>
@@ -34,7 +23,7 @@
                                 disabled/>
                     </div>
                 
-                    <div class="field col-5 md:col-6 lg:col-7">
+                    <div class="field col-5 md:col-4 lg:col-5">
                         <input  type="text"
                                 id="desemp" 
                                 class="w-full"
@@ -44,13 +33,47 @@
                     </div>
 
                 </div>
-            </div>
 
+            </div>
         </div>
 
-        <!-- Componente table -->
-        <app-data-table [clasesInformacion]="clasesInformacion"></app-data-table>
-   
+        <div class="grid">
+            <div class="col-12 md:col-offset-1 md:col-10">
+
+                <p-panel header="Clase de información">
+                    
+                    <!-- Componente de botones -->
+                    <app-button-clase-info (onRefresh)="refresh()"
+                                           (onOpenModalPrint)="openModalPrint()"
+                                           (onOpenModalCreate)="openModalCreate()"
+                                           (onEditRow)="editRow($event)"
+                                           (onDeleteRow)="deleteRow($event)">
+                    </app-button-clase-info>
+                    <!-- Componente table clase de información -->
+                    <app-data-table-clase-info [clasesInformacion]="clasesInformacion"
+                                               (onButtonDisabled)="disableButtons($event)"
+                                               (onUnSelectRow)="resetTablaTipoInfo()">
+                    </app-data-table-clase-info>
+                    
+                </p-panel>
+                
+            </div>
+        </div>
+        
+        <div class="grid mt-3">
+            <div class="col-12">
+
+                <!-- Componente tipo de información -->
+                <app-tipo-informacion [buttonDisabled]="buttonDisabled"
+                                      [empresaRow]="empresaRow"
+                                      [claseInformacionSelect]="claseInformacionSelect"
+                                      [tiposInformaciones]="tiposInformaciones"
+                                      (onRefreshData)="loadTiposInformacion()">
+                </app-tipo-informacion>
+                
+            </div>
+        </div>
+
     </div>
 </div>
 

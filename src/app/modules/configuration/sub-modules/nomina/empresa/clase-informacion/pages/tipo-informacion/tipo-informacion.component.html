@@ -1,0 +1,34 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<!-- Componente de botones-->
+<app-buttons-three-table [buttonDisabled]="buttonDisabled"
+                         (onRefresh)="refresh()"
+                         (onOpenModalPrint)="openModalPrint()"
+                         (onOpenModalCreate)="openModalCreate()"
+                         (onEditRow)="editRow($event)"
+                         (onDeleteRow)="deleteRow($event)">
+</app-buttons-three-table>
+
+<!-- Componente tipo de informacion -->
+<app-data-table-tipo-info [tiposInformaciones]="tiposInformaciones"></app-data-table-tipo-info>
+
+<!-- Modal Imprimir -->
+<app-modal-print-tipo
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print-tipo>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit-tipo 
+    [empresaRow]="empresaRow"
+    [claseInformacionSelect]="claseInformacionSelect"
+    [tiposInformaciones]="tiposInformaciones"
+    [tipoInformacionSelect]="tipoInformacionSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit-tipo>
