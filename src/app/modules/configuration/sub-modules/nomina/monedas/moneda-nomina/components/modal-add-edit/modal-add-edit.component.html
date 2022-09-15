@@ -1,0 +1,110 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12 md:col-5">
+                        <label for="fvigencia">Vigencia: *</label>
+                        <p-calendar inputId="fvigencia" 
+                                    dateFormat="dd/mm/yy"
+                                    appendTo="body"
+                                    formControlName="fvigencia"
+                                    placeholder="dd/mm/yyyy">
+                        </p-calendar>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('fvigencia')">
+                            La vigencia es obligatoria
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12">
+                        <label for="monedaid">Tipo de moneda: *</label>
+                    </div>
+                    <div class="field col-12 md:col-5 -mt-2">
+                        <p-dropdown [options]="tiposMonedas"
+                                    inputId="monedaid"
+                                    appendTo="body"
+                                    [filter]="true"
+                                    filterBy="id"
+                                    formControlName="monedaid"
+                                    optionLabel="id"
+                                    optionValue="id"
+                                    #dropdownElement
+                                    (onChange)="monedaSelectChange(dropdownElement.selectedOption)"
+                                    placeholder="Seleccione un tipo de moneda">
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('monedaid')">
+                            {{ monedaidMsgError }}
+                        </span>
+                    </div>
+                    <div class="field col-12 md:col-7 -mt-2">
+                        <input type="text"
+                               pInputText
+                               [value]="monedaSelect"
+                               disabled/>
+                    </div>
+                    
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12">
+                        <label for="comentario">Comentario: *</label>
+                        <textarea id="comentario" 
+                                  pInputTextarea 
+                                  formControlName="comentario" 
+                                  rows="3">
+                        </textarea>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('comentario')">
+                            El comentario es de longitud máxima de 256 dígitos, formato alfanumérico.
+                        </span>
+                    </div>
+                    
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar"
+                        class="p-button-secondary my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-save"
+                        class="btn-infocent my-1" 
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>
