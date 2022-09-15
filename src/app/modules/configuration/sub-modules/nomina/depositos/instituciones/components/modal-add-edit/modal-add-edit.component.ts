@@ -59,12 +59,12 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
-  // Variable para obtener el form group de spiPaisEntidadFedTb y a su vez validar si el campo de los controles tiene errores
-  get spiPaisEntidadFedTbFormGroup() {
-    return this.form.controls['spiPaisEntidadFedTb'] as FormGroup;
+  // Variable para obtener el form group de paisEntidadFed y a su vez validar si el campo de los controles tiene errores
+  get paisEntidadFedFormGroup() {
+    return this.form.controls['paisEntidadFed'] as FormGroup;
   }
 
-  // Variable para obtener el form group de spiPaisEntidadFedTb y a su vez validar si el campo de los controles tiene errores
+  // Variable para obtener el form group de tctaTipcta y a su vez validar si el campo de los controles tiene errores
   get tctaTipctaFormGroup() {
     return this.form.controls['tctaTipcta'] as FormGroup;
   }
@@ -98,7 +98,7 @@ export class ModalAddEditComponent implements OnInit {
       direc1:     [  , [ Validators.maxLength(40) ]],
       direc2:     [  , [ Validators.maxLength(40) ]],
       direc3:     [  , [ Validators.maxLength(40) ]],
-      spiPaisEntidadFedTb: this.fb.group({
+      paisEntidadFed: this.fb.group({
         codPais:    [  , [ Validators.required ]],
         codEntidad: [  , [ Validators.required ]]
       }),
@@ -112,7 +112,7 @@ export class ModalAddEditComponent implements OnInit {
       }),
       noctto:     [  , [ Validators.maxLength(20) ]],
       ctacon:     [  , [ Validators.maxLength(36) ]],
-      cfTipoInstitutoFinanTb: []
+      tipoInstitucion: []
     });
   }
 
@@ -127,7 +127,7 @@ export class ModalAddEditComponent implements OnInit {
       this.form.reset();
       this.form.controls['codins'].enable();
       this.form.controls['tipiCodtip'].enable();
-      this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].disable();
+      this.paisEntidadFedFormGroup.controls['codEntidad'].disable();
       return;
     }
     this.form.controls['codins'].disable();
@@ -137,8 +137,8 @@ export class ModalAddEditComponent implements OnInit {
       this.institucionSelect.tctaTipcta = { };
     }
     // Cargar pais y entidades si existen
-    if ( this.institucionSelect && this.institucionSelect.spiPaisEntidadFedTb.codPais ) {
-      this.loadEntitiesByCountry(this.institucionSelect.spiPaisEntidadFedTb.codPais, this.institucionSelect.spiPaisEntidadFedTb.codEntidad);
+    if ( this.institucionSelect && this.institucionSelect.paisEntidadFed.codPais ) {
+      this.loadEntitiesByCountry(this.institucionSelect.paisEntidadFed.codPais, this.institucionSelect.paisEntidadFed.codEntidad);
     }
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.institucionSelect);
@@ -184,9 +184,9 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     
-    // Crear
     // Asignar el id empresa a la localidad para crear
     data.idEmpresa = this.empresaRow.id;
+    // Crear
     this.institucionesService.create(data)
       .subscribe({
         next: (resp) => {
@@ -218,7 +218,7 @@ export class ModalAddEditComponent implements OnInit {
   clearCountrySelect() {
     this.clearEntitySelect();
     this.federalEntities = [];
-    this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].disable();
+    this.paisEntidadFedFormGroup.controls['codEntidad'].disable();
     this.countrySelect = '';
   }
 
@@ -226,7 +226,7 @@ export class ModalAddEditComponent implements OnInit {
    * Limpia el campo entidad federal que se muestra en el formulario
    */
   clearEntitySelect() {
-    this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].reset();
+    this.paisEntidadFedFormGroup.controls['codEntidad'].reset();
     this.federalEntitySelect = '';
   }
 
@@ -259,7 +259,7 @@ export class ModalAddEditComponent implements OnInit {
       .subscribe({
         next: (resp) => {
           this.federalEntities = resp;
-          this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].enable();
+          this.paisEntidadFedFormGroup.controls['codEntidad'].enable();
           // Colocar el nombre del pais y la entidad en el campo del formulario
           if (this.isEdit) {
             this.countrys.find(country => country.codigo === codCountry ? this.countrySelect = country.nombre : '');

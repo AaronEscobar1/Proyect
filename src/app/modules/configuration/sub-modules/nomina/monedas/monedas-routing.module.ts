@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'factor',
     // LazyLoad
     loadChildren: () => import('./factor/factor.module').then( m => m.FactorModule),
+  },
+  {
+    path: 'moneda-nomina',
+    // LazyLoad
+    loadChildren: () => import('./moneda-nomina/moneda-nomina.module').then( m => m.MonedaNominaModule),
   }
 ];
 

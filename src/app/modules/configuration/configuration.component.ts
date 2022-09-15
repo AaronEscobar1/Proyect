@@ -175,6 +175,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Factor de conversión',
                   routerLink: ['/main/config/monedas/factor'],
+                },
+                {
+                  label: 'Moneda nómina',
+                  routerLink: ['/main/config/monedas/moneda-nomina'],
                 }
               ]
             }            

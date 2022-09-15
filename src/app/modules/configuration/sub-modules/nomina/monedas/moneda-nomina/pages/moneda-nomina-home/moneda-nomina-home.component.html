@@ -1,0 +1,50 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Asignación de tipo de moneda a nómina</div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/*****************************
+                /*  Consultar empresas y nómina  *
+                /********************************* -->
+                <p-tabPanel header="Consultar empresas y nóminas">
+
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <app-empresas></app-empresas>
+                        </div>
+                    
+                        <div class="col-12 md:col-6">
+                            <app-tipo-nomina [empresaRow]="empresaRow"
+                                             (onGetDataGrupo)="getDataGrupo($event)">
+                            </app-tipo-nomina>
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+
+                <!--/*****************************
+                /*        Moneda a nómina        *
+                /********************************* -->
+                <p-tabPanel header="Moneda a nómina" [disabled]="empresaRow == null || nominaRow == null">
+                    
+                    <app-moneda-nomina [empresaRow]="empresaRow"
+                                       [nominaRow]="nominaRow"
+                                       [monedasNominas]="monedasNominas"
+                                       (onRefresh)="refresh()">
+                    </app-moneda-nomina>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>

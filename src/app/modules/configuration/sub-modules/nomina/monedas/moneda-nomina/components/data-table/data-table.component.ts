@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
+import { MonedaNomina } from '../../interfaces/moneda-nomina.interfaces';
 import { CompanyNominaService } from '../../../../empresa/shared-empresa/services/company-nomina.service';
-import { Institucion } from '../../interfaces/instituciones.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -10,8 +10,8 @@ import { Institucion } from '../../interfaces/instituciones.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  // Objeto para mostrar en la tabla
-  @Input() instituciones!: Institucion[];
+  // Objeto para mostrar todos las monedas nominas por empresa y tipo nomina
+  @Input() monedasNominas: MonedaNomina[] = [];
 
   // Table
   columns: TableHead[] = [];
@@ -20,9 +20,10 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codins',                   header: 'Código'           },
-      { field: 'desins',                   header: 'Descripción'      },
-      { field: 'tipoInstitucion.destip',   header: 'Tipo institución' }
+      { field: 'fvigencia',             header: 'Vigencia'       },
+      { field: 'monedaid',              header: 'Tipo de moneda' },
+      { field: 'cfMonedaTipoTb.nombre', header: 'por nombre'     },
+      { field: 'comentario',            header: 'Comentario'     }
     ];
   }
 
