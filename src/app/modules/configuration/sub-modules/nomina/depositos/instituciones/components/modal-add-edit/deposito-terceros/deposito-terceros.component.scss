@@ -1,0 +1,23 @@
+:host ::ng-deep .p-panel {
+    .p-panel-header {
+        background: #fff;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        border-bottom: 0px solid #dee2e6 !important;
+    }
+    .p-panel-content {
+        border-bottom-right-radius: 15px !important;
+        border-bottom-left-radius: 15px !important;
+    }
+}
+
+// Ocultar el tabView de primeNg
+:host ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    display: none !important;
+}
+
+// Quitar estilos del tabView de primeNg
+:host ::ng-deep .p-tabview .p-tabview-nav {
+    border: 0 !important;
+    border-width: 0 !important;
+}

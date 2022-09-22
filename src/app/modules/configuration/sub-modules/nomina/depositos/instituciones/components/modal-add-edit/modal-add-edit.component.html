@@ -64,7 +64,7 @@
                                 <button pButton
                                         pRipple
                                         label="Terceros"
-                                        (click)="tabIndex = 1"
+                                        (click)="loadTerceros()"
                                         class="p-button-secondary mx-1">
                                 </button>
                             </div>
@@ -461,7 +461,17 @@
                 <!-- TabPanel posición [1] de Terceros -->
                 <p-tabPanel>
 
-                    Terceros
+                    <app-deposito-terceros [institucionSelect]="institucionSelect"
+                                           [tercerosDeposito]="tercerosDeposito"
+                                           [bancos]="bancos"
+                                           [hasDataTercero]="hasDataTercero"
+                                           [tiposPagos]="tiposPagos"
+                                           [formasPago]="formasPago"
+                                           [monedas]="monedas"
+                                           [tiposDocumentos]="tiposDocumentos"
+                                           [tiposTransacciones]="tiposTransacciones"
+                                           (onLoadData)="loadTerceros()">
+                    </app-deposito-terceros>
 
                 </p-tabPanel>
 
