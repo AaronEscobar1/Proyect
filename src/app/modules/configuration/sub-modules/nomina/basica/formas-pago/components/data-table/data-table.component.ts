@@ -10,18 +10,18 @@ import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
+  // Objeto para mostrar en la tabla
   @Input() formasPago!: FormasPago[];
 
-  // Table
+  // Columnas de la tabla
   columns: TableHead[] = [];
 
   constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codpag', header: 'Código' },
-      { field: 'despag', header: 'Descripción' },
-      { field: 'coninsString', header: 'Tipo de pago' }
+      { field: 'codpag', header: 'Código'      },
+      { field: 'despag', header: 'Descripción' }
     ];
   }
 

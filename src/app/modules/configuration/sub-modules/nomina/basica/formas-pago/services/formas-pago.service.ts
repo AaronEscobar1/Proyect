@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
-import { FormasPago } from '../interfaces/formas-pago.interfaces';
+import { FormasPago, FormasPagoUpdate } from '../interfaces/formas-pago.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +24,12 @@ export class FormasPagoService {
     return this.http.post(this.helpers.getBasicEndPoint('/configuraciones/nominas/pagoformas'), formasPago);
   }
 
-  update(formasPago: FormasPago): Observable<any> {
-    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${formasPago.codpag}`), formasPago);
+  update(formasPago: FormasPago, formasPagoUpdate: FormasPagoUpdate): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${formasPago.codpag}`), formasPagoUpdate);
   }
 
-  delete(id: string): Observable<any> {
-    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${id}`));
+  delete(formasPago: FormasPago): Observable<any> {
+    return this.http.delete(this.helpers.getBasicEndPoint(`/configuraciones/nominas/pagoformas/${formasPago.codpag}`));
   }
 
 }

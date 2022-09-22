@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
+import { FormasPago } from '../../interfaces/formas-pago.interfaces';
 import { FormasPagoService } from '../../services/formas-pago.service';
 
 @Component({
@@ -12,10 +12,11 @@ import { FormasPagoService } from '../../services/formas-pago.service';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objeto para validaciones de valores duplicados
   @Input() formasPagos!: FormasPago[];
-  @Input() formaPagoSelected!: FormasPago | undefined;
-  @Input() typesPagos!: TypeFormasPago[];
+
+  // Variable de seleccion para editar
+  @Input() formaPagoSelect!: FormasPago | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -38,8 +39,7 @@ export class ModalAddEditComponent implements OnInit {
               private selectRowService: SelectRowService) {
       this.form = this.fb.group({
         codpag: ['', [ Validators.required, Validators.maxLength(1), this.validatedId.bind(this) ]],
-        despag: ['', [ Validators.required, Validators.maxLength(30), this.validatedDespag.bind(this)]],
-        conins: ['', [ Validators.required ]],
+        despag: ['', [ Validators.required, Validators.maxLength(30), this.validatedDespag.bind(this)]]
       });
   }
 
@@ -54,7 +54,7 @@ export class ModalAddEditComponent implements OnInit {
     }
     this.form.controls['codpag'].disable();
     // Seteamos los valores del row seleccionado al formulario
-    this.form.reset(this.formaPagoSelected);
+    this.form.reset(this.formaPagoSelect);
   }
 
   /**
@@ -73,9 +73,10 @@ export class ModalAddEditComponent implements OnInit {
 
     this.spinner.show();
 
+    // Editar
     if(this.isEdit) {
-      // Editar
-      this.formasPagoService.update(data)
+      const { codpag, ...dataUpdate } = data;
+      this.formasPagoService.update(data, dataUpdate)
         .subscribe({
           next: (resp) => {
             this.closeModal();
