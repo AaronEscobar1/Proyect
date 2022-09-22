@@ -1,0 +1,371 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div>
+    <form [formGroup]="form" autocomplete="off">
+    
+        <div class="formgrid grid">
+            
+            <div class="col-12 md:col-6">
+
+                <p-panel header="Banco Emisor" styleClass="mt-3">
+            
+                    <div class="formgrid grid" formGroupName="bancoEmisorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="codBanco">Banco </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="bancos"
+                                        inputId="codBanco"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="descripcion"
+                                        optionLabel="descripcion"
+                                        optionValue="codBanco"
+                                        formControlName="codBanco"
+                                        (onChange)="bancoSelectChange($event, 'emisor')"
+                                        [showClear]="true"
+                                        (onClear)="clearBancoSelect('emisor')"
+                                        placeholder="Seleccione el banco">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="formgrid grid">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="agenciaEmisor">Agencia </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="agenciasEmisor"
+                                        inputId="agenciaEmisor"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="descripcion"
+                                        optionLabel="descripcion"
+                                        optionValue="codAgencia"
+                                        formControlName="agenciaEmisor"
+                                        [showClear]="true"
+                                        placeholder="Seleccione la agencia">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="formgrid grid" formGroupName="tipoPagoEmisorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="tipoPago">Tipo de pago </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="tiposPagos"
+                                        inputId="tipoPago"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="descripcion"
+                                        optionLabel="descripcion"
+                                        optionValue="tipoPago"
+                                        formControlName="tipoPago"
+                                        [showClear]="true"
+                                        placeholder="Seleccione el tipo pago">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="formgrid grid" formGroupName="pagoFormaEmisorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="codpag">Forma de pago </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="formasPago"
+                                        inputId="codpag"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="despag"
+                                        optionLabel="despag"
+                                        optionValue="codpag"
+                                        formControlName="codpag"
+                                        [showClear]="true"
+                                        placeholder="Seleccione la forma pago">
+                            </p-dropdown>
+                        </div>
+                    </div>
+            
+                    <div class="formgrid grid" formGroupName="monedaEmisorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="id">Moneda </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="monedas"
+                                        inputId="id"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="nombre"
+                                        optionLabel="nombre"
+                                        optionValue="id"
+                                        formControlName="id"
+                                        [showClear]="true"
+                                        placeholder="Seleccione la moneda">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                </p-panel>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <p-panel header="Banco Receptor" styleClass="mt-3">
+            
+                    <div class="formgrid grid" formGroupName="bancoReceptorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="codBanco">Banco </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="bancos"
+                                        inputId="codBanco"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="descripcion"
+                                        optionLabel="descripcion"
+                                        optionValue="codBanco"
+                                        formControlName="codBanco"
+                                        (onChange)="bancoSelectChange($event, 'receptor')"
+                                        [showClear]="true"
+                                        (onClear)="clearBancoSelect('receptor')"
+                                        placeholder="Seleccione el banco">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="formgrid grid">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="agenciaReceptor">Agencia </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="agenciasReceptor"
+                                        inputId="agenciaReceptor"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="descripcion"
+                                        optionLabel="descripcion"
+                                        optionValue="codAgencia"
+                                        formControlName="agenciaReceptor"
+                                        [showClear]="true"
+                                        placeholder="Seleccione la agencia">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="formgrid grid" formGroupName="tipoPagoReceptorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="tipoPago">Tipo de pago </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="tiposPagos"
+                                        inputId="tipoPago"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="descripcion"
+                                        optionLabel="descripcion"
+                                        optionValue="tipoPago"
+                                        formControlName="tipoPago"
+                                        [showClear]="true"
+                                        placeholder="Seleccione el tipo pago">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="formgrid grid" formGroupName="pagoFormaReceptorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="codpag">Forma de pago </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="formasPago"
+                                        inputId="codpag"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="despag"
+                                        optionLabel="despag"
+                                        optionValue="codpag"
+                                        formControlName="codpag"
+                                        [showClear]="true"
+                                        placeholder="Seleccione la forma pago">
+                            </p-dropdown>
+                        </div>
+                    </div>
+            
+                    <div class="formgrid grid" formGroupName="monedaReceptorObj">
+                        <div class="field col-3 text-right mt-2">
+                            <label for="id">Moneda </label>
+                        </div>
+                        <div class="field col-9">
+                            <p-dropdown [options]="monedas"
+                                        inputId="id"
+                                        appendTo="body"
+                                        [filter]="true"
+                                        filterBy="nombre"
+                                        optionLabel="nombre"
+                                        optionValue="id"
+                                        formControlName="id"
+                                        [showClear]="true"
+                                        placeholder="Seleccione la moneda">
+                            </p-dropdown>
+                        </div>
+                    </div>
+            
+                </p-panel>
+
+            </div>
+
+        </div>
+
+        <div class="formgrid grid">
+            
+            <div class="col-12">
+
+                <p-panel header="Información Adicional" styleClass="mt-3">
+            
+                    <div class="formgrid grid">
+
+                        <div class="col-12 md:col-6">
+                            <div class="formgrid grid" formGroupName="tipoDocumentoObj">
+                                <div class="field col-4 text-right">
+                                    <label for="tipoDocu">Tipo de documento </label>
+                                </div>
+                                <div class="field col-8">
+                                    <p-dropdown [options]="tiposDocumentos"
+                                                inputId="tipoDocu"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="descripcion"
+                                                optionLabel="descripcion"
+                                                optionValue="tipoDocu"
+                                                formControlName="tipoDocu"
+                                                [showClear]="true"
+                                                placeholder="Seleccione el tipo documento">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <div class="formgrid grid">
+                                <div class="field col-4 text-right mt-2">
+                                    <label for="version">Versión </label>
+                                </div>
+                                <div class="field col-8">
+                                    <input type="text"
+                                           id="version" 
+                                           pInputText
+                                           formControlName="version">
+                                    <span class="form-text text-danger"
+                                        *ngIf="campoInvalid('version')">
+                                        La versión es de longitud máxima de 10 dígitos, formato alfanumérico.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="formgrid grid">
+
+                        <div class="col-12 md:col-6">
+                            <div class="formgrid grid" formGroupName="tipoTransaccionObj">
+                                <div class="field col-4 text-right">
+                                    <label for="tipoTransac">Tipo de transacción </label>
+                                </div>
+                                <div class="field col-8">
+                                    <p-dropdown [options]="tiposTransacciones"
+                                                inputId="tipoTransac"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="descripcion"
+                                                optionLabel="descripcion"
+                                                optionValue="tipoTransac"
+                                                formControlName="tipoTransac"
+                                                [showClear]="true"
+                                                placeholder="Seleccione el tipo documento">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="formgrid grid">
+
+                        <div class="field col-2 md:col-1 text-right mt-2">
+                            <label for="texto1">Texto </label>
+                        </div>
+                        <div class="field col-10 md:col-11">
+                            <input type="text"
+                                   id="texto1" 
+                                   pInputText
+                                   formControlName="texto1">
+                            <span class="form-text text-danger"
+                                  *ngIf="campoInvalid('texto1')">
+                                El texto 1 es de longitud máxima de 60 dígitos, formato alfanumérico.
+                            </span> 
+                        </div>
+
+                    </div>
+
+                    <div class="formgrid grid">
+
+                        <div class="field col-2 md:col-1 text-right mt-2">
+                            <label for="texto2"> </label>
+                        </div>
+                        <div class="field col-10 md:col-11">
+                            <input type="text"
+                                   id="texto2" 
+                                   pInputText
+                                   formControlName="texto2">
+                            <span class="form-text text-danger"
+                                  *ngIf="campoInvalid('texto2')">
+                                El texto 2 es de longitud máxima de 60 dígitos, formato alfanumérico.
+                            </span> 
+                        </div>
+
+                    </div>
+            
+                </p-panel>
+
+            </div>
+
+        </div>
+    </form>
+
+    <!-- Guardar y eliminar -->
+    <div class="flex justify-content-end flex-wrap card-container green-container mt-2">
+
+        <div class="flex align-items-center justify-content-center border-round">
+            
+            <button *ngIf="hasDataTercero"
+                    pButton 
+                    pRipple 
+                    type="submit" 
+                    label="Eliminar" 
+                    icon="pi pi-trash" 
+                    class="p-button-danger mx-1" 
+                    (click)="delete(tercerosDeposito)">
+            </button>
+            
+        </div>
+
+        <div class="flex align-items-center justify-content-center border-round">
+            
+            <button pButton 
+                    pRipple 
+                    type="submit" 
+                    [label]="hasDataTercero ? 'Actualizar' : 'Guardar'" 
+                    icon="pi pi-save" 
+                    class="btn-infocent mx-1" 
+                    (click)="save()">
+            </button>
+
+        </div>
+
+    </div>
+    
+</div>
