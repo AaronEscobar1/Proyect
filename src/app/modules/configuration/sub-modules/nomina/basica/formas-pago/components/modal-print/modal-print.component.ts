@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
 import { FormasPagoService } from '../../services/formas-pago.service';
 
 @Component({
@@ -12,7 +11,6 @@ export class ModalPrintComponent implements OnInit {
 
   // Ver modal
   @Input() printModal!: boolean;
-  @Input() typesPagos!: TypeFormasPago[];
 
   // Emisión de eventos (cerrar)
   @Output() onCloseModalPrint = new EventEmitter();
@@ -36,7 +34,6 @@ export class ModalPrintComponent implements OnInit {
   }
 
   export() {
-    console.log(this.form.value);
   }
 
   resetForm(): void {
