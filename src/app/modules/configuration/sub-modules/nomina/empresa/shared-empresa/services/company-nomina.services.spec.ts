@@ -385,5 +385,413 @@ describe('NivelesEducativosServices', () => {
       });
   }));
 
+  it('Eliminar Forma de pago (Caso exitoso)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: true,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getAllCountry()
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: false,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getAllCountry()
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso exitoso)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: true,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getEntitiesByCountry("VEN")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: false,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getEntitiesByCountry("VEN")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso exitoso)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: true,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getMunicipalitiesByCountryEntity("VEN", "COJEDES")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: false,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getMunicipalitiesByCountryEntity("VEN", "COJEDES")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso exitoso)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: true,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getParishesByCountryEntityMunicipality("VEN", "COJEDES", "LOS TEQUES")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: false,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getParishesByCountryEntityMunicipality("VEN", "COJEDES", "LOS TEQUES")
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
 });
   

@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 
 @Component({
   selector: 'app-modal-print',
-  templateUrl: './modal-print.component.html'
+  templateUrl: './modal-print.component.html',
+  styles: [
+  ]
 })
 export class ModalPrintComponent implements OnInit {
 
