@@ -30,18 +30,16 @@
 <!-- Modal Imprimir -->
 <app-modal-print  
     [printModal]="printModal"
-    [typesPagos]="typesPagos"
     (onCloseModalPrint)="closeModalPrintDialog()">
 </app-modal-print>
 
 <!-- Modal Agregar Editar-->
-<app-modal-add-edit 
-    [formasPagos]="formasPagos" 
-    [formaPagoSelected]="formaPago"
-    [typesPagos]="typesPagos"
-    [createModal]="createModal" 
-    [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()" 
+<app-modal-add-edit
+    [formasPagos]="formasPagos"
+    [formaPagoSelect]="formaPagoSelect"
+    [createModal]="createModal"
+    [isEdit]="isEdit"
+    (onCloseModal)="closeModal()"
     (onLoadData)="loadData()"
     [titleForm]="titleForm">
 </app-modal-add-edit>

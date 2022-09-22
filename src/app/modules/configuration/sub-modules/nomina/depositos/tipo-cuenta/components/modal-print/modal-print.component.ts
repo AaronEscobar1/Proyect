@@ -32,7 +32,6 @@ export class ModalPrintComponent implements OnInit {
   }
 
   export() {
-    console.log(this.form.value);
   }
 
   resetForm(): void {

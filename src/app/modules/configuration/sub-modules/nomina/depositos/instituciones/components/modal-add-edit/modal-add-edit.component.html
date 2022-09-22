@@ -64,7 +64,7 @@
                                 <button pButton
                                         pRipple
                                         label="Terceros"
-                                        (click)="tabIndex = 1"
+                                        (click)="loadTerceros()"
                                         class="p-button-secondary mx-1">
                                 </button>
                             </div>
@@ -101,7 +101,7 @@
                                                 <tr>
                                                     <td class="w-3">{{ option.codtip }}</td>
                                                     <td class="w-6">{{ option.destip }}</td>
-                                                    <td class="w-3">{{ option.nmClaseTipoInstitucionTb.descripcion }}</td>
+                                                    <td class="w-3">{{ option.nmClaseTipoInstitucionTb?.descripcion }}</td>
                                                 </tr>
                                             </tbody>  
                                         </table> 
@@ -238,7 +238,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div formGroupName="spiPaisEntidadFedTb">
+                                        <div formGroupName="paisEntidadFed">
                                             <div class="formgrid grid">
                                                 <div class="field col-3 text-right mt-2">
                                                     <label for="codPais">Pais: *</label>
@@ -267,8 +267,8 @@
                                                 </div>
                                             </div>
                                             <div class="formgrid grid -mt-3"
-                                                *ngIf="spiPaisEntidadFedTbFormGroup.controls['codPais'].errors
-                                                        && spiPaisEntidadFedTbFormGroup.controls['codPais'].touched
+                                                *ngIf="paisEntidadFedFormGroup.controls['codPais'].errors
+                                                        && paisEntidadFedFormGroup.controls['codPais'].touched
                                                         && this.form.invalid">
                                                 <div class="col-9 col-offset-3 form-text text-danger">
                                                     El país es requerido.
@@ -303,8 +303,8 @@
                                                 </div>
                                             </div>
                                             <div class="formgrid grid -mt-3"
-                                                *ngIf="spiPaisEntidadFedTbFormGroup.controls['codEntidad'].errors
-                                                        && spiPaisEntidadFedTbFormGroup.controls['codEntidad'].touched
+                                                *ngIf="paisEntidadFedFormGroup.controls['codEntidad'].errors
+                                                        && paisEntidadFedFormGroup.controls['codEntidad'].touched
                                                         && this.form.invalid">
                                                 <div class="col-9 col-offset-3 form-text text-danger">
                                                     La entidad federal es requerida.
@@ -461,7 +461,17 @@
                 <!-- TabPanel posición [1] de Terceros -->
                 <p-tabPanel>
 
-                    Terceros
+                    <app-deposito-terceros [institucionSelect]="institucionSelect"
+                                           [tercerosDeposito]="tercerosDeposito"
+                                           [bancos]="bancos"
+                                           [hasDataTercero]="hasDataTercero"
+                                           [tiposPagos]="tiposPagos"
+                                           [formasPago]="formasPago"
+                                           [monedas]="monedas"
+                                           [tiposDocumentos]="tiposDocumentos"
+                                           [tiposTransacciones]="tiposTransacciones"
+                                           (onLoadData)="loadTerceros()">
+                    </app-deposito-terceros>
 
                 </p-tabPanel>
 

@@ -10,8 +10,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { TipoCuenta } from '../../../tipo-cuenta/interaces/tipo-cuenta.interfaces';
 import { ProgramasInstitucionService } from '../../services/programas-institucion.service';
+import { TercerosInstitucionService } from '../../services/terceros-institucion.service';
 import { InstitucionPrograma, TipoPrograma } from '../../interfaces/instituciones-programas.interfaces';
 import { DataTableProgramasComponent } from './data-table-programas/data-table-programas.component';
+import { InstitucionTercero } from '../../interfaces/instituciones-terceros.interfaces';
+import { BancoInstitucion, TipoTransaccion, TipoPago, TipoDocumento } from '../../interfaces/endpoints-terceros.interfaces';
+import { FormasPago } from '../../../../basica/formas-pago/interfaces/formas-pago.interfaces';
+import { TipoMoneda } from '../../../../monedas/tipos-monedas/interfaces/tipo-moneda.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -59,18 +64,50 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
-  // Variable para obtener el form group de spiPaisEntidadFedTb y a su vez validar si el campo de los controles tiene errores
-  get spiPaisEntidadFedTbFormGroup() {
-    return this.form.controls['spiPaisEntidadFedTb'] as FormGroup;
+  // Variable para obtener el form group de paisEntidadFed y a su vez validar si el campo de los controles tiene errores
+  get paisEntidadFedFormGroup() {
+    return this.form.controls['paisEntidadFed'] as FormGroup;
   }
 
-  // Variable para obtener el form group de spiPaisEntidadFedTb y a su vez validar si el campo de los controles tiene errores
+  // Variable para obtener el form group de tctaTipcta y a su vez validar si el campo de los controles tiene errores
   get tctaTipctaFormGroup() {
     return this.form.controls['tctaTipcta'] as FormGroup;
   }
 
   // Variables para mostrar los Tab del formulario, deposito a terceros o programas de deposito
   tabIndex = 0;
+  
+  /* **************************
+   *  Terceros de deposito    *
+   ****************************/
+
+  // Objeto para terceros por depositos
+  tercerosDeposito!: InstitucionTercero | undefined;
+
+  // Variable para verificar si tiene data el deposito por tercero
+  hasDataTercero: boolean = false;
+
+  // Objeto para bancos
+  bancos: BancoInstitucion[] = [];
+
+  // Objeto para tipos de pagos
+  tiposPagos: TipoPago[] = [];
+
+  // Objeto para formas de pagos
+  formasPago: FormasPago[] = [];
+  
+  // Objeto para monedas
+  monedas: TipoMoneda[] = [];
+
+  // Objeto para tipos documentos
+  tiposDocumentos: TipoDocumento[] = [];
+  
+  // Objeto para tipos de transacciones
+  tiposTransacciones: TipoTransaccion[] = [];
+
+  /* **************************
+   *  Programas de deposito   *
+   ****************************/
   
   // Objeto para programas por depositos
   programasDepositos: InstitucionPrograma[] = [];
@@ -84,6 +121,7 @@ export class ModalAddEditComponent implements OnInit {
   constructor(private companyNominaService: CompanyNominaService, 
               private institucionesService: InstitucionesService, 
               private programasInstitucionService: ProgramasInstitucionService,
+              private tercerosInstitucionService: TercerosInstitucionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -98,7 +136,7 @@ export class ModalAddEditComponent implements OnInit {
       direc1:     [  , [ Validators.maxLength(40) ]],
       direc2:     [  , [ Validators.maxLength(40) ]],
       direc3:     [  , [ Validators.maxLength(40) ]],
-      spiPaisEntidadFedTb: this.fb.group({
+      paisEntidadFed: this.fb.group({
         codPais:    [  , [ Validators.required ]],
         codEntidad: [  , [ Validators.required ]]
       }),
@@ -112,11 +150,19 @@ export class ModalAddEditComponent implements OnInit {
       }),
       noctto:     [  , [ Validators.maxLength(20) ]],
       ctacon:     [  , [ Validators.maxLength(36) ]],
-      cfTipoInstitutoFinanTb: []
+      tipoInstitucion: []
     });
   }
 
   ngOnInit(): void {
+    // Cargar endpoints necesarios de terceros
+    this.loadBancos();
+    this.loadTiposPagos();
+    this.loadFormasPagos();
+    this.loadMonedas();
+    this.loadTiposDocumentos();
+    this.loadTiposTransacciones();
+    // Cargar endpoints necesarios de programas
     this.loadTiposProgramas();
   }
 
@@ -127,7 +173,7 @@ export class ModalAddEditComponent implements OnInit {
       this.form.reset();
       this.form.controls['codins'].enable();
       this.form.controls['tipiCodtip'].enable();
-      this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].disable();
+      this.paisEntidadFedFormGroup.controls['codEntidad'].disable();
       return;
     }
     this.form.controls['codins'].disable();
@@ -137,8 +183,8 @@ export class ModalAddEditComponent implements OnInit {
       this.institucionSelect.tctaTipcta = { };
     }
     // Cargar pais y entidades si existen
-    if ( this.institucionSelect && this.institucionSelect.spiPaisEntidadFedTb.codPais ) {
-      this.loadEntitiesByCountry(this.institucionSelect.spiPaisEntidadFedTb.codPais, this.institucionSelect.spiPaisEntidadFedTb.codEntidad);
+    if ( this.institucionSelect && this.institucionSelect.paisEntidadFed.codPais ) {
+      this.loadEntitiesByCountry(this.institucionSelect.paisEntidadFed.codPais, this.institucionSelect.paisEntidadFed.codEntidad);
     }
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.institucionSelect);
@@ -184,9 +230,9 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
     
-    // Crear
     // Asignar el id empresa a la localidad para crear
     data.idEmpresa = this.empresaRow.id;
+    // Crear
     this.institucionesService.create(data)
       .subscribe({
         next: (resp) => {
@@ -218,7 +264,7 @@ export class ModalAddEditComponent implements OnInit {
   clearCountrySelect() {
     this.clearEntitySelect();
     this.federalEntities = [];
-    this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].disable();
+    this.paisEntidadFedFormGroup.controls['codEntidad'].disable();
     this.countrySelect = '';
   }
 
@@ -226,7 +272,7 @@ export class ModalAddEditComponent implements OnInit {
    * Limpia el campo entidad federal que se muestra en el formulario
    */
   clearEntitySelect() {
-    this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].reset();
+    this.paisEntidadFedFormGroup.controls['codEntidad'].reset();
     this.federalEntitySelect = '';
   }
 
@@ -259,7 +305,7 @@ export class ModalAddEditComponent implements OnInit {
       .subscribe({
         next: (resp) => {
           this.federalEntities = resp;
-          this.spiPaisEntidadFedTbFormGroup.controls['codEntidad'].enable();
+          this.paisEntidadFedFormGroup.controls['codEntidad'].enable();
           // Colocar el nombre del pais y la entidad en el campo del formulario
           if (this.isEdit) {
             this.countrys.find(country => country.codigo === codCountry ? this.countrySelect = country.nombre : '');
@@ -341,8 +387,151 @@ export class ModalAddEditComponent implements OnInit {
   }
 
   /****************************************************
+   *                  TERCEROS                        *
+   ****************************************************/
+
+  /**
+   * Cargar bancos
+   */
+  loadBancos(): void {
+    this.spinner.show();
+    this.tercerosInstitucionService.getBancos()
+      .subscribe({
+        next: (resp) => {
+          this.bancos = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar tipos de pagos
+   */
+  loadTiposPagos(): void {
+    this.spinner.show();
+    this.tercerosInstitucionService.getTiposPagos()
+      .subscribe({
+        next: (resp) => {
+          this.tiposPagos = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar formas de pagos
+   */
+   loadFormasPagos(): void {
+    this.spinner.show();
+    this.tercerosInstitucionService.getFormasPagos()
+      .subscribe({
+        next: (resp) => {
+          this.formasPago = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar monedas
+   */
+   loadMonedas(): void {
+    this.spinner.show();
+    this.tercerosInstitucionService.getMonedas()
+      .subscribe({
+        next: (resp) => {
+          this.monedas = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar tipos documentos
+   */
+  loadTiposDocumentos(): void {
+    this.spinner.show();
+    this.tercerosInstitucionService.getTiposDocumentos()
+      .subscribe({
+        next: (resp) => {
+          this.tiposDocumentos = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar tipos de transacciones
+   */
+   loadTiposTransacciones(): void {
+    this.spinner.show();
+    this.tercerosInstitucionService.getTiposTransacciones()
+      .subscribe({
+        next: (resp) => {
+          this.tiposTransacciones = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar terceros por Institución de deposito
+   */
+  loadTerceros() {
+    this.tercerosDeposito = undefined;
+    if ( !this.institucionSelect ) { return; }
+    this.tabIndex = 1;
+    this.spinner.show();
+    this.tercerosInstitucionService.getTercerosInstitucion(this.institucionSelect)
+      .subscribe({
+        next: (resp) => {
+          this.tercerosDeposito = resp;
+          this.hasDataTercero = true;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          if( err.error.message.includes('Recurso no encontrado')) {
+            this.spinner.hide();
+            this.hasDataTercero = false;
+            // this.messageService.add({severity: 'info', summary: '', detail: err.error.detail, life: 3000});
+            return false;
+          }
+          this.spinner.hide();
+          this.hasDataTercero = false;
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+          return false;
+        }
+      });
+  }
+
+  /****************************************************
    *                  PROGRAMAS                       *
    ****************************************************/
+
   /**
    * Cargar tipos de programas
    */

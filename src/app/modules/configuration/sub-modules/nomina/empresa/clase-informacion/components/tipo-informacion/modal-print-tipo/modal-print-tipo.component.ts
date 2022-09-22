@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 
 @Component({
-  selector: 'app-modal-print',
-  templateUrl: './modal-print.component.html'
+  selector: 'app-modal-print-tipo',
+  templateUrl: './modal-print-tipo.component.html'
 })
-export class ModalPrintComponent implements OnInit {
+export class ModalPrintTipoComponent implements OnInit {
 
   // Ver modal
   @Input() printModal!: boolean;
@@ -32,7 +32,7 @@ export class ModalPrintComponent implements OnInit {
   }
 
   export() {
-    console.log(this.form.value);
+
   }
 
   resetForm(): void {

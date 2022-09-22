@@ -65,5 +65,10 @@ export class TipoNominaComponent implements OnInit {
         }
       });
   }
+  
+  /** Destrucción del observable */
+  ngOnDestroy(): void {
+    this.subscriber.unsubscribe();
+  }
 
 }

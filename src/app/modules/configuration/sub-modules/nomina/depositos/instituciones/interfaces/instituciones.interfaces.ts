@@ -20,7 +20,7 @@ export interface Institucion {
     // 3ra linea de direccion
     direc3:                 string;
     // Codigo de Pais
-    spiPaisEntidadFedTb:    SPIPaisEntidadFedTB;
+    paisEntidadFed:    PaisEntidadFed;
     // Codigo de Ciudad
     cdadCodciu:             string;
     // 1er Numero de telefono
@@ -38,21 +38,15 @@ export interface Institucion {
     // Cuenta Contable
     ctacon:                 string;    
     // Codigo y descripcion del Tipo de Institucion para Deposito
-    cfTipoInstitutoFinanTb: CFTipoInstitutoFinanTB;
+    tipoInstitucion: TipoInstitucion;
 }
 
-export interface SPIPaisEntidadFedTB {
+export interface PaisEntidadFed {
     // Codigo de Pais
     codPais:     string;
     // Codigo de Estado
     codEntidad:  string;
     nombre:      string;
-    primaryKey?: PrimaryKey;
-}
-
-export interface PrimaryKey {
-    codEntidad: string;
-    codPais:    string;
 }
 
 export interface TctaTipcta {
@@ -60,8 +54,15 @@ export interface TctaTipcta {
     descta?: string;
 }
 
-export interface CFTipoInstitutoFinanTB {
-    tipiCodtip:  string;
+export interface TipoInstitucion {
+    idEmpresa:                string;
+    codtip:                   string;
+    destip:                   string;
+    nmClaseTipoInstitucionTb: NmClaseTipoInstitucionTB;
+}
+
+export interface NmClaseTipoInstitucionTB {
+    clatip:      string;
     descripcion: string;
 }
 

@@ -27,7 +27,7 @@
                 <tr [pSelectableRow]="institucion">
                     <td>{{ institucion.codins }}</td>
                     <td>{{ institucion.desins | titlecase }}</td>
-                    <td>{{ institucion.cfTipoInstitutoFinanTb.descripcion }}</td>
+                    <td>{{ institucion.tipoInstitucion?.destip }}</td>
                 </tr>
             </ng-template>
 

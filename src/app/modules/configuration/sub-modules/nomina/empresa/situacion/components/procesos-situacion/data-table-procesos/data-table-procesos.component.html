@@ -29,30 +29,30 @@
 
                 <ng-template pTemplate="header">
                     <tr>
-                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-center">
-                            {{ col.header }}
-                            <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </th>
-                        <th style="width:8rem"></th>
-                    </tr>
-                    <!-- <tr>
-                        <th *ngFor="let col of columns">
-                            <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
-                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                    <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '...'">
-                                </ng-template>
-                            </p-columnFilter>
-                        </th>
+                        <th colspan="2" [pSortableColumn]="columns[0].field"> {{ columns[0].header }} <p-sortIcon [field]="columns[0].field"></p-sortIcon></th>
+                        <th [pSortableColumn]="columns[1].field"> {{ columns[1].header }} <p-sortIcon [field]="columns[1].field"></p-sortIcon></th>
+                        <th [pSortableColumn]="columns[2].field"> {{ columns[2].header }} <p-sortIcon [field]="columns[2].field"></p-sortIcon></th>
+                        <th [pSortableColumn]="columns[3].field"> {{ columns[3].header }} <p-sortIcon [field]="columns[3].field"></p-sortIcon></th>
                         <th></th>
-                    </tr> -->
+                    </tr>
                 </ng-template>
 
                 <ng-template pTemplate="body" let-procesoSituacion let-editing="editing" let-index="rowIndex">
                     <tr [pEditableRow]="procesoSituacion" [formGroupName]="index">
-                        <td>
+                        <td style="width:15%">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" class="text-right" formControlName="procTippro">
+                                    <p-dropdown [options]="procesos" 
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="tippro"
+                                                optionLabel="tippro"
+                                                optionValue="tippro"
+                                                formControlName="procTippro"
+                                                #dropdownElement
+                                                (onChange)="procesoSelectChange($event, index)"
+                                                placeholder="Seleccione el proceso">
+                                    </p-dropdown>
                                     <span class="form-text text-danger" *ngIf="campoInvalid(procesoSituacion.controls['procTippro'])">
                                         <span *ngIf="procesoSituacion.controls['procTippro']?.errors?.required"> 
                                             El código es obligatorio. 
@@ -68,18 +68,48 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td>
+                        <td style="width:20%">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" class="text-right" formControlName="tipsub">
-                                    <span class="form-text text-danger" *ngIf="campoInvalid(procesoSituacion.controls['tipsub'])">
-                                        <span *ngIf="procesoSituacion.controls['tipsub']?.errors?.required"> 
-                                            El Subproceso es obligatorio. 
+                                    <input type="text"
+                                           pInputText
+                                           [value]="procesoSituacion.getRawValue().procesoString"
+                                           [disabled]="true"/>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ procesoSituacion.getRawValue().procesoString }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td style="width:15%">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <div *ngIf="!isEdit">
+                                        <p-dropdown [options]="subProcesos" 
+                                                    appendTo="body"
+                                                    [filter]="true"
+                                                    filterBy="value"
+                                                    optionLabel="label"
+                                                    optionValue="value"
+                                                    formControlName="tipsub"
+                                                    placeholder="Seleccione el sub proceso">
+                                        </p-dropdown>
+                                        <span class="form-text text-danger" *ngIf="campoInvalid(procesoSituacion.controls['tipsub'])">
+                                            <span *ngIf="procesoSituacion.controls['tipsub']?.errors?.required"> 
+                                                El Subproceso es obligatorio. 
+                                            </span>
+                                            <div *ngIf="procesoSituacion.controls['tipsub']?.errors?.pattern"> 
+                                                El Subproceso es de longitud de 1 dígito, formato numérico. 
+                                            </div>
                                         </span>
-                                        <div *ngIf="procesoSituacion.controls['tipsub']?.errors?.pattern"> 
-                                            El Subproceso es de longitud de 1 dígito, formato numérico. 
-                                        </div>
-                                    </span>
+                                    </div> 
+
+                                    <div *ngIf="isEdit">
+                                        <input type="text"
+                                               pInputText
+                                               [value]="procesoSituacion.getRawValue().tipsub"
+                                               [disabled]="true"/>
+                                    </div>
                                 </ng-template>
 
                                 <ng-template pTemplate="output">
@@ -87,10 +117,10 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td class="text-right">
+                        <td style="width:15%">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
-                                    <input pInputText type="text" class="text-right" formControlName="dialim">
+                                    <input pInputText type="text" formControlName="dialim">
                                     <span class="form-text text-danger" *ngIf="campoInvalid(procesoSituacion.controls['dialim'])">
                                         <span *ngIf="procesoSituacion.controls['dialim']?.errors?.required"> 
                                             El campo día es obligatorio. 
@@ -106,7 +136,7 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td>
+                        <td  style="width:15%">
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-dropdown [options]="noSuspender" 
@@ -124,7 +154,7 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center"  style="width:20%">
                             <button *ngIf="!editing" 
                                     pButton
                                     pInitEditableRow 

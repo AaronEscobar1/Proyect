@@ -5,6 +5,7 @@ import { ProcesoSituacion } from '../../../interfaces/proceso-situacion.interfac
 import { SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
 import { ProcesoSituacionService } from '../../../services/proceso-situacion.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Procesos } from '../../../../../basica/procesos/interfaces/procesos.interfaces';
 
 @Component({
   selector: 'app-modal-procesos',
@@ -25,36 +26,33 @@ export class ModalProcesosComponent implements OnInit {
   // Objeto de procesos de situacion
   procesosSituaciones: ProcesoSituacion[] = [];
 
+  // Objeto para mostrar lista de procesos
+  procesos: Procesos[] = [];
+
   // Objeto para mostrar lista de noSuspender
   noSuspender: SuspencionVacacion[] = [];
 
   // Emisión de eventos (cerrar)
   @Output() onCloseDataTableModal = new EventEmitter();
 
-  constructor(private procesosSituacionService: ProcesoSituacionService,
+  constructor(private procesoSituacionService: ProcesoSituacionService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.loadProcesos();
     this.loadSuspensionVacacion();
   }
 
   /**
-   * Cargar procesos por situacion
-   * @param situacion: Situacion
+   * Cargar los procesos 
    */
-  loadProcesosSituacion(situacion: Situacion): void {
-    this.situacionRow = situacion;
-    this.procesosSituaciones = [];
+  loadProcesos(): void {
     this.spinner.show();
-    this.procesosSituacionService.getAllProcesosSituacion(situacion)
+    this.procesoSituacionService.getProcesos()
       .subscribe({
         next: (res) => {
-          this.procesosSituaciones = res;
-          // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
-          this.procesosSituaciones = this.procesosSituaciones.map((data, index) => { 
-            return {...data, idTableTemporal: index }
-          });
+          this.procesos = res;
           this.spinner.hide();
         },
         error: (err) => {
@@ -69,10 +67,35 @@ export class ModalProcesosComponent implements OnInit {
    */
   loadSuspensionVacacion(): void {
     this.spinner.show();
-    this.procesosSituacionService.getSuspensionVacacion()
+    this.procesoSituacionService.getSuspensionVacacion()
       .subscribe({
         next: (res) => {
           this.noSuspender = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar procesos por situacion
+   * @param situacion: Situacion
+   */
+  loadProcesosSituacion(situacion: Situacion): void {
+    this.situacionRow = situacion;
+    this.procesosSituaciones = [];
+    this.spinner.show();
+    this.procesoSituacionService.getAllProcesosSituacion(situacion)
+      .subscribe({
+        next: (res) => {
+          this.procesosSituaciones = res;
+          // Mapeo la data y agrego un atributo `idTableTemporal` para colocarlo como [dataKey] en la tabla table edit
+          this.procesosSituaciones = this.procesosSituaciones.map((data, index) => { 
+            return {...data, idTableTemporal: index }
+          });
           this.spinner.hide();
         },
         error: (err) => {

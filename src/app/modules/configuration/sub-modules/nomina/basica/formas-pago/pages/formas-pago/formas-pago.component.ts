@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { map } from 'rxjs/operators';
 import { FormasPagoService } from '../../services/formas-pago.service';
-import { FormasPago, TypeFormasPago } from '../../interfaces/formas-pago.interfaces';
+import { FormasPago } from '../../interfaces/formas-pago.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 @Component({
@@ -14,13 +12,11 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class FormasPagoComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
-  // Objetos
+  // Objetos de formas de pago
   formasPagos: FormasPago[] = [];
-  formaPago!: FormasPago | undefined;
-  typesPagos : TypeFormasPago[] = [];
+
+  // Objeto forma de pago seleccionada desde la tabla
+  formaPagoSelect!: FormasPago | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -37,32 +33,15 @@ export class FormasPagoComponent implements OnInit {
               private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
-    this.typesPagos = [
-      {label: 'Efectivo', value: '1'},
-      {label: 'Deposito', value: '2'},
-      {label: 'Cheque no continuo', value: '3'},
-      {label: 'Cheque continuo', value: '4'}
-    ];
     this.loadData();
   }
 
   loadData() {
     this.spinner.show();
     this.formasPagoService.getAll()
-      .pipe(
-        // Se agrega un valor atributo adicional "coninsString" para mostrarlo en la vista
-        map((data: FormasPago[]) => {
-          return data.map(tpago => {
-            const tipoPago = tpago.conins === '1' ? 'Efectivo' :
-                             tpago.conins === '2' ? 'Deposito' :
-                             tpago.conins === '3' ? 'Cheque no continuo' :
-                             tpago.conins === '4' ? 'Cheque continuo' : '';
-            return {...tpago, coninsString: tipoPago };
-          });
-        }),
-      ).subscribe({
-        next: (tpago) => {
-          this.formasPagos = tpago;
+      .subscribe({
+        next: (resp) => {
+          this.formasPagos = resp;
           this.spinner.hide();
         },
         error: (err) => {
@@ -93,7 +72,7 @@ export class FormasPagoComponent implements OnInit {
   closeModal() {
     this.isEdit = false;
     this.createModal = false;
-    this.formaPago = undefined;
+    this.formaPagoSelect = undefined;
   }
 
   /**
@@ -103,7 +82,7 @@ export class FormasPagoComponent implements OnInit {
    */
   editRow(formasPago: FormasPago): void {
     this.isEdit = true;
-    this.formaPago = formasPago
+    this.formaPagoSelect = formasPago;
     this.openModalCreate();
   }
 
@@ -122,7 +101,7 @@ export class FormasPagoComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.formasPagoService.delete(formasPago.codpag)
+        this.formasPagoService.delete(formasPago)
           .subscribe({
             next: (resp) => {
               this.spinner.hide();

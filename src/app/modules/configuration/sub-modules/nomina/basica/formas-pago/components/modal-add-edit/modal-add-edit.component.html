@@ -42,23 +42,7 @@
                         {{ despagMsgError }}
                     </span>
                 </div>
-
-                <div class="field">
-                    <label for="conins">Tipo de pago *</label>
-                    <p-dropdown [options]="typesPagos" 
-                                appendTo="body" 
-                                formControlName="conins" 
-                                inputId="conins"
-                                placeholder="Seleccione el tipo de pago">
-                        <ng-template let-option pTemplate="item">
-                            <span>{{option.label}}</span>
-                        </ng-template>
-                    </p-dropdown>
-                    <span class="form-text text-danger"
-                          *ngIf="campoInvalid('conins')">
-                        El tipo de pago es obligatorio.
-                    </span>
-                </div>
+                
             </form>
 
         </ng-template>
