@@ -52,8 +52,55 @@ describe('ClasificacionOficialComponent', () => {
     const fixture = TestBed.createComponent(NivelesComponent);
     const app = fixture.componentInstance;
     expect(app.niveles.length).toBe(0);
-    app.loadData();
+    app.loadNiveles();
     fixture.detectChanges();
+    app.competenciaRow = {
+      "nombre": "Competencia 46",
+      "descrip": "competencia 46",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
+      "id": 0
+    }
+    app.niveles = []
+
+    app.ngOnChanges()
+
+    app.niveles = [
+      {
+        "nivel": "nivel 46",
+        "descrip": "3333",
+        "id": 46,
+        "id_competencia": 46
+      },
+      {
+        "nivel": "nivel dos",
+        "descrip": "descrip 2",
+        "id": 4226,
+        "id_competencia": 1
+      }
+    ];
+
+    app.ngOnChanges()
+    
+    app.niveles = [
+      {
+        "nivel": "nivel 46",
+        "descrip": "3333",
+        "id": 46,
+        "id_competencia": 46
+      },
+      {
+        "nivel": "nivel dos",
+        "descrip": "descrip 2",
+        "id": 4226,
+        "id_competencia": 1
+      }
+    ];
+
+    app.ngOnChanges()
+
     expect(app.niveles.length).toBeGreaterThanOrEqual(0);
   });
 
@@ -64,37 +111,9 @@ describe('ClasificacionOficialComponent', () => {
     // Simulamos el proceso de carga despues del boton 
     app.refresh();
     expect(app.niveles.length).toBe(0);
-    app.loadData();
+    app.loadNiveles();
     fixture.detectChanges();
     expect(app.niveles.length).toBeGreaterThanOrEqual(0);  
-  })
-
-  it('Abrir Modal de impresion', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
-    const app = fixture.componentInstance;
-
-    // Simulamos el proceso de abrir el modal de impresion 
-    expect(app.printModal).toBeFalse();
-    app.openModalPrint();
-    fixture.detectChanges();
-    expect(app.printModal).toBeTrue();  
-  })
-
-  it('Cerrar Modal de impresion', async () => {
-    const fixture = TestBed.createComponent(NivelesComponent);
-    const app = fixture.componentInstance;
-
-    // Simulamos el proceso de abrir el modal de impresion 
-    expect(app.printModal).toBeFalse();
-    app.openModalPrint();
-    expect(app.printModal).toBeTrue();
-    fixture.detectChanges();
-    
-    // Simulamos el proceso de cerrar modal de impresion  
-    expect(app.printModal).toBeTrue();
-    app.closeModalPrintDialog();
-    expect(app.printModal).toBeFalse();
-    
   })
 
   it('Abrir modal de Crear Nivel', async () => {
@@ -104,13 +123,16 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "1",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
 
     // Simulamos el proceso de abrir el modal de Creacion 
     expect(app.createModal).toBeFalse();
-    app.openModalCreate(data);
+    app.openModalCreate();
     fixture.detectChanges();
     expect(app.titleForm).toBe('Agregar nivel');
     expect(app.createModal).toBeTrue();  
@@ -123,13 +145,16 @@ describe('ClasificacionOficialComponent', () => {
     const data: Competencias = {
       "nombre": "Competencia 46",
       "descrip": "1",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46
     }
 
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.createModal).toBeFalse();
-    app.openModalCreate(data);
+    app.openModalCreate();
     expect(app.titleForm).toBe('Agregar nivel');
     expect(app.createModal).toBeTrue();
     fixture.detectChanges();
@@ -308,21 +333,38 @@ describe('ClasificacionOficialComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46
       },
       {
         "nombre": "eva 2",
         "descrip": "descripcion",
-        "tipo": "03",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 4
       }
     ]
 
     const fixture = TestBed.createComponent(NivelesComponent);
     const app = fixture.componentInstance;
+    
+    app.competenciaRow = {
+      "nombre": "Competencia 46",
+      "descrip": "competencia 46",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
+      "id": 46
+    }
 
-    app.loadData()
+
+    app.loadNiveles()
 
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.flush(data);
@@ -341,7 +383,17 @@ describe('ClasificacionOficialComponent', () => {
     const fixture = TestBed.createComponent(NivelesComponent);
     const app = fixture.componentInstance;
 
-    app.loadData()
+    app.competenciaRow = {
+      "nombre": "Competencia 46",
+      "descrip": "competencia 46",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
+      "id": 46
+    }
+
+    app.loadNiveles()
 
     const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.error(error);

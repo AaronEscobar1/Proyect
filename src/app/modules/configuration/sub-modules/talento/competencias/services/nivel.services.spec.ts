@@ -4,8 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
 // Servicios y componentes requeridos
-import { NivelService } from './nivel.service';
 import { Niveles } from '../interfaces/nivel.interfaces';
+import { NivelService } from './nivel.service';
 
 describe('NivelesEducativosServices', () => {
 
@@ -125,10 +125,10 @@ describe('NivelesEducativosServices', () => {
     
     const token = 'xxxxx'
     const query: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+      "nivel": "nivel dos",
+      "descrip": "descrip 2",
+      "id": 4226,
+      "id_competencia": 1
     }
 
     const mockResult: any = {
@@ -150,10 +150,10 @@ describe('NivelesEducativosServices', () => {
     
     const token = 'xxxxx'
     const query: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+      "nivel": "nivel dos",
+      "descrip": "descrip 2",
+      "id": 4226,
+      "id_competencia": 1
     }
 
     const mockResult: any = {
@@ -176,10 +176,10 @@ describe('NivelesEducativosServices', () => {
     
     const token = 'xxxxx'
     const query: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+      "nivel": "nivel dos",
+      "descrip": "descrip 2",
+      "id": 4226,
+      "id_competencia": 1
     }
 
     const mockResult: any = {
@@ -201,10 +201,10 @@ describe('NivelesEducativosServices', () => {
     
     const token = 'xxxxx'
     const query: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+      "nivel": "nivel dos",
+      "descrip": "descrip 2",
+      "id": 4226,
+      "id_competencia": 1
     }
 
     const mockResult: any = {
@@ -227,10 +227,10 @@ describe('NivelesEducativosServices', () => {
     
     const token = 'xxxxx'
     const query: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+      "nivel": "nivel dos",
+      "descrip": "descrip 2",
+      "id": 4226,
+      "id_competencia": 1
     }
 
     const mockResult: any = {
@@ -252,10 +252,10 @@ describe('NivelesEducativosServices', () => {
     
     const token = 'xxxxx'
     const query: Niveles = {
-      "nivel": "nivel 46",
-      "descrip": "1",
-      "id_competencia": 46,
-      "id": 46
+      "nivel": "nivel dos",
+      "descrip": "descrip 2",
+      "id": 4226,
+      "id_competencia": 1
     }
 
     const mockResult: any = {

@@ -51,7 +51,7 @@ describe('ModalAddEditComponent', () => {
     expect(app.form.value.id).toEqual(null)
     expect(app.form.value.nombre).toEqual(null)
     expect(app.form.value.descrip).toEqual(null)
-    expect(app.form.value.tipo).toEqual(null)
+    expect(app.form.value.tipo).toEqual({id: null})
 
     // Validamos el requiere de los campos
     
@@ -73,7 +73,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -85,7 +88,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -99,7 +105,10 @@ describe('ModalAddEditComponent', () => {
     app.competenciaSelect = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "01",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -114,7 +123,10 @@ describe('ModalAddEditComponent', () => {
     app.competenciaSelect = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -130,7 +142,7 @@ describe('ModalAddEditComponent', () => {
     expect(app.form.value.id).toEqual(undefined)
     expect(app.form.value.nombre).toEqual("Competencia 46")
     expect(app.form.value.descrip).toEqual("competencia 46")
-    expect(app.form.value.tipo).toEqual(app.competenciaSelect.tipo)
+    expect(app.form.value.tipo).toEqual({id: '02'})
     expect(app.form.valid).toEqual(true)
   });
 
@@ -145,7 +157,7 @@ describe('ModalAddEditComponent', () => {
     expect(app.form.value.id).toEqual(null)
     expect(app.form.value.nombre).toEqual(null)
     expect(app.form.value.descrip).toEqual(null)
-    expect(app.form.value.tipo).toEqual(null)
+    expect(app.form.value.tipo).toEqual({id: null})
     expect(app.competenciaSelect).toEqual(undefined);
   });
 
@@ -159,7 +171,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -171,7 +186,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -186,7 +204,9 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "Competencia 4666",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "id": "02"
+      },
       "id": 76,
     };
 
@@ -216,7 +236,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -228,7 +251,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -243,7 +269,9 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "Competencia 666",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "id": "02"
+      },
       "id": 76,
     };
 
@@ -277,7 +305,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -289,7 +320,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -302,9 +336,12 @@ describe('ModalAddEditComponent', () => {
     
     // datos del formulario
     const data = {
-      "nombre": "Competencia 46",
-      "descrip": "competencia 46",
-      "tipo": "02",
+      "nombre": "Competencia 48",
+      "descrip": "competencia 48",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -334,7 +371,7 @@ describe('ModalAddEditComponent', () => {
     expect(app.form.value.id).toEqual(undefined)
     expect(app.form.value.nombre).toEqual(null)
     expect(app.form.value.descrip).toEqual(null)
-    expect(app.form.value.tipo).toEqual(null)
+    expect(app.form.value.tipo).toEqual({id: null})
     expect(app.competenciaSelect).toEqual(undefined);
   });
 
@@ -348,7 +385,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -360,7 +400,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -375,7 +418,10 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -409,7 +455,7 @@ describe('ModalAddEditComponent', () => {
     // Reset hecho por la funcion
     expect(app.form.value.nombre).toEqual("hola")
     expect(app.form.value.descrip).toEqual(data.descrip)
-    expect(app.form.value.tipo).toEqual(data.tipo)
+    expect(app.form.value.tipo).toEqual({id: '02'})
     expect(app.form.value.id).toEqual(undefined)
     expect(app.competenciaSelect).toEqual(undefined);
   });
@@ -424,7 +470,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -436,7 +485,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -451,7 +503,10 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "Competencia 46",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 46,
       "links": [
         {
@@ -493,7 +548,7 @@ describe('ModalAddEditComponent', () => {
     // Reset hecho por la funcion
     expect(app.form.value.nombre).toEqual("AJUSTE DE UTILIDADES")
     expect(app.form.value.descrip).toEqual(data.descrip)
-    expect(app.form.value.tipo).toEqual(data.tipo)
+    expect(app.form.value.tipo).toEqual({id: '02'})
     expect(app.form.value.id).toEqual("")
 
     app.campoInvalid('id');
@@ -510,7 +565,10 @@ describe('ModalAddEditComponent', () => {
       {  
         "nombre": "competencia modif",
         "descrip": "informaciones",
-        "tipo": "02",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 1,
         "links": [
           {
@@ -522,7 +580,10 @@ describe('ModalAddEditComponent', () => {
       {
         "nombre": "Competencia 46",
         "descrip": "competencia 46",
-        "tipo": "01",
+        "tipo": {
+          "nombre": "competencia modifs",
+          "id": "02"
+        },
         "id": 46,
         "links": [
           {
@@ -537,7 +598,10 @@ describe('ModalAddEditComponent', () => {
     const data = {
       "nombre": "competencia modif",
       "descrip": "competencia 46",
-      "tipo": "02",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
       "id": 76,
       "links": [
         {
@@ -551,7 +615,7 @@ describe('ModalAddEditComponent', () => {
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.controls['id'].disable();
     app.form.reset(data)
-    console.log(app.form.value);
+    app.tipoFormGroup
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
     app.nombreMsgError
@@ -579,7 +643,7 @@ describe('ModalAddEditComponent', () => {
     // Reset hecho por la funcion
     expect(app.form.value.nombre).toEqual("")
     expect(app.form.value.descrip).toEqual(data.descrip)
-    expect(app.form.value.tipo).toEqual(data.tipo)
+    expect(app.form.value.tipo).toEqual({id: '02'})
     expect(app.form.value.id).toEqual(undefined)
 
     app.campoInvalid('nombre');

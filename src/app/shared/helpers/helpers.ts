@@ -106,6 +106,8 @@ export class Helpers {
      * @param event: SortEventOrder
      */
     customSort(event: SortEventOrder) {
+      console.log(event);
+      
       event.data.sort((data1, data2) => {
         let value1 = data1.value[event.field];
         let value2 = data2.value[event.field];

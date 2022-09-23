@@ -52,16 +52,12 @@ export class NivelesComponent implements OnInit {
     else if ( this.niveles.length >= 1 && this.competenciaRow && (this.competenciaRow.id || this.competenciaRow.id == 0) ) {
       this.nivelesCompetencias = this.filterNiveles(this.competenciaRow.id);
     } 
-    // Vaciar niveles cuando la competencia se deselecciona
-    else if ( this.competenciaRow == null ) {
-      this.nivelesCompetencias = []; 
-    }
   }
 
   /**
    * Obtener niveles relacionadas con una competencia
    */
-  loadNiveles() {
+  loadNiveles() {    
     if ( !this.competenciaRow ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'No hay una competencia seleccionada.', life: 3000});
       return;

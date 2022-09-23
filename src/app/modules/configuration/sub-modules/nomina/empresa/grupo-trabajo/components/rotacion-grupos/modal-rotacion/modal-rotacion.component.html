@@ -1,0 +1,36 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="dataTableRotacionesModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '80vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h6>{{title}}</h6>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <!-- [gruposTrabajoSelectRow]="gruposTrabajoSelectRow" -->
+            <app-data-table-rotacion  [gruposTrabajoSelectRow] = "gruposTrabajoSelectRow"
+                                      [nomina] = "nomina"
+                                      [rotacionesGrupoTrabajo]="rotacionesGrupoTrabajo"
+                                      (onLoadData)="loadRotacion($event)"></app-data-table-rotacion>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cerrar"  
+                        class="p-button-secondary my-1" 
+                        (click)="closeModal()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

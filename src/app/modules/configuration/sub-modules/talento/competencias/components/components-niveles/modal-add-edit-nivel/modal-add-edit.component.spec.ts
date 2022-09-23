@@ -90,17 +90,21 @@ describe('ModalAddEditComponent', () => {
       "id": 4226
     }
 
+    
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     
     app.isEdit = false
-
-    app.competenciaSelect = {
-      "nombre": "competencia modif",
-      "descrip": "informaciones",
-      "tipo": "02",
-      "id": 1,
-    };
+    
+    app.competenciaRow = {
+      "nombre": "Competencia 46",
+      "descrip": "competencia 46",
+      "tipo": {
+        "nombre": "competencia modifs",
+        "id": "02"
+      },
+      "id": 21
+    }
 
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();

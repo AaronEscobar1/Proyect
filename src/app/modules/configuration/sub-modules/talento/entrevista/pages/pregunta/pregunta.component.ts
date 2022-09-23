@@ -56,10 +56,6 @@ export class PreguntaComponent implements OnInit {
     else if ( this.preguntas.length >= 1 && this.entrevistaRow && (this.entrevistaRow.id || this.entrevistaRow.id == 0) ) {
       this.preguntasEntrevistas = this.filterPreguntas(this.entrevistaRow.id);
     } 
-    // Vaciar preguntas cuando la entrevista se deselecciona
-    else if ( this.entrevistaRow == null ) {
-      this.preguntasEntrevistas = []; 
-    }
   }
 
   /**

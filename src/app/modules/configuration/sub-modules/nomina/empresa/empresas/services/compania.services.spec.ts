@@ -5,11 +5,11 @@ import { of, throwError } from 'rxjs';
 
 // Servicios y componentes requeridos
 import { CompaniaService } from './compania.service';
-import { Company } from '../interfaces/compania.interfaces';
+import { Company } from '../../shared-empresa/interfaces/empresa.interfaces';
 
 describe('NivelesEducativosServices', () => {
 
-  let clasificacionesoficiales   : CompaniaService;
+  let sindicatosService   : CompaniaService;
   let httpClientSpy : { post: jasmine.Spy };
   let getHttpClientSpy : { get: jasmine.Spy };
   let putHttpClientSpy : { put: jasmine.Spy };
@@ -24,7 +24,7 @@ describe('NivelesEducativosServices', () => {
       providers: [ CompaniaService ]
     });
 
-    clasificacionesoficiales = TestBed.inject(CompaniaService);
+    sindicatosService = TestBed.inject(CompaniaService);
 
     // Peticiones mock
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
@@ -35,51 +35,8 @@ describe('NivelesEducativosServices', () => {
   });
 
   it('Debe crearse el servicio correctamente', () => {
-    expect(clasificacionesoficiales).toBeTruthy();
+    expect(CompaniaService).toBeTruthy();
   });
-
-  it('Deberia retornar arreglo de Niveles Educativos', waitForAsync ((done: DoneFn) => {
-    
-    const mockResult: any = [
-      {
-          "desniv": "Basica",
-          "codley": null,
-          "codniv": "6"
-      },
-      {
-          "desniv": "Universitario",
-          "codley": null,
-          "codniv": "4"
-      },
-      {
-          "desniv": "Bachiller",
-          "codley": null,
-          "codniv": "5"
-      },
-      {
-          "desniv": "Primaria",
-          "codley": null,
-          "codniv": "1"
-      },
-      {
-          "desniv": "Secundaria",
-          "codley": "SES",
-          "codniv": "2"
-      }
-    ]
-
-    expect(mockResult.length).toBeGreaterThan(1)
-
-    getHttpClientSpy.get.and.returnValue(of(mockResult));
-
-    clasificacionesoficiales.getAll()
-      .subscribe((resp) => {
-        console.log(resp);
-        
-        expect(resp).toEqual(mockResult);
-        done();
-      });
-  }));
 
   it('Deberia retornar Nivel Educativo (Id Existente)', waitForAsync( (done: DoneFn) => {
     
@@ -93,7 +50,7 @@ describe('NivelesEducativosServices', () => {
 
     getHttpClientSpy.get.and.returnValue(of(mockResult));
 
-    clasificacionesoficiales.getById(id)
+    sindicatosService.getById(id)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -113,7 +70,7 @@ describe('NivelesEducativosServices', () => {
 
     getHttpClientSpy.get.and.returnValue(throwError(error404));
 
-    clasificacionesoficiales.getById(id)
+    sindicatosService.getById(id)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -156,7 +113,6 @@ describe('NivelesEducativosServices', () => {
         }
       ]
     }
-
     const mockResult: any = {
       response: true,
     };
@@ -165,7 +121,7 @@ describe('NivelesEducativosServices', () => {
 
     httpClientSpy.post.and.returnValue(of(mockResult));
 
-    clasificacionesoficiales.create(query)
+    sindicatosService.create(query)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -216,7 +172,7 @@ describe('NivelesEducativosServices', () => {
 
     httpClientSpy.post.and.returnValue(throwError(mockResult));
 
-    clasificacionesoficiales.create(query)
+    sindicatosService.create(query)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -268,7 +224,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    clasificacionesoficiales.update(query)
+    sindicatosService.update(query)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -319,7 +275,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(throwError(mockResult));
 
-    clasificacionesoficiales.update(query)
+    sindicatosService.update(query)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -371,7 +327,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    clasificacionesoficiales.delete(query.id)
+    sindicatosService.delete(query.id)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -422,7 +378,109 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    clasificacionesoficiales.delete(query.id)
+    sindicatosService.delete(query.id)
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Obtener todos los paises (Caso exitoso)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: true,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getAllCountry()
+      .subscribe((resp) => {
+        expect(resp).toEqual(mockResult);
+        done();
+      });
+  }));
+
+  it('Eliminar Forma de pago (Caso incorrecto)', waitForAsync ((done: DoneFn) => {
+    
+    const token = 'xxxxx'
+    const query: Company = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "2",
+      "capitalPag": 3,
+      "capitalSub": 3,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "02010201",
+      "paginaWeb": "www.algo.com",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "www.gold",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+        {
+          "rel": "datosadicionales",
+          "href": "/empresas/93/datosadicionales"
+        }
+      ]
+    }
+
+    const mockResult: any = {
+      response: false,
+    };
+    
+    expect(token).toContain('xxxxx')
+
+    putHttpClientSpy.put.and.returnValue(of(mockResult));
+
+    sindicatosService.getEntitiesByCountry("VEN")
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();

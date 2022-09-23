@@ -71,9 +71,7 @@ export class ParentescoComponent implements OnInit {
 
   refresh(): void {
     this.parentescos = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   /**

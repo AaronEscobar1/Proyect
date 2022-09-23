@@ -134,7 +134,7 @@ export class ModalAddEditComponent implements OnInit {
    * Realiza petición al backend para buscar los consecutivos relacionadas con el grupo rotación
    * @param event: ObjectEventChange
    */
-  rotacionGrupoSelectChange(event: ObjectEventChange): void {
+  rotacionGrupoSelectChange(event: ObjectEventChange | any): void {
     const idGrupo = event.value;
     if (idGrupo == null) { return; }
     // Limpiamos el campo consecutivo
