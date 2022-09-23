@@ -6,20 +6,7 @@
     <div class="col-12">
             
         <div class="grid">
-
-            <div class="col-12 md:col-6">
-
-                <!-- Componente de botones -->
-                <app-buttons-three-table (onRefresh)="refresh()"
-                                         (onOpenModalPrint)="openModalPrint()"
-                                         (onOpenModalCreate)="openModalCreate()"
-                                         (onEditRow)="editRow($event)"
-                                         (onDeleteRow)="deleteRow($event)">
-                </app-buttons-three-table>
-
-            </div>
-
-            <div class="col-12 md:col-6">
+            <div class="col-12">
 
                 <!-- Inputs de nombre de empresa -->
                 <div class="formgrid grid">
@@ -27,6 +14,7 @@
                     <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
                         <label for="codemp">Empresa:</label>
                     </div>
+
                     <div class="field col-3 md:col-3 lg:col-3">
                         <input  type="text"
                                 id="codemp" 
@@ -35,8 +23,8 @@
                                 [value]="empresaRow ? empresaRow.id : '' "
                                 disabled/>
                     </div>
-                
-                    <div class="field col-5 md:col-6 lg:col-7">
+
+                    <div class="field col-5 md:col-4 lg:col-5">
                         <input  type="text"
                                 id="desemp" 
                                 class="w-full"
@@ -48,11 +36,27 @@
                 </div>
 
             </div>
-
         </div>
 
-        <!-- Componente table -->
-        <app-data-table [valoresGradosEmpresa]="valoresGrados"></app-data-table>
+        <div class="grid">
+            <div class="col-12 md:col-offset-1 md:col-10">
+
+                <p-panel header="Tabuladores / Grados">
+                    
+                    <!-- Componente de botones -->
+                    <app-buttons-three-table (onRefresh)="refresh()"
+                                             (onOpenModalPrint)="openModalPrint()"
+                                             (onOpenModalCreate)="openModalCreate()"
+                                             (onEditRow)="editRow($event)"
+                                             (onDeleteRow)="deleteRow($event)">
+                    </app-buttons-three-table>
+                    <!-- Componente table grados-->
+                    <app-data-table [valoresGradosEmpresa]="valoresGrados"></app-data-table>
+                
+                </p-panel>
+                
+            </div>
+        </div>
 
     </div>
 </div>
@@ -66,8 +70,8 @@
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
     [empresaRow]="empresaRow"
-    [distribucionesNomina]="valoresGrados"
-    [distribucionNominaSelect]="valoresGradosSelect"
+    [valoresGrados]="valoresGrados"
+    [valoresGradosSelect]="valoresGradosSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()"

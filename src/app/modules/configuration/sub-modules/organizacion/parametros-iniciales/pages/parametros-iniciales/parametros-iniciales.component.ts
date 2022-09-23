@@ -9,12 +9,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-parametros-iniciales',
   templateUrl: './parametros-iniciales.component.html',
-  // Estilo para que el dropdown ocupe el 100%
-  styles: [` 
-    :host ::ng-deep .p-dropdown { 
-      width: 100%; 
-    }
-  `],
   providers: [ MessageService, ConfirmationService ]
 })
 export class ParametrosInicialesComponent implements OnInit {

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { Grados, ValoresGrados } from '../../interfaces/valores-tabulador.interfaces';
+import { Grados } from '../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -10,9 +10,8 @@ import { Grados, ValoresGrados } from '../../interfaces/valores-tabulador.interf
 })
 export class DataTableComponent implements OnInit {
 
+  // Objeto para mostrar en la tabla
   @Input() valoresGradosEmpresa!: Grados[];
-   
-  @Output() onLoadAdditionalData = new EventEmitter();
 
   // Table
   columns: TableHead[] = [];
@@ -21,8 +20,8 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codsuc', header: 'Código'      },
-      { field: 'dessuc', header: 'Descripción' },
+      { field: 'eoGradoTbId.id', header: 'Código'      },
+      { field: 'descrip',        header: 'Descripción' }
     ];
   }
 

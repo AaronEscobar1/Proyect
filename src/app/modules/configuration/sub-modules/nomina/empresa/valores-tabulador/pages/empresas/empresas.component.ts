@@ -5,10 +5,13 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { Subscription } from 'rxjs';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { dropdownType } from '../../../../../../../../shared/interfaces/typesFiles.interfaces';
+import { sueldoList } from '../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-empresas',
   templateUrl: './empresas.component.html',
+  styleUrls: ['empresas.component.scss'],
   providers: [ MessageService, ConfirmationService ]
 })
 export class EmpresasComponent implements OnInit, OnDestroy {
@@ -18,6 +21,12 @@ export class EmpresasComponent implements OnInit, OnDestroy {
 
   // Variable para seleccionar el registro
   empresaRow!: Company;
+
+  // Objeto para mostrar en la lista desplegable
+  sueldos: dropdownType[] = [];
+
+  // Variable para seleccionar el sueldo
+  sueldoSelect: string = 'Mensual';
 
   // Banderas
   isEdit: boolean = false;
@@ -36,6 +45,7 @@ export class EmpresasComponent implements OnInit, OnDestroy {
               private selectRowServices: SelectRowService) { }
 
   ngOnInit(): void {
+    this.sueldos = sueldoList;
     this.loadData();
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable
     this.subscriber = this.selectRowServices.selectRow$.subscribe( (row: Company) => this.empresaRow = row );

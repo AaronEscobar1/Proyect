@@ -3,10 +3,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ValoresTabuladorService } from '../../services/valores-tabulador.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { Grados, ValoresGrados } from '../../interfaces/valores-tabulador.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { Grados } from '../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-valores-tabuladores',
@@ -18,6 +18,9 @@ export class ValoresTabuladorComponent implements OnInit {
   // Objeto para obtener el id de la empresa
   @Input() empresaRow!: Company;
 
+  // Variable para seleccionar el sueldo
+  @Input() sueldoSelect!: string;
+  
   // Objeto de distribuciones de nominas por empresa
   valoresGrados: Grados[] = [];
 
@@ -28,7 +31,7 @@ export class ValoresTabuladorComponent implements OnInit {
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar Valores Tabulador';
+  titleForm  : string = 'Agregar grado por tabulador';
   createModal: boolean = false;
   printModal : boolean = false;
 
@@ -61,7 +64,6 @@ export class ValoresTabuladorComponent implements OnInit {
     this.valoresTabuladoresService.getAll(idEmpresa)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.valoresGrados = res;          
           this.spinner.hide();
         },
@@ -91,7 +93,7 @@ export class ValoresTabuladorComponent implements OnInit {
    * @returns void
    */
   openModalCreate(): void {
-    this.titleForm = 'Agregar Valores de Grados';
+    this.titleForm = 'Agregar grado por tabulador';
     this.createModal = true;
   }
 
@@ -108,7 +110,7 @@ export class ValoresTabuladorComponent implements OnInit {
    */
   editRow(valoresGrados: Grados): void {
     this.isEdit = true;
-    this.titleForm = 'Editar Valores de Grados';
+    this.titleForm = 'Editar grado por tabulador';
     this.valoresGradosSelect = valoresGrados;
     this.createModal = true;
   }
@@ -118,9 +120,9 @@ export class ValoresTabuladorComponent implements OnInit {
    * @param valoresGrados row de la tabla
    * @returns void
    */
-  deleteRow(valoresGrados: Grados): void {
+  deleteRow(valorGrado: Grados): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar este valor de tabulador <b>${valoresGrados.eoGradoTbId.id}</b>?`,
+      message: `¿Desea eliminar este grado de tabulador <b>${valorGrado.descrip}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -128,7 +130,7 @@ export class ValoresTabuladorComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.valoresTabuladoresService.delete(valoresGrados.eoGradoTbId.id, valoresGrados.eoGradoTbId.idEmpresa)
+        this.valoresTabuladoresService.delete(valorGrado.eoGradoTbId.id, valorGrado.eoGradoTbId.idEmpresa)
           .subscribe({
             next: (resp) => {
               this.spinner.hide();

@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors }
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { Grados, ValoresGrados } from '../../interfaces/valores-tabulador.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { ValoresTabuladorService } from '../../services/valores-tabulador.service';
+import { Grados, GradoCreate } from '../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -17,10 +17,10 @@ export class ModalAddEditComponent implements OnInit {
   @Input() empresaRow!: Company;
 
   // Objeto para validaciones de valores duplicados 
-  @Input() distribucionesNomina: Grados[] = [];
+  @Input() valoresGrados: Grados[] = [];
 
   // Variable de seleccion para editar
-  @Input() distribucionNominaSelect!: Grados | undefined;
+  @Input() valoresGradosSelect!: Grados | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -42,8 +42,10 @@ export class ModalAddEditComponent implements OnInit {
               private messageService: MessageService,
               private fb: FormBuilder) {
     this.form = this.fb.group({
-      codOficial: [  , [ Validators.required, Validators.maxLength(5), this.validatedId.bind(this) ]],
-      descrip: [  , [ Validators.required, Validators.maxLength(30) ]],
+      idEmpresa:  [ ],
+      id:         [  , [ Validators.required, Validators.maxLength(6), this.validatedId.bind(this) ]],
+      descrip:    [  , [ Validators.required, Validators.maxLength(40) ]],
+      codOficial: [  , [ Validators.maxLength(6), ]]
     });
   }
 
@@ -53,12 +55,18 @@ export class ModalAddEditComponent implements OnInit {
   ngOnChanges() {
     if( !this.isEdit ) {
       this.form.reset();
-      this.form.controls['codOficial'].enable();
+      this.form.controls['id'].enable();
       return;
     }
-    this.form.controls['codOficial'].disable();
+    // Deshabilitamos los campos
+    this.form.controls['id'].disable();
+    // Colocar el id del grado en el atributo id
+    if (this.valoresGradosSelect && this.valoresGradosSelect.eoGradoTbId ) {
+      this.valoresGradosSelect.id        = this.valoresGradosSelect.eoGradoTbId.id;
+      this.valoresGradosSelect.idEmpresa = this.valoresGradosSelect.eoGradoTbId.idEmpresa;
+    }
     // Seteamos los valores del row seleccionado al formulario
-    this.form.reset(this.distribucionNominaSelect);
+    this.form.reset(this.valoresGradosSelect);
   }
 
   /**
@@ -67,19 +75,18 @@ export class ModalAddEditComponent implements OnInit {
    */
   save(): void {
     if (this.form.invalid) {
-      console.log("no es valido");
-      
       this.form.markAllAsTouched();
       return;
     }
     // Obtener formulario
-    let data = this.form.getRawValue();
+    let data: GradoCreate = this.form.getRawValue();
     
     this.spinner.show();
     
+    // Editar
     if (this.isEdit) {
-      // Editar
-      this.valoresTabuladorService.update(this.distribucionNominaSelect!.eoGradoTbId.id, this.empresaRow.id, data)
+      const { id, idEmpresa, ...dataUpdate } = data;
+      this.valoresTabuladorService.update(data, dataUpdate)
       .subscribe({
         next: (resp) => {
           this.closeModal();
@@ -90,16 +97,14 @@ export class ModalAddEditComponent implements OnInit {
         },
         error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar la distribución nómina.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el grado tabulador.', life: 3000});
         }
       });
       return;
     }
     
+    data.idEmpresa = this.empresaRow.id;
     // Crear
-    
-    data.idEmpresa = this.empresaRow.id
-    data.id = Math.floor((Math.random() * (99 - 0 + 1)) + 0)
     this.valoresTabuladorService.create(data)
       .subscribe({
         next: (resp) => {
@@ -111,7 +116,7 @@ export class ModalAddEditComponent implements OnInit {
         },
         error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear la distribución nómina.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el grado tabulador.', life: 3000});
         }
       });
   }
@@ -130,26 +135,26 @@ export class ModalAddEditComponent implements OnInit {
              && this.form.invalid;
   }
   
-  // Mensajes de errores id
-  get codsucMsgError(): string {
-    const errors = this.form.get('codsuc')?.errors;
+   // Mensajes de errores id
+   get idMsgError(): string {
+    const errors = this.form.get('id')?.errors;
     if ( errors?.required ) {
       return 'El código es obligatorio.';
     } else if ( errors?.maxlength ) {
-      return 'El código es de longitud máxima de 5 dígitos y formato alfanumérico.';
+      return 'El código es de longitud máxima de 6 dígitos, formato alfanumérico.';
     } else if ( errors?.duplicated ) {
       return 'El código ya existe.';
     }
     return '';
   }
-
-  // Mensajes de errores nombre
+  
+  // Mensajes de errores descrip
   get dessucMsgError(): string {
-    const errors = this.form.get('dessuc')?.errors;
+    const errors = this.form.get('descrip')?.errors;
     if ( errors?.required ) {
       return 'La descripción es obligatoria.';
     } else if ( errors?.maxlength ) {
-      return 'La descripción es de longitud máxima de 30 dígitos y formato alfanumérico.';
+      return 'La descripción es de longitud máxima de 40 dígitos, formato alfanumérico.';
     }
     return '';
   }
@@ -157,9 +162,9 @@ export class ModalAddEditComponent implements OnInit {
   // Validar si esta duplicado el id 
   validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-    return this.distribucionesNomina.findIndex(val => val.codOficial === control.value) > -1 ?
-                                              {'duplicated': true} :
-                                              null;
+    return this.valoresGrados.findIndex(val => val.eoGradoTbId.id === control.value) > -1 ?
+                                            {'duplicated': true} :
+                                            null;
   }
 
 }

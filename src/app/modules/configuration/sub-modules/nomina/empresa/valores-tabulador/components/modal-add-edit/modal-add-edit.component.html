@@ -7,6 +7,7 @@
           <ng-template pTemplate="content">
               
             <div class="flex justify-content-between align-items-center my-4">
+                
                 <h5>{{titleForm}}</h5>
                 <div class="p-dialog-header-icons">
                     <button pButton pRipple type="button" icon="pi pi-times"
@@ -18,56 +19,46 @@
                 
                 <form [formGroup]="form" autocomplete="off">
                     
-                <div class="formgrid grid">
+                    <div class="field">
+                        <label for="id">Código: *</label>
+                        <input  type="text" 
+                                id="id"
+                                pInputText 
+                                formControlName="id"
+                                placeholder="Ingrese el código"/>
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('id')">
+                            {{ idMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field">
+                        <label for="descrip">Descripción: *</label>
+                        <input  type="text" 
+                                id="descrip"
+                                pInputText 
+                                formControlName="descrip"
+                                placeholder="Ingrese la descripción">
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('descrip')">
+                            {{ dessucMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field">
+                        <label for="codOficial">Código oficial: </label>
+                        <input  type="text" 
+                                id="codOficial"
+                                pInputText 
+                                formControlName="codOficial"
+                                placeholder="Ingrese el código oficial"/>
+                        <span class="form-text text-danger"
+                            *ngIf="campoInvalid('codOficial')">
+                            La código oficial es de longitud máxima de 6 dígitos, formato alfanumérico.
+                        </span>
+                    </div>
                     
-                    <div class="field col-3 md:col-2 md:col-offset-1 text-right mt-2">
-                        <label for="codemp">Compañia:</label>
-                    </div>
-                    <div class="field col-9 md:col-3">
-                        <input  type="text"
-                                id="codemp" 
-                                pInputText
-                                [value]="empresaRow ? empresaRow.id : ''"
-                                disabled/>
-                    </div>
-
-                    <div class="field col-12 md:col-5">
-                        <input  type="text"
-                                id="desemp" 
-                                pInputText
-                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : ''"
-                                disabled/>
-                    </div>
-
-                </div>
-
-                <div class="field">
-                    <label for="codOficial">Código: *</label>
-                    <input  type="text" 
-                            id="codOficial"
-                            pInputText 
-                            formControlName="codOficial"
-                            placeholder="Ingrese el código"/>
-                    <span class="form-text text-danger"
-                          *ngIf="campoInvalid('codOficial')">
-                        {{ codsucMsgError }}
-                    </span>
-                </div>
-
-                <div class="field">
-                    <label for="descrip">Descripción *</label>
-                    <input  type="text" 
-                            id="descrip"
-                            pInputText 
-                            formControlName="descrip"
-                            placeholder="Ingrese la descripción">
-                    <span class="form-text text-danger"
-                          *ngIf="campoInvalid('descrip')">
-                        {{ dessucMsgError }}
-                    </span>
-                </div>
-
-            </form>
+                </form>
 
         </ng-template>
         
