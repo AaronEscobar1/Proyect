@@ -9,13 +9,13 @@
 
             <div class="col-12">
 
-                <!-- Inputs de nombre de empresa y nomina  -->
+                <!-- Inputs de nombre de empresa  -->
                 <div class="formgrid grid">
                                 
-                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
-                        <label for="codemp">Nómina:</label>
+                    <div class="field col-3 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
                     </div>
-                    <div class="field col-2 md:col-2 lg:col-2">
+                    <div class="field col-2">
                         <input  type="text"
                                 id="codemp" 
                                 class="w-full"
@@ -23,17 +23,8 @@
                                 [value]="empresaRow ? empresaRow.id : '' "
                                 disabled/>
                     </div>
-                    
-                    <div class="field col-2 md:col-2 lg:col-2">
-                        <input  type="text"
-                                id="codemp" 
-                                class="w-full"
-                                pInputText
-                                [value]="nominaRow ? nominaRow.tipnom : '' "
-                                disabled/>
-                    </div>
 
-                    <div class="field col-4 md:col-3 lg:col-4">
+                    <div class="field col-5">
                         <input  type="text"
                                 id="desemp" 
                                 class="w-full"
@@ -48,28 +39,42 @@
         </div>
 
         <div class="grid">
-            <div class="col-12 md:col-offset-1 md:col-10">
+            <div class="col-12 md:col-6">
 
-                <p-panel header="Tipos de moneda">
+                <p-panel header="Tipo de institución">
                     
-                    <!-- Componente table tipos de monedas -->
-                    <app-data-table-monedas [tiposMonedas]="tiposMonedas"
-                                            (onButtonDisabled)="disableButtons($event)"
-                                            (onUnSelectRow)="resetTablaDenominacion()">
-                    </app-data-table-monedas>
+                    <!-- Componente table tipos de instituciones -->
+                    <app-data-table-tipo-institucion [tiposInstituciones]="tiposInstituciones"
+                                                     (onUnSelectRow)="resetTablaInstitucionEquivalencia()">
+                    </app-data-table-tipo-institucion>
 
                 </p-panel>
 
             </div>
+
+            <div class="col-12 md:col-6">
+
+                <p-panel header="Institución">
+
+                    <!-- Componente data-table institución -->
+                    <app-data-table-instituciones [instituciones]="instituciones"
+                                                  (onButtonDisabled)="disableButtons($event)"
+                                                  (onUnSelectRow)="resetTablaEquivalencia()">
+                    </app-data-table-instituciones>
+
+                </p-panel>
+
+            </div>
+
         </div>
 
         <div class="grid mt-3">
 
             <div class="col-12">
 
-                <p-panel header="Denominación o familia de monedas">
+                <p-panel header="Equivalencia tipo de cuenta">
 
-                    <!-- Componente de botones  -->
+                    <!-- Componentes de botones -->
                     <app-buttons-three-table [buttonDisabled]="buttonDisabled"
                                              (onRefresh)="refresh()"
                                              (onOpenModalPrint)="openModalPrint()"
@@ -77,9 +82,9 @@
                                              (onEditRow)="editRow($event)"
                                              (onDeleteRow)="deleteRow($event)">
                     </app-buttons-three-table>
-
-                    <!-- Componente denominacion o familia de monedas -->
-                    <app-data-table-denominacion [denominacionesMonedas]="denominacionesMonedas"></app-data-table-denominacion>
+               
+                    <!-- Componente equivalencias de cuentas -->
+                    <app-data-table-equivalencias [equivalenciasCuentas]="equivalenciasCuentas"></app-data-table-equivalencias>
 
                 </p-panel>
 
@@ -87,9 +92,9 @@
 
         </div>
 
+
     </div>
 </div>
-
 
 <!-- Modal Imprimir -->
 <app-modal-print
@@ -99,11 +104,9 @@
 
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
-    [empresaRow]="empresaRow"
-    [nominaRow]="nominaRow"
-    [tipoMonedaRow]="tipoMonedaRow"
-    [denominacionesMonedas]="denominacionesMonedas"
-    [denominacionMonedaSelect]="denominacionMonedaSelect"
+    [institucionSelect]="institucionSelect"
+    [equivalenciasCuentas]="equivalenciasCuentas"
+    [equivalenciaCuentaSelect]="equivalenciaCuentaSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()"
