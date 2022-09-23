@@ -64,22 +64,28 @@
         </div>
 
         <div class="grid mt-3">
+
             <div class="col-12">
 
-                <!-- Componente de botones  -->
-                <app-buttons-three-table [buttonDisabled]="buttonDisabled"
-                                         (onRefresh)="refresh()"
-                                         (onOpenModalPrint)="openModalPrint()"
-                                         (onOpenModalCreate)="openModalCreate()"
-                                         (onEditRow)="editRow($event)"
-                                         (onDeleteRow)="deleteRow($event)">
-                </app-buttons-three-table>
-    
-            </div>
-        </div>
+                <p-panel header="Denominación o familia de monedas">
 
-        <!-- Componente denominacion o familia de monedas -->
-        <app-data-table-denominacion [denominacionesMonedas]="denominacionesMonedas"></app-data-table-denominacion>
+                    <!-- Componente de botones  -->
+                    <app-buttons-three-table [buttonDisabled]="buttonDisabled"
+                                             (onRefresh)="refresh()"
+                                             (onOpenModalPrint)="openModalPrint()"
+                                             (onOpenModalCreate)="openModalCreate()"
+                                             (onEditRow)="editRow($event)"
+                                             (onDeleteRow)="deleteRow($event)">
+                    </app-buttons-three-table>
+
+                    <!-- Componente denominacion o familia de monedas -->
+                    <app-data-table-denominacion [denominacionesMonedas]="denominacionesMonedas"></app-data-table-denominacion>
+
+                </p-panel>
+
+            </div>
+
+        </div>
 
     </div>
 </div>
