@@ -1,0 +1,115 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="grid">
+
+            <div class="col-12">
+
+                <!-- Inputs de nombre de empresa  -->
+                <div class="formgrid grid">
+                                
+                    <div class="field col-3 text-right mt-2">
+                        <label for="codemp">Empresa:</label>
+                    </div>
+                    <div class="field col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-5">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="grid">
+            <div class="col-12 md:col-6">
+
+                <p-panel header="Tipo de institución">
+                    
+                    <!-- Componente table tipos de instituciones -->
+                    <app-data-table-tipo-institucion [tiposInstituciones]="tiposInstituciones"
+                                                     (onUnSelectRow)="resetTablaInstitucionEquivalencia()">
+                    </app-data-table-tipo-institucion>
+
+                </p-panel>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <p-panel header="Institución">
+
+                    <!-- Componente data-table institución -->
+                    <app-data-table-instituciones [instituciones]="instituciones"
+                                                  (onButtonDisabled)="disableButtons($event)"
+                                                  (onUnSelectRow)="resetTablaEquivalencia()">
+                    </app-data-table-instituciones>
+
+                </p-panel>
+
+            </div>
+
+        </div>
+
+        <div class="grid mt-3">
+
+            <div class="col-12">
+
+                <p-panel header="Equivalencia tipo de cuenta">
+
+                    <!-- Componentes de botones -->
+                    <app-buttons-three-table [buttonDisabled]="buttonDisabled"
+                                             (onRefresh)="refresh()"
+                                             (onOpenModalPrint)="openModalPrint()"
+                                             (onOpenModalCreate)="openModalCreate()"
+                                             (onEditRow)="editRow($event)"
+                                             (onDeleteRow)="deleteRow($event)">
+                    </app-buttons-three-table>
+               
+                    <!-- Componente equivalencias de cuentas -->
+                    <app-data-table-equivalencias [equivalenciasCuentas]="equivalenciasCuentas"></app-data-table-equivalencias>
+
+                </p-panel>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Modal Imprimir -->
+<app-modal-print
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit
+    [institucionSelect]="institucionSelect"
+    [equivalenciasCuentas]="equivalenciasCuentas"
+    [equivalenciaCuentaSelect]="equivalenciaCuentaSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit>

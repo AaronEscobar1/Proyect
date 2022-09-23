@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'instituciones',
     // LazyLoad
     loadChildren: () => import('./instituciones/instituciones.module').then( m => m.InstitucionesModule),
+  },
+  {
+    path: 'equivalencias',
+    // LazyLoad
+    loadChildren: () => import('./equivalencias/equivalencias.module').then( m => m.EquivalenciasModule),
   }
 ];
 

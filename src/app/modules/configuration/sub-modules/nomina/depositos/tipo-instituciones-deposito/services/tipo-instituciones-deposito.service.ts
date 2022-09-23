@@ -19,6 +19,11 @@ export class TipoInstitucionesDepositoService {
     return this.http.get(this.helpers.getBasicEndPoint(`${this.baseUrlModule}/${idEmpresa}`));
   }
 
+  // Endpoints para obtener las instituciones por tipo de institucion
+  getAllInstitucionesByTipoInstitucion(idEmpresa: string, idTipoInstitucion: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/institucionesdepositos/empresas/${idEmpresa}/tiposinstitucionesdepositos/${idTipoInstitucion}`));
+  }
+
   create(tipoInstitucion: TipoInstitucion): Observable<any> {
     return this.http.post(this.helpers.getBasicEndPoint(`${this.baseUrlModule}`), tipoInstitucion);
   }
