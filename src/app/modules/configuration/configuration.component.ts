@@ -101,6 +101,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Instituciones',
                   routerLink: ['/main/config/deposito/instituciones']
+                },
+                {
+                  label: 'Equivalencias',
+                  routerLink: ['/main/config/deposito/equivalencias']
                 }
               ]
             },
