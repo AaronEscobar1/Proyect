@@ -38,23 +38,46 @@
             </div>
         </div>
 
+        <!-- Componente grados tabuladores -->
         <div class="grid">
             <div class="col-12 md:col-offset-1 md:col-10">
 
                 <p-panel header="Tabuladores / Grados">
                     
                     <!-- Componente de botones -->
-                    <app-buttons-three-table (onRefresh)="refresh()"
-                                             (onOpenModalPrint)="openModalPrint()"
-                                             (onOpenModalCreate)="openModalCreate()"
-                                             (onEditRow)="editRow($event)"
-                                             (onDeleteRow)="deleteRow($event)">
-                    </app-buttons-three-table>
+                    <app-buttons-grados (onRefresh)="refresh()"
+                                        (onOpenModalPrint)="openModalPrint()"
+                                        (onOpenModalCreate)="openModalCreate()"
+                                        (onEditRow)="editRow($event)"
+                                        (onDeleteRow)="deleteRow($event)">
+                    </app-buttons-grados>
+
                     <!-- Componente table grados-->
-                    <app-data-table [gradosTabulador]="gradosTabulador"></app-data-table>
+                    <app-data-table [gradosTabulador]="gradosTabulador"
+                                    (onButtonDisabled)="disableButtons($event)"
+                                    (onUnSelectRow)="resetTablaValoresGrados()">
+                    </app-data-table>
                 
                 </p-panel>
                 
+            </div>
+        </div>
+
+        <!-- Componente valores grados tabuladores -->
+        <div class="grid mt-3">
+            <div class="col-12">
+
+                <p-panel header="Valores de grados">
+
+                    <app-valores-grados-tabulador [empresaRow]="empresaRow"
+                                                  [gradoTabuladorSelect]="gradoTabuladorSelect"
+                                                  [buttonDisabled]="buttonDisabled"                                              
+                                                  [valoresGrados]="valoresGrados"
+                                                  [sueldoSelect]="sueldoSelect"
+                                                  (onRefreshData)="loadValoresGrados()">
+                    </app-valores-grados-tabulador>
+
+                </p-panel>
             </div>
         </div>
 

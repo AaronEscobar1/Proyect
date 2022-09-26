@@ -63,13 +63,17 @@
         <div class="grid mt-3">
             <div class="col-12">
 
-                <!-- Componente tipo de información -->
-                <app-tipo-informacion [buttonDisabled]="buttonDisabled"
-                                      [empresaRow]="empresaRow"
-                                      [claseInformacionSelect]="claseInformacionSelect"
-                                      [tiposInformaciones]="tiposInformaciones"
-                                      (onRefreshData)="loadTiposInformacion()">
-                </app-tipo-informacion>
+                <p-panel header="Tipos de información">
+
+                    <!-- Componente tipo de información -->
+                    <app-tipo-informacion [buttonDisabled]="buttonDisabled"
+                                          [empresaRow]="empresaRow"
+                                          [claseInformacionSelect]="claseInformacionSelect"
+                                          [tiposInformaciones]="tiposInformaciones"
+                                          (onRefreshData)="loadTiposInformacion()">
+                    </app-tipo-informacion>
+
+                </p-panel>
                 
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
@@ -7,7 +7,10 @@ import { GradoCreate, GradoCreateUpdate } from '../interfaces/grados-tabuladores
 @Injectable({
   providedIn: 'root'
 })
-export class ValoresTabuladorService {
+export class GradosTabuladorService {
+
+  // Variable para obtener el row desde la tabla
+  public selectRowGrado$ = new EventEmitter<any | null>();
 
   private url: string = '/configuraciones/nominas';
 

@@ -1,0 +1,36 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<!-- Componente de botones-->
+<app-buttons-three-table [buttonDisabled]="buttonDisabled"
+                         (onRefresh)="refresh()"
+                         (onOpenModalPrint)="openModalPrint()"
+                         (onOpenModalCreate)="openModalCreate()"
+                         (onEditRow)="editRow($event)"
+                         (onDeleteRow)="deleteRow($event)" >
+</app-buttons-three-table>
+
+<!-- Componente valores grados -->
+<app-data-table-valores [valoresGrados]="valoresGrados"
+                        [sueldoSelect]="sueldoSelect">
+</app-data-table-valores>
+
+<!-- Modal Imprimir -->
+<app-modal-print-valores
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print-valores>
+
+<!-- Modal Agregar Editar-->
+<!-- <app-modal-add-edit-valores 
+    [empresaRow]="empresaRow"
+    [claseInformacionSelect]="claseInformacionSelect"
+    [tiposInformaciones]="tiposInformaciones"
+    [tipoInformacionSelect]="tipoInformacionSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()" 
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit-valores> -->

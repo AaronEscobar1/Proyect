@@ -1,6 +1,6 @@
 import { EoGradoTBID } from './grados-tabuladores.interfaces';
 
-export interface ValoresGrados {
+export interface ValorGrado {
     // Codigo de la empresa
     idEmpresa:  string;
     // Codigo del tabulador o grado
@@ -20,3 +20,6 @@ export interface EoGradoTB {
     descrip:     string;
     codOficial:  string;
 }
+
+// Interfaces para actualizar registros
+export type ValorGradoUpdate = Pick<ValorGrado, 'valtab' | 'eoGradoTb'>

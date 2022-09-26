@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors }
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
-import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
-import { ValoresTabuladorService } from '../../../services/valores-tabulador.service';
+import { GradosTabuladorService } from '../../../services/grados-tabulador.service';
 import { Grados, GradoCreate } from '../../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
@@ -36,8 +35,7 @@ export class ModalAddEditComponent implements OnInit {
   // Formulario reactivo
   form!: FormGroup;
 
-  constructor(private companyNominaService: CompanyNominaService,
-              private valoresTabuladorService: ValoresTabuladorService, 
+  constructor(private gradosTabuladorService: GradosTabuladorService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -86,13 +84,13 @@ export class ModalAddEditComponent implements OnInit {
     // Editar
     if (this.isEdit) {
       const { id, idEmpresa, ...dataUpdate } = data;
-      this.valoresTabuladorService.update(data, dataUpdate)
+      this.gradosTabuladorService.update(data, dataUpdate)
       .subscribe({
         next: (resp) => {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.companyNominaService.selectRowThirdTable$.emit(null);
+          this.gradosTabuladorService.selectRowGrado$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {
@@ -105,13 +103,13 @@ export class ModalAddEditComponent implements OnInit {
     
     data.idEmpresa = this.empresaRow.id;
     // Crear
-    this.valoresTabuladorService.create(data)
+    this.gradosTabuladorService.create(data)
       .subscribe({
         next: (resp) => {
           this.closeModal();
           this.spinner.hide();
           this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-          this.companyNominaService.selectRowThirdTable$.emit(null);
+          this.gradosTabuladorService.selectRowGrado$.emit(null);
           this.onLoadData.emit();
         },
         error: (err) => {

@@ -59,10 +59,10 @@
                 /******************************** -->
                 <p-tabPanel header="Valores por tabulador" [disabled]="empresaRow == null">
                     
-                    <app-valores-tabuladores [empresaRow]="empresaRow"
-                                             [sueldoSelect]="sueldoSelect"
-                                             (onDataGrados)="getDataGrados($event)">
-                    </app-valores-tabuladores>
+                    <app-grados-tabuladores [empresaRow]="empresaRow"
+                                            [sueldoSelect]="sueldoSelect"
+                                            (onDataGrados)="getDataGrados($event)">
+                    </app-grados-tabuladores>
 
                 </p-tabPanel>
 
