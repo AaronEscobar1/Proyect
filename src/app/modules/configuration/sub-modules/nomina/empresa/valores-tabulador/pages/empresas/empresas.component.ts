@@ -6,7 +6,7 @@ import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
 import { Subscription } from 'rxjs';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { dropdownType } from '../../../../../../../../shared/interfaces/typesFiles.interfaces';
-import { sueldoList } from '../../interfaces/grados-tabuladores.interfaces';
+import { sueldoList, Grados } from '../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-empresas',
@@ -27,6 +27,9 @@ export class EmpresasComponent implements OnInit, OnDestroy {
 
   // Variable para seleccionar el sueldo
   sueldoSelect: string = 'Mensual';
+
+  // Objeto de grados por tabulador     
+  grados: Grados[] = [];
 
   // Banderas
   isEdit: boolean = false;
@@ -64,6 +67,14 @@ export class EmpresasComponent implements OnInit, OnDestroy {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
         }
       });
+  }
+
+  /**
+   * Obtener todos los grados por tabulador
+   * @param gradosEvent: Grados[] lista de grados
+   */
+  getDataGrados(gradosEvent: Grados[]): void {
+    this.grados = gradosEvent;
   }
 
   /** Destrucción del observable*/

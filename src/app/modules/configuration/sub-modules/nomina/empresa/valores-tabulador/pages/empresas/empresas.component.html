@@ -54,14 +54,26 @@
 
                 </p-tabPanel>
 
-                <!--/*************************
-                /*    Valores tabulador      *
-                /***************************** -->
-                <p-tabPanel header="Valores Tabulador" [disabled]="empresaRow == null">
+                <!--/****************************
+                /*    Valores por tabulador     *
+                /******************************** -->
+                <p-tabPanel header="Valores por tabulador" [disabled]="empresaRow == null">
                     
                     <app-valores-tabuladores [empresaRow]="empresaRow"
-                                             [sueldoSelect]="sueldoSelect">
+                                             [sueldoSelect]="sueldoSelect"
+                                             (onDataGrados)="getDataGrados($event)">
                     </app-valores-tabuladores>
+
+                </p-tabPanel>
+
+                <!--/***************************
+                /*    Cargos por tabulador     *
+                /******************************* -->
+                <p-tabPanel header="Cargos por tabulador" [disabled]="empresaRow == null">
+                    
+                    <app-cargos-tabulador [empresaRow]="empresaRow"
+                                          [grados]="grados">
+                    </app-cargos-tabulador>
 
                 </p-tabPanel>
 

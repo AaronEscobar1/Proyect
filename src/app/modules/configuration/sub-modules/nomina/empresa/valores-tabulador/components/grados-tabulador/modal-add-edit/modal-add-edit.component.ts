@@ -2,10 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { ValoresTabuladorService } from '../../services/valores-tabulador.service';
-import { Grados, GradoCreate } from '../../interfaces/grados-tabuladores.interfaces';
+import { Company } from '../../../../shared-empresa/interfaces/empresa.interfaces';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
+import { ValoresTabuladorService } from '../../../services/valores-tabulador.service';
+import { Grados, GradoCreate } from '../../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -17,10 +17,10 @@ export class ModalAddEditComponent implements OnInit {
   @Input() empresaRow!: Company;
 
   // Objeto para validaciones de valores duplicados 
-  @Input() valoresGrados: Grados[] = [];
+  @Input() gradosTabulador: Grados[] = [];
 
   // Variable de seleccion para editar
-  @Input() valoresGradosSelect!: Grados | undefined;
+  @Input() gradoTabuladorSelect!: Grados | undefined;
 
   // Banderas
   @Input() createModal!: boolean;
@@ -61,12 +61,12 @@ export class ModalAddEditComponent implements OnInit {
     // Deshabilitamos los campos
     this.form.controls['id'].disable();
     // Colocar el id del grado en el atributo id
-    if (this.valoresGradosSelect && this.valoresGradosSelect.eoGradoTbId ) {
-      this.valoresGradosSelect.id        = this.valoresGradosSelect.eoGradoTbId.id;
-      this.valoresGradosSelect.idEmpresa = this.valoresGradosSelect.eoGradoTbId.idEmpresa;
+    if (this.gradoTabuladorSelect && this.gradoTabuladorSelect.eoGradoTbId ) {
+      this.gradoTabuladorSelect.id        = this.gradoTabuladorSelect.eoGradoTbId.id;
+      this.gradoTabuladorSelect.idEmpresa = this.gradoTabuladorSelect.eoGradoTbId.idEmpresa;
     }
     // Seteamos los valores del row seleccionado al formulario
-    this.form.reset(this.valoresGradosSelect);
+    this.form.reset(this.gradoTabuladorSelect);
   }
 
   /**
@@ -162,9 +162,9 @@ export class ModalAddEditComponent implements OnInit {
   // Validar si esta duplicado el id 
   validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
-    return this.valoresGrados.findIndex(val => val.eoGradoTbId.id === control.value) > -1 ?
-                                            {'duplicated': true} :
-                                            null;
+    return this.gradosTabulador.findIndex(val => val.eoGradoTbId.id === control.value) > -1 ?
+                                          {'duplicated': true} :
+                                          null;
   }
 
 }

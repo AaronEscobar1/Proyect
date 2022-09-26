@@ -4,17 +4,27 @@
 
 <div class="grid">
     <div class="col-12">
-            
+
         <div class="grid">
-            <div class="col-12">
+            <div class="col-12 md:col-6">
+
+            <!-- Componente de botones -->
+            <app-buttons-three-table [showUpdateButton]="false"
+                                     (onRefresh)="refresh()"
+                                     (onOpenModalPrint)="openModalPrint()"
+                                     (onOpenModalCreate)="openModalCreate()"
+                                     (onDeleteRow)="deleteRow($event)">
+            </app-buttons-three-table>
+
+            </div>
+            <div class="col-12 md:col-6">
 
                 <!-- Inputs de nombre de empresa -->
                 <div class="formgrid grid">
-                            
+                                    
                     <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
                         <label for="codemp">Empresa:</label>
                     </div>
-
                     <div class="field col-3 md:col-3 lg:col-3">
                         <input  type="text"
                                 id="codemp" 
@@ -23,8 +33,8 @@
                                 [value]="empresaRow ? empresaRow.id : '' "
                                 disabled/>
                     </div>
-
-                    <div class="field col-5 md:col-4 lg:col-5">
+                
+                    <div class="field col-5 md:col-6 lg:col-7">
                         <input  type="text"
                                 id="desemp" 
                                 class="w-full"
@@ -34,47 +44,32 @@
                     </div>
 
                 </div>
-
             </div>
+
         </div>
-
-        <div class="grid">
-            <div class="col-12 md:col-offset-1 md:col-10">
-
-                <p-panel header="Tabuladores / Grados">
-                    
-                    <!-- Componente de botones -->
-                    <app-buttons-three-table (onRefresh)="refresh()"
-                                             (onOpenModalPrint)="openModalPrint()"
-                                             (onOpenModalCreate)="openModalCreate()"
-                                             (onEditRow)="editRow($event)"
-                                             (onDeleteRow)="deleteRow($event)">
-                    </app-buttons-three-table>
-                    <!-- Componente table grados-->
-                    <app-data-table [gradosTabulador]="gradosTabulador"></app-data-table>
-                
-                </p-panel>
-                
-            </div>
-        </div>
-
+        
+        <!-- <pre>{{grados |json}}</pre> -->
+        
+        <!-- Componente table -->
+        <app-data-table-cargos [cargosTabulador]="cargosTabulador"></app-data-table-cargos>
+   
     </div>
 </div>
 
 <!-- Modal Imprimir -->
-<app-modal-print  
+<!-- <app-modal-print  
     [printModal]="printModal"
     (onCloseModalPrint)="closeModalPrintDialog()">
-</app-modal-print>
+</app-modal-print> -->
 
 <!-- Modal Agregar Editar-->
-<app-modal-add-edit
+<!-- <app-modal-add-edit
     [empresaRow]="empresaRow"
-    [gradosTabulador]="gradosTabulador"
-    [gradoTabuladorSelect]="gradoTabuladorSelect"
+    [motivoHorasExtras]="motivoHorasExtras" 
+    [motivoHoraExtraSelect]="motivoHoraExtraSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()"
+    (onCloseModal)="closeModal()" 
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
-</app-modal-add-edit>
+</app-modal-add-edit> -->

@@ -6,19 +6,23 @@ import { ValoresTabuladorRoutingModule } from './valores-tabulador-routing.modul
 import { SharedEmpresaModule } from '../shared-empresa/shared-empresa.module';
 
 // Components
-import { DataTableComponent } from './components/data-table/data-table.component';
-import { ValoresTabuladorComponent } from './pages/valores-tabulador/valores-tabulador.component';
+import { CargosTabuladorComponent } from './pages/cargos-tabulador/cargos-tabulador.component';
+import { DataTableCargosComponent } from './components/cargos-tabulador/data-table-cargos/data-table-cargos.component';
+import { DataTableComponent } from './components/grados-tabulador/data-table/data-table.component';
 import { EmpresasComponent } from './pages/empresas/empresas.component';
-import { ModalAddEditComponent } from './components/modal-add-edit/modal-add-edit.component';
-import { ModalPrintComponent } from './components/modal-print/modal-print.component';
+import { ModalAddEditComponent } from './components/grados-tabulador/modal-add-edit/modal-add-edit.component';
+import { ModalPrintComponent } from './components/grados-tabulador/modal-print/modal-print.component';
+import { ValoresTabuladorComponent } from './pages/valores-tabulador/valores-tabulador.component';
 
 @NgModule({
   declarations: [
+    CargosTabuladorComponent,
+    DataTableCargosComponent,
     DataTableComponent,
-    ValoresTabuladorComponent,
     EmpresasComponent,
     ModalAddEditComponent,
-    ModalPrintComponent
+    ModalPrintComponent,
+    ValoresTabuladorComponent
   ],
   imports: [
     SharedModule,

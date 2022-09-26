@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 
 import { DataTableComponent } from './data-table.component';
 

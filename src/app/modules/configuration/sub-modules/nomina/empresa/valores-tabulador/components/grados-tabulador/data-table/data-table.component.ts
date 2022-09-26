@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { Grados } from '../../interfaces/grados-tabuladores.interfaces';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
+import { Grados } from '../../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
   selector: 'app-data-table',
@@ -11,7 +11,7 @@ import { Grados } from '../../interfaces/grados-tabuladores.interfaces';
 export class DataTableComponent implements OnInit {
 
   // Objeto para mostrar en la tabla
-  @Input() valoresGradosEmpresa!: Grados[];
+  @Input() gradosTabulador!: Grados[];
 
   // Table
   columns: TableHead[] = [];

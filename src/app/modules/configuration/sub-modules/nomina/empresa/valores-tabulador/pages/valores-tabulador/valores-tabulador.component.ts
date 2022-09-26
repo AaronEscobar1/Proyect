@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ValoresTabuladorService } from '../../services/valores-tabulador.service';
@@ -21,11 +21,11 @@ export class ValoresTabuladorComponent implements OnInit {
   // Variable para seleccionar el sueldo
   @Input() sueldoSelect!: string;
   
-  // Objeto de distribuciones de nominas por empresa
-  valoresGrados: Grados[] = [];
+  // Objeto de grados por tabulador     
+  gradosTabulador: Grados[] = [];
 
   // Objeto seleccionado para editar
-  valoresGradosSelect!: Grados | undefined;
+  gradoTabuladorSelect!: Grados | undefined;
 
   // Banderas
   isEdit: boolean = false;
@@ -34,6 +34,9 @@ export class ValoresTabuladorComponent implements OnInit {
   titleForm  : string = 'Agregar grado por tabulador';
   createModal: boolean = false;
   printModal : boolean = false;
+
+  // Emisión de evento (cargar data de Grados por tabulador)
+  @Output() onDataGrados = new EventEmitter();
 
   constructor(private companyNominaService: CompanyNominaService,
               private valoresTabuladoresService: ValoresTabuladorService,
@@ -64,7 +67,9 @@ export class ValoresTabuladorComponent implements OnInit {
     this.valoresTabuladoresService.getAll(idEmpresa)
       .subscribe({
         next: (res) => {
-          this.valoresGrados = res;          
+          this.gradosTabulador = res;
+          // Emite el valor de grados por tabulador para enviarlo al componente hermano de cargos por tabulador
+          this.onDataGrados.emit(this.gradosTabulador);
           this.spinner.hide();
         },
         error: (err) => {
@@ -74,7 +79,7 @@ export class ValoresTabuladorComponent implements OnInit {
   }
 
   refresh(): void {
-    this.valoresGrados = [];
+    this.gradosTabulador = [];
     if ( this.empresaRow && this.empresaRow.id ) {
       this.loadValoresTabuladores(this.empresaRow.id);
     }
@@ -100,7 +105,7 @@ export class ValoresTabuladorComponent implements OnInit {
   closeModal() {
     this.isEdit = false;
     this.createModal = false;
-    this.valoresGradosSelect = undefined;
+    this.gradoTabuladorSelect = undefined;
   }
 
   /**
@@ -111,7 +116,7 @@ export class ValoresTabuladorComponent implements OnInit {
   editRow(valoresGrados: Grados): void {
     this.isEdit = true;
     this.titleForm = 'Editar grado por tabulador';
-    this.valoresGradosSelect = valoresGrados;
+    this.gradoTabuladorSelect = valoresGrados;
     this.createModal = true;
   }
 
