@@ -44,7 +44,7 @@
                     <td>{{ tipoInfo.fecefe | date: 'dd/MM/YYYY'}}</td>
                     <td class="text-center">{{ tipoInfo.pastab }}</td>
                     <td class="text-right"> {{ sueldoSelect == 'Mensual' ? (tipoInfo.valtab / 30  | number: '1.0-3':'es-ve') : '0.000000' }} </td>
-                    <td class="text-right">{{ tipoInfo.valtab }}</td>
+                    <td class="text-right">{{ tipoInfo.valtab | number: '1.0-5':'es-ve' }}</td>
                 </tr>
             </ng-template>
 

@@ -6,7 +6,7 @@ export interface ValorGrado {
     // Codigo del tabulador o grado
     tabuCodtab: string;
     // Fecha de efectividad del paso o valor del tabulador o grado
-    fecefe:     Date;
+    fecefe:     Date | string;
     // Paso o consecutivo del tabulador o grado
     pastab:     number;
     // Valor del salario diario del tabulador
