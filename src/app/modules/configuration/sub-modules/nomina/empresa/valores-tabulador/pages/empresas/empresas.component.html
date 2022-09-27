@@ -8,7 +8,7 @@
 <div class="grid">
     <div class="col-12">
 
-        <div class="header-card bg-gray-600 text-white p-2">Empresas / Distribución nómina</div>
+        <div class="header-card bg-gray-600 text-white p-2">Empresas / Valores tabulador</div>
         <div class="card-table">
 
             <!-- Pestañas -->
@@ -19,17 +19,61 @@
                 /*********************** -->
                 <p-tabPanel header="Consultar empresas">
 
-                    <!-- Componente table -->
-                    <app-data-table-empresa [companias]="companias"></app-data-table-empresa>
+                    <div class="grid">
+
+                        <div class="col-12 md:col-9">
+
+                            <!-- Componente table -->
+                            <app-data-table-empresa [companias]="companias"></app-data-table-empresa>
+
+                        </div>
+
+                        <!-- Segmento para elegir sueldo -->
+                        <div class="col-12 md:col-3">
+
+                            <div class="flex flex-column">
+                                <p-panel header="Sueldo" styleClass="mt-3">
+
+                                    <div class="flex align-items-center justify-content-center">
+                                        
+                                        <div class="field col-12">
+                                            <p-dropdown [options]="sueldos"
+                                                        styleClass="w-full"
+                                                        appendTo="body"
+                                                        [(ngModel)]="sueldoSelect">
+                                            </p-dropdown>
+                                        </div>
+
+                                    </div>
+
+                                </p-panel>
+                            </div>
+                            
+                        </div>
+                    </div>
 
                 </p-tabPanel>
 
-                <!--/*************************
-                /*    Distribución nómina    *
-                /***************************** -->
-                <p-tabPanel header="Valores Tabulador" [disabled]="empresaRow == null">
+                <!--/****************************
+                /*    Valores por tabulador     *
+                /******************************** -->
+                <p-tabPanel header="Valores por tabulador" [disabled]="empresaRow == null">
                     
-                    <app-valores-tabuladores [empresaRow]="empresaRow"></app-valores-tabuladores>
+                    <app-grados-tabuladores [empresaRow]="empresaRow"
+                                            [sueldoSelect]="sueldoSelect"
+                                            (onDataGrados)="getDataGrados($event)">
+                    </app-grados-tabuladores>
+
+                </p-tabPanel>
+
+                <!--/***************************
+                /*    Cargos por tabulador     *
+                /******************************* -->
+                <p-tabPanel header="Cargos por tabulador" [disabled]="empresaRow == null">
+                    
+                    <app-cargos-tabulador [empresaRow]="empresaRow"
+                                          [grados]="grados">
+                    </app-cargos-tabulador>
 
                 </p-tabPanel>
 

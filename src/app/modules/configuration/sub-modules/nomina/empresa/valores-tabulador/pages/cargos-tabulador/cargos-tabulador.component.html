@@ -4,26 +4,24 @@
 
 <div class="grid">
     <div class="col-12">
-            
-        <div class="grid">
 
+        <div class="grid">
             <div class="col-12 md:col-6">
 
-                <!-- Componente de botones -->
-                <app-buttons-three-table (onRefresh)="refresh()"
-                                         (onOpenModalPrint)="openModalPrint()"
-                                         (onOpenModalCreate)="openModalCreate()"
-                                         (onEditRow)="editRow($event)"
-                                         (onDeleteRow)="deleteRow($event)">
-                </app-buttons-three-table>
+            <!-- Componente de botones -->
+            <app-buttons-three-table [showUpdateButton]="false"
+                                     (onRefresh)="refresh()"
+                                     (onOpenModalPrint)="openModalPrint()"
+                                     (onOpenModalCreate)="openModalCreate()"
+                                     (onDeleteRow)="deleteRow($event)">
+            </app-buttons-three-table>
 
             </div>
-
             <div class="col-12 md:col-6">
 
                 <!-- Inputs de nombre de empresa -->
                 <div class="formgrid grid">
-                            
+                                    
                     <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
                         <label for="codemp">Empresa:</label>
                     </div>
@@ -46,31 +44,32 @@
                     </div>
 
                 </div>
-
             </div>
 
         </div>
-
+        
+        <!-- <pre>{{grados |json}}</pre> -->
+        
         <!-- Componente table -->
-        <app-data-table [valoresGradosEmpresa]="valoresGrados"></app-data-table>
-
+        <app-data-table-cargos [cargosTabulador]="cargosTabulador"></app-data-table-cargos>
+   
     </div>
 </div>
 
 <!-- Modal Imprimir -->
-<app-modal-print  
+<!-- <app-modal-print  
     [printModal]="printModal"
     (onCloseModalPrint)="closeModalPrintDialog()">
-</app-modal-print>
+</app-modal-print> -->
 
 <!-- Modal Agregar Editar-->
-<app-modal-add-edit
+<!-- <app-modal-add-edit
     [empresaRow]="empresaRow"
-    [distribucionesNomina]="valoresGrados"
-    [distribucionNominaSelect]="valoresGradosSelect"
+    [motivoHorasExtras]="motivoHorasExtras" 
+    [motivoHoraExtraSelect]="motivoHoraExtraSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()"
+    (onCloseModal)="closeModal()" 
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
-</app-modal-add-edit>
+</app-modal-add-edit> -->

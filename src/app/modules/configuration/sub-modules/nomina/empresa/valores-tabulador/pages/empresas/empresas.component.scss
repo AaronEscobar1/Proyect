@@ -1,0 +1,12 @@
+:host ::ng-deep .p-panel {
+    .p-panel-header {
+        background: #fff;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        border-bottom: 0px solid #dee2e6 !important;
+    }
+    .p-panel-content {
+        border-bottom-right-radius: 15px !important;
+        border-bottom-left-radius: 15px !important;
+    }
+}

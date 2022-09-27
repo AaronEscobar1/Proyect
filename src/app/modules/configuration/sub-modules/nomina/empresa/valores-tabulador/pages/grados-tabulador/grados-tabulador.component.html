@@ -4,16 +4,17 @@
 
 <div class="grid">
     <div class="col-12">
-
+            
         <div class="grid">
             <div class="col-12">
 
                 <!-- Inputs de nombre de empresa -->
                 <div class="formgrid grid">
-
+                            
                     <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
                         <label for="codemp">Empresa:</label>
                     </div>
+
                     <div class="field col-3 md:col-3 lg:col-3">
                         <input  type="text"
                                 id="codemp" 
@@ -22,13 +23,13 @@
                                 [value]="empresaRow ? empresaRow.id : '' "
                                 disabled/>
                     </div>
-                
+
                     <div class="field col-5 md:col-4 lg:col-5">
                         <input  type="text"
                                 id="desemp" 
                                 class="w-full"
                                 pInputText
-                                [value]="empresaRow ? empresaRow.nombre : '' "
+                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : ''"
                                 disabled/>
                     </div>
 
@@ -37,44 +38,46 @@
             </div>
         </div>
 
+        <!-- Componente grados tabuladores -->
         <div class="grid">
             <div class="col-12 md:col-offset-1 md:col-10">
 
-                <p-panel header="Clase de información">
+                <p-panel header="Tabuladores / Grados">
                     
                     <!-- Componente de botones -->
-                    <app-button-clase-info (onRefresh)="refresh()"
-                                           (onOpenModalPrint)="openModalPrint()"
-                                           (onOpenModalCreate)="openModalCreate()"
-                                           (onEditRow)="editRow($event)"
-                                           (onDeleteRow)="deleteRow($event)">
-                    </app-button-clase-info>
-                    <!-- Componente table clase de información -->
-                    <app-data-table-clase-info [clasesInformacion]="clasesInformacion"
-                                               (onButtonDisabled)="disableButtons($event)"
-                                               (onUnSelectRow)="resetTablaTipoInfo()">
-                    </app-data-table-clase-info>
-                    
+                    <app-buttons-grados (onRefresh)="refresh()"
+                                        (onOpenModalPrint)="openModalPrint()"
+                                        (onOpenModalCreate)="openModalCreate()"
+                                        (onEditRow)="editRow($event)"
+                                        (onDeleteRow)="deleteRow($event)">
+                    </app-buttons-grados>
+
+                    <!-- Componente table grados-->
+                    <app-data-table [gradosTabulador]="gradosTabulador"
+                                    (onButtonDisabled)="disableButtons($event)"
+                                    (onUnSelectRow)="resetTablaValoresGrados()">
+                    </app-data-table>
+                
                 </p-panel>
                 
             </div>
         </div>
-        
+
+        <!-- Componente valores grados tabuladores -->
         <div class="grid mt-3">
             <div class="col-12">
 
-                <p-panel header="Tipos de información">
+                <p-panel header="Valores de grados">
 
-                    <!-- Componente tipo de información -->
-                    <app-tipo-informacion [buttonDisabled]="buttonDisabled"
-                                          [empresaRow]="empresaRow"
-                                          [claseInformacionSelect]="claseInformacionSelect"
-                                          [tiposInformaciones]="tiposInformaciones"
-                                          (onRefreshData)="loadTiposInformacion()">
-                    </app-tipo-informacion>
+                    <app-valores-grados-tabulador [empresaRow]="empresaRow"
+                                                  [gradoTabuladorSelect]="gradoTabuladorSelect"
+                                                  [buttonDisabled]="buttonDisabled"                                              
+                                                  [valoresGrados]="valoresGrados"
+                                                  [sueldoSelect]="sueldoSelect"
+                                                  (onRefreshData)="loadValoresGrados()">
+                    </app-valores-grados-tabulador>
 
                 </p-panel>
-                
             </div>
         </div>
 
@@ -90,12 +93,11 @@
 <!-- Modal Agregar Editar-->
 <app-modal-add-edit
     [empresaRow]="empresaRow"
-    [clasesInformacion]="clasesInformacion"
-    [claseInformacionSelect]="claseInformacionSelect"
-    [equivalencias]="equivalencias"
+    [gradosTabulador]="gradosTabulador"
+    [gradoTabuladorSelect]="gradoTabuladorSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
-    (onCloseModal)="closeModal()" 
+    (onCloseModal)="closeModal()"
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
 </app-modal-add-edit>

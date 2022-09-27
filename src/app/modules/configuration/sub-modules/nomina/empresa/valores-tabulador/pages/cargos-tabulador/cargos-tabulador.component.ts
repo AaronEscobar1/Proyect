@@ -1,43 +1,45 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ValoresTabuladorService } from '../../services/valores-tabulador.service';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
-import { Grados, ValoresGrados } from '../../interfaces/valores-tabulador.interfaces';
-import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { CargoTabulador } from '../../interfaces/cargos-tabulador.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { CargosTabuladorService } from '../../services/cargos-tabulador.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { Grados } from '../../interfaces/grados-tabuladores.interfaces';
 
 @Component({
-  selector: 'app-valores-tabuladores',
-  templateUrl: './valores-tabulador.component.html',
+  selector: 'app-cargos-tabulador',
+  templateUrl: './cargos-tabulador.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class ValoresTabuladorComponent implements OnInit {
+export class CargosTabuladorComponent implements OnInit {
 
   // Objeto para obtener el id de la empresa
   @Input() empresaRow!: Company;
 
-  // Objeto de distribuciones de nominas por empresa
-  valoresGrados: Grados[] = [];
+  // Objeto de grados por tabulador
+  @Input() grados: Grados[] = [];
+
+  // Objeto cargos por tabulador
+  cargosTabulador: CargoTabulador[] = [];
 
   // Objeto seleccionado para editar
-  valoresGradosSelect!: Grados | undefined;
+  cargoTabuladorSelect!: CargoTabulador | undefined;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar Valores Tabulador';
+  titleForm  : string = 'Agregar cargo por tabulador';
   createModal: boolean = false;
   printModal : boolean = false;
 
   constructor(private companyNominaService: CompanyNominaService,
-              private valoresTabuladoresService: ValoresTabuladorService,
+              private cargosTabuladorService: CargosTabuladorService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private spinner: NgxSpinnerService,
-              private selectRowService: SelectRowService ) { }
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
   }
@@ -45,36 +47,34 @@ export class ValoresTabuladorComponent implements OnInit {
   ngOnChanges() {
     // Validar si empresa existe y tiene id
     if ( this.empresaRow && this.empresaRow.id ) {
-      // Limpia el row de la tabla de distribucion nomina
-      this.selectRowService.selectRowAlterno$.emit(null);
       // Realizar peticion al backend asociada a la empresa seleccionada
-      this.loadValoresTabuladores(this.empresaRow.id);
+      this.loadCargosTabulador(this.empresaRow.id);
     }
   }
 
   /**
-   * Obtener datos de parametros asignado a la empresa
+   * Obtener datos de cargos por tabulador asignado a la empresa
    * @param idEmpresa: string id empresa
    */
-  loadValoresTabuladores( idEmpresa: string ) {
+  loadCargosTabulador( idEmpresa: string ): void {
     this.spinner.show(undefined, spinnerLight);
-    this.valoresTabuladoresService.getAll(idEmpresa)
+    this.cargosTabuladorService.getCargosTabuladorByEmpresa(idEmpresa)
       .subscribe({
         next: (res) => {
-          console.log(res);
-          this.valoresGrados = res;          
+          this.cargosTabulador = res;
           this.spinner.hide();
         },
         error: (err) => {
           this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
         }
       });
   }
 
   refresh(): void {
-    this.valoresGrados = [];
+    this.cargosTabulador = [];
     if ( this.empresaRow && this.empresaRow.id ) {
-      this.loadValoresTabuladores(this.empresaRow.id);
+      this.loadCargosTabulador(this.empresaRow.id);
     }
   }
 
@@ -91,36 +91,24 @@ export class ValoresTabuladorComponent implements OnInit {
    * @returns void
    */
   openModalCreate(): void {
-    this.titleForm = 'Agregar Valores de Grados';
+    this.titleForm = 'Agregar cargo por tabulador';
     this.createModal = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.isEdit = false;
     this.createModal = false;
-    this.valoresGradosSelect = undefined;
-  }
-
-  /**
-   * Carga la data en el formulario para editar
-   * @param valoresGrados row de la tabla
-   * @returns void
-   */
-  editRow(valoresGrados: Grados): void {
-    this.isEdit = true;
-    this.titleForm = 'Editar Valores de Grados';
-    this.valoresGradosSelect = valoresGrados;
-    this.createModal = true;
+    this.cargoTabuladorSelect = undefined;
   }
 
   /**
    * Elimina un registro
-   * @param valoresGrados row de la tabla
+   * @param cargoTabulador row de la tabla
    * @returns void
    */
-  deleteRow(valoresGrados: Grados): void {
+  deleteRow(cargoTabulador: CargoTabulador): void {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar este valor de tabulador <b>${valoresGrados.eoGradoTbId.id}</b>?`,
+      message: `¿Desea eliminar este cargo por tabulador?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -128,7 +116,7 @@ export class ValoresTabuladorComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.valoresTabuladoresService.delete(valoresGrados.eoGradoTbId.id, valoresGrados.eoGradoTbId.idEmpresa)
+        this.cargosTabuladorService.delete(cargoTabulador)
           .subscribe({
             next: (resp) => {
               this.spinner.hide();
@@ -139,12 +127,12 @@ export class ValoresTabuladorComponent implements OnInit {
             },
             error: (err) => {
               if ( err.error.message === 'Error en solicitud.' ) {
-                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar la valor de tabulador, posee dependencia de registros.', life: 3000});
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar el cargo por tabulador, posee dependencia de registros.', life: 3000});
                 this.spinner.hide();
                 return false;
               }
               this.spinner.hide();
-              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar la valor de tabulador.', life: 3000});
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar el cargo por tabulador.', life: 3000});
               return false;
             }
           });
