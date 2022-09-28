@@ -24,3 +24,9 @@ export type ProcesoSituacionCreate = Omit<ProcesoSituacion, 'idTableTemporal'>;
 
 // Interfaces para actualizar registros omitiendo [procTippro, tipsub]
 export type ProcesoSituacionUpdate = Pick<ProcesoSituacion, 'dialim' | 'susvac'>;
+
+export interface SubProceso {
+    subpro:     number;
+    dessub:     string;
+    procTippro: number;
+}

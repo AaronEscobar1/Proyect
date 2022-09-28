@@ -48,7 +48,7 @@ export class ProcesoSituacionService {
 
   // Obtener sub procesos
   getSubProcesosByProceso(codProceso: number): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/subprocesos/${codProceso}`));
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/nominas/procesos/${codProceso}/subprocesos`));
   }
 
 }

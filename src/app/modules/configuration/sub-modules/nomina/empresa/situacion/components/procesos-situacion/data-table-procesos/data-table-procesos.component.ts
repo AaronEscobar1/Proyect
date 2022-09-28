@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProcesoSituacionService } from '../../../services/proceso-situacion.service';
 import { SuspencionVacacion } from '../../../interfaces/concepto-situacion.interfaces';
 import { SortEventOrder, TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
-import { ProcesoSituacion } from '../../../interfaces/proceso-situacion.interfaces';
+import { ProcesoSituacion, SubProceso } from '../../../interfaces/proceso-situacion.interfaces';
 import { Situacion } from '../../../interfaces/situacion.interfaces';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { Procesos } from '../../../../../basica/procesos/interfaces/procesos.interfaces';
@@ -32,7 +32,7 @@ export class DataTableProcesosComponent implements OnInit {
   @Input() noSuspender: SuspencionVacacion[] = [];
 
   // Objeto para sub procesos
-  subProcesos!: any[];
+  subProcesos: SubProceso[] = [];
 
   // Formulario reactivo
   form!: FormGroup;
@@ -206,28 +206,22 @@ export class DataTableProcesosComponent implements OnInit {
    * @param codProceso: number codigo proceso a buscar
    */
   loadSubProcesosByProceso(codProceso: number, index: number) {
-    this.subProcesos = [
-      { value: 1, label: 1 },
-      { value: 2, label: 2 }
-    ];
-    // TODO: Pasar este codigo cuando se realice la peticion al backend
-      // Obtener el formGroup del proceso 
-      const procesoFormGroup = this.procesosFormArray.controls[index] as FormGroup;
-      // Habilitar el control del subproceso
-      procesoFormGroup.controls['tipsub'].enable();
-    // this.spinner.show();
-    // this.procesosSituacionService.getSubProcesosByProceso(codProceso)
-    //   .subscribe({
-    //     next: (resp) => {
-    //       this.subProcesos = resp;
-          
-    //       this.spinner.hide();
-    //     },
-    //     error: (err) => {
-    //       this.spinner.hide();
-    //       this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-    //     }
-    //   });
+    // Obtener el formGroup del proceso 
+    const procesoFormGroup = this.procesosFormArray.controls[index] as FormGroup;
+    // Habilitar el control del subproceso
+    procesoFormGroup.controls['tipsub'].enable();
+    this.spinner.show();
+    this.procesosSituacionService.getSubProcesosByProceso(codProceso)
+      .subscribe({
+        next: (resp) => {
+          this.subProcesos = resp;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   /**
