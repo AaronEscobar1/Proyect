@@ -2,14 +2,16 @@ import { dropdownType } from '../../../../../../../shared/interfaces/typesFiles.
 
 export interface Grados {
     // Codigo de tabulador o grado ( Atributo para rellenar en el formulario a la hora de actualizar)
-    id:          string;
-    idEmpresa:   string;
+    id:            string;
+    idEmpresa:     string;
     // Identificador de empresa y codigo de tabulador o grado
-    eoGradoTbId: EoGradoTBID;
+    eoGradoTbId:   EoGradoTBID;
     // Nombre o descripcion
-    descrip:     string;
+    descrip:       string;
     // Codigo alterno -oficial
-    codOficial:  string;
+    codOficial:    string;
+    // Atributo para deshabilitar el campo en la lista
+    disabledGrado?: boolean;
 }
 
 export interface EoGradoTBID {

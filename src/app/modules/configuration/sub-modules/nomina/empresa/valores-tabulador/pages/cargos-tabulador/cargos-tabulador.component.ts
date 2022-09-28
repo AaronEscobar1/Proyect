@@ -102,6 +102,18 @@ export class CargosTabuladorComponent implements OnInit {
   }
 
   /**
+   * Carga la data en el formulario para editar
+   * @param cargo row de la tabla
+   * @returns void
+   */
+  editRow(cargo: CargoTabulador): void {
+    this.isEdit = true;
+    this.titleForm = 'Editar grado por tabulador';
+    this.cargoTabuladorSelect = cargo;
+    this.createModal = true;
+  }
+
+  /**
    * Elimina un registro
    * @param cargoTabulador row de la tabla
    * @returns void
