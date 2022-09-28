@@ -1,0 +1,582 @@
+
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '75vw'}"
+          [draggable]="false" [resizable]="false">
+          
+          <ng-template pTemplate="content">
+              
+            <div class="flex justify-content-between align-items-center my-4">
+                
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                    class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                        </button>
+                    </div>
+                </div>
+                
+                <form [formGroup]="form" autocomplete="off">
+                    
+                    <!-- Inputs de nombre de empresa -->
+                    <div class="formgrid grid">
+                                        
+                        <div class="field col-2 md:col-2 text-right mt-2">
+                            <label for="codemp">Empresa:</label>
+                        </div>
+                        <div class="field col-3 md:col-3">
+                            <input  type="text"
+                                    id="codemp" 
+                                    class="w-full"
+                                    pInputText
+                                    [value]="empresaRow ? empresaRow.id : '' "
+                                    disabled/>
+                        </div>
+                    
+                        <div class="field col-7 md:col-6">
+                            <input  type="text"
+                                    id="desemp" 
+                                    class="w-full"
+                                    pInputText
+                                    [value]="empresaRow ? (empresaRow.nombre | titlecase) : ''"
+                                    disabled/>
+                        </div>
+
+                    </div>
+
+                    <p-panel header="">
+
+                        <div class="formgrid grid">
+
+                            <div class="field col-2 md:col-2 text-right mt-2">
+                                <label for="id">Código:</label>
+                            </div>
+                            <div class="field col-3 md:col-3">
+                                <input  type="text"
+                                        id="id" 
+                                        pInputText
+                                        formControlName="id"
+                                        placeholder="Ingrese el código"/>
+                            </div>
+                            <span class="form-text text-danger mt-2"
+                                  *ngIf="campoInvalid('id')">
+                                {{ idMsgError }}
+                            </span>
+    
+                        </div>
+
+                        <div class="formgrid grid mt-3">
+
+                            <div class="col-12 md:col-6">
+                                
+                                <!-- Tabu01 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu01">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <label for="tabu01" class="mb-2">Tabulador</label>
+                                            <p-dropdown [options]="grados" 
+                                                        inputId="tabu01"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        optionDisabled="disabledGrado"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <label for="mest01">Meses</label>
+                                        <input type="text"
+                                               id="mest01"
+                                               pInputText
+                                               pKeyFilter="num"
+                                               formControlName="mest01"/>
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest01')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+                                
+                                <!-- Tabu02 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu02">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        optionDisabled="disabledGrado"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                               id="mest02"
+                                               pInputText
+                                               pKeyFilter="num"
+                                               formControlName="mest02"/>
+                                            
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest02')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu03 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu03">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        optionDisabled="disabledGrado"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                               id="mest03"
+                                               pInputText
+                                               pKeyFilter="num"
+                                               formControlName="mest03"/>
+
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest03')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu04 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu04">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        optionDisabled="disabledGrado"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                               id="mest04"
+                                               pInputText
+                                               pKeyFilter="num"
+                                               formControlName="mest04"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest04')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu05 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu05">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest05"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest05"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest05')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu06 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu06">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest06"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest06"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest06')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+
+                            <div class="col-12 md:col-6">
+
+                                <!-- Tabu07 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu07">
+
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <label for="tabu07" class="mb-2">Tabulador</label>
+                                            <p-dropdown [options]="grados" 
+                                                        inputId="tabu07"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <label for="mest07">Meses</label>
+                                        <input type="text"
+                                            id="mest07"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest07"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest07')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu08 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu08">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest08"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest08"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest08')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu09 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu09">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest09"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest09"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest09')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu10 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu10">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest10"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest10"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest10')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu11 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu11">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest11"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest11"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest11')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <!-- Tabu12 -->
+                                <div class="formgrid grid">
+                                    <div class="field col-12 md:col-6 md:col-offset-1" formGroupName="tabu12">
+                                        
+                                        <div formGroupName="eoGradoTbId">
+
+                                            <p-dropdown [options]="grados"
+                                                        appendTo="body"
+                                                        optionLabel="descrip"
+                                                        optionValue="eoGradoTbId.id"
+                                                        formControlName="id"
+                                                        [showClear]="true"
+                                                        placeholder="Seleccione tabulador">
+                                            </p-dropdown>
+
+                                        </div>
+                                        
+                                    </div>
+            
+                                    <div class="field col-12 md:col-4">
+
+                                        <input type="text"
+                                            id="mest12"
+                                            pInputText
+                                            pKeyFilter="num"
+                                            formControlName="mest12"/>
+                                        
+                                    </div>
+
+                                    <div class="field col-10 col-offset-1 -mt-2">
+
+                                        <span class="form-text text-danger"
+                                              *ngIf="campoInvalid('mest12')">
+                                            El mes es de longitud máxima de 4 dígitos, formato numérico.'
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                    </p-panel>                    
+                    
+                </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar" 
+                        class="p-button-secondary my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-save"
+                        class="btn-infocent my-1" 
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

@@ -8,15 +8,16 @@
         <div class="grid">
             <div class="col-12 md:col-6">
 
-            <!-- Componente de botones -->
-            <app-buttons-three-table [showUpdateButton]="false"
-                                     (onRefresh)="refresh()"
-                                     (onOpenModalPrint)="openModalPrint()"
-                                     (onOpenModalCreate)="openModalCreate()"
-                                     (onDeleteRow)="deleteRow($event)">
-            </app-buttons-three-table>
+                <!-- Componente de botones -->
+                <app-buttons-three-table (onRefresh)="refresh()"
+                                         (onOpenModalPrint)="openModalPrint()"
+                                         (onOpenModalCreate)="openModalCreate()"
+                                         (onEditRow)="editRow($event)"
+                                         (onDeleteRow)="deleteRow($event)">
+                </app-buttons-three-table>
 
             </div>
+
             <div class="col-12 md:col-6">
 
                 <!-- Inputs de nombre de empresa -->
@@ -44,32 +45,33 @@
                     </div>
 
                 </div>
+                
             </div>
 
         </div>
         
-        <!-- <pre>{{grados |json}}</pre> -->
         
         <!-- Componente table -->
         <app-data-table-cargos [cargosTabulador]="cargosTabulador"></app-data-table-cargos>
-   
+        
     </div>
 </div>
 
 <!-- Modal Imprimir -->
-<!-- <app-modal-print  
+<app-modal-print-cargo
     [printModal]="printModal"
     (onCloseModalPrint)="closeModalPrintDialog()">
-</app-modal-print> -->
+</app-modal-print-cargo>
 
 <!-- Modal Agregar Editar-->
-<!-- <app-modal-add-edit
+<app-modal-add-edit-cargo
     [empresaRow]="empresaRow"
-    [motivoHorasExtras]="motivoHorasExtras" 
-    [motivoHoraExtraSelect]="motivoHoraExtraSelect"
+    [grados]="grados" 
+    [cargosTabulador]="cargosTabulador"
+    [cargoTabuladorSelect]="cargoTabuladorSelect"
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()" 
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
-</app-modal-add-edit> -->
+</app-modal-add-edit-cargo>

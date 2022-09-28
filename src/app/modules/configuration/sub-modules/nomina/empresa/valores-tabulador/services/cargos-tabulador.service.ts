@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
-import { CargoTabulador } from '../interfaces/cargos-tabulador.interfaces';
+import { CargoTabulador, CargoTabuladorUpdate } from '../interfaces/cargos-tabulador.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,10 @@ export class CargosTabuladorService {
 
   create(cargoTabulador: CargoTabulador): Observable<any> {
     return this.http.post(this.helpers.getBasicEndPoint(`${this.url}`), cargoTabulador);
+  }
+
+  update(cargoTabulador: CargoTabulador, cargoTabuladorUpdate: CargoTabuladorUpdate): Observable<any> {
+    return this.http.put(this.helpers.getBasicEndPoint(`${this.url}/empresas/${cargoTabulador.idEmpresa}/${cargoTabulador.id}`), cargoTabuladorUpdate);
   }
 
   delete(cargoTabulador: CargoTabulador): Observable<any> {
