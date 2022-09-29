@@ -8,6 +8,7 @@ import { MonedaNominaService } from '../../services/moneda-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { MonedaNomina } from '../../interfaces/moneda-nomina.interfaces';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -26,7 +27,7 @@ export class TipoNominaComponent implements OnInit {
   tipoNominaRow!: TipoNomina | null;
 
   // Emisión de evento (cargar data monedas nóminas)
-  @Output() onGetDataGrupo = new EventEmitter();
+  @Output() onGetMonedaNomina = new EventEmitter();
 
   // Variable para manejar la suscripción
   subscriber!: Subscription;
@@ -75,22 +76,21 @@ export class TipoNominaComponent implements OnInit {
    * Obtener monedas nóminas relacionadas con una empresa y un tipo de nomina
    */
   loadMonedasNominas(): void {
-    console.log('load monedas');
     if ( !this.tipoNominaRow ) {
       return;
     }
-    // this.spinner.show(undefined, spinnerLight);
-    // this.puntajeEvaluacionService.getAllPuntajesByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
-    //   .subscribe({
-    //     next: (res: PuntajeEvaluacion[]) => {
-    //       this.onGetDataGrupo.emit(res);
-    //       this.spinner.hide();
-    //     },
-    //     error: (err) => {
-    //       this.spinner.hide();
-    //       this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-    //     }
-    //   });
+    this.spinner.show(undefined, spinnerLight);
+    this.monedaNominaService.getAllMonedasNominasByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
+      .subscribe({
+        next: (res: MonedaNomina[]) => {
+          this.onGetMonedaNomina.emit(res);
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
   /** Destrucción del observable*/
