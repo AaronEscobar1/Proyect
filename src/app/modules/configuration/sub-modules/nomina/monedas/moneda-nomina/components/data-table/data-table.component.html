@@ -26,7 +26,7 @@
                 <tr [pSelectableRow]="moneda">
                     <td>{{ moneda.fvigencia | date: 'YYYY-MM-dd' }}</td>
                     <td>{{ moneda.monedaid }}</td>
-                    <td>{{ moneda.cfMonedaTipoTb?.nombre }}</td>
+                    <td>{{ moneda.tipo?.nombre }}</td>
                     <td>{{ moneda.comentario }}</td>
                 </tr>
             </ng-template>

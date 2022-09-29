@@ -1,15 +1,14 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Company } from '../../../../empresa/shared-empresa/interfaces/empresa.interfaces';
 import { TipoNomina } from '../../../../empresa/shared-empresa/interfaces/nominas.interfaces';
-import { MonedaNomina, MonedaNominaCreate } from '../../interfaces/moneda-nomina.interfaces';
+import { MonedaNomina } from '../../interfaces/moneda-nomina.interfaces';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CompanyNominaService } from '../../../../empresa/shared-empresa/services/company-nomina.service';
 import { MonedaNominaService } from '../../services/moneda-nomina.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { TipoMoneda } from '../../../tipos-monedas/interfaces/tipo-moneda.interfaces';
-import { ObjectEventChange } from 'src/app/shared/interfaces/country-entity.interfaces';
-import { Dropdown } from '../../../../basica/sindicatos/interfaces/sindicatos.interfaces';
+import { Helpers } from 'src/app/shared/helpers/helpers';
 
 @Component({
   selector: 'app-modal-add-edit',
@@ -53,11 +52,12 @@ export class ModalAddEditComponent implements OnInit {
               private monedaNominaService: MonedaNominaService, 
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private helpers: Helpers) {
     this.form = this.fb.group({
       empresaid:  [ ],
       nominaid:   [ ],
-      fvigencia:  [  , [ Validators.required ]],
+      fvigencia:  [  , [ Validators.required, this.validateDate.bind(this) ]],
       monedaid:   [  , [ Validators.required, this.validatedId.bind(this) ]],
       comentario: [  , [ Validators.maxLength(256) ]]
     });
@@ -68,6 +68,7 @@ export class ModalAddEditComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
+      this.monedaSelect = '';
       this.form.reset();
       this.form.controls['fvigencia'].enable();
       this.form.controls['monedaid'].enable();
@@ -75,6 +76,14 @@ export class ModalAddEditComponent implements OnInit {
     }
     this.form.controls['fvigencia'].disable();
     this.form.controls['monedaid'].disable();
+    // Comprobar si el registro tiene fecha para establecerlo en el formulario y poder editar
+    if ( this.monedaNominaSelect && this.monedaNominaSelect.fvigencia ) {
+      this.monedaNominaSelect.fvigencia = new Date(this.monedaNominaSelect.fvigencia);
+    }
+    // Mostrar la descripción de la moneda en el formulario
+    if ( this.monedaNominaSelect && this.monedaNominaSelect.monedaid && this.monedaNominaSelect.tipo) {
+      this.monedaSelect = this.monedaNominaSelect.tipo.nombre;
+    }
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.monedaNominaSelect);
   }
@@ -99,6 +108,8 @@ export class ModalAddEditComponent implements OnInit {
     }
     // Obtener formulario
     let data: MonedaNomina = this.form.getRawValue();
+    // Formatear fecha para crear 
+    data.fvigencia = `${new Date(data.fvigencia).toISOString().slice(0, 10)}T00:00:00`;
     
     this.spinner.show();
 
@@ -123,6 +134,7 @@ export class ModalAddEditComponent implements OnInit {
       return;
     }
 
+    // Asignar idEmpresa e idNomina para crear
     data.empresaid = this.empresaRow.id;
     data.nominaid = this.nominaRow.tipnom;
     // Crear
@@ -162,6 +174,17 @@ export class ModalAddEditComponent implements OnInit {
              && this.form.invalid;
   }
 
+  // Mensajes de errores dinamicos
+  get fvigenciaMsgError(): string {
+    const errors = this.form.get('fvigencia')?.errors;
+    if ( errors?.required ) {
+      return 'La vigencia es obligatoria.';
+    } else if ( errors?.duplicated ) {
+      return 'La vigencia esta registrada.';
+    }
+    return '';
+  }
+
   // Mensajes de errores id
   get monedaidMsgError(): string {
     const errors = this.form.get('monedaid')?.errors;
@@ -171,6 +194,28 @@ export class ModalAddEditComponent implements OnInit {
       return 'La moneda ya existe.';
     }
     return '';
+  }
+
+  /**
+   * Validar fecha duplicada
+   * @param control 
+   * @returns ValidationErrors | null
+   */ 
+  validateDate(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    const fecha: Date = control.value;
+    // Fecha desde el formulario formateada
+    const fechaFormateada = this.helpers.formatDateCompleta(fecha);
+    const duplicated = this.monedasNominas.findIndex(val => {
+      const fecha: Date = new Date(val.fvigencia);
+      // Fecha desde base de datos formateada para poder validar
+      const fechaBackendFormateada = this.helpers.formatDateCompleta(fecha);
+      return fechaBackendFormateada === fechaFormateada;
+    });
+    if (duplicated > -1) {
+      return {'duplicated': true};
+    }
+    return null;
   }
 
   // Validar si esta duplicado el id 

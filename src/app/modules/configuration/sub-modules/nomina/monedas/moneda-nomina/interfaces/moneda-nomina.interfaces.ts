@@ -12,7 +12,7 @@ export interface MonedaNomina {
     // Comentario
     comentario:     string;
     // Atributo adicional de tipo de moneda
-    cfMonedaTipoTb: TipoMoneda;
+    tipo: TipoMoneda;
 }
 
 // Interfaces para crear registro

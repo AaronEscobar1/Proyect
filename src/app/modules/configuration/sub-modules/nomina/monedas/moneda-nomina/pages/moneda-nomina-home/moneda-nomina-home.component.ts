@@ -47,7 +47,7 @@ export class MonedaNominaHomeComponent implements OnInit {
    * Obtener monedas nominas por empresa y tipo de nomina
    * @param monedasNominasEvent: MonedaNomina[] monedas nominas
    */
-  getDataGrupo(monedasNominasEvent: MonedaNomina[]): void {
+  getMonedaNomina(monedasNominasEvent: MonedaNomina[]): void {
     this.monedasNominas = monedasNominasEvent;
   }
 

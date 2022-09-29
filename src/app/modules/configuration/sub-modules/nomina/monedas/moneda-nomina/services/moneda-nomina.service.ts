@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
-import { MonedaNominaUpdate, MonedaNomina, MonedaNominaCreate } from '../interfaces/moneda-nomina.interfaces';
+import { MonedaNominaUpdate, MonedaNomina } from '../interfaces/moneda-nomina.interfaces';
 
 
 @Injectable({
@@ -17,11 +17,11 @@ export class MonedaNominaService {
 
   // Endpoints de monedas nominas
   getAllMonedasNominasByEmpresaNomina(idEmpresa: string, idNomina: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}}/empresas/${idEmpresa}/nominas/${idNomina}/monedas`));
+    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/empresas/${idEmpresa}/nominas/${idNomina}/monedas`));
   }
 
   create(monedaNomina: MonedaNomina): Observable<any> {
-    const { empresaid, nominaid, cfMonedaTipoTb, ...monedaNominaCreate} = monedaNomina;
+    const { empresaid, nominaid, tipo, ...monedaNominaCreate } = monedaNomina;
     return this.http.post(this.helpers.getBasicEndPoint(`${this.url}/empresas/${empresaid}/nominas/${nominaid}/monedas`), monedaNominaCreate);
   }
 
