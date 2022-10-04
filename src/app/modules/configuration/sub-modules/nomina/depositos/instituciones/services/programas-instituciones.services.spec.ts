@@ -88,18 +88,19 @@ describe('NivelesEducativosServices', () => {
           "tipcta": "1",
           "descta": "CUENTA CORRIENTE",
       },
-      "cfTipoInstitutoFinanTb": {
-          "tipiCodtip": "01",
-          "descripcion": "BANCO COMERCIAL",
+      "paisEntidadFed": {
+        "codPais":     "1",
+        "codEntidad":  "3",
+        "nombre":      "VEN",
       },
-      "spiPaisEntidadFedTb": {
-          "codEntidad": "DC",
-          "codPais": "VEN",
-          "nombre": "DISTRITO CAPITAL",
-          "primaryKey": {
-              "codEntidad": "DC",
-              "codPais": "VEN"
-          }
+      "tipoInstitucion" : {
+        "idEmpresa": "93",
+        "codtip": "1",
+        "destip": "hola",
+        "nmClaseTipoInstitucionTb": {
+          "clatip": "01",
+          "descripcion": "hola"
+        } 
       },
       "idEmpresa": "93",
       "tipiCodtip": "01",

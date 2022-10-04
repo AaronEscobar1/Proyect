@@ -203,7 +203,7 @@ export class ModalAddEditCargoComponent implements OnInit {
           this.onLoadData.emit();
         },
         error: (err) => {
-          if ( err.error.detail.includes('Error en los datos de entrada.') ) {
+          if ( err.error.detail?.includes('Error en los datos de entrada.') ) {
             this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pueden repetir los tabuladores y los meses.', life: 3000});
             this.spinner.hide();
             return false;
@@ -229,7 +229,7 @@ export class ModalAddEditCargoComponent implements OnInit {
           this.onLoadData.emit();
         },
         error: (err) => {
-          if ( err.error.detail.includes('Error en los datos de entrada.') ) {
+          if ( err.error.detail?.includes('Error en los datos de entrada.') ) {
             this.messageService.add({severity: 'error', summary: 'Error', detail: 'No se pueden repetir los tabuladores y los meses.', life: 3000});
             this.spinner.hide();
            return false;

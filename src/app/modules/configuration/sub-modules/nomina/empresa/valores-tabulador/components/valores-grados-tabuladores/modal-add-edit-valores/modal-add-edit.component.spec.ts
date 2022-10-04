@@ -3,14 +3,14 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
-import { ModalAddEditComponent } from './modal-add-edit.component';
+import { ModalAddEditValoresComponent } from './modal-add-edit-valores.component';
 import { environment } from 'src/environments/environment';
 
 
 describe('ModalAddEditComponent', () => {
   let httpTestingController: HttpTestingController;
 
-  const URL = `${environment.api}/configuraciones/nominas/grados/empresas`;
+  const URL = `${environment.api}/configuraciones/nominas/valoresgrados`;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('ModalAddEditComponent', () => {
         FormsModule,
       ],
       declarations: [
-        ModalAddEditComponent
+        ModalAddEditValoresComponent
       ]
     }).compileComponents()
     
@@ -33,13 +33,13 @@ describe('ModalAddEditComponent', () => {
 
 
   it('Crear componente de Niveles Educativos Crear-Editar', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it('Inicializar el componente Forma de Crear', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Se valida que no haya cambios en el input isEdit
@@ -57,22 +57,26 @@ describe('ModalAddEditComponent', () => {
   });
 
   it('Inicializar el componente Forma de Editar', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Seteamos los datos que irian en el input
     app.isEdit = true; 
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
 
@@ -135,7 +139,7 @@ describe('ModalAddEditComponent', () => {
 
 
   it('Cerrando modal de Crear-Editar', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Llamamos al close modal para resetear todo
@@ -145,31 +149,42 @@ describe('ModalAddEditComponent', () => {
   });
 
   it('Probando el Guardado de Datos (Caso Verdadero)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
     
     // datos del formulario
     const data = {
-      "descrip": "hola",
-      "codOficial": "12",
-      "id": "1334",
-      "idEmpresa": "93"
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     new Date(),
+      'pastab':     12,
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
+      },
     }
 
     app.empresaRow = {
@@ -205,48 +220,83 @@ describe('ModalAddEditComponent', () => {
       ]
     }
 
+    app.gradoTabuladorSelect = {
+      "descrip": "hola",
+      "codOficial": "12",
+      "disabledGrado": false,
+      "eoGradoTbId": {
+        "id": "1234",
+        "idEmpresa": "93"  
+      },
+      "id": "1234",
+      "idEmpresa": "93"
+    }
+
     const resp = {"message":"Forma de pago creado."}
 
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.setValue(data)
     expect(app.form.valid).toEqual(true)
-    app.idMsgError
-    app.dessucMsgError
+    app.pastabMsgError
+    app.valtabMsgError
     
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/grados`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('POST');
 
   });
 
   it('Probando el Guardado de Datos (Caso Falso)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
     
     // datos del formulario
     const data = {
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     new Date(),
+      'pastab':     12,
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
+      },
+    }
+
+    app.gradoTabuladorSelect = {
       "descrip": "hola",
       "codOficial": "12",
-      "id": "1334",
+      "disabledGrado": false,
+      "eoGradoTbId": {
+        "id": "1234",
+        "idEmpresa": "93"  
+      },
+      "id": "1234",
       "idEmpresa": "93"
     }
 
@@ -297,34 +347,54 @@ describe('ModalAddEditComponent', () => {
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/grados`);
+    const fakeBackend = httpTestingController.expectOne(`${URL}`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('POST');
 
   });
 
   it('Probando el Editado de Datos (caso Verdadero)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
     
     // datos del formulario
     const data = {
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     new Date(),
+      'pastab':     12,
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
+        'descrip':     'string',
+        'codOficial':  'string',
+      },
+    }
+
+    app.gradoTabuladorSelect = {
       "descrip": "hola",
       "codOficial": "12",
       "disabledGrado": false,
@@ -372,44 +442,61 @@ describe('ModalAddEditComponent', () => {
     const resp = {"message":"Forma de pago creado."}
 
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['pastab'].disable();
+    app.form.controls['fecefe'].disable();
     app.form.reset(data)
-    console.log(app.form.valid)
     expect(app.form.valid).toEqual(true)
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/grados/1234/empresas/93`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/valoresgrados/empresas/93/1/2022-10-04T00:00:00/12`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('PUT');
-
-    // Reset hecho por la funcion
-    expect(app.gradoTabuladorSelect).toEqual(undefined);
   });
 
   it('Probando el Editado de Datos (Caso Falso)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
     
     // datos del formulario
     const data = {
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     new Date(),
+      'pastab':     12,
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
+        'descrip':     'string',
+        'codOficial':  'string',
+      },
+    }
+
+    app.gradoTabuladorSelect = {
       "descrip": "hola",
       "codOficial": "12",
       "disabledGrado": false,
@@ -463,140 +550,138 @@ describe('ModalAddEditComponent', () => {
 
 
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['pastab'].disable();
+    app.form.controls['fecefe'].disable();
     app.form.reset(data)
-    app.form.controls['descrip'].setValue("hola")
     expect(app.form.valid).toEqual(true)
 
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/grados/1234/empresas/93`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/valoresgrados/empresas/93/1/2022-10-04T00:00:00/12`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('PUT');
 
-    // Reset hecho por la funcion
-    expect(app.gradoTabuladorSelect).toEqual(undefined);
   });
 
   it('Validando el formulario (Caso Creado)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = false;
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
     
     // datos del formulario
     const data = {
-      "descrip": "hola",
-      "codOficial": "12",
-      "disabledGrado": false,
-      "eoGradoTbId": {
-        "id": "1234",
-        "idEmpresa": "93"  
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     '18-01-2001',
+      'pastab':     "",
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
+        'descrip':     'string',
+        'codOficial':  'string',
       },
-      "id": "1234",
-      "idEmpresa": "93"
     }
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
     expect(app.form.valid).toEqual(false)
-    app.idMsgError
+    app.pastabMsgError
     
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['id'].setValue("01234444444444444444444555555555555555444444444444444444")
+    app.form.controls['pastab'].setValue("01234444444444444444444555555555555555444444444444444444")
     expect(app.form.valid).toEqual(false)
-    app.idMsgError
+    app.pastabMsgError
 
-    // caso vacio
-    // Guardamos los datos en el formulario y lo comprobamos
-    app.form.reset(data)
-    app.form.controls['id'].setValue("")
-    expect(app.form.valid).toEqual(false)
-    app.idMsgError
-
-    // caso vacio con descripcion duplicada
-    // Guardamos los datos en el formulario y lo comprobamos
-    app.form.reset(data)
-    app.form.controls['id'].setValue("")
-    expect(app.form.valid).toEqual(false)
-    app.idMsgError
-
-    app.campoInvalid('id');
+    app.campoInvalid('pastab');
 
   });
   it('Validando el formulario (Caso Editado)', () => {
-    const fixture = TestBed.createComponent(ModalAddEditComponent);
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     // Variables de los inputs
     app.isEdit = true;
-    app.gradosTabulador = [
+    app.valoresGrados = [
       {
-        "descrip": "hola",
-        "codOficial": "12",
-        "disabledGrado": false,
-        "eoGradoTbId": {
-          "id": "1234",
-          "idEmpresa": "93"  
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
         },
-        "id": "1234",
-        "idEmpresa": "93"
       }
     ];
     
     // datos del formulario
     const data = {
-      "descrip": "hola",
-      "codOficial": "12",
-      "disabledGrado": false,
-      "eoGradoTbId": {
-        "id": "1234",
-        "idEmpresa": "93"  
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     '18-01-2001',
+      'pastab':     12,
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
       },
-      "id": "1234",
-      "idEmpresa": "93"
     }
 
     // caso repite
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['tabuCodtab'].disable();
     app.form.reset(data)
-    app.form.controls['descrip'].setValue("")
+    app.form.controls['valtab'].setValue("")
     console.log(app.form.value);
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.dessucMsgError
+    app.valtabMsgError
 
     // caso length
     // Guardamos los datos en el formulario y lo comprobamos
-    app.form.controls['id'].disable();
+    app.form.controls['tabuCodtab'].disable();
     app.form.reset(data)
-    app.form.controls['descrip'].setValue("12345678912345678912345678915555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555234")
+    app.form.controls['valtab'].setValue(12345678912345678912345678915555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555234)
     expect(app.form.valid).toEqual(false)
     expect(app.form.invalid).toEqual(true)
-    app.dessucMsgError
+    app.valtabMsgError
 
     app.save();
 
-    app.campoInvalid('descrip');
+    app.campoInvalid('valtab');
     
   });
 });

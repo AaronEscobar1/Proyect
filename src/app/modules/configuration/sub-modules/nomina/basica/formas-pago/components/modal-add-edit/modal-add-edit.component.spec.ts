@@ -49,7 +49,6 @@ describe('ModalAddEditComponent', () => {
     // Validamos los datos del formulario vacio
 
     expect(app.form.value.despag).toEqual(null)
-    expect(app.form.value.conins).toEqual(null)
     expect(app.form.value.codpag).toEqual(null)
     
     // Validamos el requiere de los campos
@@ -58,7 +57,7 @@ describe('ModalAddEditComponent', () => {
 
     // validamos que no exista el nivelSelect
 
-    expect(app.formaPagoSelected).toEqual(undefined);
+    expect(app.formaPagoSelect).toEqual(undefined);
   
   });
   
@@ -71,25 +70,21 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
           "despag": "DEPOSITO",
-          "conins": "2",
           "codpag": "2"
       }
     ];
-    app.formaPagoSelected = {
+    app.formaPagoSelect = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion
     expect(app.form.value.despag).toEqual("CHEQUE CONTINUO")
-    expect(app.form.value.conins).toEqual("4")
     expect(app.form.value.codpag).toEqual(undefined)
     expect(app.form.valid).toEqual(true)
   });
@@ -103,25 +98,21 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
           "despag": "DEPOSITO",
-          "conins": "2",
           "codpag": "2"
       }
     ];
-    app.formaPagoSelected = {
+    app.formaPagoSelect = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
     // Validacion
     expect(app.form.value.despag).toEqual("CHEQUE CONTINUO")
-    expect(app.form.value.conins).toEqual("4")
     expect(app.form.value.codpag).toEqual(undefined)
     expect(app.form.valid).toEqual(true)
   });
@@ -134,9 +125,8 @@ describe('ModalAddEditComponent', () => {
     // Llamamos al close modal para resetear todo
     app.closeModal()
     expect(app.form.value.despag).toEqual(null)
-    expect(app.form.value.conins).toEqual(null)
     expect(app.form.value.codpag).toEqual(null)
-    expect(app.formaPagoSelected).toEqual(undefined);
+    expect(app.formaPagoSelect).toEqual(undefined);
   });
 
   it('Probando el Guardado de Datos (Caso Verdadero)', () => {
@@ -148,12 +138,10 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
           "despag": "DEPOSITO",
-          "conins": "2",
           "codpag": "2"
       }
     ];
@@ -161,7 +149,6 @@ describe('ModalAddEditComponent', () => {
     // datos del formulario
     const data = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
 
@@ -190,20 +177,17 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
-          "despag": "DEPOSITO",
-          "conins": "2",
-          "codpag": "2"
+        "despag": "DEPOSITO",
+        "codpag": "2"
       }
     ];
 
     // datos del formulario
     const data = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
 
@@ -236,13 +220,11 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
-          "despag": "DEPOSITO",
-          "conins": "2",
-          "codpag": "2"
+        "despag": "DEPOSITO",
+        "codpag": "2"
       }
     ];
 
@@ -251,7 +233,6 @@ describe('ModalAddEditComponent', () => {
     // datos del formulario
     const data = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
 
@@ -271,9 +252,8 @@ describe('ModalAddEditComponent', () => {
 
     // Reset hecho por la funcion
     expect(app.form.value.despag).toEqual(null)
-    expect(app.form.value.conins).toEqual(null)
     expect(app.form.value.codpag).toEqual(undefined)
-    expect(app.formaPagoSelected).toEqual(undefined);
+    expect(app.formaPagoSelect).toEqual(undefined);
   });
 
   it('Probando el Editado de Datos (Caso Falso)', () => {
@@ -285,13 +265,11 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
-          "despag": "DEPOSITO",
-          "conins": "2",
-          "codpag": "2"
+        "despag": "DEPOSITO",
+        "codpag": "2"
       }
     ];
 
@@ -305,7 +283,6 @@ describe('ModalAddEditComponent', () => {
     // datos del formulario
     const data = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
 
@@ -323,9 +300,8 @@ describe('ModalAddEditComponent', () => {
 
     // Reset hecho por la funcion
     expect(app.form.value.despag).toEqual(data.despag)
-    expect(app.form.value.conins).toEqual(data.conins)
     expect(app.form.value.codpag).toEqual(undefined)
-    expect(app.formaPagoSelected).toEqual(undefined);
+    expect(app.formaPagoSelect).toEqual(undefined);
   });
 
   it('Validando el formulario (Caso Creado)', () => {
@@ -337,20 +313,17 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
-          "despag": "DEPOSITO",
-          "conins": "2",
-          "codpag": "2"
+        "despag": "DEPOSITO",
+        "codpag": "2"
       }
     ];
 
     // datos del formulario
     const data = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "4",
       "codpag": "3"
     };
 
@@ -385,13 +358,11 @@ describe('ModalAddEditComponent', () => {
 
     // Reset hecho por la funcion
     expect(app.form.value.despag).toEqual("DEPOSITO")
-    expect(app.form.value.conins).toEqual(data.conins)
     expect(app.form.value.codpag).toEqual('')
 
     app.campoInvalid('codpag');
-
-
   });
+
   it('Validando el formulario (Caso Editado)', () => {
     const fixture = TestBed.createComponent(ModalAddEditComponent);
     const app = fixture.componentInstance;
@@ -401,20 +372,17 @@ describe('ModalAddEditComponent', () => {
     app.formasPagos = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
-          "despag": "DEPOSITO",
-          "conins": "2",
-          "codpag": "2"
+        "despag": "DEPOSITO",
+        "codpag": "2"
       }
     ];
 
     // datos del formulario
     const data = {
       "despag": "CHEQUE CONTINUO",
-      "conins": "1",
       "codpag": "1"
     };
 
@@ -449,7 +417,6 @@ describe('ModalAddEditComponent', () => {
 
     // Reset hecho por la funcion
     expect(app.form.value.despag).toEqual('')
-    expect(app.form.value.conins).toEqual(data.conins)
     expect(app.form.value.coddes).toEqual(undefined)
 
     app.campoInvalid('despag');

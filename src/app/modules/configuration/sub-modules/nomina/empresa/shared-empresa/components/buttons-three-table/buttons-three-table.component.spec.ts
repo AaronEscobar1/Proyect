@@ -34,7 +34,6 @@ describe('ButtonsComponent', () => {
     const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
-    spyOn(app.onEditRow, 'emit').and.callThrough();
 
     app.selectRow = {
       "originalEvent": {
@@ -51,19 +50,14 @@ describe('ButtonsComponent', () => {
       "type": "row"
     }
     
-    const nativeElement = fixture.debugElement.nativeElement.querySelector('#edit');;
-    nativeElement.dispatchEvent(new Event('click'));    
-    
-    fixture.detectChanges();
-    
-    expect(app.onEditRow.emit).toHaveBeenCalledWith(app.selectRow);
-    fixture.detectChanges();
+    app.editSelectRow()
+
+    fixture.detectChanges()
   });
   it('delete Row Seleccionada ', () => {
     const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
     
-    spyOn(app.onDeleteRow, 'emit').and.callThrough();
 
     app.selectRow = {
       "originalEvent": {
@@ -80,42 +74,33 @@ describe('ButtonsComponent', () => {
       "type": "row"
     }
     
-    const nativeElement = fixture.debugElement.nativeElement.querySelector('#delete');;
-    nativeElement.dispatchEvent(new Event('click'));    
-    
-    fixture.detectChanges();
-    
-    expect(app.onDeleteRow.emit).toHaveBeenCalledWith(app.selectRow);
+    app.deleteRow()
+
+    fixture.detectChanges()
   });
   it('refresh', () => {
     const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
-    
-    spyOn(app.onRefresh, 'emit').and.callThrough();
-    
-    const nativeElement = fixture.debugElement.nativeElement.querySelector('#refresh');;
-    nativeElement.dispatchEvent(new Event('click')); 
-    fixture.detectChanges();   
+        
+    app.refresh()
+
+    fixture.detectChanges() 
   });
   it('print', () => {
     const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
-    
-    spyOn(app.onRefresh, 'emit').and.callThrough();
-    
-    const nativeElement = fixture.debugElement.nativeElement.querySelector('#print');;
-    nativeElement.dispatchEvent(new Event('click'));
-    fixture.detectChanges();    
+        
+    app.openModalPrint()
+
+    fixture.detectChanges()
   });
   it('add', () => {
     const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
     const app = fixture.componentInstance;
-    
-    spyOn(app.onRefresh, 'emit').and.callThrough();
-    
-    const nativeElement = fixture.debugElement.nativeElement.querySelector('#add');;
-    nativeElement.dispatchEvent(new Event('click'));    
-    fixture.detectChanges();
+        
+    app.openModalCreate()
+
+    fixture.detectChanges()
   });
   it('ngOnInit row', inject([CompanyNominaService], (service: CompanyNominaService) => {
     const fixture = TestBed.createComponent(ButtonsThreeTableComponent);
@@ -135,6 +120,8 @@ describe('ButtonsComponent', () => {
       "type": "row"
     }
 
+    fixture.detectChanges()
+    
     spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
     
     app.ngOnInit();

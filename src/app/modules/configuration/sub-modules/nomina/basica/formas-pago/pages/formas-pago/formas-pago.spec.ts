@@ -131,16 +131,15 @@ describe('NivelesEducativosComponent', () => {
     // seteamos data simulate
     const data: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
 
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.formaPago).toBe(undefined);
+    expect(app.formaPagoSelect).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.formaPago).toBe(data);
+    expect(app.formaPagoSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
     expect(app.titleForm).toBe('Editar formas de pago');
     expect(app.createModal).toBeTrue();  
@@ -152,26 +151,25 @@ describe('NivelesEducativosComponent', () => {
 
     const data: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
     
     // Simulamos el proceso de abrir el modal de Edicion
     expect(app.isEdit).toBeFalse();
-    expect(app.formaPago).toBe(undefined);
+    expect(app.formaPagoSelect).toBe(undefined);
     app.editRow(data);
     fixture.detectChanges();
-    expect(app.formaPago).toBe(data);
+    expect(app.formaPagoSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
     expect(app.titleForm).toBe('Editar formas de pago');
     expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion
     expect(app.isEdit).toBeTrue();
-    expect(app.formaPago).toBe(data);
+    expect(app.formaPagoSelect).toBe(data);
     app.closeModal();
     fixture.detectChanges();
-    expect(app.formaPago).toBe(undefined);
+    expect(app.formaPagoSelect).toBe(undefined);
     expect(app.isEdit).toBeFalse();
     expect(app.createModal).toBeFalse(); 
   })
@@ -180,7 +178,6 @@ describe('NivelesEducativosComponent', () => {
 
     const data: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
 
@@ -216,7 +213,6 @@ describe('NivelesEducativosComponent', () => {
 
     const data: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
 
@@ -250,27 +246,22 @@ describe('NivelesEducativosComponent', () => {
     const data: FormasPago[] = [
       {
         "despag": "EFECTIVO",
-        "conins": "1",
         "codpag": "1"
       },
       {
         "despag": "EFECTIVO",
-        "conins": "2",
         "codpag": "2"
       },
       {
         "despag": "EFECTIVO",
-        "conins": "3",
         "codpag": "3"
       },
       {
         "despag": "EFECTIVO",
-        "conins": "4",
         "codpag": "4"
       },
       {
         "despag": "EFECTIVO",
-        "conins": "5",
         "codpag": "5"
       }
     ]
