@@ -382,6 +382,108 @@ describe('NivelesEducativosComponent', () => {
 
   })
 
+  it('Cargar procesos (caso fallido)', ()=>{
+    const fixture = TestBed.createComponent(ModalProcesosComponent);
+    const app = fixture.componentInstance;
+
+    const error = new ErrorEvent('', {
+      error : new Error('Error'),
+      filename : '',
+      lineno: 404,
+      message: "Error",   
+    });
+
+    app.loadProcesos();
+    fixture.detectChanges(); 
+    
+    const fakeBackend = httpTestingController.match(`${environment.api}/configuraciones/nominas/procesos`); 
+    fakeBackend[0].error(error);
+    expect(fakeBackend[0].request.method).toBe('GET'); 
+
+  })
+
+  it('Cargar procesos (caso verdadero)', ()=>{
+    const fixture = TestBed.createComponent(ModalProcesosComponent);
+    const app = fixture.componentInstance;
+
+    const resp = [
+      {
+          "idEmpresa": "94",
+          "idNomina": "0004",
+          "codStat": "AUA",
+          "idConcepto": "1",
+          "dialim": 365,
+          "usrcre": "USR",
+          "feccre": "2022-08-17T16:43:17",
+          "usract": "USR",
+          "fecact": "2022-08-17T17:30:16",
+          "nmTipoSuspencionVacacTb": {
+              "susvac": "1",
+              "descripcion": "Salida",
+              "usrcre": null,
+              "feccre": null,
+              "usract": null,
+              "fecact": null,
+              "primaryKey": {
+                  "susvac": "1"
+              }
+          }
+      },
+      {
+          "idEmpresa": "94",
+          "idNomina": "0004",
+          "codStat": "AUA",
+          "idConcepto": "2",
+          "dialim": 2,
+          "usrcre": "USR",
+          "feccre": "2022-08-17T17:08:10",
+          "usract": "USR",
+          "fecact": "2022-08-17T17:20:42",
+          "nmTipoSuspencionVacacTb": {
+              "susvac": "0",
+              "descripcion": "No aplica",
+              "usrcre": null,
+              "feccre": null,
+              "usract": null,
+              "fecact": null,
+              "primaryKey": {
+                  "susvac": "0"
+              }
+          }
+      },
+      {
+          "idEmpresa": "94",
+          "idNomina": "0004",
+          "codStat": "AUA",
+          "idConcepto": "3",
+          "dialim": 3,
+          "usrcre": "USR",
+          "feccre": "2022-08-17T17:17:51",
+          "usract": null,
+          "fecact": null,
+          "nmTipoSuspencionVacacTb": {
+              "susvac": "0",
+              "descripcion": "No aplica",
+              "usrcre": null,
+              "feccre": null,
+              "usract": null,
+              "fecact": null,
+              "primaryKey": {
+                  "susvac": "0"
+              }
+          }
+      }
+    ]
+
+    app.loadProcesos();
+    fixture.detectChanges(); 
+
+    const fakeBackend = httpTestingController.match(`${environment.api}/configuraciones/nominas/procesos`);
+    fakeBackend[0].flush(resp);
+    expect(fakeBackend[0].request.method).toBe('GET');
+
+  })
+
   it('Cargar SituacionVacacional (caso fallido)', ()=>{
     const fixture = TestBed.createComponent(ModalProcesosComponent);
     const app = fixture.componentInstance;

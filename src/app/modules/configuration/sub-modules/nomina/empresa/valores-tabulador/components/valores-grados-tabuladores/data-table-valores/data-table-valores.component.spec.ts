@@ -1,13 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
-import { GradosTabuladorService } from '../../../services/grados-tabulador.service';
 
-import { DataTableComponent } from './data-table.component';
+import { DataTableValoresComponent } from './data-table-valores.component';
 
 describe('DataTableComponent', () => {
   let httpTestingController: HttpTestingController;
-  let service: GradosTabuladorService;
+  let service: CompanyNominaService;
 
   beforeEach( waitForAsync  (() => {
     TestBed.configureTestingModule({
@@ -15,23 +14,23 @@ describe('DataTableComponent', () => {
         HttpClientTestingModule,
       ],
       declarations: [
-        DataTableComponent
+        DataTableValoresComponent
       ]
     }).compileComponents();
     
     // Peticiones mock
     httpTestingController = TestBed.inject(HttpTestingController);
-    service = TestBed.inject(GradosTabuladorService);
+    service = TestBed.inject(CompanyNominaService);
   }));
 
   it('Crear componente de Motivos Finiquito DataTable Component correctamente', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
   it('Inicializar el componente DataTable', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
@@ -39,11 +38,11 @@ describe('DataTableComponent', () => {
   });
 
   it('Obtener Row Seleccionada ', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowGrado$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
@@ -63,16 +62,16 @@ describe('DataTableComponent', () => {
     }
 
     app.onRowSelect(log)
-    expect(service.selectRowGrado$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
 
   });
 
   it('Obtener Row Deseleccionada ', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowGrado$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     const nativeElement = fixture.nativeElement;
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
@@ -81,11 +80,11 @@ describe('DataTableComponent', () => {
   });
 
   it('Obtener Row Seleccionada ', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowGrado$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
@@ -105,31 +104,31 @@ describe('DataTableComponent', () => {
     }
 
     app.onRowSelect(log)
-    expect(service.selectRowGrado$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
 
   });
 
   it('Obtener Row Deseleccionada ', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowGrado$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     const nativeElement = fixture.nativeElement;
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
     app.onRowUnselect()
-    expect(service.selectRowGrado$.emit).toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).toHaveBeenCalledWith(null);
 
   });
 
   it('Obtener Row Seleccionada ', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 
-    spyOn(service.selectRowGrado$, 'emit').and.callThrough();
+    spyOn(service.selectRowThirdTable$, 'emit').and.callThrough();
 
     expect(app.columns.length).toBeGreaterThanOrEqual(0)
 
@@ -149,12 +148,12 @@ describe('DataTableComponent', () => {
     }
 
     app.onRowSelect(log)
-    expect(service.selectRowGrado$.emit).not.toHaveBeenCalledWith(null);
+    expect(service.selectRowThirdTable$.emit).not.toHaveBeenCalledWith(null);
 
   });
 
   it('Obtener Row Deseleccionada ', () => {
-    const fixture = TestBed.createComponent(DataTableComponent);
+    const fixture = TestBed.createComponent(DataTableValoresComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
 

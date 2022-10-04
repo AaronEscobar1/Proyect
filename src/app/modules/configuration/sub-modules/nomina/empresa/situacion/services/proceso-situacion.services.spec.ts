@@ -334,7 +334,8 @@ describe('NivelesEducativosServices', () => {
       "statCodsta": "AUA",
       "procTippro": 1,
       "tipsub": 2,
-      "idTableTemporal": 11
+      "idTableTemporal": 11,
+      "procesoString": "Atributo"
     }
 
     const id = '1'
@@ -364,7 +365,8 @@ describe('NivelesEducativosServices', () => {
       "statCodsta": "AUA",
       "procTippro": 1,
       "tipsub": 2,
-      "idTableTemporal": 11
+      "idTableTemporal": 11,
+      "procesoString": "Atributo"
     }
 
     const procesoCreate = {
@@ -374,6 +376,7 @@ describe('NivelesEducativosServices', () => {
       "idNomina": "0004",
       "statCodsta": "AUA",
       "procTippro": 1,
+      "procesoString": "Atributo",
       "tipsub": 2
     }
 
@@ -406,7 +409,8 @@ describe('NivelesEducativosServices', () => {
       "statCodsta": "AUA",
       "procTippro": 1,
       "tipsub": 2,
-      "idTableTemporal": 11
+      "idTableTemporal": 11,
+      "procesoString": "Atributo"
     }
 
     const procesoUpdate = {
@@ -416,7 +420,8 @@ describe('NivelesEducativosServices', () => {
       "idNomina": "0004",
       "statCodsta": "AUA",
       "procTippro": 1,
-      "tipsub": 2
+      "tipsub": 2,
+      "procesoString": "Atributo"
     }
 
     const id = '99'
@@ -448,7 +453,8 @@ describe('NivelesEducativosServices', () => {
       "statCodsta": "AUA",
       "procTippro": 1,
       "tipsub": 2,
-      "idTableTemporal": 11
+      "idTableTemporal": 11,
+      "procesoString": "Atributo"
     }
 
     const id = '99'
@@ -463,6 +469,27 @@ describe('NivelesEducativosServices', () => {
     getHttpClientSpy.get.and.returnValue(throwError(error404));
 
     nivelesEducativosService.delete(proceso)
+      .subscribe((resp) => {
+      }, (error) => {
+        expect(error.status).toEqual(500);
+        done();
+      });
+  }));
+
+  it('Deberia retornar mensaje de error: 404 (Id inexistente)', waitForAsync( (done: DoneFn) => {
+
+    const id = '99'
+    const error404 = new HttpErrorResponse({
+      error: 'Bad Id',
+      status: 404,
+      statusText: 'Not Found'
+    });
+
+    expect(id).toContain('99')
+
+    getHttpClientSpy.get.and.returnValue(throwError(error404));
+
+    nivelesEducativosService.getSubProcesosByProceso(12)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);

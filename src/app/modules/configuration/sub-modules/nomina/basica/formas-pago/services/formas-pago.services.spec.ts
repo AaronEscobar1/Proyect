@@ -5,7 +5,7 @@ import { of, throwError } from 'rxjs';
 
 // Servicios y componentes requeridos
 import { FormasPagoService } from './formas-pago.service';
-import { FormasPago } from '../interfaces/formas-pago.interfaces';
+import { FormasPago, FormasPagoUpdate } from '../interfaces/formas-pago.interfaces';
 
 describe('NivelesEducativosServices', () => {
 
@@ -126,7 +126,6 @@ describe('NivelesEducativosServices', () => {
     const token = 'xxxxx'
     const query: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     } 
     const mockResult: any = {
@@ -149,7 +148,6 @@ describe('NivelesEducativosServices', () => {
     const token = 'xxxxx'
     const query: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
 
@@ -174,8 +172,10 @@ describe('NivelesEducativosServices', () => {
     const token = 'xxxxx'
     const query: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
+    }
+    const queryUpdate: FormasPagoUpdate = {
+      "despag": "EFECTIVO",
     }
 
     const mockResult: any = {
@@ -186,7 +186,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    formasPagoService.update(query)
+    formasPagoService.update(query, queryUpdate)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -198,9 +198,13 @@ describe('NivelesEducativosServices', () => {
     const token = 'xxxxx'
     const query: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
+
+    const queryUpdate: FormasPagoUpdate = {
+      "despag": "EFECTIVO",
+    }
+
     const mockResult: any = {
       response: false,
     };
@@ -209,7 +213,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(throwError(mockResult));
 
-    formasPagoService.update(query)
+    formasPagoService.update(query, queryUpdate)
       .subscribe((resp) => {
       }, (error) => {
         expect(error.status).toEqual(500);
@@ -222,7 +226,6 @@ describe('NivelesEducativosServices', () => {
     const token = 'xxxxx'
     const query: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
 
@@ -234,7 +237,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    formasPagoService.delete(query.codpag)
+    formasPagoService.delete(query)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
@@ -246,7 +249,6 @@ describe('NivelesEducativosServices', () => {
     const token = 'xxxxx'
     const query: FormasPago = {
       "despag": "EFECTIVO",
-      "conins": "1",
       "codpag": "1"
     }
 
@@ -258,7 +260,7 @@ describe('NivelesEducativosServices', () => {
 
     putHttpClientSpy.put.and.returnValue(of(mockResult));
 
-    formasPagoService.delete(query.codpag)
+    formasPagoService.delete(query)
       .subscribe((resp) => {
         expect(resp).toEqual(mockResult);
         done();
