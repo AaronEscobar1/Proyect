@@ -12,16 +12,17 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class MotivosFiniquitoComponent implements OnInit {
 
-  // Objetos
-  motivosFiniquito    : MotivosFiniquito[] = [];
-  motivoFiniquito!    : MotivosFiniquito | undefined;
-  classificationMotive: ClasificacionMotivo[] = [];
+  // Objetos de motivos de finiquitos
+  motivosFiniquito: MotivosFiniquito[] = [];
+
+  // Objeto seleccionado para editar
+  motivoFiniquito!: MotivosFiniquito | undefined;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar motivos de finiquito';
+  titleForm  : string = 'Agregar motivo de finiquito';
   createModal: boolean = false;
   printModal : boolean = false;
 
@@ -35,6 +36,9 @@ export class MotivosFiniquitoComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar motivos de finiquitos
+   */
   loadData(): void {
     this.spinner.show();
     this.motivosFiniquitoService.getAll()
@@ -64,7 +68,7 @@ export class MotivosFiniquitoComponent implements OnInit {
   }
 
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar motivos de finiquito' : 'Agregar motivos de finiquito';
+    this.titleForm = this.isEdit ? 'Editar motivo de finiquito' : 'Agregar motivo de finiquito';
     this.createModal = true;
   }
 

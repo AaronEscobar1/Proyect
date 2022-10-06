@@ -12,8 +12,10 @@ import { ProcesosService } from '../../services/procesos.service';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de procesos para validaciones
   @Input() procesos!: Procesos[];
+
+  // Objeto seleccionado para editar
   @Input() procesoSelect!: Procesos | undefined;
 
   // Banderas
@@ -39,9 +41,7 @@ export class ModalAddEditComponent implements OnInit {
           tippro: ['', [ Validators.required, Validators.pattern('[0-9]{1,2}'), this.validatedId.bind(this) ]],
           nompro: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this)]],
           nomadi: [''],
-          nodefi: [ false ],
-          // codsec:  ['', [ Validators.required, Validators.maxLength(1) ]],
-          // dessec:  ['', [ Validators.required, Validators.maxLength(30) ]],
+          nodefi: [ false ]
       });
   }
 

@@ -13,10 +13,11 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class CentrosMedicosComponent implements OnInit {
 
-  // Objetos
+  // Objetos de centros médicos
   centrosMedicos: CentrosMedicos[] = [];
+
+  // Objeto seleccionado para editar
   centrosMedicosSelect: CentrosMedicos | undefined;
-  typesFile     : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -36,6 +37,9 @@ export class CentrosMedicosComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar centros médicos
+   */
   loadData() {
     this.spinner.show();
     this.centrosMedicosService.getAll()

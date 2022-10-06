@@ -12,8 +12,10 @@ import { CategoriesService } from '../../services/categories.service';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de categorias para validaciones
   @Input() categories!: Categories[];
+
+  // Objeto seleccionado para editar
   @Input() categoriesSelect!: Categories | undefined;
 
   // Banderas
@@ -35,10 +37,10 @@ export class ModalAddEditComponent implements OnInit {
               private messageService: MessageService,
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
-        this.form = this.fb.group({
-          codcat: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
-          descat: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
-        });
+    this.form = this.fb.group({
+      codcat: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
+      descat: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]]
+    });
   }
 
   ngOnInit(): void {

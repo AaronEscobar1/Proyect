@@ -14,13 +14,11 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class ProcesosComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
-  // Objetos
+  // Objeto de procesos
   procesos: Procesos[] = [];
+
+  // Objeto seleccionado para editar
   procesoSelect: Procesos | undefined;
-  typesFile  : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -43,6 +41,9 @@ export class ProcesosComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar procesos
+   */
   loadData(): void {
     this.spinner.show();
     this.procesosService.getAll()
@@ -90,7 +91,7 @@ export class ProcesosComponent implements OnInit {
    editRow(proceso: Procesos): void {
     this.isEdit = true;
     // Seteamos los valores del row seleccionado al formulario
-    this.procesoSelect = proceso
+    this.procesoSelect = proceso;
     this.openModalCreate();
   }
 

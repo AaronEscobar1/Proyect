@@ -12,8 +12,10 @@ import { MotivosCambiosService } from '../../services/motivos-cambios.service';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de motivos de cambios
   @Input() motivosCambios!: MotivosCambios[];
+
+  // Objeto seleccionado para editar
   @Input() motivoCambioSelect!: MotivosCambios | undefined;
 
   // Banderas
@@ -37,7 +39,7 @@ export class ModalAddEditComponent implements OnInit {
               private selectRowService: SelectRowService) {
     this.form = this.fb.group({
       codcam: ['', [ Validators.required, Validators.maxLength(10), this.validatedId.bind(this) ]],
-      descam: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesc.bind(this) ]],
+      descam: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesc.bind(this) ]]
     });
   }
 

@@ -12,8 +12,10 @@ import { ClasificacionOficialService } from '../../services/clasificacion-oficia
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de clasificación oficial para validaciones
   @Input() officialClassification!: OfficialClassification[];
+
+  // Objeto seleccionado para editar
   @Input() officialClassificationSelect!: OfficialClassification | undefined;
 
   // Banderas
@@ -59,7 +61,7 @@ export class ModalAddEditComponent implements OnInit {
    * Metodo para guardar y actualizar registros
    * @returns void
    */
-   save(): void {
+  save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -114,7 +116,7 @@ export class ModalAddEditComponent implements OnInit {
   /**
    * VALIDACIONES DEL FORMULARIO REACTIVO
    */
-   campoInvalid(campo: string) {
+  campoInvalid(campo: string) {
     return (this.form.controls[campo].errors) 
             && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
               && this.form.invalid;

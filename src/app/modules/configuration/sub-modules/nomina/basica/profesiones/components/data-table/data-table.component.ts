@@ -10,7 +10,7 @@ import { Profession } from '../../interfaces/professions.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() professions!: Profession[];
+  @Input() professions: Profession[] = [];
 
   // Table
   columns: TableHead[] = [];

@@ -172,7 +172,7 @@ export class ModalAddEditComponent implements OnInit {
                                               null;
   }
 
-  // Validar que cumpla con la expresión regular 12 numeros enteros y 10 decimales maximo
+  // Validar que cumpla con la expresión regular 3 numeros enteros y 10 decimales maximo
   validateFactor(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
     let factorPattern = new RegExp(/^([0-9]{1,3})(\.[0-9]{1,10})?$/g);

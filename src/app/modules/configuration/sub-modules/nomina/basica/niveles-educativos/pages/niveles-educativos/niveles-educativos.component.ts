@@ -13,15 +13,17 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class NivelesEducativosComponent implements OnInit {
 
-  // Objetos
+  // Objeto de niveles educativos
   niveles: NivelesEducativos[] = [];
+
+  // Objeto seleccionado para editar
   nivel! : NivelesEducativos | undefined;
   
   // Banderas
   isEdit : boolean = false;
   
   // Modales
-  titleForm      : string = 'Agregar niveles educativos';
+  titleForm      : string = 'Agregar nivel educativo';
   addNivelModal  : boolean = false;
   printNivelModal: boolean = false;
   
@@ -36,7 +38,10 @@ export class NivelesEducativosComponent implements OnInit {
     this.loadData();
   }
 
-  loadData(){
+  /**
+   * Cargar data de niveles educativos
+   */
+  loadData() {
     this.spinner.show();
     this.nivelesServices.getNivelesAll()
       .subscribe({
@@ -61,7 +66,7 @@ export class NivelesEducativosComponent implements OnInit {
   
   openModalCreate(): void {
     this.isEdit = false;
-    this.titleForm = 'Agregar niveles educativos';
+    this.titleForm = 'Agregar nivel educativo';
     this.addNivelModal = true;
   }
 
@@ -78,7 +83,7 @@ export class NivelesEducativosComponent implements OnInit {
 
   editRow(nivel: NivelesEducativos) {
     this.isEdit = true;
-    this.titleForm = 'Editar niveles educativos';
+    this.titleForm = 'Editar nivel educativo';
     this.nivel = nivel;
     this.addNivelModal = true;
   }

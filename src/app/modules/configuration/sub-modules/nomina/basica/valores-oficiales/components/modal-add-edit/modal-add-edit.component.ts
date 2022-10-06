@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
@@ -12,10 +12,14 @@ import { Countrys, ValorOficial } from '../../interfaces/valor-oficial.interface
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de valores oficiales para validaciones
   @Input() valoresOficiales: ValorOficial[] = [];
-  @Input() countrys: Countrys[] = [];
+  
+  // Objeto seleccionado para editar
   @Input() valoresSelect!: ValorOficial | undefined;
+
+  // Objeto de paises
+  @Input() countrys: Countrys[] = [];
 
   // Banderas
   @Input() createModal!: boolean;
@@ -36,12 +40,12 @@ export class ModalAddEditComponent implements OnInit {
               private messageService: MessageService,
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
-      this.form = this.fb.group({
-          id    : ['', [ Validators.required ]],
-          paisId: ['', [ Validators.required ]],
-          fecefe: ['', [ Validators.required ]],
-          valor : ['', [ Validators.required, Validators.maxLength(10) ]],
-      });
+    this.form = this.fb.group({
+        id    : ['', [ Validators.required ]],
+        paisId: ['', [ Validators.required ]],
+        fecefe: ['', [ Validators.required ]],
+        valor : ['', [ Validators.required, this.validateValor.bind(this) ]]
+    });
   }
 
   ngOnInit(): void {
@@ -66,7 +70,7 @@ export class ModalAddEditComponent implements OnInit {
    * Metodo para guardar y actualizar registros
    * @returns void
    */
-   save(): void {
+  save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -162,9 +166,19 @@ export class ModalAddEditComponent implements OnInit {
     const errors = this.form.get('valor')?.errors;
     if ( errors?.required ) {
       return 'El valor es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'El valor es de longitud máxima de 10 dígitos.';
+    } else if ( errors?.patternError ) {
+      return 'El valor es de longitud de 14 enteros y 5 decimales, formato númerico.';
     }
     return '';
   }
+
+  // Validar que cumpla con la expresión regular 14 numeros enteros y 5 decimales máximo
+  validateValor(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let valorPattern = new RegExp(/^([0-9]{1,14})(\.[0-9]{1,5})?$/g);
+    return !valorPattern.test(control.value) ? 
+                    {'patternError': true } :
+                    null;
+  }
+
 }

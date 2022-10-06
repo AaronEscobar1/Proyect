@@ -13,7 +13,7 @@ import { FormasPagoService } from '../../services/formas-pago.service';
 export class ModalAddEditComponent implements OnInit {
 
   // Objeto para validaciones de valores duplicados
-  @Input() formasPagos!: FormasPago[];
+  @Input() formasPagos: FormasPago[] = [];
 
   // Variable de seleccion para editar
   @Input() formaPagoSelect!: FormasPago | undefined;

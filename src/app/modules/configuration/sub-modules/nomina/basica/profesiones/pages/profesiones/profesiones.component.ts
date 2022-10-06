@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProfesionesService } from '../../services/profesiones.service';
-import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { Profession } from '../../interfaces/professions.interfaces';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
@@ -15,19 +13,17 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class ProfesionesComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
-  // Objetos
+  // Objetos de profesiones
   professions: Profession[] = [];
+
+  // Objeto seleccionado para editar
   professionSelect: Profession | undefined;
-  typesFile  : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar profesiones';
+  titleForm  : string = 'Agregar profesión';
   createModal: boolean = false;
   printModal : boolean = false;
 
@@ -41,6 +37,9 @@ export class ProfesionesComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar profesiones
+   */
   loadData() {
     this.spinner.show();
     this.profesionesService.getAll()
@@ -66,7 +65,7 @@ export class ProfesionesComponent implements OnInit {
   }
 
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar profesiones' : 'Agregar profesiones';
+    this.titleForm = this.isEdit ? 'Editar profesión' : 'Agregar profesión';
     this.createModal = true;
   }
   
@@ -87,7 +86,7 @@ export class ProfesionesComponent implements OnInit {
    */
   editRow(profesion: Profession): void {
     this.isEdit = true;
-    this.professionSelect = profesion
+    this.professionSelect = profesion;
     this.openModalCreate();
   }
   

@@ -12,9 +12,14 @@ import { MotivosFiniquitoService } from '../../services/motivos-finiquito.servic
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
-  @Input() motivosFiniquito!: MotivosFiniquito[];
+  // Objetos de motivos de finiquitos
+  @Input() motivosFiniquito : MotivosFiniquito[] = [];
+
+  // Objeto seleccionado para editar
   @Input() motivoSelect!: MotivosFiniquito | undefined;
+
+  // Objetos de clasificación de motivo
+  classificationMotive: ClasificacionMotivo[] = [];
 
   // Banderas
   @Input() createModal!: boolean;
@@ -29,9 +34,6 @@ export class ModalAddEditComponent implements OnInit {
 
   // Formulario reactivo
   form!: FormGroup;
-
-  // Objetos
-  classificationMotive: ClasificacionMotivo[] = [];
 
   constructor(private motivosFiniquitoService: MotivosFiniquitoService, 
               private spinner: NgxSpinnerService,

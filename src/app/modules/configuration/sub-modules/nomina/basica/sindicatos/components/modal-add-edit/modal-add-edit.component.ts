@@ -13,13 +13,19 @@ import { Countrys, Dropdown, FederalEntities, ObjectEventChange, Sindicatos } fr
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
-  @Input() sindicatos!        : Sindicatos[];
-  @Input() sindicatosSelect!  : Sindicatos | undefined;
-  @Input() countrys!          : Countrys[] ;
+  // Objetos de sindicatos para validaciones
+  @Input() sindicatos!: Sindicatos[];
 
-  // Objetos y atributos
-  federalEntities!   : FederalEntities[] ;
+  // Objeto seleccionado para editar
+  @Input() sindicatosSelect!: Sindicatos | undefined;
+
+  // Objeto de paises
+  @Input() countrys!: Countrys[];
+
+  // Objetos de entidades federales
+  federalEntities!: FederalEntities[];
+
+  // Variables para mostrar en el formulario
   countrySelect      : string = '';
   federalEntitySelect: string = '';
 
@@ -94,7 +100,7 @@ export class ModalAddEditComponent implements OnInit {
    * Metodo para guardar y actualizar registros
    * @returns void
    */
-   save(): void {
+  save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -162,7 +168,7 @@ export class ModalAddEditComponent implements OnInit {
   /**
    * Limpia el campo país que se muestra en el formulario
    */
-   clearCountrySelect() {
+  clearCountrySelect() {
     this.clearEntitySelect();
     this.federalEntities = [];
     this.form.controls['edoCodedo'].disable();
