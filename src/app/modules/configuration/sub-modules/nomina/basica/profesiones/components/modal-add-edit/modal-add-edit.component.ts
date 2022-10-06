@@ -12,8 +12,10 @@ import { Profession } from '../../interfaces/professions.interfaces';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de profesiones
   @Input() profesiones!: Profession[];
+
+  // Objeto seleccionado para editar 
   @Input() profesionSelect!: Profession | undefined;
 
   // Banderas

@@ -12,8 +12,10 @@ import { MotivosCambiosService } from '../../services/motivos-cambios.service';
 })
 export class MotivosCambiosComponent implements OnInit {
 
-  // Objetos
+  // Objetos de motivos de cambios
   motivosCambios    : MotivosCambios[] = [];
+
+  // Objeto seleccionado para editar
   motivoCambioSelect: MotivosCambios | undefined;
 
   // Banderas
@@ -34,6 +36,9 @@ export class MotivosCambiosComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar motivos de cambios
+   */
   loadData() {
     this.spinner.show();
     this.motivosCambiosService.getAll()

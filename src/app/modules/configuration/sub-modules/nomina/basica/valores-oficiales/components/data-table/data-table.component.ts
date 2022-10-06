@@ -10,7 +10,7 @@ import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() valoresOficiales!: ValorOficial[];
+  @Input() valoresOficiales: ValorOficial[] = [];
 
   // Table
   columns: TableHead[] = [];
@@ -19,10 +19,10 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'id', header: 'id' },
-      { field: 'paisId', header: 'País' },
+      { field: 'id',     header: 'Id'    },
+      { field: 'paisId', header: 'País'  },
       { field: 'fecefe', header: 'Fecha' },
-      { field: 'valor',   header: 'Valor' }
+      { field: 'valor',  header: 'Valor' }
     ];
   }
 

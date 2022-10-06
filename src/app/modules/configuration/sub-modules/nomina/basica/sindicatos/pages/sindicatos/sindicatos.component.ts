@@ -13,15 +13,17 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class SindicatosComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-
-  // Objetos
+  // Objeto de sindicatos
   sindicatos         : Sindicatos[]      = [];
+
+  // Objeto seleccionado para editar
   sindicatosSelect!: Sindicatos | undefined;
+
+  // Objeto de países
   countrys           : Countrys[]        = [];
   countrySelect      : String            = '';
+
+  // Objeto de entidades federales
   federalEntities    : FederalEntities[] = [];
   federalEntitySelect: String            = '';
 
@@ -44,6 +46,9 @@ export class SindicatosComponent implements OnInit {
     this.loadCountrysData();
   }
 
+  /**
+   * Cargar sindicatos
+   */
   loadData(): void {
     this.spinner.show();
     this.sindicatosService.getAll()
@@ -92,7 +97,7 @@ export class SindicatosComponent implements OnInit {
   }
   
   closeModal(): void {
-    this.sindicatosSelect = undefined
+    this.sindicatosSelect = undefined;
     this.countrySelect = '';
     this.federalEntitySelect = '';
     this.isEdit = false;

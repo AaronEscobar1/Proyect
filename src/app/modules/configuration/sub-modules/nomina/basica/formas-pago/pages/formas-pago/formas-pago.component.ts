@@ -15,14 +15,14 @@ export class FormasPagoComponent implements OnInit {
   // Objetos de formas de pago
   formasPagos: FormasPago[] = [];
 
-  // Objeto forma de pago seleccionada desde la tabla
+  // Objeto seleccionado para editar
   formaPagoSelect!: FormasPago | undefined;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar formas de pago';
+  titleForm  : string = 'Agregar forma de pago';
   createModal: boolean = false;
   printModal : boolean = false;
 
@@ -36,6 +36,9 @@ export class FormasPagoComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar formas de pago
+   */
   loadData() {
     this.spinner.show();
     this.formasPagoService.getAll()
@@ -65,7 +68,7 @@ export class FormasPagoComponent implements OnInit {
   }
 
   openModalCreate(): void {
-    this.titleForm = this.isEdit ? 'Editar formas de pago' : 'Agregar formas de pago';
+    this.titleForm = this.isEdit ? 'Editar forma de pago' : 'Agregar forma de pago';
     this.createModal = true;
   }
   

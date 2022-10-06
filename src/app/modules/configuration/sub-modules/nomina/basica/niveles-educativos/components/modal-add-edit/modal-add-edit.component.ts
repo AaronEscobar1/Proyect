@@ -12,8 +12,10 @@ import { NivelesEducativosService } from '../../services/niveles-educativos.serv
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos
-  @Input() niveles!    : NivelesEducativos[];
+  // Objeto de niveles educativos
+  @Input() niveles: NivelesEducativos[] = [];
+
+  // Objeto seleccionado para editar
   @Input() nivelSelect!: NivelesEducativos | undefined;
 
   // Banderas

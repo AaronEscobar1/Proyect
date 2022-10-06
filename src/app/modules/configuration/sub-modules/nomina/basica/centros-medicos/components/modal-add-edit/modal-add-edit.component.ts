@@ -12,8 +12,10 @@ import { CentrosMedicosService } from '../../services/centros-medicos.service';
 })
 export class ModalAddEditComponent implements OnInit {
 
-  // Objetos Input()
+  // Objetos de centros médicos para validaciones
   @Input() centrosMedicos!: CentrosMedicos[];
+
+  // Objeto seleccionado para editar
   @Input() centrosMedicosSelect!: CentrosMedicos | undefined;
 
   // Banderas
@@ -35,10 +37,10 @@ export class ModalAddEditComponent implements OnInit {
               private messageService: MessageService,
               private fb: FormBuilder,
               private selectRowService: SelectRowService) {
-        this.form = this.fb.group({
-          codmed: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
-          desmed: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]],
-        });
+    this.form = this.fb.group({
+      codmed: ['', [ Validators.required, Validators.maxLength(4), this.validatedId.bind(this) ]],
+      desmed: ['', [ Validators.required, Validators.maxLength(30), this.validatedDesniv.bind(this) ]]
+    });
   }
 
   ngOnInit(): void {
@@ -54,26 +56,44 @@ export class ModalAddEditComponent implements OnInit {
     this.form.reset(this.centrosMedicosSelect);
   }
 
-/**
+  /**
    * Metodo para guardar y actualizar registros
    * @returns void
    */
- save(): void {
-  if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
-  }
+  save(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
-  // Obtener formulario
-  let data: CentrosMedicos = this.form.getRawValue();
-  // Eliminar espacios en blanco en su atributo
-  data.desmed.trim();
+    // Obtener formulario
+    let data: CentrosMedicos = this.form.getRawValue();
+    // Eliminar espacios en blanco en su atributo
+    data.desmed.trim();
 
-  this.spinner.show();
+    this.spinner.show();
 
-  if(this.isEdit) {
-    // Editar
-    this.centrosMedicosService.update(data)
+    if(this.isEdit) {
+      // Editar
+      this.centrosMedicosService.update(data)
+        .subscribe({
+          next: (resp) => {
+            this.closeModal();
+            this.spinner.hide();
+            this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
+            this.selectRowService.selectRow$.emit(null);
+            this.onLoadData.emit();
+          },
+          error: (err) => {
+            this.spinner.hide();
+            this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el centro médico.', life: 3000});
+          } 
+        });
+      return;
+    }
+
+    // Crear
+    this.centrosMedicosService.create(data)
       .subscribe({
         next: (resp) => {
           this.closeModal();
@@ -84,27 +104,9 @@ export class ModalAddEditComponent implements OnInit {
         },
         error: (err) => {
           this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el centro médico.', life: 3000});
-        } 
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el centro médico.', life: 3000});
+        }
       });
-    return;
-  }
-
-  // Crear
-  this.centrosMedicosService.create(data)
-    .subscribe({
-      next: (resp) => {
-        this.closeModal();
-        this.spinner.hide();
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.message, life: 3000});
-        this.selectRowService.selectRow$.emit(null);
-        this.onLoadData.emit();
-      },
-      error: (err) => {
-        this.spinner.hide();
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el centro médico.', life: 3000});
-      }
-    });
   }
 
   closeModal(): void {
@@ -115,7 +117,7 @@ export class ModalAddEditComponent implements OnInit {
   /**
    * VALIDACIONES DEL FORMULARIO REACTIVO
    */
-   campoInvalid(campo: string) {
+  campoInvalid(campo: string) {
     return (this.form.controls[campo].errors) 
             && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
               && this.form.invalid;

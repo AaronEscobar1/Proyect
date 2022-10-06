@@ -9,17 +9,17 @@ import { NivelesEducativos } from '../../interfaces/niveles-educativos.interface
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() niveles!: NivelesEducativos[];
+  @Input() niveles: NivelesEducativos[] = [];
 
-  columns       : any[]             = [];
+  columns: any[] = [];
 
   constructor(private selectRowService: SelectRowService) { }
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codniv', header: 'Código' },
+      { field: 'codniv', header: 'Código'      },
       { field: 'desniv', header: 'Descripción' },
-      { field: 'codley', header: 'Oficial' }
+      { field: 'codley', header: 'Oficial'     }
     ]
   }
 

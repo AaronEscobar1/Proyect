@@ -18,12 +18,12 @@
             <form [formGroup]="form" autocomplete="off">
 
                 <div class="field">
-                    <label for="tipevlo">ID Valores Oficiales *</label>
+                    <label for="tipevlo">ID valor oficial: *</label>
                     <input  type="text"
                             id="id" 
                             pInputText
                             formControlName="id"
-                            placeholder="Ingrese el tipo de valor"/>
+                            placeholder="Ingrese el id del valor oficial"/>
                     <span class="form-text text-danger"
                           *ngIf="campoInvalid('id')">
                         {{ idvloMsgError }}
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="field">
-                    <label for="paisId">Pais *</label>
+                    <label for="paisId">Pais: *</label>
                     <p-dropdown [options]="countrys"
                         inputId="paisId"
                         appendTo="body"
@@ -51,7 +51,7 @@
                 </div>
                 
                 <div class="field">
-                    <label for="datevlo">Fecha *</label>
+                    <label for="datevlo">Fecha: *</label>
                     <p-calendar id="fecefe" 
                                 formControlName="fecefe"
                                 dateFormat="dd/mm/yy"
@@ -65,12 +65,13 @@
                 </div>
 
                 <div class="field">
-                    <label for="valor">Valor *</label>
-                    <p-inputNumber id="valor"
-                                    type="number"
-                                    formControlName="valor" 
-                                    placeholder="Ingrese el valor">
-                    </p-inputNumber>
+                    <label for="valor">Valor: *</label>
+                    <input type="text"
+                           id="valor"
+                           pInputText
+                           pKeyFilter="num"
+                           formControlName="valor"
+                           placeholder="Ingrese el valor"/>
                     <span class="form-text text-danger"
                           *ngIf="campoInvalid('valor')">
                         {{ valorMsgError }}

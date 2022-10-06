@@ -10,7 +10,7 @@ import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() motivosFiniquito!: MotivosFiniquito[];
+  @Input() motivosFiniquito: MotivosFiniquito[] = [];
 
   // Table
   columns: TableHead[] = [];

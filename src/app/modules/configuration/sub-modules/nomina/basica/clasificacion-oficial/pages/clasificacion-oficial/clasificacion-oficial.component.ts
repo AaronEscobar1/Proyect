@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup } from '@angular/forms';
 import { OfficialClassification } from '../../interfaces/clasificacion-oficial.interfaces';
-import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ClasificacionOficialService } from '../../services/clasificacion-oficial.service';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
@@ -14,13 +12,11 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class ClasificacionOficialComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
-  // Objetos
+  // Objeto de clasificación oficial
   officialClassification: OfficialClassification[] = [];
+
+  // Objeto seleccionado para editar
   officialClassificationSelect: OfficialClassification | undefined;
-  typesFile             : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
@@ -40,6 +36,9 @@ export class ClasificacionOficialComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar clasificación oficial
+   */
   loadData() {
     this.spinner.show();
     this.clasificacionOficialService.getAll()
@@ -57,9 +56,7 @@ export class ClasificacionOficialComponent implements OnInit {
 
   refresh(): void {
     this.officialClassification = [];
-    setTimeout(() => {
-      this.loadData();
-    }, 200);
+    this.loadData();
   }
 
   openModalPrint(): void {
@@ -88,7 +85,7 @@ export class ClasificacionOficialComponent implements OnInit {
    */
   editRow(officialClassification: OfficialClassification): void {
     this.isEdit = true;
-    this.officialClassificationSelect = officialClassification
+    this.officialClassificationSelect = officialClassification;
     this.openModalCreate();
   }
 

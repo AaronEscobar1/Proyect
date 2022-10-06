@@ -16,7 +16,7 @@
                     <th *ngFor="let col of columns">
                         <p-columnFilter [field]="col.field" matchMode="contains" [showMenu]="false" [showClearButton]="false">
                             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '..'">
+                                <input pInputText type="text" (input)="filter($any($event.target).value)" [placeholder]="'Buscar ' + col.header + '...'">
                             </ng-template>
                         </p-columnFilter>
                     </th>
@@ -28,7 +28,7 @@
                     <td>{{ valorOficial.id }}</td>
                     <td>{{ valorOficial.paisId }}</td>
                     <td>{{ valorOficial.fecefe | date: 'dd/MM/YYYY' }}</td>
-                    <td>{{ valorOficial.valor | number: '1.4-4':'es-ve' }}</td>
+                    <td class="text-right">{{ valorOficial.valor | number: '1.5-5':'es-ve' }}</td>
                 </tr>
             </ng-template>
 

@@ -10,7 +10,7 @@ import { MotivosCambios } from '../../interfaces/motivos-cambios.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() motivosCambios!: MotivosCambios[];
+  @Input() motivosCambios: MotivosCambios[] = [];
 
   // Table
   columns: TableHead[] = [];
@@ -19,7 +19,7 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { field: 'codcam', header: 'Código' },
+      { field: 'codcam', header: 'Código'      },
       { field: 'descam', header: 'Descripción' }
     ];
   }

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { FormGroup } from '@angular/forms';
 import { Countrys, ValorOficial } from '../../interfaces/valor-oficial.interfaces';
-import { TypesFile, typesFileData } from 'src/app/shared/interfaces/typesFiles.interfaces';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ValoresOficialesService } from '../../services/valores-oficiales.service';
 import { Helpers } from 'src/app/shared/helpers/helpers';
@@ -15,14 +13,14 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class ValoresOficialesComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
-  // Objetos
+  // Objetos de valores oficiales
   valoresOficiales: ValorOficial[] = [];
-  countrys: Countrys[] = [];
+
+  // Objeto seleccionado para editar
   valoresSelect!: ValorOficial | undefined;
-  typesFile       : TypesFile[] = typesFileData;
+
+  // Objeto de paises
+  countrys: Countrys[] = [];
 
   // Banderas
   isEdit: boolean = false;
@@ -44,12 +42,33 @@ export class ValoresOficialesComponent implements OnInit {
     this.loadCountrysData();
   }
 
+  /**
+   * Cargar valores oficiales
+   */
   loadData() {
     this.spinner.show();
     this.valoresOficialesService.getAll()
       .subscribe({
         next: (res) => {
           this.valoresOficiales = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+  
+  /**
+   * Carga todos los países
+   */
+  loadCountrysData(): void {
+    this.spinner.show();
+    this.valoresOficialesService.getAllCountry()
+      .subscribe({
+        next: (resp) => {
+          this.countrys = resp;
           this.spinner.hide();
         },
         error: (err) => {
@@ -78,35 +97,6 @@ export class ValoresOficialesComponent implements OnInit {
     this.createModal = false;
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.valoresOficiales.length; i++) {
-        if (this.valoresOficiales[i].id === id) {
-            index = i;
-            break;
-        }
-    }
-    return index;
-  } 
-
-  /**
-   * Carga todos los países
-   */
-   loadCountrysData(): void {
-    this.spinner.show();
-    this.valoresOficialesService.getAllCountry()
-      .subscribe({
-        next: (resp) => {
-          this.countrys = resp;
-          this.spinner.hide();
-        },
-        error: (err) => {
-          this.spinner.hide();
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
-        }
-      });
-  }
-
   closeModalPrintDialog(): void {
     this.printModal = false;
   }
@@ -116,14 +106,9 @@ export class ValoresOficialesComponent implements OnInit {
    * @param valorOficial row de la tabla
    * @returns void
    */
-   editRow(valorOficial: ValorOficial): void {    
+  editRow(valorOficial: ValorOficial): void {    
     this.isEdit = true;
-    if (!valorOficial) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return;
-    }
     valorOficial.fecefe = valorOficial.fecefe ? new Date(valorOficial.fecefe) : valorOficial.fecefe;
-
     this.valoresSelect = valorOficial
     this.openModalCreate();
   }
@@ -135,11 +120,6 @@ export class ValoresOficialesComponent implements OnInit {
    */
   deleteRow(valorOficial: ValorOficial): void {
     valorOficial.fecefe = `${new Date(valorOficial.fecefe).toISOString().slice(0, 10)}T00:00:00`;
-    
-    if (!valorOficial) {  
-      this.helpers.openErrorAlert('No se encontro el id.')
-      return; 
-    }
     this.confirmationService.confirm({
       message: `¿Desea eliminar este valor oficial <b>${valorOficial.id}</b>?`,
       header: 'Eliminar',

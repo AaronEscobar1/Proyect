@@ -10,7 +10,7 @@ import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() sindicatos!: Sindicatos[];
+  @Input() sindicatos: Sindicatos[] = [];
 
   // Table
   columns: TableHead[] = [];

@@ -14,19 +14,17 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 })
 export class CategoriesComponent implements OnInit {
 
-  // Formulario reactivo
-  form!: FormGroup;
-
-  // Objetos
+  // Objetos de categorías
   categories: Categories[] = [];
+
+  // Objeto seleccionado para editar
   categoriesSelect!: Categories | undefined;
-  typesFile : TypesFile[] = typesFileData;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar categorías';
+  titleForm  : string = 'Agregar categoría';
   createModal: boolean = false;
   printModal : boolean = false;
 
@@ -40,6 +38,9 @@ export class CategoriesComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar categorías
+   */
   loadData() {
     this.spinner.show();
     this.categoriesService.getAll()

@@ -10,7 +10,7 @@ import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 })
 export class DataTableComponent implements OnInit {
 
-  @Input() categories!: Categories[];
+  @Input() categories: Categories[] = [];
 
   // Table
   columns: TableHead[] = [];
