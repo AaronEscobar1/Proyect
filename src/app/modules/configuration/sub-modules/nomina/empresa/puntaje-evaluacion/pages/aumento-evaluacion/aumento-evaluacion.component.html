@@ -1,0 +1,75 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="grid">
+
+            <div class="col-12 md:col-6">
+
+                <!-- Componente de botones -->
+                <app-buttons-aumento (onRefresh)="refresh()"
+                                     (onOpenModalPrint)="openModalPrint()"
+                                     (onOpenModalCreate)="openModalCreate()"
+                                     (onEditRow)="editRow($event)"
+                                     (onDeleteRow)="deleteRow($event)">
+                </app-buttons-aumento>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa y nomina  -->
+                <div class="formgrid grid">
+                                
+                    <div class="field col-6 md:col-6 text-right mt-2">
+                        <label for="codemp">Puntaje de evaluación:</label>
+                    </div>
+                    <div class="field col-2 md:col-2">
+                        <input  type="text"
+                                id="codemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="puntajeEvaluacionSelectRow ? puntajeEvaluacionSelectRow.codpun : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-4 md:col-4">
+                        <input  type="text"
+                                id="desemp" 
+                                class="w-full"
+                                pInputText
+                                [value]="puntajeEvaluacionSelectRow ? (puntajeEvaluacionSelectRow.despun | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Componente table aumento -->
+        <app-data-table-aumento [aumentoEvaluacion]="aumentoEvaluacion"></app-data-table-aumento>
+
+    </div>
+</div>
+
+<!-- Modal Imprimir -->
+<app-modal-print-aumento
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print-aumento>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit-aumento
+    [puntajeEvaluacionSelectRow]="puntajeEvaluacionSelectRow"
+    [aumentoEvaluacion]="aumentoEvaluacion"
+    [aumentoEvaluacionSelect]="aumentoEvaluacionSelect"
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit-aumento>

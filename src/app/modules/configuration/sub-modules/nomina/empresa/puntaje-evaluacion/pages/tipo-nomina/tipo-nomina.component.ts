@@ -27,10 +27,13 @@ export class TipoNominaComponent implements OnInit {
   tiposNominas: TipoNomina[] = [];
 
   // Emisión de evento (cargar data de puntaje de evaluacion)
-  @Output() onGetDataGrupo = new EventEmitter();
+  @Output() onGetDataPuntaje = new EventEmitter();
 
   // Variable para manejar la suscripción
   subscriber!: Subscription;
+
+  // Emision de evento (Habilitar la pestaña aumento por evaluación)
+  @Output() onEnableTabAumento = new EventEmitter();
 
   constructor(private companyNominaService: CompanyNominaService,
               private puntajeEvaluacionService: PuntajeEvaluacionService,
@@ -57,9 +60,13 @@ export class TipoNominaComponent implements OnInit {
     }
   }
 
-  loadNominas(id: string): void {
+  /**
+   * Cargar nominas por empresa
+   * @param idEmpresa: string
+   */
+  loadNominas(idEmpresa: string): void {
     this.spinner.show(undefined, spinnerLight);
-    this.companyNominaService.getAllNominasByEmpresa(id)
+    this.companyNominaService.getAllNominasByEmpresa(idEmpresa)
       .subscribe({
         next: (res: TipoNomina[]) => {
           this.tiposNominas = res;
@@ -76,6 +83,8 @@ export class TipoNominaComponent implements OnInit {
    * Obtener los puntajes de evaluacion relacionadas con una empresa y un tipo de nomina
    */
   loadPuntajesEvaluacion(): void {
+    // Deshabilitar pestaña Aumento por evaluación
+    this.onEnableTabAumento.emit(false);
     if ( !this.tipoNominaRow ) {
       return;
     }
@@ -83,7 +92,7 @@ export class TipoNominaComponent implements OnInit {
     this.puntajeEvaluacionService.getAllPuntajesByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
       .subscribe({
         next: (res: PuntajeEvaluacion[]) => {
-          this.onGetDataGrupo.emit(res);
+          this.onGetDataPuntaje.emit(res);
           this.spinner.hide();
         },
         error: (err) => {
@@ -93,7 +102,7 @@ export class TipoNominaComponent implements OnInit {
       });
   }
 
-  /** Destrucción del observable*/
+  /** Destrucción del observable */
   ngOnDestroy(): void {
     this.subscriber.unsubscribe();
   }

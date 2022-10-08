@@ -37,6 +37,12 @@ export class PuntajeEvaluacionComponent implements OnInit {
   createModal: boolean = false;
   printModal : boolean = false;
 
+  // Emisión de evento (Habilitar la pestaña aumento por evaluación)
+  @Output() onEnableTabAumento = new EventEmitter();
+
+  // Emisión de evento (Enviar puntaje de evaluacion seleccionado)
+  @Output() onPuntajeEvaluacionSelect = new EventEmitter();
+
   constructor(private companyNominaService: CompanyNominaService,
               private puntajeEvaluacionService: PuntajeEvaluacionService,
               private messageService: MessageService,
@@ -123,6 +129,27 @@ export class PuntajeEvaluacionComponent implements OnInit {
           });
       }
     });
+  }
+
+  /************************************
+   *     Aumento por evaluación       *
+   ************************************/
+  
+  /**
+   * Habilitar la pestaña aumento por evaluación
+   * @param event: boolean 
+   */
+  enableTabAumento(event: boolean) {
+    this.onEnableTabAumento.emit(event);
+  }
+
+  /**
+   * Emitir data puntaje de evaluación
+   * @param puntajeEvaluacionSelect: PuntajeEvaluacion
+   */
+  getDataPuntajeEvaluacion(puntajeEvaluacionSelect: PuntajeEvaluacion) {
+    // Enviar puntaje de evaluacion seleccionado
+    this.onPuntajeEvaluacionSelect.emit(puntajeEvaluacionSelect);
   }
 
 }

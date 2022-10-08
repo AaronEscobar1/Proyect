@@ -5,6 +5,20 @@
             [rowHover]="true" styleClass="p-datatable-scrollable" responsiveLayout="scroll"
             [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} registros de {totalRecords} entradas." [rowsPerPageOptions]="[5,10,25,50]">
     
+            <!-- Cargar aumento por evaluación -->
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <span class="p-input-icon-left ml-auto">
+                        <button pButton pRipple 
+                                class="p-button-secondary mx-1"
+                                (click)="loadAumento()"
+                                label="Aumento"
+                                [disabled]="!puntajeEvaluacionSelectRow">
+                        </button>
+                    </span>
+                </div>
+            </ng-template>
+            
             <ng-template pTemplate="header">
                 <tr>
                     <th *ngFor="let col of columns" [pSortableColumn]="col.field">

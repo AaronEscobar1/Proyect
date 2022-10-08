@@ -8,7 +8,7 @@
         <div class="card-table">
 
             <!-- Pestañas -->
-            <p-tabView>
+            <p-tabView [(activeIndex)]="tabIndex">
 
                 <!--/*******************
                 /*  Consultar empresas *
@@ -22,7 +22,8 @@
                     
                         <div class="col-12 md:col-6">
                             <app-tipo-nomina [empresaRow]="empresaRow"
-                                             (onGetDataGrupo)="getDataGrupo($event)">
+                                             (onGetDataPuntaje)="getDataPuntajes($event)"
+                                             (onEnableTabAumento)="enableTabAumento($event)">
                             </app-tipo-nomina>
                         </div>
                     </div>
@@ -37,9 +38,23 @@
                     <app-puntaje-evaluacion [empresaRow]="empresaRow"
                                             [nominaRow]="nominaRow"
                                             [puntajesEvaluacion]="puntajesEvaluacion"
-                                            (onRefresh)="refresh()">
+                                            (onRefresh)="refresh()"
+                                            (onEnableTabAumento)="enableTabAumento($event)"
+                                            (onPuntajeEvaluacionSelect)="getDataPuntajeEvaluacion($event)">
                     </app-puntaje-evaluacion>
 
+                </p-tabPanel>
+
+                <!--/*****************************
+                /*    Aumento por evaluación     *
+                /********************************* -->
+                <p-tabPanel header="Aumento por evaluación"  [disabled]="empresaRow == null || nominaRow == null || !isEnableAumentoTab">
+                    
+                    <app-aumento-evaluacion [aumentoEvaluacion]="aumentoEvaluacion"
+                                            [puntajeEvaluacionSelectRow]="puntajeEvaluacionSelectRow"
+                                            (onRefresh)="loadAumentoEvaluacion()">
+                    </app-aumento-evaluacion>
+                    
                 </p-tabPanel>
 
             </p-tabView>

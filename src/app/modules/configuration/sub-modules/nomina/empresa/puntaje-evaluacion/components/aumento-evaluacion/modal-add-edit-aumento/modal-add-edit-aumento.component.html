@@ -1,0 +1,137 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '80vw', '640px': '90vw'}" [style]="{width: '50vw'}"
+          [draggable]="false" [resizable]="false">
+
+          <ng-template pTemplate="content">
+
+            <div class="flex justify-content-between align-items-center my-4">
+                <h5>{{titleForm}}</h5>
+                <div class="p-dialog-header-icons">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-secondary p-button-text"
+                            (click)="closeModal()">
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="form" autocomplete="off">
+
+                <div class="formgrid grid">
+                    
+                    <div class="field col-12">
+                        <label for="idConcepto">Concepto: *</label>
+                        <p-dropdown [options]="conceptos" 
+                                    inputId="idConcepto"
+                                    appendTo="body"
+                                    [filter]="true"
+                                    filterBy="label"
+                                    filterPlaceholder="Buscar por descripción..."
+                                    formControlName="idConcepto"
+                                    placeholder="Seleccione un concepto">
+                            <ng-template let-option pTemplate="item" style="height: 50px;">
+                                <table class="w-full">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 25%;">{{ option.value }}</td>
+                                            <td style="width: 75%;">{{ option.label }}</td>
+                                        </tr>
+                                    </tbody>  
+                                </table> 
+                            </ng-template>
+                        </p-dropdown>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('idConcepto')">
+                            {{ idConceptoMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="moncto">Monto: *</label>
+                        <input  type="text" 
+                                id="moncto"
+                                pInputText
+                                pKeyFilter="num"
+                                formControlName="moncto"
+                                placeholder="Ingrese el monto"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('moncto')">
+                            {{ monctoMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="cancto">Cantidad: *</label>
+                        <input  type="text" 
+                                id="cancto"
+                                pInputText
+                                pKeyFilter="num"
+                                formControlName="cancto"
+                                placeholder="Ingrese la cantidad"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('cancto')">
+                            {{ canctoMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="formgrid grid">
+
+                    <div class="field col-12 md:col-6">
+                        <label for="facsue">Factor: *</label>
+                        <input  type="text" 
+                                id="facsue"
+                                pInputText
+                                pKeyFilter="num"
+                                formControlName="facsue"
+                                placeholder="Ingrese el monto"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('facsue')">
+                            {{ facsueMsgError }}
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <label for="incsue">Incremento: *</label>
+                        <input  type="text" 
+                                id="incsue"
+                                pInputText
+                                pKeyFilter="num"
+                                formControlName="incsue"
+                                placeholder="Ingrese la cantidad"/>
+                        <span class="form-text text-danger"
+                              *ngIf="campoInvalid('incsue')">
+                            {{ incsueMsgError }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+        
+        <ng-template pTemplate="footer">
+            <div class="mt-2">
+                <button pButton 
+                        pRipple 
+                        label="Cancelar"
+                        class="p-button-secondary my-1" 
+                        (click)="closeModal()">
+                </button>
+                <button pButton 
+                        pRipple 
+                        type="submit" 
+                        label="Guardar" 
+                        icon="pi pi-save"
+                        class="btn-infocent my-1" 
+                        (click)="save()">
+                </button>
+            </div>
+        </ng-template>
+</p-dialog>

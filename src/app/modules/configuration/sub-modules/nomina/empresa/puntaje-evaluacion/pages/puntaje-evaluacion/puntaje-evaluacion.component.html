@@ -60,7 +60,10 @@
         </div>
 
         <!-- Componente table -->
-        <app-data-table-puntaje [puntajesEvaluacion]="puntajesEvaluacion"></app-data-table-puntaje> 
+        <app-data-table-puntaje [puntajesEvaluacion]="puntajesEvaluacion"
+                                (onEnableTabAumento)="enableTabAumento($event)"
+                                (onPuntajeEvaluacionSelect)="getDataPuntajeEvaluacion($event)">
+        </app-data-table-puntaje> 
 
     </div>
 </div>
