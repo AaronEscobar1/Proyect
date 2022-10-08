@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { TableHead } from 'src/app/shared/interfaces/tableHead.interfaces';
 import { dropdownType } from 'src/app/shared/interfaces/typesFiles.interfaces';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
-import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
+import { PuntajeEvaluacion } from '../../../interfaces/puntaje-evaluacion.interfaces';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 
 @Component({
   selector: 'app-data-table-puntaje',
