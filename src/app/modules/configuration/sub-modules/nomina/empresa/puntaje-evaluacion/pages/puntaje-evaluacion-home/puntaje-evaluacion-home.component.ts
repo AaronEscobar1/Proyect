@@ -115,7 +115,6 @@ export class PuntajeEvaluacionHomeComponent implements OnInit {
           this.spinner.hide();
         },
         error: (err) => {
-          console.log(err);
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
           this.spinner.hide();
         }
