@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Company } from '../../../shared-empresa/interfaces/empresa.interfaces';
@@ -6,6 +6,7 @@ import { TipoNomina } from '../../../shared-empresa/interfaces/nominas.interface
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { PuntajeEvaluacionService } from '../../services/puntaje-evaluacion.service';
+import { DataTablePuntajeComponent } from '../../components/puntaje-evaluacion/data-table-puntaje/data-table-puntaje.component';
 
 @Component({
   selector: 'app-puntaje-evaluacion',
@@ -42,6 +43,9 @@ export class PuntajeEvaluacionComponent implements OnInit {
 
   // Emisión de evento (Enviar puntaje de evaluacion seleccionado)
   @Output() onPuntajeEvaluacionSelect = new EventEmitter();
+
+  // Emisión de evento de padre a hijo (limpiar data de puntajes de evaluación)
+  @ViewChild(DataTablePuntajeComponent) dataTablePuntajeComponent!: DataTablePuntajeComponent;
 
   constructor(private companyNominaService: CompanyNominaService,
               private puntajeEvaluacionService: PuntajeEvaluacionService,
@@ -129,6 +133,13 @@ export class PuntajeEvaluacionComponent implements OnInit {
           });
       }
     });
+  }
+
+  /**
+   * Limpiar el registro seleccionado de la tabla puntaje de evaluación
+   */
+  clearPuntajeEvaluacionTable(): void {
+    this.dataTablePuntajeComponent.onRowUnselect();
   }
 
   /************************************
