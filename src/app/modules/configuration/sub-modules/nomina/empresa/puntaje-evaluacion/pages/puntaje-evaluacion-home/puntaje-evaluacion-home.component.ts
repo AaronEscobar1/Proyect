@@ -10,6 +10,7 @@ import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfac
 import { AumentoEvaluacionService } from '../../services/aumento-evaluacion.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PuntajeEvaluacionComponent } from '../puntaje-evaluacion/puntaje-evaluacion.component';
 
 @Component({
   selector: 'app-puntaje-evaluacion-home',
@@ -41,6 +42,9 @@ export class PuntajeEvaluacionHomeComponent implements OnInit {
 
   // Emisión de evento de padre a hijo (cargar data de puntajes de evaluación)
   @ViewChild(TipoNominaComponent) tipoNominaComponent!: TipoNominaComponent;
+
+  // Emisión de evento de padre a hijo (limpiar data de puntajes de evaluación)
+  @ViewChild(PuntajeEvaluacionComponent) puntajeEvaluacionComponent!: PuntajeEvaluacionComponent;
 
   // Variable para manejar la suscripción
   subscriber!: Subscription;
@@ -119,6 +123,13 @@ export class PuntajeEvaluacionHomeComponent implements OnInit {
           this.spinner.hide();
         }
       });
+  }
+
+  /**
+   * Limpiar el registro seleccionado de la tabla puntaje de evaluación
+   */
+  clearPuntajeEvaluacionTable(): void {
+    this.puntajeEvaluacionComponent.clearPuntajeEvaluacionTable();
   }
 
   /** Destrucción del observable */

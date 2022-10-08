@@ -35,6 +35,9 @@ export class TipoNominaComponent implements OnInit {
   // Emision de evento (Habilitar la pestaña aumento por evaluación)
   @Output() onEnableTabAumento = new EventEmitter();
 
+  // Emision de evento (Limpiar tabla de puntaje de evaluación)
+  @Output() onClearPuntajeEvaluacionTable = new EventEmitter();
+
   constructor(private companyNominaService: CompanyNominaService,
               private puntajeEvaluacionService: PuntajeEvaluacionService,
               private spinner: NgxSpinnerService,
@@ -85,6 +88,8 @@ export class TipoNominaComponent implements OnInit {
   loadPuntajesEvaluacion(): void {
     // Deshabilitar pestaña Aumento por evaluación
     this.onEnableTabAumento.emit(false);
+    // Limpiar el registro seleccionado de la tabla puntaje de evaluación
+    this.onClearPuntajeEvaluacionTable.emit();
     if ( !this.tipoNominaRow ) {
       return;
     }
