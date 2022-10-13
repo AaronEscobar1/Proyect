@@ -2,31 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
-import { TipoMoneda } from '../../interfaces/tipo-moneda.interfaces';
-import { TipoMonedaService } from '../../services/tipo-moneda.service';
+import { OrganismoPublico } from '../../interfaces/organismos-publicos.interfaces';
+import { OrganismosPublicosService } from '../../services/organismos-publicos.service';
 
 @Component({
-  selector: 'app-tipo-moneda',
-  templateUrl: './tipo-moneda.component.html',
+  selector: 'app-organismos-publicos',
+  templateUrl: './organismos-publicos.component.html',
   providers: [ MessageService, ConfirmationService ]
 })
-export class TipoMonedaComponent implements OnInit {
+export class OrganismosPublicosComponent implements OnInit {
 
-  // Objeto tipos de monedas
-  tiposMonedas: TipoMoneda[] = [];
+  // Objeto organismos publicos
+  organismosPublicos: OrganismoPublico[] = [];
 
   // Objeto seleccionado para editar
-  tipoMonedaSelect: TipoMoneda | undefined;
+  organismoPublicoSelect: OrganismoPublico | undefined;
 
   // Banderas
   isEdit: boolean = false;
 
   // Modales
-  titleForm  : string = 'Agregar tipo de moneda';
+  titleForm  : string = 'Agregar organismo público';
   createModal: boolean = false;
   printModal : boolean = false;
 
-  constructor(private tipoMonedaService: TipoMonedaService,
+  constructor(private organismosPublicosService: OrganismosPublicosService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -36,12 +36,15 @@ export class TipoMonedaComponent implements OnInit {
     this.loadData();
   }
 
+  /**
+   * Cargar organismos públicos
+   */
   loadData() {
     this.spinner.show();
-    this.tipoMonedaService.getAll()
+    this.organismosPublicosService.getAll()
       .subscribe({
         next: (res) => {
-          this.tiposMonedas = res;
+          this.organismosPublicos = res;
           this.spinner.hide();
         },
         error: (err) => {
@@ -52,7 +55,7 @@ export class TipoMonedaComponent implements OnInit {
   }
 
   refresh(): void {
-    this.tiposMonedas = [];
+    this.organismosPublicos = [];
     this.loadData();
   }
 
@@ -69,36 +72,36 @@ export class TipoMonedaComponent implements OnInit {
    * @returns void
    */
   openModalCreate(): void {
-    this.titleForm = 'Agregar tipo de moneda';
+    this.titleForm = 'Agregar organismo público';
     this.createModal = true;
   }
   
   closeModal() {
     this.isEdit = false;
     this.createModal = false;
-    this.tipoMonedaSelect = undefined;
+    this.organismoPublicoSelect = undefined;
   }
 
   /**
    * Carga la data en el formulario para editar
-   * @param tipoMoneda row de la tabla
+   * @param organismoPublico row de la tabla
    * @returns void
    */
-  editRow(tipoMoneda: TipoMoneda): void {
+  editRow(organismoPublico: OrganismoPublico): void {
     this.isEdit = true;
-    this.titleForm = 'Editar tipo de moneda';
-    this.tipoMonedaSelect = tipoMoneda;
+    this.titleForm = 'Editar organismo público';
+    this.organismoPublicoSelect = organismoPublico;
     this.createModal = true;
   }
   
   /**
    * Elimina un registro
-   * @param tipoMoneda row de la tabla
+   * @param organismoPublico row de la tabla
    * @returns void
    */
-  deleteRow(tipoMoneda: TipoMoneda) {
+  deleteRow(organismoPublico: OrganismoPublico) {
     this.confirmationService.confirm({
-      message: `¿Desea eliminar este tipo de moneda <b>${tipoMoneda.nombre}</b>?`,
+      message: `¿Desea eliminar este organismo público <b>${organismoPublico.nomorg}</b>?`,
       header: 'Eliminar',
       icon: 'pi pi-trash',
       acceptLabel: 'Si, eliminar',
@@ -106,7 +109,7 @@ export class TipoMonedaComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-secondary',
       accept: () => {
         this.spinner.show();
-        this.tipoMonedaService.delete(tipoMoneda.id)
+        this.organismosPublicosService.delete(organismoPublico.codorg)
           .subscribe({
             next: (resp) => {
               this.spinner.hide();
@@ -116,17 +119,18 @@ export class TipoMonedaComponent implements OnInit {
             },
             error: (err) => {
               if ( err.error.message === 'Error en solicitud.' ) {
-                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar el tipo de moneda, posee dependencia de registros.', life: 3000});
+                this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se puede eliminar el organismo público, posee dependencia de registros.', life: 3000});
                 this.spinner.hide();
                 return false;
               }
               this.spinner.hide();
-              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar este tipo de moneda.', life: 3000});
+              this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo eliminar este organismo público.', life: 3000});
               return false;
             }
           });
       }
     });
   }
+
 
 }

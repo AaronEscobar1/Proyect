@@ -73,6 +73,11 @@ const routes: Routes = [
     loadChildren: () => import('./valores-tabulador/valores-tabulador.module').then( m => m.ValoresTabuladorModule),
   },
   {
+    path: 'organismos-publicos',
+    // LazyLoad
+    loadChildren: () => import('./organismos-publicos/organismos-publicos.module').then( m => m.OrganismosPublicosModule),
+  },
+  {
     path: '**', redirectTo: '/main/config'
   }
 ];
