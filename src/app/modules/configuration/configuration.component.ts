@@ -166,6 +166,10 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
                 {
                   label: 'Valores Tabulador',
                   routerLink: ['/main/config/empresa/valores-tabulador']
+                },
+                {
+                  label: 'Organismos públicos',
+                  routerLink: ['/main/config/empresa/organismos-publicos']
                 }
               ]
             },
