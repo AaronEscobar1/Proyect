@@ -1,3 +1,4 @@
+
 pipeline {
     agent {
         node {
@@ -17,7 +18,7 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                sh 'pm2 start "ng serve --host 0.0.0.0" --name nomina-frontend' 
+                sh 'pm2 start "npm run start:prod" --name nomina-frontend' 
             }
         }
     }
