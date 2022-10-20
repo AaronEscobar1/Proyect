@@ -373,7 +373,7 @@ describe('ModalAddEditComponent', () => {
     // caso vacio con descripcion duplicada
     // Guardamos los datos en el formulario y lo comprobamos
     app.form.reset(data)
-    app.form.controls['valor'].setValue("123456789123")
+    app.form.controls['valor'].setValue("123456789120003")
     expect(app.form.valid).toEqual(false)
     app.valorMsgError
 

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { CompanyNominaService } from '../../../../shared-empresa/services/company-nomina.service';
 import { SelectRowService } from 'src/app/shared/services/select-row/select-row.service';
 
 import { DataTablePuntajeComponent } from './data-table-puntaje.component';
@@ -170,5 +170,21 @@ describe('DataTableComponent', () => {
     app.onRowUnselect()
     // expect(service.selectRowAlterno$.emit).toHaveBeenCalledWith(null);
 
+  });
+
+  it('LoadAumento ', () => {
+    const fixture = TestBed.createComponent(DataTablePuntajeComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    app.puntajeEvaluacionSelectRow = {
+      "despun": "descripcion 01",
+      "aumpun": "0",
+      "codpun": "01",
+      "idEmpresa": "93",
+      "idNomina": "0001"
+    }
+
+    app.loadAumento()
   });
 });

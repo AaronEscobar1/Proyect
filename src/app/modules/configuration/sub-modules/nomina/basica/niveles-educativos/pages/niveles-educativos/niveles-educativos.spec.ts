@@ -103,7 +103,7 @@ describe('NivelesEducativosComponent', () => {
     expect(app.addNivelModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar niveles educativos');
+    expect(app.titleForm).toBe('Agregar nivel educativo');
     expect(app.addNivelModal).toBeTrue();  
   })
 
@@ -114,7 +114,7 @@ describe('NivelesEducativosComponent', () => {
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.addNivelModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar niveles educativos');
+    expect(app.titleForm).toBe('Agregar nivel educativo');
     expect(app.addNivelModal).toBeTrue();
     fixture.detectChanges();
     
@@ -144,7 +144,7 @@ describe('NivelesEducativosComponent', () => {
     fixture.detectChanges();
     expect(app.nivel).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar niveles educativos');
+    expect(app.titleForm).toBe('Editar nivel educativo');
     expect(app.addNivelModal).toBeTrue();  
   })
 
@@ -167,7 +167,7 @@ describe('NivelesEducativosComponent', () => {
     fixture.detectChanges();
     expect(app.nivel).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar niveles educativos');
+    expect(app.titleForm).toBe('Editar nivel educativo');
     expect(app.addNivelModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion

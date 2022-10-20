@@ -103,7 +103,7 @@ describe('MotivosFiniquitoComponent', () => {
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar motivos de finiquito');
+    expect(app.titleForm).toBe('Agregar motivo de finiquito');
     expect(app.createModal).toBeTrue();  
   })
 
@@ -114,7 +114,7 @@ describe('MotivosFiniquitoComponent', () => {
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar motivos de finiquito');
+    expect(app.titleForm).toBe('Agregar motivo de finiquito');
     expect(app.createModal).toBeTrue();
     fixture.detectChanges();
     
@@ -144,7 +144,7 @@ describe('MotivosFiniquitoComponent', () => {
     fixture.detectChanges();
     expect(app.motivoFiniquito).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar motivos de finiquito');
+    expect(app.titleForm).toBe('Editar motivo de finiquito');
     expect(app.createModal).toBeTrue();  
   })
 
@@ -167,7 +167,7 @@ describe('MotivosFiniquitoComponent', () => {
     fixture.detectChanges();
     expect(app.motivoFiniquito).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar motivos de finiquito');
+    expect(app.titleForm).toBe('Editar motivo de finiquito');
     expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion
