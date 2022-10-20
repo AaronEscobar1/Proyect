@@ -103,7 +103,7 @@ describe('NivelesEducativosComponent', () => {
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar formas de pago');
+    expect(app.titleForm).toBe('Agregar forma de pago');
     expect(app.createModal).toBeTrue();  
   })
 
@@ -114,7 +114,7 @@ describe('NivelesEducativosComponent', () => {
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar formas de pago');
+    expect(app.titleForm).toBe('Agregar forma de pago');
     expect(app.createModal).toBeTrue();
     fixture.detectChanges();
     
@@ -141,7 +141,7 @@ describe('NivelesEducativosComponent', () => {
     fixture.detectChanges();
     expect(app.formaPagoSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar formas de pago');
+    expect(app.titleForm).toBe('Editar forma de pago');
     expect(app.createModal).toBeTrue();  
   })
 
@@ -161,7 +161,7 @@ describe('NivelesEducativosComponent', () => {
     fixture.detectChanges();
     expect(app.formaPagoSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar formas de pago');
+    expect(app.titleForm).toBe('Editar forma de pago');
     expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion
