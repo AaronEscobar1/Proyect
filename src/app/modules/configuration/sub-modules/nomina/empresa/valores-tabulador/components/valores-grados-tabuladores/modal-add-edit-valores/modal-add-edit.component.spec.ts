@@ -450,7 +450,7 @@ describe('ModalAddEditComponent', () => {
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/valoresgrados/empresas/93/1/2022-10-04T00:00:00/12`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/valoresgrados/empresas/93/1/2022-10-20T00:00:00/12`);
     fakeBackend.flush(resp);
     expect(fakeBackend.request.method).toBe('PUT');
   });
@@ -558,7 +558,7 @@ describe('ModalAddEditComponent', () => {
     // Llamamos a la funcion de Guardado
     app.save()
 
-    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/valoresgrados/empresas/93/1/2022-10-04T00:00:00/12`);
+    const fakeBackend = httpTestingController.expectOne(`http://localhost:8080/api/configuraciones/nominas/valoresgrados/empresas/93/1/2022-10-20T00:00:00/12`);
     fakeBackend.error(error);
     expect(fakeBackend.request.method).toBe('PUT');
 

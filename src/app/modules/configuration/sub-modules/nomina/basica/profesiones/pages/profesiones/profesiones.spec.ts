@@ -103,7 +103,7 @@ describe('ClasificacionOficialComponent', () => {
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
     fixture.detectChanges();
-    expect(app.titleForm).toBe('Agregar profesiones');
+    expect(app.titleForm).toBe('Agregar profesión');
     expect(app.createModal).toBeTrue();  
   })
 
@@ -114,7 +114,7 @@ describe('ClasificacionOficialComponent', () => {
     // Simulamos el proceso de abrir el modal de Crear
     expect(app.createModal).toBeFalse();
     app.openModalCreate();
-    expect(app.titleForm).toBe('Agregar profesiones');
+    expect(app.titleForm).toBe('Agregar profesión');
     expect(app.createModal).toBeTrue();
     fixture.detectChanges();
     
@@ -141,7 +141,7 @@ describe('ClasificacionOficialComponent', () => {
     fixture.detectChanges();
     expect(app.professionSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar profesiones');
+    expect(app.titleForm).toBe('Editar profesión');
     expect(app.createModal).toBeTrue();  
   })
 
@@ -161,7 +161,7 @@ describe('ClasificacionOficialComponent', () => {
     fixture.detectChanges();
     expect(app.professionSelect).toBe(data);
     expect(app.isEdit).toBeTrue();
-    expect(app.titleForm).toBe('Editar profesiones');
+    expect(app.titleForm).toBe('Editar profesión');
     expect(app.createModal).toBeTrue();  
     
     // Simulamos el proceso de cerrar el modal de Edicion

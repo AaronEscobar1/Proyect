@@ -24,7 +24,7 @@ export class ModalPrintComponent implements OnInit {
     this.form = this.fb.group({
       type: [],
       id: [''],
-      desniv: ['']
+      des: ['']
     });
   }
 
@@ -41,15 +41,6 @@ export class ModalPrintComponent implements OnInit {
   closeModalPrint(): void {
     this.resetForm();
     this.onCloseModalPrint.emit();
-  }
-
-  /**
-   * VALIDACIONES DEL FORMULARIO REACTIVO
-   */
-  campoInvalid( campo: string ) {
-    return (this.form.controls[campo].errors) 
-            && (this.form.controls[campo].touched || this.form.controls[campo].dirty)
-             && this.form.invalid;
   }
 
 }
