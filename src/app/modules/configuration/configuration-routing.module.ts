@@ -28,6 +28,11 @@ const routes: Routes = [
         loadChildren: () => import('./sub-modules/nomina/empresa/empresa.module').then( m => m.EmpresaModule)
       },
       {
+        path: 'formulacion',
+        // LazyLoad
+        loadChildren: () => import('./sub-modules/nomina/formulacion/formulacion.module').then( m => m.FormulacionModule)
+      },
+      {
         path: 'monedas',
         // LazyLoad
         loadChildren: () => import('./sub-modules/nomina/monedas/monedas.module').then( m => m.MonedasModule)
