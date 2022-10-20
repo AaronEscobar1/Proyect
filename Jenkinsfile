@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                sh 'ng serve' 
+                sh 'pm2 start "ng serve --host 0.0.0.0" --name nomina-frontend' 
             }
         }
     }
