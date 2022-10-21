@@ -25,16 +25,18 @@
                                     inputId="idConcepto"
                                     appendTo="body"
                                     [filter]="true"
-                                    filterBy="label"
-                                    filterPlaceholder="Buscar por descripción..."
+                                    filterBy="id"
+                                    optionLabel="descto"
+                                    optionValue="id"
+                                    filterPlaceholder="Buscar por código..."
                                     formControlName="idConcepto"
                                     placeholder="Seleccione un concepto">
                             <ng-template let-option pTemplate="item" style="height: 50px;">
                                 <table class="w-full">
                                     <tbody>
                                         <tr>
-                                            <td style="width: 25%;">{{ option.value }}</td>
-                                            <td style="width: 75%;">{{ option.label }}</td>
+                                            <td style="width: 25%;">{{ option.id }}</td>
+                                            <td style="width: 75%;">{{ option.descto }}</td>
                                         </tr>
                                     </tbody>  
                                 </table> 

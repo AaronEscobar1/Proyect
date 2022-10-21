@@ -23,6 +23,7 @@
                         <div class="col-12 md:col-6">
                             <app-tipo-nomina [empresaRow]="empresaRow"
                                              (onGetDataPuntaje)="getDataPuntajes($event)"
+                                             (onGetDataConceptos)="getDataConceptos($event)"
                                              (onEnableTabAumento)="enableTabAumento($event)"
                                              (onClearPuntajeEvaluacionTable)="clearPuntajeEvaluacionTable()">
                             </app-tipo-nomina>
@@ -52,6 +53,7 @@
                 <p-tabPanel header="Aumento por evaluación"  [disabled]="empresaRow == null || nominaRow == null || !isEnableAumentoTab">
                     
                     <app-aumento-evaluacion [aumentoEvaluacion]="aumentoEvaluacion"
+                                            [conceptos]="conceptos"
                                             [puntajeEvaluacionSelectRow]="puntajeEvaluacionSelectRow"
                                             (onRefresh)="loadAumentoEvaluacion()">
                     </app-aumento-evaluacion>

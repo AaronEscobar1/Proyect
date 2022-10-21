@@ -9,6 +9,7 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { CompanyNominaService } from '../../../shared-empresa/services/company-nomina.service';
+import { ConceptosService } from '../../../../formulacion/conceptos/services/conceptos.service';
 
 @Component({
   selector: 'app-tipo-nomina',
@@ -28,6 +29,9 @@ export class TipoNominaComponent implements OnInit {
 
   // Emisión de evento (cargar data de puntaje de evaluacion)
   @Output() onGetDataPuntaje = new EventEmitter();
+  
+  // Emisión de evento (cargar data conceptos)
+  @Output() onGetDataConceptos = new EventEmitter();
 
   // Variable para manejar la suscripción
   subscriber!: Subscription;
@@ -40,6 +44,7 @@ export class TipoNominaComponent implements OnInit {
 
   constructor(private companyNominaService: CompanyNominaService,
               private puntajeEvaluacionService: PuntajeEvaluacionService,
+              private conceptosService: ConceptosService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private selectRowServices: SelectRowService) { }
@@ -57,7 +62,7 @@ export class TipoNominaComponent implements OnInit {
     if ( this.empresaRow && this.empresaRow.id) {
       this.loadNominas(this.empresaRow.id);
     } 
-    // Vaciar los tipos de nomninas cuando la empresa se deselecciona
+    // Vaciar los tipos de nominas cuando la empresa se deselecciona
     else if ( this.empresaRow == null ) {
       this.tiposNominas = []; 
     }
@@ -85,7 +90,7 @@ export class TipoNominaComponent implements OnInit {
   /**
    * Obtener los puntajes de evaluacion relacionadas con una empresa y un tipo de nomina
    */
-  loadPuntajesEvaluacion(): void {
+  loadPuntajesEvaluacion(isRefresh: boolean = false): void {
     // Deshabilitar pestaña Aumento por evaluación
     this.onEnableTabAumento.emit(false);
     // Limpiar el registro seleccionado de la tabla puntaje de evaluación
@@ -98,6 +103,33 @@ export class TipoNominaComponent implements OnInit {
       .subscribe({
         next: (res: PuntajeEvaluacion[]) => {
           this.onGetDataPuntaje.emit(res);
+          this.spinner.hide();
+          // Realizar peticion al backend para buscar los conceptos cuando no es por metodo refresh
+          if (!isRefresh) {
+            // Vaciar lista de conceptos
+            this.onGetDataConceptos.emit([]);
+            this.loadConceptosByEmpresaNomina();
+          }
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar conceptos por empresa y nomina para el listado del formulario
+   */
+  loadConceptosByEmpresaNomina(): void {
+    if ( !this.tipoNominaRow ) {
+      return;
+    }
+    this.spinner.show(undefined, spinnerLight);
+    this.conceptosService.getAllConceptosByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
+      .subscribe({
+        next: (res) => {
+          this.onGetDataConceptos.emit(res);
           this.spinner.hide();
         },
         error: (err) => {

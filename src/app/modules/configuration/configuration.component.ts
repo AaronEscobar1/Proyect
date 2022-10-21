@@ -174,6 +174,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
               ]
             },
             {
+              label: 'Formulación',
+              items: [
+                {
+                  label: 'Conceptos',
+                  routerLink: ['/main/config/formulacion/conceptos'],
+                }
+              ]
+            },    
+            {
               label: 'Monedas',
               items: [
                 {
