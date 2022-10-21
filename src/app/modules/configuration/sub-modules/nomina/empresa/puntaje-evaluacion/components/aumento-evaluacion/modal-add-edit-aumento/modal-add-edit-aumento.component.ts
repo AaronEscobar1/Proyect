@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors }
 import { AumentoEvaluacionService } from '../../../services/aumento-evaluacion.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import { Concepto } from '../../../../../formulacion/conceptos/interfaces/concepto.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit-aumento',
@@ -21,9 +22,8 @@ export class ModalAddEditAumentoComponent implements OnInit {
   // Objeto seleccionado para editar
   @Input() aumentoEvaluacionSelect!: AumentoEvaluacion | undefined;
 
-  // Objeto para mostrar conceptos en el dropdown
-  // TODO: Crear interfaz de concepto y consumir el endpoint que trae la data de base de datos
-  conceptos: any[] = [];
+  // Objeto para mostrar lista de conceptos en el dropdown
+  @Input() conceptos: Concepto[] = [];
 
   // Banderas
   @Input() createModal!: boolean;
@@ -56,12 +56,6 @@ export class ModalAddEditAumentoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: Consumir el endpoint que trae la data de base de datos
-    this.conceptos = [
-      { label: 'concepto 1',  value: 1  },
-      { label: 'concepto 2',  value: 2  },
-      { label: 'concepto 99', value: 99 },
-    ]
   }
 
   ngOnChanges() {
