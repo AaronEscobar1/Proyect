@@ -25,11 +25,11 @@
                 <div class="formgrid grid">
                                 
                     <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
-                        <label for="codemp">Nómina:</label>
+                        <label for="id">Nómina:</label>
                     </div>
                     <div class="field col-2 md:col-2 lg:col-2">
                         <input  type="text"
-                                id="codemp" 
+                                id="id" 
                                 class="w-full"
                                 pInputText
                                 [value]="empresaRow ? empresaRow.id : '' "
@@ -38,7 +38,7 @@
                     
                     <div class="field col-2 md:col-2 lg:col-2">
                         <input  type="text"
-                                id="codemp" 
+                                id="tipnom" 
                                 class="w-full"
                                 pInputText
                                 [value]="nominaRow ? nominaRow.tipnom : '' "
@@ -47,10 +47,10 @@
 
                     <div class="field col-4 md:col-4 lg:col-6">
                         <input  type="text"
-                                id="desemp" 
+                                id="desnom" 
                                 class="w-full"
                                 pInputText
-                                [value]="empresaRow ? (empresaRow.nombre | titlecase) : '' "
+                                [value]="nominaRow ? (nominaRow.desnom | titlecase) : '' "
                                 disabled/>
                     </div>
 
@@ -73,14 +73,20 @@
 </app-modal-print-concepto>
 
 <!-- Modal Agregar Editar-->
-<!-- <app-modal-add-edit
+<app-modal-add-edit-concepto
     [empresaRow]="empresaRow"
     [nominaRow]="nominaRow"
-    [nivelesExcepcion]="nivelesExcepcion"
-    [nivelExcepcionSelect]="nivelExcepcionSelect"
+    [conceptos]="conceptos"
+    [conceptosFilters]="conceptosFilters"
+    [conceptoSelect]="conceptoSelect"
+    
+    [tiposCalculos]="tiposCalculos"
+    [metodosFiscales]="metodosFiscales"
+    [rutinasCalculos]="rutinasCalculos"
+
     [createModal]="createModal" 
     [isEdit]="isEdit" 
     (onCloseModal)="closeModal()"
     (onLoadData)="refresh()"
     [titleForm]="titleForm">
-</app-modal-add-edit> -->
+</app-modal-add-edit-concepto>

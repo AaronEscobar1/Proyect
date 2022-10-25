@@ -3,26 +3,59 @@ export interface Concepto {
     idEmpresa:  string;
     // Tipo de Nomina
     idNomina:   string;
-    // Codigo de Concepto
-    id:         number;
-    // Descripcion del Concepto
-    descto:     string;
-    // Numero de la Clausula del Contrato Colectivo
-    clausu:     number | null;
-    // Funcion (1=Asignacion, 2=Deduccion, 3=Reserva)
-    functo:     string;
-    // Prioridad de ejecucion
-    prieje:     number;
-    // Maneja saldo (0=No, 1=Acumular, 2=Decrementar)
-    mansal:     string;
-    // Concepto al cual se le afecta el saldo
-    ctoafe:     number | null;
-    // Tipo de calculo a considerar
-    tipcal:     number;
-    // Clasificacion del tipo o metodo calculo fiscal
-    tipfis:     number | null;
-    // Rutina de calculo
-    rutcal:     string | null;
+    /** BASICO */
+        // Codigo de Concepto
+        id:         number;
+        // Descripcion del Concepto
+        descto:     string;
+        // Prioridad de ejecucion
+        prieje:     number;
+        // Numero de la Clausula del Contrato Colectivo
+        clausu:     number | null;
+        // Funcion (1=Asignacion, 2=Deduccion, 3=Reserva)
+        functo:     string;
+        // Tipo de calculo a considerar
+        tipcal:     number;
+        // Clasificacion del tipo o metodo calculo fiscal
+        tipfis:     number | null;
+        // Rutina de calculo
+        rutcal:     string | null;
+        // Maneja saldo (0=No, 1=Acumular, 2=Decrementar)
+        mansal:     string;
+        // Gravable al Impuesto (1=Si)
+        graimp:     string;
+        // No debe cosiderarse en la impresion (1=Afirmativo)
+        noimpr:     string;
+        // No debe reflejarse en el neto (1=Afirmativo)
+        noneto:     string;
+        // Incorporar el concepto en el listado, de nomina, detalle por concepto (1=Si)
+        incdet:     string;
+        // Se actualiza en el maestro de prestaciones de antiguedad (1=Si)
+        abopre:     string;
+        // Indicar si el concepto debe considerarse aun cuando el monto sea cero (1=Si)
+        montocero:  string;
+        // Considerar tope en monto de calculo (1=Si)
+        topmon:     string;
+        //*** Los decimales del monto calculado debe ser cero (0= NO, 1=Sin redondeo, 2=Con redondeo)
+        sindec:     string;
+        //*** Concepto al cual se le afecta el saldo
+        ctoafe:     number | null;
+        //*** Factor de calculo
+        faccto:     number;
+        //*** Descripcion del concepto o expresion utilizada en el calculo del factor
+        desfac:     string | null;
+        //*** Indicar si el concepto esta activo (1=Si)
+        inactivo:   string;
+    /** TODO: SALARIO  */
+    /** TODO: VALOR  */
+    /** TODO: FACTOR  */
+    /** TODO: CANTIDAD  */
+    /** TODO: LIMITE */
+    /** TODO: PROCESAR  */
+    /** TODO: VACACION */
+    /** TODO: MISCELANEA */
+    /** TODO: OTROS */
+
     // Valor o monto fijo a considerar en el calculo
     valcto:     number;
     // Tipo de Sueldo para considerar el valor segun escala (0..6)
@@ -41,8 +74,6 @@ export interface Concepto {
     sussue:     string;
     // Promedio a sustituir por el sueldo de calculo
     promProsus: string | null;
-    // Factor de calculo
-    faccto:     number;
     // Tipo de Sueldo para considerar el factor segun escala (0..6)
     suefac:     string;
     // Promedio, sueldo, para buscar el factor en escala de sueldo
@@ -51,8 +82,6 @@ export interface Concepto {
     serfac:     string;
     // Considerar el factor por mes (1=Si)
     facmes:     string;
-    // Descripcion del concepto o expresion utilizada en el calculo del factor
-    desfac:     string | null;
     // Cantidad a considerar en el calculo
     cancto:     number;
     // Tipo de sueldo para considerar la cantidad segun escala (0..6)
@@ -135,11 +164,7 @@ export interface Concepto {
     ctofij:     number | null;
     // Concepto para generar los intereses
     ctoint:     number | null;
-    // No debe reflejarse en el neto (1=Afirmativo)
-    noneto:     string;
-    // No debe cosiderarse en la impresion (1=Afirmativo)
-    noimpr:     string;
-    // Maneja institucion para depositp (1=Si)
+    // Maneja institucion para deposito (1=Si)
     manins:     string;
     // Factor para considerar el monto a depositar o si el mismo se resta o suma
     facaho:     number;
@@ -149,10 +174,6 @@ export interface Concepto {
     unasup:     string;
     // Concepto a generar en caso de suplencia
     ctosup:     number | null;
-    // Gravable al Impuesto (1=Si)
-    graimp:     string;
-    // Los decimales del monto calculado debe ser cero (0= NO, 1=Sin redondeo, 2=Con redondeo)
-    sindec:     string;
     // Factor de Impresion
     facimp:     number;
     // Considerar sueldo tope (1=Si)
@@ -177,12 +198,6 @@ export interface Concepto {
     suecav:     string;
     // Considerar sueldo de calculo para vericar el limte (1=Si)
     suelim:     string;
-    // Considerar tope en monto de calculo (1=Si)
-    topmon:     string;
-    // Incorporar el concepto en el listado, de nomina, detalle por concepto (1=Si)
-    incdet:     string;
-    // Se actualiza en el maestro de prestaciones de antiguedad (1=Si)
-    abopre:     string;
     // Concepto de intereses de prestaciones al cual se le afecta el saldo
     ctoIntpre:  null;
     // Capitalizar o Pagar Intereses/Prestaciones prestaciones (Capitalizar: 0=No, 1=Anual, 2=Mensual; Pagar: 3=No, 4= Anual, 5=Mensual)
@@ -215,10 +230,9 @@ export interface Concepto {
     facfij:     number;
     // Determinar el factor por centro o puesto de trabajo (1=Si)
     faccen:     string;
-    // Indicar si el concepto debe considerarse aun cuando el monto sea cero (1=Si)
-    montocero:  string;
-    // Indicar si el concepto esta activo (1=Si)
-    inactivo:   string;
     // Sustituye cuota de prestamos sobre prestaciones(0=No, 1=Si)
     suscuota:   string;
 }
+
+// Interfaces para actualizar registros
+export type ConceptoUpdate = Omit<Concepto, 'idEmpresa' | 'idNomina' | 'id'>

@@ -6,6 +6,8 @@ import { CompanyNominaService } from '../../../../empresa/shared-empresa/service
 import { ConceptosService } from '../../services/conceptos.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo } from '../../interfaces/tablas-tipos-concepto.interfaces';
 
 @Component({
   selector: 'app-conceptos',
@@ -23,6 +25,9 @@ export class ConceptosComponent implements OnInit {
   // Objeto de conceptos por empresa y nomina
   @Input() conceptos: Concepto[] = [];
 
+  // Objeto de conceptos que manejan saldos
+  @Input() conceptosFilters: Concepto[] = [];
+
   // Objeto seleccionado para editar
   conceptoSelect!: Concepto | undefined;
 
@@ -36,14 +41,31 @@ export class ConceptosComponent implements OnInit {
   titleForm  : string = 'Agregar concepto';
   createModal: boolean = false;
   printModal : boolean = false;
+
+  /****************************
+   *  Objetos de tablas tipos *
+   ****************************/
+
+  // Objeto de tipo de cálculos
+  tiposCalculos: TipoCalculo[] = [];
+
+  // Objeto de métodos Fiscales
+  metodosFiscales: MetodoFiscal[] = [];
+
+  // Objeto de rutinas de Cálculos
+  rutinasCalculos: RutinaCalculo[] = [];
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService,
+              private tablasTipoConceptoService: TablasTipoConceptoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.loadTiposCalculos();
+    this.loadMetodosFiscales();
+    this.loadRutinasCalculos();
   }
 
   refresh(): void {
@@ -123,6 +145,49 @@ export class ConceptosComponent implements OnInit {
           });
       }
     });
+  }
+
+  /**
+   * Cargar tablas tipos
+   */
+
+  /** Tipos de Cálculos */
+  loadTiposCalculos(): void {
+    this.tablasTipoConceptoService.getAllTiposCalculos()
+      .subscribe({
+        next: (res: TipoCalculo[]) => {
+          this.tiposCalculos = res;
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los tipos de cálculos, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /** Métodos Fiscales */
+  loadMetodosFiscales(): void {
+    this.tablasTipoConceptoService.getAllMetodosFiscales()
+      .subscribe({
+        next: (res: MetodoFiscal[]) => {
+          this.metodosFiscales = res;
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los métodos fiscales, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /** Rutinas de Cálculos */
+  loadRutinasCalculos(): void {
+    this.tablasTipoConceptoService.getAllRutinasCalculos()
+      .subscribe({
+        next: (res: RutinaCalculo[]) => {
+          this.rutinasCalculos = res;
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener las rutinas de cálculos, error conexión con el servidor.', life: 3000});
+        }
+      });
   }
 
 }

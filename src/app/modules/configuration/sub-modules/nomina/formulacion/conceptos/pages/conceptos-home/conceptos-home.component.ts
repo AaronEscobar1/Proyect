@@ -21,6 +21,9 @@ export class ConceptosHomeComponent implements OnInit {
   // Objeto para mostrar en la tabla de conceptos
   conceptos: Concepto[] = [];
   
+  // Objeto de conceptos que manejan saldos
+  conceptosFilters: Concepto[] = [];
+
   // Emisión de evento de padre a hijo (cargar data de conceptos)
   @ViewChild(TipoNominaComponent) tipoNominaComponent!: TipoNominaComponent;
 
@@ -49,6 +52,8 @@ export class ConceptosHomeComponent implements OnInit {
    */
   getDataConceptos(conceptosEvent: Concepto[]): void {
     this.conceptos = conceptosEvent;
+    // Filtrar los conceptos que solo manejen saldos
+    this.conceptosFilters = this.conceptos.filter(concepto => concepto.mansal != '0');
   }
 
   /** Destrucción del observable */
