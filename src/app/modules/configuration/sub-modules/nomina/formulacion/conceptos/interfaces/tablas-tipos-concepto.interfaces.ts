@@ -91,7 +91,7 @@ export interface RutinaCalculo {
 }
 
 export const redondeoDataConcepto: dropdownType[] = [
-    { label: 'No aplica',    value: 0 },
-    { label: 'Sin redondeo', value: 1 },
-    { label: 'Con redondeo', value: 2 }
+    { label: 'No aplica',    value: "0" },
+    { label: 'Sin redondeo', value: "1" },
+    { label: 'Con redondeo', value: "2" }
 ];
