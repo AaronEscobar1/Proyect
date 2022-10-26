@@ -88,4 +88,14 @@ export class TablasTipoConceptoService {
     return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/rutinascalculos`));
   }
 
+  /** Tipos salarios */
+  getAllTiposSalariosByEmpresa(idEmpresa: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/tipossalarios/${idEmpresa}`));
+  }
+
+  /** Promedios */
+  getAllPromediosByEmpresaNomina(idEmpresa: string, idNomina: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/promedios/empresas/${idEmpresa}/nominas/${idNomina}`));
+  }
+
 }

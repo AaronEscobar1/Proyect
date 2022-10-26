@@ -7,9 +7,8 @@ import { CompanyNominaService } from '../../../../../empresa/shared-empresa/serv
 import { ConceptosService } from '../../../services/conceptos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { MetodoFiscal, redondeoDataConcepto, RutinaCalculo, TipoCalculo } from '../../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
-import { dropdownType } from '../../../../../../../../../shared/interfaces/typesFiles.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit-concepto',
@@ -48,9 +47,6 @@ export class ModalAddEditConceptoComponent implements OnInit {
    *  Objetos de tablas tipos *
    ****************************/
 
-  // Objeto para listar el campo redondeo
-  redondeoList: dropdownType[] = redondeoDataConcepto;
-
   // Objeto de tipo de cálculos
   @Input() tiposCalculos: TipoCalculo[] = [];
 
@@ -60,12 +56,20 @@ export class ModalAddEditConceptoComponent implements OnInit {
   // Objeto de rutinas de Cálculos
   @Input() rutinasCalculos: RutinaCalculo[] = [];
 
+  // Objeto de manejos decimales (redondeo)
+  @Input() manejosDecimales: ManejoDecimal[] = [];
+
+  // Objeto de tipos de salarios
+  @Input() tiposSalarios: TipoSalario[] = [];
+
+  // Objeto de promedios
+  @Input() promedios: Promedio[] = [];
+
   // Formulario reactivo
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 0;
-
+  tabIndex = 1;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -96,7 +100,16 @@ export class ModalAddEditConceptoComponent implements OnInit {
         ctoafe:    [  ],
         faccto:    [  , [ Validators.required, this.validateFactor.bind(this)]],
         desfac:    [  , [ Validators.maxLength(256)]],
-        inactivo:  [  ]
+        inactivo:  [  ],
+      /** Salario */
+        tipsue:     [  , [ Validators.required ]],
+        promCodpro: [ ],
+        salmin:     [  , [ Validators.pattern('[0-9]{0,3}') ]],
+        sussue:     [  , [ Validators.required ]],
+        promProsus: [ ],
+        salmis:     [  , [ Validators.pattern('[0-9]{0,3}') ]],
+        rutsus:     [  , [ Validators.maxLength(10) ]],
+        topsue:     [ ],
     });
   }
 
@@ -105,7 +118,6 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
-      // const formInit = { prieje: 0, functo: '0', mansal: '0', noimpr: '0', noneto: '0', incdet: '0', abopre: '0', topmon: '0', faccto: '0', montocero: '0', inactivo: '0' };
       this.form.reset(FORM_INIT_CONCEPTO);
       this.form.controls['id'].enable();
       return;
@@ -123,6 +135,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
       (this.conceptoSelect && this.conceptoSelect.montocero) === "1" ? this.form.controls['montocero'].reset(true) : this.form.controls['montocero'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.topmon)    === "1" ? this.form.controls['topmon'].reset(true) : this.form.controls['topmon'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.inactivo)  === "1" ? this.form.controls['inactivo'].reset(true) : this.form.controls['inactivo'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.topsue)    === "1" ? this.form.controls['topsue'].reset(true) : this.form.controls['topsue'].reset(false);
   }
 
   /**
@@ -131,6 +144,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
    */
   save(): void {
     if ( this.form.invalid ) {
+      this.tabIndex = 0;
+      // Validar errores en pestaña (Salario) 
+      if ( this.form.controls['tipsue'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors) ) {
+        this.tabIndex = 1;
+      }
+      if ( this.form.controls['sussue'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors) ) {
+        this.tabIndex = 1;
+      }
       this.form.markAllAsTouched();
       return;
     }
@@ -145,6 +166,20 @@ export class ModalAddEditConceptoComponent implements OnInit {
     data.montocero = data.montocero ? '1' : '0';
     data.topmon    = data.topmon    ? '1' : '0';
     data.inactivo  = data.inactivo  ? '1' : '0';
+    data.topsue    = data.topsue    ? '1' : '0';
+
+    // Validar si el campo minimo esta en null, si esta en null colocarle un 0
+    if ( data.salmin == null ) {
+      data.salmin = 0;
+    }
+    if ( data.salmis == null) {
+      data.salmis = 0;
+    }
+
+    // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto.
+    if ( data.sussue && !data.tipsue ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Es obligatorio colocar un sueldo de cálculo si existe seleccionado un sueldo sustituto.', life: 5000});
+    }
 
     console.log(data);
     return;

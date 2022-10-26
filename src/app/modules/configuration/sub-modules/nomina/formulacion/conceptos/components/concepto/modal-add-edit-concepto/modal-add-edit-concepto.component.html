@@ -73,7 +73,7 @@
 
                 </div>
 
-                <p-tabView [(activeIndex)]="tabIndex">
+                <p-tabView [(activeIndex)]="tabIndex" [scrollable]="true">
 
                     <!--/****************************
                         /*          Basico          *
@@ -84,11 +84,11 @@
 
                             <div class="col-12 md:col-12 lg:col-3">
                                 <div class="formgrid grid mb-2">
-                                    <label for="id" class="col-4 md:col-4 lg:col-5 xl:col-4 text-right mt-2">Código:</label>
+                                    <label for="idCod" class="col-4 md:col-4 lg:col-5 xl:col-4 text-right mt-2">Código:</label>
                                     <div class="col-8 md:col-8 lg:col-7 xl:col-8">
                                         <input type="text"
                                                pInputText
-                                               id="id"
+                                               id="idCod"
                                                class="p-inputtext-sm"
                                                pKeyFilter="num"
                                                formControlName="id"/>
@@ -415,9 +415,11 @@
                                 <div class="formgrid grid">
                                     <label for="sindec" class="col-4 md:col-4 lg:col-4 text-right mt-2">Redondeo:</label>
                                     <div class="col-8 md:col-8 lg:col-7">
-                                        <p-dropdown [options]="redondeoList"
+                                        <p-dropdown [options]="manejosDecimales"
                                                     inputId="sindec"
                                                     appendTo="body"
+                                                    optionLabel="descripcion"
+                                                    optionValue="sindec"
                                                     formControlName="sindec"
                                                     placeholder="Seleccione el redondeo">
                                         </p-dropdown>
@@ -538,6 +540,214 @@
                         /*         Salario          *
                         /**************************** -->
                     <p-tabPanel header="Salario">
+
+                        <div class="formgrid grid mt-3">
+
+                            <div class="col-12 md:col-9 lg:col-8">
+
+                                <p-panel header="Sueldo de cálculo">
+                                    
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="tipsue" class="col-4 md:col-3 lg:col-2 mt-2">Tipo:</label>
+                                        <div class="col-8 md:col-6 lg:col-5">
+                                            <p-dropdown [options]="tiposSalarios"
+                                                        inputId="tipsue"
+                                                        appendTo="body"
+                                                        optionLabel="nombre"
+                                                        optionValue="id"
+                                                        formControlName="tipsue"
+                                                        placeholder="Seleccione el tipo">
+                                            </p-dropdown>
+                                            <span class="form-text text-danger text-center"
+                                                  *ngIf="campoInvalid('tipsue')">
+                                                El tipo es obligatorio.
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid mb-1">
+
+                                        <label for="promCodpro" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
+                                        <div class="col-8 md:col-9 lg:col-10">
+                                            <p-dropdown [options]="promedios" 
+                                                        inputId="promCodpro"
+                                                        appendTo="body"
+                                                        [filter]="true"
+                                                        filterBy="codpro"
+                                                        optionLabel="despro"
+                                                        optionValue="codpro"
+                                                        formControlName="promCodpro"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        placeholder="Seleccione un promedio">
+                                                <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                    <table class="w-full">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                <td style="width: 75%;">{{ option.despro }}</td>
+                                                            </tr>
+                                                        </tbody>  
+                                                    </table> 
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="salmin" class="col-4 md:col-3 lg:col-2 mt-2">Mínimo:</label>
+                                        <div class="col-8 md:col-3 lg:col-2">
+                                            <input type="number"
+                                                   id="salmin"
+                                                   pInputText
+                                                   pKeyFilter="num"
+                                                   formControlName="salmin"
+                                                   class="p-inputtext-sm"/>
+                                        </div>
+                                        <span class="col-12 md:col-12 lg:col-offset-2 form-text text-danger"
+                                                *ngIf="campoInvalid('salmin')">
+                                            El mínimo es de longitud máxima de 3 dígitos, formato numérico.
+                                        </span>
+
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid mt-3">
+
+                            <div class="col-12 md:col-9 lg:col-8">
+
+                                <p-panel header="Sueldo sustituto">
+                                    
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="sussue" class="col-4 md:col-3 lg:col-2 mt-2">Tipo:</label>
+                                        <div class="col-8 md:col-6 lg:col-5">
+                                            <p-dropdown [options]="tiposSalarios"
+                                                        inputId="sussue"
+                                                        appendTo="body"
+                                                        optionLabel="nombre"
+                                                        optionValue="id"
+                                                        formControlName="sussue"
+                                                        placeholder="Seleccione el tipo">
+                                            </p-dropdown>
+                                            <span class="form-text text-danger text-center"
+                                                  *ngIf="campoInvalid('sussue')">
+                                                El tipo es obligatorio.
+                                            </span>
+                                        </div>
+
+                                    </div>
+    
+                                    <div class="formgrid grid mb-1">
+
+                                        <label for="promProsus" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
+                                        <div class="col-8 md:col-9 lg:col-10">
+                                            <p-dropdown [options]="promedios" 
+                                                        inputId="promProsus"
+                                                        appendTo="body"
+                                                        [filter]="true"
+                                                        filterBy="codpro"
+                                                        optionLabel="despro"
+                                                        optionValue="codpro"
+                                                        formControlName="promProsus"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        placeholder="Seleccione un promedio">
+                                                <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                    <table class="w-full">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                <td style="width: 75%;">{{ option.despro }}</td>
+                                                            </tr>
+                                                        </tbody>  
+                                                    </table> 
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="salmis" class="col-4 md:col-3 lg:col-2 mt-2">Mínimo:</label>
+                                        <div class="col-8 md:col-3 lg:col-2">
+                                            <input type="number"
+                                                    id="salmis"
+                                                    pInputText
+                                                    pKeyFilter="num"
+                                                    formControlName="salmis"
+                                                    class="p-inputtext-sm"/>
+                                        </div>
+                                        <span class="col-12 md:col-12 lg:col-offset-2 form-text text-danger"
+                                              *ngIf="campoInvalid('salmis')">
+                                            El mínimo es de longitud máxima de 3 dígitos, formato numérico.
+                                        </span>
+                                    </div>
+
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="rutsus" class="col-4 md:col-3 lg:col-2 mt-2">Rutina:</label>
+                                        <div class="col-8 md:col-4 lg:col-4">
+                                            <input type="text"
+                                                   id="rutsus"
+                                                   pInputText
+                                                   formControlName="rutsus"
+                                                   class="p-inputtext-sm"/>
+                                            </div>
+                                        <span class="col-12 md:col-12 lg:col-offset-2 form-text text-danger"
+                                              *ngIf="campoInvalid('rutsus')">
+                                            La rutina es de longitud máxima de 10 dígitos, formato alfanumérico.
+                                        </span>
+
+                                    </div>
+    
+                                </p-panel>
+                            
+                            </div>
+                            
+                            <div class="col-12 md:col-3 lg:col-4">
+                                
+                                <div class="flex align-items-end flex-wrap mb-3 h-1rem md:h-15rem">
+
+                                    <div class="formgrid grid mt-3">
+
+                                        <div class="flex ml-5">
+                                            <div class="field-checkbox mt-2 mr-5">
+                                                <p-checkbox inputId="topmon"
+                                                            name="topmon"
+                                                            formControlName="topsue"
+                                                            [value]="true"
+                                                            [binary]="true">
+                                                </p-checkbox>
+                                                <label for="topmon">Tope</label>
+                                            </div>
+                                            <div *ngIf="isEdit">
+                                                <button pButton 
+                                                        pRipple 
+                                                        label=""
+                                                        pTooltip="Información adicional Tope"
+                                                        icon="pi pi-external-link"
+                                                        class="p-button-raised p-button-secondary p-button-sm">
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </p-tabPanel>
 
                     <!--/****************************

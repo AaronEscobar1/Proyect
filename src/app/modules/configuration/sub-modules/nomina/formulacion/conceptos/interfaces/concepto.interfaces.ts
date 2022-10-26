@@ -46,7 +46,24 @@ export interface Concepto {
         desfac:     string | null;
         //*** Indicar si el concepto esta activo (1=Si)
         inactivo:   string;
-    /** TODO: SALARIO  */
+    /** SALARIO  */
+        // Tipo de sueldo a considerar en el calculo (0=No, 1..6=Si)
+        tipsue:     string;
+        // Promedio a considerar en calculo
+        promCodpro: string | null;
+        // Cantidad de salarios miminos a considerar en el calculo
+        salmin:     number;
+        // Considerar sueldo sustituto (0=No, 1..6=Si)
+        sussue:     string;
+        // Promedio a sustituir por el sueldo de calculo
+        promProsus: string | null;
+        // Cantidad de salarios miminos sustituto a considerar en el calculo
+        salmis:     number;
+        // Rutina de calculo para condicionar la sustitucion de sueldo
+        rutsus:     string | null;
+        // Considerar sueldo tope (1=Si)
+        topsue:     string;
+
     /** TODO: VALOR  */
     /** TODO: FACTOR  */
     /** TODO: CANTIDAD  */
@@ -66,14 +83,6 @@ export interface Concepto {
     serval:     string;
     // Considerar el valor por mes (1=Si)
     valmes:     string;
-    // Tipo de sueldo a considerar en el calculo (0=No, 1..6=Si)
-    tipsue:     string;
-    // Promedio a considerar en calculo
-    promCodpro: string | null;
-    // Considerar sueldo sustituto (0=No, 1..6=Si)
-    sussue:     string;
-    // Promedio a sustituir por el sueldo de calculo
-    promProsus: string | null;
     // Tipo de Sueldo para considerar el factor segun escala (0..6)
     suefac:     string;
     // Promedio, sueldo, para buscar el factor en escala de sueldo
@@ -176,8 +185,6 @@ export interface Concepto {
     ctosup:     number | null;
     // Factor de Impresion
     facimp:     number;
-    // Considerar sueldo tope (1=Si)
-    topsue:     string;
     // Considerar valor tope (1=Si)
     topval:     string;
     // Considerar factor tope (1=Si)
@@ -210,10 +217,6 @@ export interface Concepto {
     gretro:     string;
     // Codigo beneficiario (*FICHA=Trabajador)
     codben:     string | null;
-    // Cantidad de salarios miminos a considerar en el calculo
-    salmin:     number;
-    // Cantidad de salarios miminos sustituto a considerar en el calculo
-    salmis:     number;
     // Cantidad de salarios miminos para buscar, valor, por escala de sueldo
     salmiv:     string;
     // Cantidad de salarios miminos para buscar, cantidad, por escala de sueldo
@@ -222,8 +225,6 @@ export interface Concepto {
     salmif:     string;
     // Cantidad de salarios miminos indicados en el rango limite (1=Si)
     salmil:     string;
-    // Rutina de calculo para condicionar la sustitucion de sueldo
-    rutsus:     string | null;
     // Factor que indica en que propocion se afecta el saldo de otro concepto
     facafe:     number;
     // Factor que indica en que propocion se afecta la cuota del concepto a generar fijo

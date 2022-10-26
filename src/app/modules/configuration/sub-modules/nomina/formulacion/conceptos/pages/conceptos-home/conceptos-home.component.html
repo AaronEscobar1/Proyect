@@ -22,7 +22,8 @@
                     
                         <div class="col-12 md:col-6">
                             <app-tipo-nomina [empresaRow]="empresaRow"
-                                             (onGetDataConceptos)="getDataConceptos($event)">
+                                             (onGetDataConceptos)="getDataConceptos($event)"
+                                             (onGetDataPromedios)="getDataPromedios($event)">
                             </app-tipo-nomina>
                         </div>
                     </div>
@@ -40,6 +41,8 @@
                                    [nominaRow]="nominaRow"
                                    [conceptos]="conceptos"
                                    [conceptosFilters]="conceptosFilters"
+                                   [tiposSalarios]="tiposSalarios"
+                                   [promedios]="promedios"
                                    (onRefresh)="refresh()">
                     </app-conceptos>
 

@@ -14,5 +14,9 @@ export const FORM_INIT_CONCEPTO = {
         faccto: '0', 
         topmon: '0', 
         montocero: '0', 
-        inactivo: '0' 
+        inactivo: '0', 
+    /** Salario */
+        salmin: 0,
+        salmis: 0,
+        topsue: '0'
 };

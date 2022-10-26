@@ -7,7 +7,7 @@ import { ConceptosService } from '../../services/conceptos.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo } from '../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio } from '../../interfaces/tablas-tipos-concepto.interfaces';
 
 @Component({
   selector: 'app-conceptos',
@@ -30,6 +30,12 @@ export class ConceptosComponent implements OnInit {
 
   // Objeto seleccionado para editar
   conceptoSelect!: Concepto | undefined;
+
+  // Objeto de tipos de salarios
+  @Input() tiposSalarios: TipoSalario[] = [];
+
+  // Objeto de promedios
+  @Input() promedios: Promedio[] = [];
 
   // Emisión de evento (cargar data de conceptos)
   @Output() onRefresh = new EventEmitter();
@@ -55,6 +61,9 @@ export class ConceptosComponent implements OnInit {
   // Objeto de rutinas de Cálculos
   rutinasCalculos: RutinaCalculo[] = [];
   
+  // Objeto de manejos decimales (redondeo)
+  manejosDecimales: ManejoDecimal[] = [];
+  
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService,
               private tablasTipoConceptoService: TablasTipoConceptoService,
@@ -66,6 +75,7 @@ export class ConceptosComponent implements OnInit {
     this.loadTiposCalculos();
     this.loadMetodosFiscales();
     this.loadRutinasCalculos();
+    this.loadManejoDecimales();
   }
 
   refresh(): void {
@@ -186,6 +196,19 @@ export class ConceptosComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener las rutinas de cálculos, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /** Manejos Decimales (Redondeo) */
+  loadManejoDecimales(): void {
+    this.tablasTipoConceptoService.getAllManejosDecimales()
+      .subscribe({
+        next: (res: ManejoDecimal[]) => {
+          this.manejosDecimales = res;
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener las manejos decimales, error conexión con el servidor.', life: 3000});
         }
       });
   }
