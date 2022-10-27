@@ -26,5 +26,13 @@ export const FORM_INIT_CONCEPTO = {
         salmiv: false,
         serval: '0',
         valmes: false,
-        topval: false
+        topval: false,
+    /** Factor */
+        suecaf: false,
+        bussuf: false,
+        salmif: false,
+        serfac: '0',
+        facmes: false,
+        faccen: false,
+        topfac: false,
 };

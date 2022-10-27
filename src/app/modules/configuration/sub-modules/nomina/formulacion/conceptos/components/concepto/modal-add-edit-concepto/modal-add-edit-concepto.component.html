@@ -917,7 +917,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="field col-12 md:col-8 lg:col-6 flex justify-content-between">
+                                            <div class="field col-12 flex justify-content-between">
                                                 <div class="field-radiobutton mt-2">
                                                     <p-radioButton  inputId="tiempo" 
                                                                     name="serval" 
@@ -938,7 +938,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="field col-12 md:col-8 lg:col-6 flex justify-content-between">
+                                            <div class="field col-12 flex justify-content-between">
                                                 <div class="field-radiobutton mt-2">
                                                     <p-radioButton  inputId="grupo" 
                                                                     name="serval" 
@@ -976,7 +976,7 @@
 
                                 <div class="formgrid grid">
 
-                                    <div class="field col-12 md:col-8 lg:col-6 flex justify-content-between">
+                                    <div class="field col-6 md:col-8 lg:col-6 flex justify-content-between">
                                         <div class="field-checkbox mt-2">
                                             <p-checkbox inputId="topval"
                                                         name="topval"
@@ -1009,6 +1009,274 @@
                         /*         Factor         *
                         /**************************** -->
                     <p-tabPanel header="Factor">
+
+                        <div class="formgrid grid mt-2">
+
+                            <div class="col-12">
+                                <div class="formgrid grid mb-3">
+                                    <label for="faccto1" class="col-4 md:col-2 lg:col-1 text-right mt-2">Factor:</label>
+                                    <div class="col-8 md:col-4 lg:col-2">
+                                        <input type="text"
+                                               pInputText
+                                               id="faccto1"
+                                               class="p-inputtext-sm"
+                                               pKeyFilter="num"
+                                               formControlName="faccto"/>
+                                    </div>
+                                    <span class="form-text text-danger text-center"
+                                          *ngIf="campoInvalid('faccto')">
+                                        El factor es de longitud de 3 dígitos enteros y 9 decimales, formato numérico.
+                                    </span>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="formgrid grid">
+
+                            <div class="col-12 md:col-5 lg:col-6 mb-2">
+
+                                <p-panel header="Escala Sueldo">
+
+                                    <ng-template pTemplate="icons">
+                                        <div *ngIf="isEdit">
+                                            <button pButton 
+                                                    pRipple 
+                                                    label=""
+                                                    pTooltip="Información adicional Escala Sueldo"
+                                                    icon="pi pi-external-link"
+                                                    class="p-button-raised p-button-secondary p-button-sm">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="suefac" class="col-4 md:col-3 lg:col-2 mt-2">Tipo:</label>
+                                        <div class="col-8 md:col-6 lg:col-5">
+                                            <p-dropdown [options]="tiposSalarios"
+                                                        inputId="suefac"
+                                                        appendTo="body"
+                                                        optionLabel="nombre"
+                                                        optionValue="id"
+                                                        formControlName="suefac"
+                                                        placeholder="Seleccione el tipo">
+                                            </p-dropdown>
+                                            <span class="form-text text-danger text-center"
+                                                    *ngIf="campoInvalid('suefac')">
+                                                El tipo es obligatorio.
+                                            </span>
+                                        </div>
+    
+                                    </div>
+    
+                                    <div class="formgrid grid mb-1">
+    
+                                        <label for="promProfac" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
+                                        <div class="col-8 md:col-9 lg:col-10">
+                                            <p-dropdown [options]="promedios" 
+                                                        inputId="promProfac"
+                                                        appendTo="body"
+                                                        [filter]="true"
+                                                        filterBy="codpro"
+                                                        optionLabel="despro"
+                                                        optionValue="codpro"
+                                                        formControlName="promProfac"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        placeholder="Seleccione un promedio">
+                                                <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                    <table class="w-full">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                <td style="width: 75%;">{{ option.despro }}</td>
+                                                            </tr>
+                                                        </tbody>  
+                                                    </table> 
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+    
+                                    </div>
+    
+                                    <div class="formgrid grid">
+                                    
+                                        <div class="col-offset-4 md:col-offset-3 lg:col-offset-2 col-12">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="suecaf"
+                                                                name="suecaf"
+                                                                formControlName="suecaf"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="suecaf">Sueldo de cálculo</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-offset-4 md:col-offset-3 lg:col-offset-2 col-12">
+    
+                                            <div class="field mt-2">
+                                                <div class="field-checkbox mt-2 pb-2">
+                                                    <p-checkbox inputId="bussuf"
+                                                                name="bussuf"
+                                                                formControlName="bussuf"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="bussuf">Búsqueda superior</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-offset-4 md:col-offset-3 lg:col-offset-2 col-12">
+    
+                                            <div class="field mt-2">
+                                                <div class="field-checkbox mt-2 pb-2">
+                                                    <p-checkbox inputId="salmif"
+                                                                name="salmif"
+                                                                formControlName="salmif"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="salmif">Mínimo</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                    </div>
+                            
+                                </p-panel>
+                            
+                            </div>
+
+                            <div class="col-12 md:col-4 lg:col-4">
+                                
+                                <p-panel header="Tiempo o grupo">
+
+                                    <div class="formgrid grid">
+                                        <div class="col-12 mb-2">
+                                            <div class="field-radiobutton col-12">
+                                                <p-radioButton  inputId="noaplicaTF" 
+                                                                name="serfac" 
+                                                                value="0" 
+                                                                formControlName="serfac">
+                                                </p-radioButton>
+                                                <label for="noaplicaTF">No aplica</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="field col-12 flex justify-content-between">
+                                                <div class="field-radiobutton mt-2">
+                                                    <p-radioButton  inputId="tiempoF" 
+                                                                    name="serfac" 
+                                                                    value="1" 
+                                                                    formControlName="serfac">
+                                                    </p-radioButton>
+                                                    <label for="tiempoF">Tiempo</label>
+                                                </div>
+                                                <div *ngIf="isEdit">
+                                                    <button pButton 
+                                                            pRipple 
+                                                            label=""
+                                                            pTooltip="Información adicional tiempo de servicio "
+                                                            icon="pi pi-external-link"
+                                                            class="p-button-raised p-button-secondary p-button-sm">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="field col-12 flex justify-content-between">
+                                                <div class="field-radiobutton mt-2">
+                                                    <p-radioButton  inputId="grupoF" 
+                                                                    name="serfac" 
+                                                                    value="2" 
+                                                                    formControlName="serfac">
+                                                    </p-radioButton>
+                                                    <label for="grupoF">Grupo</label>
+                                                </div>
+                                                <div *ngIf="isEdit">
+                                                    <button pButton 
+                                                            pRipple 
+                                                            label=""
+                                                            pTooltip="Información adicional grupo"
+                                                            icon="pi pi-external-link"
+                                                            class="p-button-raised p-button-secondary p-button-sm">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                                <div class="formgrid grid mt-3">
+                                    <div class="field-radiobutton col-12">
+                                        <p-checkbox inputId="facmes"
+                                                    name="facmes"
+                                                    formControlName="facmes"
+                                                    [value]="true"
+                                                    [binary]="true">
+                                        </p-checkbox>
+                                        <label for="facmes">Mes calendario</label>
+                                    </div>
+                                </div>
+
+                                <div class="formgrid grid">
+
+                                    <div class="field col-6 md:col-8 lg:col-6 flex justify-content-between">
+                                        <div class="field-checkbox mt-2">
+                                            <p-checkbox inputId="faccen"
+                                                        name="faccen"
+                                                        formControlName="faccen"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="faccen">Centro de trabajo</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 md:col-3 lg:col-2">
+
+                                <div class="formgrid grid">
+
+                                    <div class="field col-6 md:col-10 lg:col-10 flex justify-content-between">
+                                        <div class="field-checkbox mt-2">
+                                            <p-checkbox inputId="topfac"
+                                                        name="topfac"
+                                                        formControlName="topfac"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="topfac">Tope</label> 
+                                        </div>
+                                        <div *ngIf="isEdit">
+                                            <button pButton 
+                                                    pRipple 
+                                                    label=""
+                                                    pTooltip="Información adicional Tope"
+                                                    icon="pi pi-external-link"
+                                                    class="p-button-raised p-button-secondary p-button-sm">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </p-tabPanel>
 
                     <!--/****************************

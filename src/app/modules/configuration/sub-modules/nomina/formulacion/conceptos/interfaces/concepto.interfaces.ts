@@ -82,25 +82,33 @@ export interface Concepto {
         valmes:     string;
         // Considerar valor tope (1=Si)
         topval:     string;
+    /** FACTOR */
+        // Tipo de Sueldo para considerar el factor segun escala (0..6)
+        suefac:     string;
+        // Promedio, sueldo, para buscar el factor en escala de sueldo
+        promProfac: null;
+        // Considerar sueldo de calculo para buscar, factor, por sueldo escala (1=Si)
+        suecaf:     string;
+        // Buscar factor, en sueldo escala, por limite superior (1=Si)
+        bussuf:     string;
+        // Cantidad de salarios miminos para buscar, factor, por escala de sueldo
+        salmif:     string;
+        // El factor se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
+        serfac:     string;
+        // Considerar el factor por mes (1=Si)
+        facmes:     string;
+        // Determinar el factor por centro o puesto de trabajo (1=Si)
+        faccen:     string;
+        // Considerar factor tope (1=Si)
+        topfac:     string;
         
-
-    /** TODO: FACTOR  */
     /** TODO: CANTIDAD  */
     /** TODO: LIMITE */
     /** TODO: PROCESAR  */
     /** TODO: VACACION */
     /** TODO: MISCELANEA */
     /** TODO: OTROS */
-
     
-    // Tipo de Sueldo para considerar el factor segun escala (0..6)
-    suefac:     string;
-    // Promedio, sueldo, para buscar el factor en escala de sueldo
-    promProfac: null;
-    // El factor se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
-    serfac:     string;
-    // Considerar el factor por mes (1=Si)
-    facmes:     string;
     // Cantidad a considerar en el calculo
     cancto:     number;
     // Tipo de sueldo para considerar la cantidad segun escala (0..6)
@@ -195,18 +203,12 @@ export interface Concepto {
     ctosup:     number | null;
     // Factor de Impresion
     facimp:     number;
-    // Considerar factor tope (1=Si)
-    topfac:     string;
     // Considerar cantidad tope (1=Si)
     topcan:     string;
     // Buscar cantidad, en sueldo escala, por limite superior (1=Si)
     bussuc:     string;
-    // Buscar factor, en sueldo escala, por limite superior (1=Si)
-    bussuf:     string;
     // Considerar sueldo de calculo para buscar, cantidad, por sueldo escala (1=Si)
     suecac:     string;
-    // Considerar sueldo de calculo para buscar, factor, por sueldo escala (1=Si)
-    suecaf:     string;
     // Considerar sueldo de calculo para vericar el limte (1=Si)
     suelim:     string;
     // Concepto de intereses de prestaciones al cual se le afecta el saldo
@@ -223,16 +225,12 @@ export interface Concepto {
     codben:     string | null;
     // Cantidad de salarios miminos para buscar, cantidad, por escala de sueldo
     salmic:     string;
-    // Cantidad de salarios miminos para buscar, factor, por escala de sueldo
-    salmif:     string;
     // Cantidad de salarios miminos indicados en el rango limite (1=Si)
     salmil:     string;
     // Factor que indica en que propocion se afecta el saldo de otro concepto
     facafe:     number;
     // Factor que indica en que propocion se afecta la cuota del concepto a generar fijo
     facfij:     number;
-    // Determinar el factor por centro o puesto de trabajo (1=Si)
-    faccen:     string;
     // Sustituye cuota de prestamos sobre prestaciones(0=No, 1=Si)
     suscuota:   string;
 }

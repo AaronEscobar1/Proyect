@@ -69,7 +69,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 2;
+  tabIndex = 3;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -120,6 +120,16 @@ export class ModalAddEditConceptoComponent implements OnInit {
         serval:     [ ],
         valmes:     [ ],
         topval:     [ ],
+      /** Factor */
+        suefac:     [ , [ Validators.required ]],
+        promProfac: [ ],
+        suecaf:     [ ],
+        bussuf:     [ ],
+        salmif:     [ ],
+        serfac:     [ ],
+        facmes:     [ ],
+        faccen:     [ ],
+        topfac:     [ ],
     });
   }
 
@@ -153,6 +163,13 @@ export class ModalAddEditConceptoComponent implements OnInit {
       (this.conceptoSelect && this.conceptoSelect.salmiv) === "1" ? this.form.controls['salmiv'].reset(true) : this.form.controls['salmiv'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.valmes) === "1" ? this.form.controls['valmes'].reset(true) : this.form.controls['valmes'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.topval) === "1" ? this.form.controls['topval'].reset(true) : this.form.controls['topval'].reset(false);
+      // Factor
+      (this.conceptoSelect && this.conceptoSelect.suecaf) === "1" ? this.form.controls['suecaf'].reset(true) : this.form.controls['suecaf'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.bussuf) === "1" ? this.form.controls['bussuf'].reset(true) : this.form.controls['bussuf'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.salmif) === "1" ? this.form.controls['salmif'].reset(true) : this.form.controls['salmif'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.facmes) === "1" ? this.form.controls['facmes'].reset(true) : this.form.controls['facmes'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.faccen) === "1" ? this.form.controls['faccen'].reset(true) : this.form.controls['faccen'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.topfac) === "1" ? this.form.controls['topfac'].reset(true) : this.form.controls['topfac'].reset(false);
   }
 
   /**
@@ -161,18 +178,21 @@ export class ModalAddEditConceptoComponent implements OnInit {
    */
   save(): void {
     if ( this.form.invalid ) {
-      this.tabIndex = 0;
-      // Validar errores en pestaña (Valor) 
-      if ( this.form.controls['sueval'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors)
-                                                || (!this.form.controls['tipsue'] && !this.form.controls['sussue']) ) {
+      // Validar errores de pestaña basico
+      if ( this.form.controls['id'].errors || this.form.controls['descto'].errors || this.form.controls['prieje'].errors || this.form.controls['clausu'].errors || this.form.controls['tipcal'].errors || this.form.controls['sindec'].errors || this.form.controls['faccto'].errors || this.form.controls['desfac'].errors ) {
+        this.tabIndex = 0;
+      } 
+      // Validar errores de pestaña Salario
+      else if ( this.form.controls['tipsue'].errors || this.form.controls['salmin'].errors || this.form.controls['sussue'].errors || this.form.controls['salmis'].errors || this.form.controls['rutsus'].errors ) {
+        this.tabIndex = 1;
+      } 
+      // Validar errores de pestaña Valor
+      else if ( this.form.controls['valcto'].errors || this.form.controls['sueval'].errors) {
         this.tabIndex = 2;
-      }
-      // Validar errores en pestaña (Salario) 
-      if ( this.form.controls['tipsue'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors) ) {
-        this.tabIndex = 1;
-      }
-      if ( this.form.controls['sussue'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors) ) {
-        this.tabIndex = 1;
+      }  
+      // Validar errores de pestaña Factor 
+      else if ( this.form.controls['faccto'].errors || this.form.controls['suefac'].errors ) {
+        this.tabIndex = 3;
       }
       this.form.markAllAsTouched();
       return;
@@ -197,6 +217,13 @@ export class ModalAddEditConceptoComponent implements OnInit {
     data.salmiv    = data.salmiv    ? '1' : '0';
     data.valmes    = data.valmes    ? '1' : '0';
     data.topval    = data.topval    ? '1' : '0';
+    // Factor
+    data.suecaf    = data.suecaf    ? '1' : '0';
+    data.bussuf    = data.bussuf    ? '1' : '0';
+    data.salmif    = data.salmif    ? '1' : '0';
+    data.facmes    = data.facmes    ? '1' : '0';
+    data.faccen    = data.faccen    ? '1' : '0';
+    data.topfac    = data.topfac    ? '1' : '0';
 
     // Validar si el campo factor en basico esta en null, si esta en null colocarle un 0
     if ( data.prieje == null || data.prieje == '' ) {
