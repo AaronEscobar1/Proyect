@@ -69,7 +69,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 1;
+  tabIndex = 2;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -82,7 +82,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
       /** Basico */
         id:        [  , [ Validators.required, Validators.pattern('[0-9]{1,4}'), this.validatedId.bind(this)]],
         descto:    [  , [ Validators.required, Validators.maxLength(50) ]],
-        prieje:    [  , [ Validators.required, Validators.maxLength(4) ]],
+        prieje:    [  , [ Validators.pattern('[0-9]{1,4}') ]],
         clausu:    [  , [ Validators.maxLength(4) ]],
         functo:    [  , [ Validators.required ]],
         tipcal:    [  , [ Validators.required ]],
@@ -98,7 +98,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
         topmon:    [  ],
         sindec:    [  , [ Validators.required ]],
         ctoafe:    [  ],
-        faccto:    [  , [ Validators.required, this.validateFactor.bind(this)]],
+        faccto:    [  , [ this.validateFactor.bind(this)]],
         desfac:    [  , [ Validators.maxLength(256)]],
         inactivo:  [  ],
       /** Salario */
@@ -110,6 +110,16 @@ export class ModalAddEditConceptoComponent implements OnInit {
         salmis:     [  , [ Validators.pattern('[0-9]{0,3}') ]],
         rutsus:     [  , [ Validators.maxLength(10) ]],
         topsue:     [ ],
+      /** Valor */
+        valcto:     [  , [ this.validateValor.bind(this) ]],
+        sueval:     [  , [ Validators.required ]],
+        promProval: [ ],
+        suecav:     [ ],
+        bussuv:     [ ],
+        salmiv:     [ ],
+        serval:     [ ],
+        valmes:     [ ],
+        topval:     [ ],
     });
   }
 
@@ -126,8 +136,8 @@ export class ModalAddEditConceptoComponent implements OnInit {
     // Seteamos los valores del row seleccionado al formulario
     console.log(this.conceptoSelect);
     this.form.reset(this.conceptoSelect);
-    /** BASICA */
-      // Validamos si la propiedad es = 1, si es = 1 le asignamos true para marcar el check
+    // Validar si la propiedad es = 1, si es = 1 le asignamos true para marcar el check
+      // Básica
       (this.conceptoSelect && this.conceptoSelect.noimpr) === "1" ? this.form.controls['noimpr'].reset(true) : this.form.controls['noimpr'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.noneto) === "1" ? this.form.controls['noneto'].reset(true) : this.form.controls['noneto'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.incdet) === "1" ? this.form.controls['incdet'].reset(true) : this.form.controls['incdet'].reset(false);
@@ -135,7 +145,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
       (this.conceptoSelect && this.conceptoSelect.montocero) === "1" ? this.form.controls['montocero'].reset(true) : this.form.controls['montocero'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.topmon)    === "1" ? this.form.controls['topmon'].reset(true) : this.form.controls['topmon'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.inactivo)  === "1" ? this.form.controls['inactivo'].reset(true) : this.form.controls['inactivo'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.topsue)    === "1" ? this.form.controls['topsue'].reset(true) : this.form.controls['topsue'].reset(false);
+      // Salario
+      (this.conceptoSelect && this.conceptoSelect.topsue) === "1" ? this.form.controls['topsue'].reset(true) : this.form.controls['topsue'].reset(false);
+      // Valor
+      (this.conceptoSelect && this.conceptoSelect.suecav) === "1" ? this.form.controls['suecav'].reset(true) : this.form.controls['suecav'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.bussuv) === "1" ? this.form.controls['bussuv'].reset(true) : this.form.controls['bussuv'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.salmiv) === "1" ? this.form.controls['salmiv'].reset(true) : this.form.controls['salmiv'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.valmes) === "1" ? this.form.controls['valmes'].reset(true) : this.form.controls['valmes'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.topval) === "1" ? this.form.controls['topval'].reset(true) : this.form.controls['topval'].reset(false);
   }
 
   /**
@@ -145,6 +162,11 @@ export class ModalAddEditConceptoComponent implements OnInit {
   save(): void {
     if ( this.form.invalid ) {
       this.tabIndex = 0;
+      // Validar errores en pestaña (Valor) 
+      if ( this.form.controls['sueval'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors)
+                                                || (!this.form.controls['tipsue'] && !this.form.controls['sussue']) ) {
+        this.tabIndex = 2;
+      }
       // Validar errores en pestaña (Salario) 
       if ( this.form.controls['tipsue'].errors && (!this.form.controls['id'].errors && !this.form.controls['descto'].errors && !this.form.controls['tipcal'].errors && !this.form.controls['sindec'].errors) ) {
         this.tabIndex = 1;
@@ -159,6 +181,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
     let data: Concepto = this.form.getRawValue();
 
     // Si el check de estos campos esta seleccionado se coloca el valor 1, de lo contrario 0
+    // Basico
     data.noimpr    = data.noimpr    ? '1' : '0';
     data.noneto    = data.noneto    ? '1' : '0';
     data.incdet    = data.incdet    ? '1' : '0';
@@ -166,14 +189,32 @@ export class ModalAddEditConceptoComponent implements OnInit {
     data.montocero = data.montocero ? '1' : '0';
     data.topmon    = data.topmon    ? '1' : '0';
     data.inactivo  = data.inactivo  ? '1' : '0';
+    // Salario
     data.topsue    = data.topsue    ? '1' : '0';
+    // Valor
+    data.suecav    = data.suecav    ? '1' : '0';
+    data.bussuv    = data.bussuv    ? '1' : '0';
+    data.salmiv    = data.salmiv    ? '1' : '0';
+    data.valmes    = data.valmes    ? '1' : '0';
+    data.topval    = data.topval    ? '1' : '0';
 
-    // Validar si el campo minimo esta en null, si esta en null colocarle un 0
+    // Validar si el campo factor en basico esta en null, si esta en null colocarle un 0
+    if ( data.prieje == null || data.prieje == '' ) {
+      data.prieje = 0;
+    }
+    if ( data.faccto == null || data.faccto == '' ) {
+      data.faccto = 0;
+    }
+    // Validar si el campo minimo en salario esta en null, si esta en null colocarle un 0
     if ( data.salmin == null ) {
       data.salmin = 0;
     }
     if ( data.salmis == null) {
       data.salmis = 0;
+    }
+    // Validar si el campo valor en valor esta en null, si esta en null colocarle un 0
+    if ( data.valcto == null || data.valcto == '' ) {
+      data.valcto = 0;
     }
 
     // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto.
@@ -264,29 +305,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
     } 
     return '';
   }
-  
-  // Mensajes de errores prieje
-  get priejeMsgError(): string {
-    const errors = this.form.get('prieje')?.errors;
-    if ( errors?.required ) {
-      return 'La prioridad es obligatorio.';
-    } else if ( errors?.maxlength ) {
-      return 'La prioridad es de longitud máxima de 4 dígitos, formato alfanumérico.';
-    } 
-    return '';
-  }
-  
-  // Mensajes de errores faccto
-  get facctoMsgError(): string {
-    const errors = this.form.get('faccto')?.errors;
-    if ( errors?.required ) {
-      return 'El factor es obligatorio.';
-    } else if ( errors?.patternError ) {
-      return 'El factor es de longitud de 3 dígitos enteros y 9 decimales, formato numérico.';
-    }
-    return '';
-  }
-  
+    
   // Validar si esta duplicado el id 
   validatedId(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
@@ -299,6 +318,15 @@ export class ModalAddEditConceptoComponent implements OnInit {
   validateFactor(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
     let valuePattern = new RegExp(/^([0-9]{1,3})(\.[0-9]{1,9})?$/g);
+    return !valuePattern.test(control.value) ?
+                          {'patternError': true } :
+                          null;
+  }
+
+  // Validar que cumpla con la expresión regular 25 números enteros y 9 decimales máximos
+  validateValor(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let valuePattern = new RegExp(/^([0-9]{1,25})(\.[0-9]{1,9})?$/g);
     return !valuePattern.test(control.value) ?
                           {'patternError': true } :
                           null;

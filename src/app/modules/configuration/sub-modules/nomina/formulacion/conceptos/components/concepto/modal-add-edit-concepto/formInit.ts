@@ -7,16 +7,24 @@ export const FORM_INIT_CONCEPTO = {
         functo: '0', 
         mansal: '0', 
         graimp: '0', 
-        noimpr: '0', 
-        noneto: '0', 
-        incdet: '0', 
-        abopre: '0', 
+        noimpr: false, 
+        noneto: false, 
+        incdet: false, 
+        abopre: false, 
+        montocero: false, 
+        topmon: false, 
         faccto: '0', 
-        topmon: '0', 
-        montocero: '0', 
-        inactivo: '0', 
+        inactivo: false, 
     /** Salario */
         salmin: 0,
         salmis: 0,
-        topsue: '0'
+        topsue: false,
+    /** Valor */
+        valcto: 0,
+        suecav: false,
+        bussuv: false,
+        salmiv: false,
+        serval: '0',
+        valmes: false,
+        topval: false
 };

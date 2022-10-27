@@ -9,7 +9,7 @@ export interface Concepto {
         // Descripcion del Concepto
         descto:     string;
         // Prioridad de ejecucion
-        prieje:     number;
+        prieje:     number | string;
         // Numero de la Clausula del Contrato Colectivo
         clausu:     number | null;
         // Funcion (1=Asignacion, 2=Deduccion, 3=Reserva)
@@ -41,7 +41,7 @@ export interface Concepto {
         //*** Concepto al cual se le afecta el saldo
         ctoafe:     number | null;
         //*** Factor de calculo
-        faccto:     number;
+        faccto:     number | string;
         //*** Descripcion del concepto o expresion utilizada en el calculo del factor
         desfac:     string | null;
         //*** Indicar si el concepto esta activo (1=Si)
@@ -63,8 +63,27 @@ export interface Concepto {
         rutsus:     string | null;
         // Considerar sueldo tope (1=Si)
         topsue:     string;
+    /** VALOR  */
+        // Valor o monto fijo a considerar en el calculo
+        valcto:     number | string;
+        // Tipo de Sueldo para considerar el valor segun escala (0..6)
+        sueval:     string;
+        // Promedio, sueldo, para buscar el valor en escala de sueldos
+        promProval: string | null;
+        // Considerar sueldo de calculo para buscar, valor, por sueldo escala (1=Si)
+        suecav:     string;
+        // Buscar valor, en sueldo escala, por limite superior (1=Si)
+        bussuv:     string;
+        // Cantidad de salarios miminos para buscar, valor, por escala de sueldo
+        salmiv:     string;
+        // El valor se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
+        serval:     string;
+        // Considerar el valor por mes (1=Si)
+        valmes:     string;
+        // Considerar valor tope (1=Si)
+        topval:     string;
+        
 
-    /** TODO: VALOR  */
     /** TODO: FACTOR  */
     /** TODO: CANTIDAD  */
     /** TODO: LIMITE */
@@ -73,16 +92,7 @@ export interface Concepto {
     /** TODO: MISCELANEA */
     /** TODO: OTROS */
 
-    // Valor o monto fijo a considerar en el calculo
-    valcto:     number;
-    // Tipo de Sueldo para considerar el valor segun escala (0..6)
-    sueval:     string;
-    // Promedio, sueldo, para buscar el valor en escala de sueldos
-    promProval: string | null;
-    // El valor se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
-    serval:     string;
-    // Considerar el valor por mes (1=Si)
-    valmes:     string;
+    
     // Tipo de Sueldo para considerar el factor segun escala (0..6)
     suefac:     string;
     // Promedio, sueldo, para buscar el factor en escala de sueldo
@@ -185,8 +195,6 @@ export interface Concepto {
     ctosup:     number | null;
     // Factor de Impresion
     facimp:     number;
-    // Considerar valor tope (1=Si)
-    topval:     string;
     // Considerar factor tope (1=Si)
     topfac:     string;
     // Considerar cantidad tope (1=Si)
@@ -195,14 +203,10 @@ export interface Concepto {
     bussuc:     string;
     // Buscar factor, en sueldo escala, por limite superior (1=Si)
     bussuf:     string;
-    // Buscar valor, en sueldo escala, por limite superior (1=Si)
-    bussuv:     string;
     // Considerar sueldo de calculo para buscar, cantidad, por sueldo escala (1=Si)
     suecac:     string;
     // Considerar sueldo de calculo para buscar, factor, por sueldo escala (1=Si)
     suecaf:     string;
-    // Considerar sueldo de calculo para buscar, valor, por sueldo escala (1=Si)
-    suecav:     string;
     // Considerar sueldo de calculo para vericar el limte (1=Si)
     suelim:     string;
     // Concepto de intereses de prestaciones al cual se le afecta el saldo
@@ -217,8 +221,6 @@ export interface Concepto {
     gretro:     string;
     // Codigo beneficiario (*FICHA=Trabajador)
     codben:     string | null;
-    // Cantidad de salarios miminos para buscar, valor, por escala de sueldo
-    salmiv:     string;
     // Cantidad de salarios miminos para buscar, cantidad, por escala de sueldo
     salmic:     string;
     // Cantidad de salarios miminos para buscar, factor, por escala de sueldo
