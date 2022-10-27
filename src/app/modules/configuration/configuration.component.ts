@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './configuration.component.html',
   styles: [`
     .fondo-img {
-        background-image: url("./../../../assets/images/fondo_module/talento.jpg");
+        background-image: url("./../../../assets/images/fondo_module/talento.svg");
         background-size: 100%;
         background-repeat: no-repeat;
     }
