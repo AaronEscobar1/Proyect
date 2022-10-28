@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 // Components
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { CardMainComponent } from './components/card-main/card-main.component';
+import { ErrorComponent } from './components/error/error.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { TableSkeletonComponent } from './components/table-skeleton/table-skeleton.component';
@@ -21,11 +22,12 @@ import { TopbarComponent } from './components/topbar/topbar.component';
   declarations: [
     ButtonsComponent,
     CardMainComponent,
+    ErrorComponent,
     FooterComponent,
     MenuComponent,
     TableSkeletonComponent,
     SpinnerComponent,
-    TopbarComponent
+    TopbarComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     // Components
     ButtonsComponent,
     CardMainComponent,
+    ErrorComponent,
     FooterComponent,
     MenuComponent,
     TableSkeletonComponent,

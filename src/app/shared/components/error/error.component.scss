@@ -1,0 +1,108 @@
+.center-align{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error{
+    z-index: 1;
+    margin-bottom: 50px;
+    margin-left: 140px;
+    width: 150px;
+    height: 150px;
+}
+
+.movement{
+    animation-name: movement;
+    animation-duration: 6s;
+}
+
+@keyframes movement {
+	0% {
+		transform: rotate(7deg)
+	}
+	10% {
+		transform: rotate(-4deg)
+	}
+	20% {
+		transform: rotate(5deg)
+	}
+	30% {
+		transform: rotate(-3deg)
+	}
+	40% {
+		transform: rotate(3deg)
+	}
+	50% {
+		transform: rotate(-2.5deg)
+	}
+	60% {
+		transform: rotate(2deg)
+	}
+	70% {
+		transform: rotate(0deg)
+	}
+	80% {
+		transform: rotate(0deg)
+	}
+	90% {
+		transform: rotate(0deg)
+	}
+	100% {
+		transform: rotate(0deg)
+	}
+}
+
+.bg-gradient{
+    background: radial-gradient(at bottom,rgb(73, 72, 72), #000000,#000000, );
+}
+
+.arrow {
+    border: ridge gray;
+    border-width: 5px 0px 0px 0px;
+    display: inline-block;
+    width: 250px;
+    height: 20px;
+    border-radius: 30px;
+}
+
+.up {
+    transform: skew(0deg,25deg);
+}
+.down{
+    transform: skew(0deg,-25deg);
+}
+
+.full-height{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.app-title{
+	font-style: oblique;
+}
+
+.message-info{
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 5em;
+    color: #000000;
+}
+
+.message-description {
+    color: #000000;
+}
+
+.card{
+    width: 550px;
+    height: 250px;
+	border-radius: 10px;
+}
+
+.card-body{
+    border: 5px solid white;
+    border-radius: 10px;
+    text-align: center;
+}

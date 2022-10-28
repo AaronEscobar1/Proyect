@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../interfaces/user.interfaces';
-import { Message } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Helpers } from '../../../shared/helpers/helpers';
@@ -10,7 +10,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [ MessageService ]
 })
 export class LoginComponent implements OnInit {
 
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authServices: AuthService,
               private formBuilder: FormBuilder,
+              private messageService: MessageService,
               private router: Router,
               private spinner: NgxSpinnerService,
               private helpers: Helpers) {
@@ -30,9 +32,20 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getDetectPrivateMode();
     const auth = this.authServices.getAuth();
     if (auth) {
       this.loginSuccess();
+    }
+  }
+
+  async getDetectPrivateMode() {
+    if (await this.helpers.detectPrivateMode()) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Cerrar modo incognito.', life: 2000});
+      this.loginForm.disable();
+      setTimeout(() =>{
+        this.router.navigateByUrl('/error');
+    }, 2000);
     }
   }
 
