@@ -1,5 +1,3 @@
-import { dropdownType } from '../../../../../../../shared/interfaces/typesFiles.interfaces';
-
 /** Funciones de Conceptos */
 export interface FuncionConcepto {
     functo:      string;
@@ -73,7 +71,7 @@ export interface IndicadorRetroactivo {
 }
 
 /** Días de Semana */
-export interface IndicadorRetroactivo {
+export interface DiaSemana {
     diasem:      number;
     descripcion: string;
 }

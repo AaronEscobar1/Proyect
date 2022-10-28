@@ -35,4 +35,14 @@ export const FORM_INIT_CONCEPTO = {
         facmes: false,
         faccen: false,
         topfac: false,
+    /** Cantidad */
+        cancto: 0,
+        suecac: false,
+        bussuc: false,
+        salmic: false,
+        sercan: '0',
+        facimp: 0,
+        candia: 0,
+        canmes: false,
+        topcan: false,
 };

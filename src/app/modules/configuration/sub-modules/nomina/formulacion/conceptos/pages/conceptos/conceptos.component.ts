@@ -7,7 +7,7 @@ import { ConceptosService } from '../../services/conceptos.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio } from '../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana } from '../../interfaces/tablas-tipos-concepto.interfaces';
 
 @Component({
   selector: 'app-conceptos',
@@ -63,6 +63,9 @@ export class ConceptosComponent implements OnInit {
   
   // Objeto de manejos decimales (redondeo)
   manejosDecimales: ManejoDecimal[] = [];
+
+  // Objeto de dias semanas
+  diasSemanas: DiaSemana[] = [];
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService,
@@ -76,6 +79,7 @@ export class ConceptosComponent implements OnInit {
     this.loadMetodosFiscales();
     this.loadRutinasCalculos();
     this.loadManejoDecimales();
+    this.loadDiasSemanas();
   }
 
   refresh(): void {
@@ -209,6 +213,19 @@ export class ConceptosComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener las manejos decimales, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /** Días de Semana */
+  loadDiasSemanas(): void {
+    this.tablasTipoConceptoService.getAllDiasSemana()
+      .subscribe({
+        next: (res: DiaSemana[]) => {
+          this.diasSemanas = res;
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los días de semana, error conexión con el servidor.', life: 3000});
         }
       });
   }

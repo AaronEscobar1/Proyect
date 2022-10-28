@@ -7,7 +7,7 @@ import { CompanyNominaService } from '../../../../../empresa/shared-empresa/serv
 import { ConceptosService } from '../../../services/conceptos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio } from '../../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
 
 @Component({
@@ -65,11 +65,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
   // Objeto de promedios
   @Input() promedios: Promedio[] = [];
 
+  // Objeto de dias semanas
+  @Input() diasSemanas: DiaSemana[] = [];
+
   // Formulario reactivo
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 3;
+  tabIndex = 4;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -130,6 +133,19 @@ export class ModalAddEditConceptoComponent implements OnInit {
         facmes:     [ ],
         faccen:     [ ],
         topfac:     [ ],
+      /** Cantidad */
+        cancto:     [ , [ this.validateCantidad.bind(this) ]],
+        promProcan: [ ],
+        suecan:     [ ],
+        promProca1: [ ],
+        suecac:     [ ],
+        bussuc:     [ ],
+        salmic:     [ ],
+        sercan:     [ ],
+        facimp:     [  , [ this.validateFactorImpresion.bind(this) ]],
+        candia:     [ ],
+        canmes:     [ ],
+        topcan:     [ ],
     });
   }
 
@@ -170,6 +186,12 @@ export class ModalAddEditConceptoComponent implements OnInit {
       (this.conceptoSelect && this.conceptoSelect.facmes) === "1" ? this.form.controls['facmes'].reset(true) : this.form.controls['facmes'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.faccen) === "1" ? this.form.controls['faccen'].reset(true) : this.form.controls['faccen'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.topfac) === "1" ? this.form.controls['topfac'].reset(true) : this.form.controls['topfac'].reset(false);
+      // Cantidad
+      (this.conceptoSelect && this.conceptoSelect.suecac) === "1" ? this.form.controls['suecac'].reset(true) : this.form.controls['suecac'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.bussuc) === "1" ? this.form.controls['bussuc'].reset(true) : this.form.controls['bussuc'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.salmic) === "1" ? this.form.controls['salmic'].reset(true) : this.form.controls['salmic'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.canmes) === "1" ? this.form.controls['canmes'].reset(true) : this.form.controls['canmes'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.topcan) === "1" ? this.form.controls['topcan'].reset(true) : this.form.controls['topcan'].reset(false);
   }
 
   /**
@@ -193,6 +215,10 @@ export class ModalAddEditConceptoComponent implements OnInit {
       // Validar errores de pestaña Factor 
       else if ( this.form.controls['faccto'].errors || this.form.controls['suefac'].errors ) {
         this.tabIndex = 3;
+      }
+      // Validar errores de pestaña Cantidad
+      else if ( this.form.controls['cancto'].errors || this.form.controls['facimp'].errors ) {
+        this.tabIndex = 4;
       }
       this.form.markAllAsTouched();
       return;
@@ -224,24 +250,34 @@ export class ModalAddEditConceptoComponent implements OnInit {
     data.facmes    = data.facmes    ? '1' : '0';
     data.faccen    = data.faccen    ? '1' : '0';
     data.topfac    = data.topfac    ? '1' : '0';
+    // Cantidad
+    data.suecac    = data.suecac    ? '1' : '0';
+    data.bussuc    = data.bussuc    ? '1' : '0';
+    data.salmic    = data.salmic    ? '1' : '0';
+    data.canmes    = data.canmes    ? '1' : '0';
+    data.topcan    = data.topcan    ? '1' : '0';
 
-    // Validar si el campo factor en basico esta en null, si esta en null colocarle un 0
+    // Validar si el campo (prioridad y factor) en BASICO esta en null, si esta en null colocarle un 0
     if ( data.prieje == null || data.prieje == '' ) {
       data.prieje = 0;
     }
     if ( data.faccto == null || data.faccto == '' ) {
       data.faccto = 0;
     }
-    // Validar si el campo minimo en salario esta en null, si esta en null colocarle un 0
+    // Validar si los campos (minimos) en SALARIO esta en null, si esta en null colocarle un 0
     if ( data.salmin == null ) {
       data.salmin = 0;
     }
     if ( data.salmis == null) {
       data.salmis = 0;
     }
-    // Validar si el campo valor en valor esta en null, si esta en null colocarle un 0
+    // Validar si el campo (valor) en VALOR esta en null, si esta en null colocarle un 0
     if ( data.valcto == null || data.valcto == '' ) {
       data.valcto = 0;
+    }
+    // Validar si el campo (cantidad) en CANTIDAD esta en null, si esta en null colocarle un 0
+    if ( data.cancto == null || data.cancto == '' ) {
+      data.cancto = 0;
     }
 
     // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto.
@@ -354,6 +390,24 @@ export class ModalAddEditConceptoComponent implements OnInit {
   validateValor(control: AbstractControl): ValidationErrors | null {
     if( !control.value ) { return null; }
     let valuePattern = new RegExp(/^([0-9]{1,25})(\.[0-9]{1,9})?$/g);
+    return !valuePattern.test(control.value) ?
+                          {'patternError': true } :
+                          null;
+  }
+
+  // Validar que cumpla con la expresión regular 4 números enteros y 3 decimales máximos
+  validateCantidad(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let valuePattern = new RegExp(/^([0-9]{1,4})(\.[0-9]{1,3})?$/g);
+    return !valuePattern.test(control.value) ?
+                          {'patternError': true } :
+                          null;
+  }
+
+  // Validar que cumpla con la expresión regular 3 números enteros y 10 decimales máximos
+  validateFactorImpresion(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let valuePattern = new RegExp(/^([0-9]{1,3})(\.[0-9]{1,10})?$/g);
     return !valuePattern.test(control.value) ?
                           {'patternError': true } :
                           null;

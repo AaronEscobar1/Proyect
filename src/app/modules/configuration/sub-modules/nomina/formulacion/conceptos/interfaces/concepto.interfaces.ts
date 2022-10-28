@@ -101,28 +101,38 @@ export interface Concepto {
         faccen:     string;
         // Considerar factor tope (1=Si)
         topfac:     string;
-        
-    /** TODO: CANTIDAD  */
+    /** CANTIDAD  */
+        // Cantidad a considerar en el calculo
+        cancto:     number | string;
+        // Promedio para considerar la cantidad de calculo
+        promProcan: string | null;
+        // Tipo de sueldo para considerar la cantidad segun escala (0..6)
+        suecan:     string;
+        // Promedio, sueldo, para buscar la cantidada en escala de sueldos
+        promProca1: string | null;
+        // Considerar sueldo de calculo para buscar, cantidad, por sueldo escala (1=Si)
+        suecac:     string;
+        // Buscar cantidad, en sueldo escala, por limite superior (1=Si)
+        bussuc:     string;
+        // Cantidad de salarios miminos para buscar, cantidad, por escala de sueldo
+        salmic:     string;
+        // La cantidad se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
+        sercan:     string;
+        // Factor de Impresion
+        facimp:     number;
+        // Cantidad segun los dias en el periodo (0=No, 1..7=Si)
+        candia:     number;
+        // Considerar la cantidad por mes (1=Si)
+        canmes:     string;
+        // Considerar cantidad tope (1=Si)
+        topcan:     string;
+
     /** TODO: LIMITE */
     /** TODO: PROCESAR  */
     /** TODO: VACACION */
     /** TODO: MISCELANEA */
     /** TODO: OTROS */
     
-    // Cantidad a considerar en el calculo
-    cancto:     number;
-    // Tipo de sueldo para considerar la cantidad segun escala (0..6)
-    suecan:     string;
-    // Promedio, sueldo, para buscar la cantidada en escala de sueldos
-    promProca1: string | null;
-    // La cantidad se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
-    sercan:     string;
-    // Promedio para considerar la cantidad de calculo
-    promProcan: string | null;
-    // Considerar la cantidad por mes (1=Si)
-    canmes:     string;
-    // Cantidad segun los dias en el periodo (0=No, 1..7=Si)
-    candia:     number;
     // Considerar limite (0=No, 1=Generar, 2=Suspender)
     conlim:     string;
     // Cantidad limite, desde
@@ -201,14 +211,6 @@ export interface Concepto {
     unasup:     string;
     // Concepto a generar en caso de suplencia
     ctosup:     number | null;
-    // Factor de Impresion
-    facimp:     number;
-    // Considerar cantidad tope (1=Si)
-    topcan:     string;
-    // Buscar cantidad, en sueldo escala, por limite superior (1=Si)
-    bussuc:     string;
-    // Considerar sueldo de calculo para buscar, cantidad, por sueldo escala (1=Si)
-    suecac:     string;
     // Considerar sueldo de calculo para vericar el limte (1=Si)
     suelim:     string;
     // Concepto de intereses de prestaciones al cual se le afecta el saldo
@@ -223,8 +225,6 @@ export interface Concepto {
     gretro:     string;
     // Codigo beneficiario (*FICHA=Trabajador)
     codben:     string | null;
-    // Cantidad de salarios miminos para buscar, cantidad, por escala de sueldo
-    salmic:     string;
     // Cantidad de salarios miminos indicados en el rango limite (1=Si)
     salmil:     string;
     // Factor que indica en que propocion se afecta el saldo de otro concepto

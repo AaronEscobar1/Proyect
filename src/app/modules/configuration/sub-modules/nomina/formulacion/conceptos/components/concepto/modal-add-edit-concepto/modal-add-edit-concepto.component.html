@@ -769,7 +769,7 @@
                                                pKeyFilter="num"
                                                formControlName="valcto"/>
                                     </div>
-                                    <span class="col-12 md:col-offset-2 lg:col-offset-1 text-right md:text-left form-text text-danger ng-star-inserted"
+                                    <span class="col-12 md:col-offset-2 lg:col-offset-1 text-right md:text-left form-text text-danger"
                                           *ngIf="campoInvalid('valcto')">
                                         El valor es de longitud de 25 dígitos enteros y 9 decimales, formato numérico.
                                     </span>
@@ -1023,7 +1023,7 @@
                                                pKeyFilter="num"
                                                formControlName="faccto"/>
                                     </div>
-                                    <span class="form-text text-danger text-center"
+                                    <span class="col-12 md:col-offset-2 lg:col-offset-1 text-right md:text-left form-text text-danger"
                                           *ngIf="campoInvalid('faccto')">
                                         El factor es de longitud de 3 dígitos enteros y 9 decimales, formato numérico.
                                     </span>
@@ -1283,6 +1283,325 @@
                         /*         Cantidad         *
                         /**************************** -->
                     <p-tabPanel header="Cantidad">
+
+                        <div class="formgrid grid mt-2">
+
+                            <div class="col-12 md:col-12 lg:col-3">
+                                <div class="formgrid grid mb-3">
+                                    <label for="cancto" class="col-4 md:col-4 lg:col-5 xl:col-4 text-right mt-2">Cantidad:</label>
+                                    <div class="col-8 md:col-8 lg:col-7 xl:col-8">
+                                        <input type="text"
+                                                pInputText
+                                                id="cancto"
+                                                class="p-inputtext-sm"
+                                                pKeyFilter="num"
+                                                formControlName="cancto"/>
+                                    </div>
+                                    <span class="col-12 md:col-offset-2 lg:col-offset-1 text-right md:text-left form-text text-danger"
+                                            *ngIf="campoInvalid('cancto')">
+                                        La cantidad es de longitud de 4 dígitos enteros y 3 decimales, formato numérico.
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="col-12 md:col-12 lg:col-5">
+                                <div class="formgrid grid mb-3">
+                                    <label for="promProcan" class="col-4 md:col-4 lg:col-3 text-right mt-2">Promedio:</label>
+                                    <div class="col-8 md:col-8 lg:col-9">
+                                        <p-dropdown [options]="promedios" 
+                                                    inputId="promProcan"
+                                                    appendTo="body"
+                                                    [filter]="true"
+                                                    filterBy="codpro"
+                                                    optionLabel="despro"
+                                                    optionValue="codpro"
+                                                    formControlName="promProcan"
+                                                    filterPlaceholder="Buscar por código..."
+                                                    placeholder="Seleccione un promedio">
+                                            <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                <table class="w-full">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 25%;">{{ option.codpro }}</td>
+                                                            <td style="width: 75%;">{{ option.despro }}</td>
+                                                        </tr>
+                                                    </tbody>  
+                                                </table> 
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid">
+
+                            <div class="col-12 md:col-5 lg:col-6 mb-2">
+
+                                <p-panel header="Escala Sueldo">
+
+                                    <ng-template pTemplate="icons">
+                                        <div *ngIf="isEdit">
+                                            <button pButton 
+                                                    pRipple 
+                                                    label=""
+                                                    pTooltip="Información adicional Escala Sueldo"
+                                                    icon="pi pi-external-link"
+                                                    class="p-button-raised p-button-secondary p-button-sm">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+
+                                    <div class="formgrid grid mb-1">  
+
+                                        <label for="suecan" class="col-4 md:col-3 lg:col-2 mt-2">Tipo:</label>
+                                        <div class="col-8 md:col-6 lg:col-5">
+                                            <p-dropdown [options]="tiposSalarios"
+                                                        inputId="suecan"
+                                                        appendTo="body"
+                                                        optionLabel="nombre"
+                                                        optionValue="id"
+                                                        formControlName="suecan"
+                                                        placeholder="Seleccione el tipo">
+                                            </p-dropdown>
+                                            <span class="form-text text-danger text-center"
+                                                    *ngIf="campoInvalid('suecan')">
+                                                El tipo es obligatorio.
+                                            </span>
+                                        </div>
+    
+                                    </div>
+    
+                                    <div class="formgrid grid mb-1">
+    
+                                        <label for="promProca1" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
+                                        <div class="col-8 md:col-9 lg:col-10">
+                                            <p-dropdown [options]="promedios" 
+                                                        inputId="promProca1"
+                                                        appendTo="body"
+                                                        [filter]="true"
+                                                        filterBy="codpro"
+                                                        optionLabel="despro"
+                                                        optionValue="codpro"
+                                                        formControlName="promProca1"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        placeholder="Seleccione un promedio">
+                                                <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                    <table class="w-full">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                <td style="width: 75%;">{{ option.despro }}</td>
+                                                            </tr>
+                                                        </tbody>  
+                                                    </table> 
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+    
+                                    </div>
+    
+                                    <div class="formgrid grid">
+                                    
+                                        <div class="col-offset-4 md:col-offset-3 lg:col-offset-2 col-12">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="suecac"
+                                                                name="suecac"
+                                                                formControlName="suecac"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="suecac">Sueldo de cálculo</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-offset-4 md:col-offset-3 lg:col-offset-2 col-12">
+    
+                                            <div class="field mt-2">
+                                                <div class="field-checkbox mt-2 pb-2">
+                                                    <p-checkbox inputId="bussuc"
+                                                                name="bussuc"
+                                                                formControlName="bussuc"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="bussuc">Búsqueda superior</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-offset-4 md:col-offset-3 lg:col-offset-2 col-12">
+    
+                                            <div class="field mt-2">
+                                                <div class="field-checkbox mt-2 pb-2">
+                                                    <p-checkbox inputId="salmic"
+                                                                name="salmic"
+                                                                formControlName="salmic"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="salmic">Mínimo</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                    </div>
+                            
+                                </p-panel>
+                            
+                            </div>
+
+                            <div class="col-12 md:col-4 lg:col-4">
+                                
+                                <p-panel header="Tiempo o grupo">
+
+                                    <div class="formgrid grid">
+                                        <div class="col-12 mb-2">
+                                            <div class="field-radiobutton col-12">
+                                                <p-radioButton  inputId="noaplicaTC" 
+                                                                name="sercan" 
+                                                                value="0" 
+                                                                formControlName="sercan">
+                                                </p-radioButton>
+                                                <label for="noaplicaTC">No aplica</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="field col-12 flex justify-content-between">
+                                                <div class="field-radiobutton mt-2">
+                                                    <p-radioButton  inputId="tiempoC" 
+                                                                    name="sercan" 
+                                                                    value="1" 
+                                                                    formControlName="sercan">
+                                                    </p-radioButton>
+                                                    <label for="tiempoC">Tiempo</label>
+                                                </div>
+                                                <div *ngIf="isEdit">
+                                                    <button pButton 
+                                                            pRipple 
+                                                            label=""
+                                                            pTooltip="Información adicional tiempo de servicio "
+                                                            icon="pi pi-external-link"
+                                                            class="p-button-raised p-button-secondary p-button-sm">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="field col-12 flex justify-content-between">
+                                                <div class="field-radiobutton mt-2">
+                                                    <p-radioButton  inputId="grupoC" 
+                                                                    name="sercan" 
+                                                                    value="2" 
+                                                                    formControlName="sercan">
+                                                    </p-radioButton>
+                                                    <label for="grupoC">Grupo</label>
+                                                </div>
+                                                <div *ngIf="isEdit">
+                                                    <button pButton 
+                                                            pRipple 
+                                                            label=""
+                                                            pTooltip="Información adicional grupo"
+                                                            icon="pi pi-external-link"
+                                                            class="p-button-raised p-button-secondary p-button-sm">
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                                <div class="formgrid grid mt-3">  
+
+                                    <div class="field col-12 md:col-12">
+                                        <label for="facimp">Factor de impresión: </label>
+                                        <input type="text"
+                                               pInputText
+                                               id="facimp"
+                                               class="p-inputtext-sm"
+                                               pKeyFilter="num"
+                                               formControlName="facimp"/>
+                                        <span class="form-text text-danger text-center"
+                                              *ngIf="campoInvalid('facimp')">
+                                            El factor de impresión es de longitud de 3 dígitos enteros y 10 decimales, formato numérico.
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 md:col-3 lg:col-2">
+
+                                <div class="formgrid grid mb-1">  
+
+                                    <div class="field col-12 md:col-12">
+
+                                        <label for="candia">Días en el período: </label>
+                                        <p-dropdown [options]="diasSemanas"
+                                                    inputId="candia"
+                                                    appendTo="body"
+                                                    optionLabel="descripcion"
+                                                    optionValue="diasem"
+                                                    formControlName="candia"
+                                                    placeholder="Seleccione el día">
+                                        </p-dropdown>
+        
+                                    </div>
+
+                                </div>
+
+                                <div class="formgrid grid mt-3">
+
+                                    <div class="field-radiobutton col-12">
+                                        <p-checkbox inputId="canmes"
+                                                    name="canmes"
+                                                    formControlName="canmes"
+                                                    [value]="true"
+                                                    [binary]="true">
+                                        </p-checkbox>
+                                        <label for="canmes">Mes calendario</label>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="formgrid grid">
+
+                                    <div class="field col-12 md:col-12 lg:col-12 flex justify-content-between">
+                                        <div class="field-checkbox mt-2">
+                                            <p-checkbox inputId="topcan"
+                                                        name="topcan"
+                                                        formControlName="topcan"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="topcan">Tope</label> 
+                                        </div>
+                                        <div *ngIf="isEdit">
+                                            <button pButton 
+                                                    pRipple 
+                                                    label=""
+                                                    pTooltip="Información adicional Tope"
+                                                    icon="pi pi-external-link"
+                                                    class="p-button-raised p-button-secondary p-button-sm">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </p-tabPanel>
 
                     <!--/****************************
