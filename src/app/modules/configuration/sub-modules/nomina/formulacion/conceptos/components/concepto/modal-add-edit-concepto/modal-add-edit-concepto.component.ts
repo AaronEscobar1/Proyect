@@ -72,7 +72,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 4;
+  tabIndex = 5;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -136,7 +136,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
       /** Cantidad */
         cancto:     [ , [ this.validateCantidad.bind(this) ]],
         promProcan: [ ],
-        suecan:     [ ],
+        suecan:     [ , [ Validators.required ]],
         promProca1: [ ],
         suecac:     [ ],
         bussuc:     [ ],
@@ -146,6 +146,17 @@ export class ModalAddEditConceptoComponent implements OnInit {
         candia:     [ ],
         canmes:     [ ],
         topcan:     [ ],
+      /** LIMITE */
+        conlim:     [ ],
+        canlid:     [ , [ this.validateCantidad.bind(this) ]],
+        canlih:     [ , [ this.validateCantidad.bind(this) ]],
+        promProli1: [ ],
+        liminf:     [ , [ this.validateSueldoDesdeHasta.bind(this) ]],
+        limsup:     [ , [ this.validateSueldoDesdeHasta.bind(this) ]],
+        limsue:     [ , [ Validators.required ]],
+        promProlim: [ ],
+        suelim:     [ ],
+        salmil:     [ ],
     });
   }
 
@@ -156,9 +167,11 @@ export class ModalAddEditConceptoComponent implements OnInit {
     if( !this.isEdit ) {
       this.form.reset(FORM_INIT_CONCEPTO);
       this.form.controls['id'].enable();
+      this.desactiveFieldCantidadSueldo();
       return;
     }
     this.form.controls['id'].disable();
+    this.activeFieldCantidadSueldo();
     // Seteamos los valores del row seleccionado al formulario
     console.log(this.conceptoSelect);
     this.form.reset(this.conceptoSelect);
@@ -192,6 +205,9 @@ export class ModalAddEditConceptoComponent implements OnInit {
       (this.conceptoSelect && this.conceptoSelect.salmic) === "1" ? this.form.controls['salmic'].reset(true) : this.form.controls['salmic'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.canmes) === "1" ? this.form.controls['canmes'].reset(true) : this.form.controls['canmes'].reset(false);
       (this.conceptoSelect && this.conceptoSelect.topcan) === "1" ? this.form.controls['topcan'].reset(true) : this.form.controls['topcan'].reset(false);
+      // Limite
+      (this.conceptoSelect && this.conceptoSelect.suelim) === "1" ? this.form.controls['suelim'].reset(true) : this.form.controls['suelim'].reset(false);
+      (this.conceptoSelect && this.conceptoSelect.salmil) === "1" ? this.form.controls['salmil'].reset(true) : this.form.controls['salmil'].reset(false);
   }
 
   /**
@@ -217,8 +233,12 @@ export class ModalAddEditConceptoComponent implements OnInit {
         this.tabIndex = 3;
       }
       // Validar errores de pestaña Cantidad
-      else if ( this.form.controls['cancto'].errors || this.form.controls['facimp'].errors ) {
+      else if ( this.form.controls['cancto'].errors || this.form.controls['suecan'].errors || this.form.controls['facimp'].errors ) {
         this.tabIndex = 4;
+      }
+      // Validar errores de pestaña Limite
+      else if ( this.form.controls['canlid'].errors || this.form.controls['canlih'].errors || this.form.controls['limsue'].errors || this.form.controls['liminf'].errors || this.form.controls['limsup'].errors ) {
+        this.tabIndex = 5;
       }
       this.form.markAllAsTouched();
       return;
@@ -256,6 +276,9 @@ export class ModalAddEditConceptoComponent implements OnInit {
     data.salmic    = data.salmic    ? '1' : '0';
     data.canmes    = data.canmes    ? '1' : '0';
     data.topcan    = data.topcan    ? '1' : '0';
+    // Limite
+    data.suelim    = data.suelim    ? '1' : '0';
+    data.salmil    = data.salmil    ? '1' : '0';
 
     // Validar si el campo (prioridad y factor) en BASICO esta en null, si esta en null colocarle un 0
     if ( data.prieje == null || data.prieje == '' ) {
@@ -279,10 +302,52 @@ export class ModalAddEditConceptoComponent implements OnInit {
     if ( data.cancto == null || data.cancto == '' ) {
       data.cancto = 0;
     }
-
-    // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto.
+    // Validar si el campo (cantidad desde) en LIMITE esta en null, si esta en null colocarle un 0
+    if ( data.canlid == null || data.canlid == '' ) {
+      data.canlid = 0;
+    }
+    // Validar si el campo (cantidad hasta) en LIMITE esta en null, si esta en null colocarle un 0
+    if ( data.canlih == null || data.canlih == '' ) {
+      data.canlih = 0;
+    }
+    // Validar si el campo (sueldo desde) en LIMITE esta en null, si esta en null colocarle un 0
+    if ( data.liminf == null || data.liminf == '' ) {
+      data.liminf = 0;
+    }
+    // Validar si el campo (sueldo hasta) en LIMITE esta en null, si esta en null colocarle un 0
+    if ( data.limsup == null || data.limsup == '' ) {
+      data.limsup = 0;
+    }
+    
+    // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto. En pestaña SALARIO
     if ( data.sussue && !data.tipsue ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'Es obligatorio colocar un sueldo de cálculo si existe seleccionado un sueldo sustituto.', life: 5000});
+      this.tabIndex = 1;
+      return;
+    }
+    // Validar que cantidad desde no sea mayor que cantidad hasta
+    if ( data.canlid > data.canlih ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'La cantidad desde no puede ser mayor que cantidad hasta.', life: 5000});
+      this.tabIndex = 5;
+      return;
+    }
+    // Validar que el promedio de cantidad sea obligatorio si se llenan los campos desde y hasta 
+    if ( data.canlid && data.canlih ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'El promedio de cantidad es obligatorio si se llenan los campos desde y hasta.', life: 5000});
+      this.tabIndex = 5;
+      return;
+    }
+    // Validar que sueldo desde no sea mayor que sueldo hasta
+    if ( data.liminf > data.limsup ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'El sueldo desde no puede ser mayor que sueldo hasta.', life: 5000});
+      this.tabIndex = 5;
+      return;
+    }
+    // Validar que el promedio de sueldo sea obligatorio si se llenan los campos desde y hasta 
+    if ( data.liminf && data.limsup ) {
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'El promedio de sueldo es obligatorio si se llenan los campos desde y hasta.', life: 5000});
+      this.tabIndex = 5;
+      return;
     }
 
     console.log(data);
@@ -411,6 +476,49 @@ export class ModalAddEditConceptoComponent implements OnInit {
     return !valuePattern.test(control.value) ?
                           {'patternError': true } :
                           null;
+  }
+
+  // Validar que cumpla con la expresión regular 12 números enteros y 5 decimales máximos
+  validateSueldoDesdeHasta(control: AbstractControl): ValidationErrors | null {
+    if( !control.value ) { return null; }
+    let valuePattern = new RegExp(/^([0-9]{1,12})(\.[0-9]{1,5})?$/g);
+    return !valuePattern.test(control.value) ?
+                          {'patternError': true } :
+                          null;
+  }
+
+  /**
+   * Deshabilitar campos segun validación
+   * Para rellenar las secciones cantidad o sueldo, debe ser obligatorio estar tildado generar o suspendido. 
+   */
+  desactiveFieldCantidadSueldo(): void {
+    // Deshabilitar                                   // Resetear
+    this.form.controls['canlid'].disable();           this.form.controls['canlid'].reset(0);
+    this.form.controls['canlih'].disable();           this.form.controls['canlih'].reset(0);
+    this.form.controls['promProli1'].disable();       this.form.controls['promProli1'].reset();  
+    this.form.controls['liminf'].disable();           this.form.controls['liminf'].reset(0);
+    this.form.controls['limsup'].disable();           this.form.controls['limsup'].reset(0);
+    this.form.controls['limsue'].disable();           this.form.controls['limsue'].reset();
+    this.form.controls['promProlim'].disable();       this.form.controls['promProlim'].reset();
+    this.form.controls['suelim'].disable();           this.form.controls['suelim'].reset(false);
+    this.form.controls['salmil'].disable();           this.form.controls['salmil'].reset(false);
+  }
+
+  /**
+   * Habilitar campos segun validación
+   * Para rellenar las secciones cantidad o sueldo, debe ser obligatorio estar tildado generar o suspendido. 
+   */
+  activeFieldCantidadSueldo(): void {
+    // Habilitar
+    this.form.controls['canlid'].enable();
+    this.form.controls['canlih'].enable();
+    this.form.controls['promProli1'].enable();
+    this.form.controls['liminf'].enable();
+    this.form.controls['limsup'].enable();
+    this.form.controls['limsue'].enable();
+    this.form.controls['promProlim'].enable();
+    this.form.controls['suelim'].enable();
+    this.form.controls['salmil'].enable();
   }
 
 }

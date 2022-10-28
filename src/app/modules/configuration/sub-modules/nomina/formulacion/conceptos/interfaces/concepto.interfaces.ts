@@ -126,29 +126,33 @@ export interface Concepto {
         canmes:     string;
         // Considerar cantidad tope (1=Si)
         topcan:     string;
+    /** LIMITE */
+        // Considerar limite (0=No, 1=Generar, 2=Suspender)
+        conlim:     string;
+        // Cantidad limite, desde
+        canlid:     number | string;
+        // Cantidad limite, hasta
+        canlih:     number | string;
+        // Promedio para considerar la cantidad limite
+        promProli1: string | null;
+        // Sueldo, diario, para el limite inferior
+        liminf:     number | string;
+        // Sueldo, diario, para el limite superior
+        limsup:     number | string;
+        // Tipo de Sueldo (0..6) para el limite
+        limsue:     string;
+        // Promedio para considerar el sueldo limite
+        promProlim: null;
+        // Considerar sueldo de calculo para vericar el limte (1=Si)
+        suelim:     string;
+        // Cantidad de salarios miminos indicados en el rango limite (1=Si)
+        salmil:     string;
 
-    /** TODO: LIMITE */
     /** TODO: PROCESAR  */
     /** TODO: VACACION */
     /** TODO: MISCELANEA */
     /** TODO: OTROS */
     
-    // Considerar limite (0=No, 1=Generar, 2=Suspender)
-    conlim:     string;
-    // Cantidad limite, desde
-    canlid:     number;
-    // Cantidad limite, hasta
-    canlih:     number;
-    // Promedio para considerar la cantidad limite
-    promProli1: string | null;
-    // Sueldo, diario, para el limite inferior
-    liminf:     number;
-    // Sueldo, diario, para el limite superior
-    limsup:     number;
-    // Tipo de Sueldo (0..6) para el limite
-    limsue:     string;
-    // Promedio para considerar el sueldo limite
-    promProlim: null;
     // Se procesa en el periodo o semana 1 (1=Si)
     prope1:     string;
     // Se procesa en el periodo o semana 2 (1=Si)
@@ -211,8 +215,6 @@ export interface Concepto {
     unasup:     string;
     // Concepto a generar en caso de suplencia
     ctosup:     number | null;
-    // Considerar sueldo de calculo para vericar el limte (1=Si)
-    suelim:     string;
     // Concepto de intereses de prestaciones al cual se le afecta el saldo
     ctoIntpre:  null;
     // Capitalizar o Pagar Intereses/Prestaciones prestaciones (Capitalizar: 0=No, 1=Anual, 2=Mensual; Pagar: 3=No, 4= Anual, 5=Mensual)
@@ -225,8 +227,6 @@ export interface Concepto {
     gretro:     string;
     // Codigo beneficiario (*FICHA=Trabajador)
     codben:     string | null;
-    // Cantidad de salarios miminos indicados en el rango limite (1=Si)
-    salmil:     string;
     // Factor que indica en que propocion se afecta el saldo de otro concepto
     facafe:     number;
     // Factor que indica en que propocion se afecta la cuota del concepto a generar fijo

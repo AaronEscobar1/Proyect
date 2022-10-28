@@ -45,4 +45,12 @@ export const FORM_INIT_CONCEPTO = {
         candia: 0,
         canmes: false,
         topcan: false,
+    /** LIMITE */
+        conlim: '0',
+        canlid: 0,
+        canlih: 0,
+        liminf: 0,
+        limsup: 0,
+        suelim: false,
+        salmil: false,
 };

@@ -1608,6 +1608,270 @@
                         /*         Límite           *
                         /**************************** -->
                     <p-tabPanel header="Límite">
+
+                        <div class="formgrid grid mt-2">
+
+                            <div class="col-12 md:col-3 md:col-offset-1 mb-2">
+
+                                <p-panel header="Tipo">
+
+                                    <div class="formgrid grid mt-3">
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="noaplicaL" 
+                                                            name="conlim" 
+                                                            value="0"
+                                                            (click)="desactiveFieldCantidadSueldo()"
+                                                            formControlName="conlim">
+                                            </p-radioButton>
+                                            <label for="noaplicaL">No aplica</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="generar" 
+                                                            name="conlim" 
+                                                            value="1"
+                                                            (click)="activeFieldCantidadSueldo()"
+                                                            formControlName="conlim">
+                                            </p-radioButton>
+                                            <label for="generar">Generar</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="suspender" 
+                                                            name="conlim" 
+                                                            value="2" 
+                                                            (click)="activeFieldCantidadSueldo()"
+                                                            formControlName="conlim">
+                                            </p-radioButton>
+                                            <label for="suspender">Suspender</label>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-8">
+
+                                <div class="formgrid grid">
+
+                                    <div class="col-12 md:col-8 mb-2">
+                                        
+                                        <p-panel header="Cantidad">
+
+                                            <div class="formgrid grid">
+
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="canlid">Desde: </label>
+                                                    <input type="text"
+                                                            pInputText
+                                                            id="canlid"
+                                                            class="p-inputtext-sm"
+                                                            pKeyFilter="num"
+                                                            formControlName="canlid"/>
+                                                    <span class="form-text text-danger text-center"
+                                                            *ngIf="campoInvalid('canlid')">
+                                                        El cantidad desde es de longitud de 4 dígitos enteros y 3 decimales, formato numérico.
+                                                    </span>
+                                                </div>
+
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="canlih">Hasta: </label>
+                                                    <input type="text"
+                                                            pInputText
+                                                            id="canlih"
+                                                            class="p-inputtext-sm"
+                                                            pKeyFilter="num"
+                                                            formControlName="canlih"/>
+                                                    <span class="form-text text-danger text-center"
+                                                            *ngIf="campoInvalid('canlih')">
+                                                        El cantidad hasta es de longitud de 4 dígitos enteros y 3 decimales, formato numérico.
+                                                    </span>
+                                                </div>
+                
+                                            </div>
+
+                                            <div class="formgrid grid">
+
+                                                <div class="field col-12">
+                                                    <label for="promProli1">Promedio:</label>
+                                                    <p-dropdown [options]="promedios" 
+                                                                inputId="promProli1"
+                                                                appendTo="body"
+                                                                [filter]="true"
+                                                                filterBy="codpro"
+                                                                optionLabel="despro"
+                                                                optionValue="codpro"
+                                                                formControlName="promProli1"
+                                                                filterPlaceholder="Buscar por código..."
+                                                                placeholder="Seleccione un promedio">
+                                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                            <table class="w-full">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                        <td style="width: 75%;">{{ option.despro }}</td>
+                                                                    </tr>
+                                                                </tbody>  
+                                                            </table> 
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                                
+                                            </div>
+
+                                        </p-panel>    
+
+                                    </div>
+
+                                    <div class="col-12 md:col-10">
+                                       
+                                        <p-panel header="Sueldo">
+
+                                            <div class="formgrid grid">
+
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="liminf">Desde: </label>
+                                                    <input type="text"
+                                                            pInputText
+                                                            id="liminf"
+                                                            class="p-inputtext-sm"
+                                                            pKeyFilter="num"
+                                                            formControlName="liminf"/>
+                                                    <span class="form-text text-danger text-center"
+                                                            *ngIf="campoInvalid('liminf')">
+                                                        El sueldo desde es de longitud de 12 dígitos enteros y 5 decimales, formato numérico.
+                                                    </span>
+                                                </div>
+
+                                                <div class="field col-12 md:col-4">
+                                                    <label for="limsup">Hasta: </label>
+                                                    <input type="text"
+                                                            pInputText
+                                                            id="limsup"
+                                                            class="p-inputtext-sm"
+                                                            pKeyFilter="num"
+                                                            formControlName="limsup"/>
+                                                    <span class="form-text text-danger text-center"
+                                                            *ngIf="campoInvalid('limsup')">
+                                                        El sueldo hasta es de longitud de 12 dígitos enteros y 5 decimales, formato numérico.
+                                                    </span>
+                                                </div>
+                
+                                            </div>
+
+                                            <div class="formgrid grid mb-1">  
+
+                                                <div class="field col-12 md:col-12 lg:col-6">
+                                                    <label for="limsue">Tipo:</label>
+                                                    <p-dropdown [options]="tiposSalarios"
+                                                                inputId="limsue"
+                                                                appendTo="body"
+                                                                optionLabel="nombre"
+                                                                optionValue="id"
+                                                                formControlName="limsue"
+                                                                placeholder="Seleccione el tipo">
+                                                    </p-dropdown>
+                                                    <span class="form-text text-danger text-center"
+                                                            *ngIf="campoInvalid('limsue')">
+                                                        El tipo es obligatorio.
+                                                    </span>
+                                                </div>
+            
+                                            </div>
+
+                                            <div class="formgrid grid">
+
+                                                <div class="field col-12">
+                                                    <label for="promProlim">Promedio:</label>
+                                                    <p-dropdown [options]="promedios" 
+                                                                inputId="promProlim"
+                                                                appendTo="body"
+                                                                [filter]="true"
+                                                                filterBy="codpro"
+                                                                optionLabel="despro"
+                                                                optionValue="codpro"
+                                                                formControlName="promProlim"
+                                                                filterPlaceholder="Buscar por código..."
+                                                                placeholder="Seleccione un promedio">
+                                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                            <table class="w-full">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                        <td style="width: 75%;">{{ option.despro }}</td>
+                                                                    </tr>
+                                                                </tbody>  
+                                                            </table> 
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <div class="formgrid grid">                            
+
+                                                <div class="col-6 md:col-6 lg:col-4">
+            
+                                                    <div class="field">
+                                                        <div class="field-checkbox mt-3 pb-2">
+                                                            <p-checkbox inputId="suelim"
+                                                                        name="suelim"
+                                                                        formControlName="suelim"
+                                                                        [value]="true"
+                                                                        [binary]="true">
+                                                            </p-checkbox>
+                                                            <label for="suelim">Sueldo de cálculo</label>
+                                                        </div>
+                                                    </div>
+            
+                                                </div>
+
+                                                <div class="col-6 md:col-6 lg:col-4">
+            
+                                                    <div class="field">
+                                                        <div class="field-checkbox mt-3 pb-2">
+                                                            <p-checkbox inputId="salmil"
+                                                                        name="salmil"
+                                                                        formControlName="salmil"
+                                                                        [value]="true"
+                                                                        [binary]="true">
+                                                            </p-checkbox>
+                                                            <label for="salmil">Mínimo</label>
+                                                        </div>
+                                                    </div>
+            
+                                                </div>
+
+                                            </div>
+
+                                        </p-panel>
+
+                                        <div class="formgrid grid mt-3" *ngIf="isEdit">
+
+                                            <div class="flex">
+                                                <div class="field-checkbox mt-2 mr-5">
+                                                    <label for="topmon">Anular</label>
+                                                </div>
+                                                <div>
+                                                    <button pButton 
+                                                            pRipple 
+                                                            label=""
+                                                            pTooltip="Información adicional concepto a anular"
+                                                            icon="pi pi-external-link"
+                                                            class="p-button-raised p-button-secondary p-button-sm">
+                                                    </button>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </p-tabPanel>
 
                     <!--/****************************
