@@ -3,6 +3,7 @@ import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { Message } from 'primeng/api';
 import { environment } from '../../../environments/environment';
 import { SortEventOrder } from '../interfaces/tableHead.interfaces';
+import { detectIncognito } from "detectincognitojs";
 
 @Injectable({
     providedIn: 'root'
@@ -124,6 +125,17 @@ export class Helpers {
           result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
         return (event.order * result);
       })
+    }
+
+    /*
+     * Método para saber si la aplicación se encuentra en modo incognito
+     */
+    detectPrivateMode(): Promise<boolean> {
+      let resultValue = detectIncognito().then((res) => {
+        return res.isPrivate;
+      });
+
+      return resultValue;
     }
 
 }
