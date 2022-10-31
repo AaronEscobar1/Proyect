@@ -7,7 +7,7 @@ import { CompanyNominaService } from '../../../../../empresa/shared-empresa/serv
 import { ConceptosService } from '../../../services/conceptos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana } from '../../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
 
 @Component({
@@ -68,11 +68,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
   // Objeto de dias semanas
   @Input() diasSemanas: DiaSemana[] = [];
 
+  // Objeto de tipos fechas Aniversario
+  @Input() fechasAniversario: FechaAniversario[] = [];
+
   // Formulario reactivo
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 5;
+  tabIndex = 6;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -157,6 +160,18 @@ export class ModalAddEditConceptoComponent implements OnInit {
         promProlim: [ ],
         suelim:     [ ],
         salmil:     [ ],
+      /** Procesar */
+        autpro:     [ ],
+        profij:     [ ],
+        fijing:     [ ],
+        prope1:     [ ],
+        prope2:     [ ],
+        prope3:     [ ],
+        prope4:     [ ],
+        prope5:     [ ],
+        proani:     [ ],
+        tipfea:     [ ],
+        conexc:     [ ],
     });
   }
 
@@ -168,6 +183,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
       this.form.reset(FORM_INIT_CONCEPTO);
       this.form.controls['id'].enable();
       this.desactiveFieldCantidadSueldo();
+      this.form.controls['profij'].enable();
       return;
     }
     this.form.controls['id'].disable();
@@ -175,39 +191,54 @@ export class ModalAddEditConceptoComponent implements OnInit {
     // Seteamos los valores del row seleccionado al formulario
     console.log(this.conceptoSelect);
     this.form.reset(this.conceptoSelect);
+    if (!this.conceptoSelect) return;
     // Validar si la propiedad es = 1, si es = 1 le asignamos true para marcar el check
       // Básica
-      (this.conceptoSelect && this.conceptoSelect.noimpr) === "1" ? this.form.controls['noimpr'].reset(true) : this.form.controls['noimpr'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.noneto) === "1" ? this.form.controls['noneto'].reset(true) : this.form.controls['noneto'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.incdet) === "1" ? this.form.controls['incdet'].reset(true) : this.form.controls['incdet'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.abopre) === "1" ? this.form.controls['abopre'].reset(true) : this.form.controls['abopre'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.montocero) === "1" ? this.form.controls['montocero'].reset(true) : this.form.controls['montocero'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.topmon)    === "1" ? this.form.controls['topmon'].reset(true) : this.form.controls['topmon'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.inactivo)  === "1" ? this.form.controls['inactivo'].reset(true) : this.form.controls['inactivo'].reset(false);
+      (this.conceptoSelect.noimpr) === "1" ? this.form.controls['noimpr'].reset(true) : this.form.controls['noimpr'].reset(false);
+      (this.conceptoSelect.noneto) === "1" ? this.form.controls['noneto'].reset(true) : this.form.controls['noneto'].reset(false);
+      (this.conceptoSelect.incdet) === "1" ? this.form.controls['incdet'].reset(true) : this.form.controls['incdet'].reset(false);
+      (this.conceptoSelect.abopre) === "1" ? this.form.controls['abopre'].reset(true) : this.form.controls['abopre'].reset(false);
+      (this.conceptoSelect.montocero) === "1" ? this.form.controls['montocero'].reset(true) : this.form.controls['montocero'].reset(false);
+      (this.conceptoSelect.topmon)    === "1" ? this.form.controls['topmon'].reset(true) : this.form.controls['topmon'].reset(false);
+      (this.conceptoSelect.inactivo)  === "1" ? this.form.controls['inactivo'].reset(true) : this.form.controls['inactivo'].reset(false);
       // Salario
-      (this.conceptoSelect && this.conceptoSelect.topsue) === "1" ? this.form.controls['topsue'].reset(true) : this.form.controls['topsue'].reset(false);
+      (this.conceptoSelect.topsue) === "1" ? this.form.controls['topsue'].reset(true) : this.form.controls['topsue'].reset(false);
       // Valor
-      (this.conceptoSelect && this.conceptoSelect.suecav) === "1" ? this.form.controls['suecav'].reset(true) : this.form.controls['suecav'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.bussuv) === "1" ? this.form.controls['bussuv'].reset(true) : this.form.controls['bussuv'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.salmiv) === "1" ? this.form.controls['salmiv'].reset(true) : this.form.controls['salmiv'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.valmes) === "1" ? this.form.controls['valmes'].reset(true) : this.form.controls['valmes'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.topval) === "1" ? this.form.controls['topval'].reset(true) : this.form.controls['topval'].reset(false);
+      (this.conceptoSelect.suecav) === "1" ? this.form.controls['suecav'].reset(true) : this.form.controls['suecav'].reset(false);
+      (this.conceptoSelect.bussuv) === "1" ? this.form.controls['bussuv'].reset(true) : this.form.controls['bussuv'].reset(false);
+      (this.conceptoSelect.salmiv) === "1" ? this.form.controls['salmiv'].reset(true) : this.form.controls['salmiv'].reset(false);
+      (this.conceptoSelect.valmes) === "1" ? this.form.controls['valmes'].reset(true) : this.form.controls['valmes'].reset(false);
+      (this.conceptoSelect.topval) === "1" ? this.form.controls['topval'].reset(true) : this.form.controls['topval'].reset(false);
       // Factor
-      (this.conceptoSelect && this.conceptoSelect.suecaf) === "1" ? this.form.controls['suecaf'].reset(true) : this.form.controls['suecaf'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.bussuf) === "1" ? this.form.controls['bussuf'].reset(true) : this.form.controls['bussuf'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.salmif) === "1" ? this.form.controls['salmif'].reset(true) : this.form.controls['salmif'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.facmes) === "1" ? this.form.controls['facmes'].reset(true) : this.form.controls['facmes'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.faccen) === "1" ? this.form.controls['faccen'].reset(true) : this.form.controls['faccen'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.topfac) === "1" ? this.form.controls['topfac'].reset(true) : this.form.controls['topfac'].reset(false);
+      (this.conceptoSelect.suecaf) === "1" ? this.form.controls['suecaf'].reset(true) : this.form.controls['suecaf'].reset(false);
+      (this.conceptoSelect.bussuf) === "1" ? this.form.controls['bussuf'].reset(true) : this.form.controls['bussuf'].reset(false);
+      (this.conceptoSelect.salmif) === "1" ? this.form.controls['salmif'].reset(true) : this.form.controls['salmif'].reset(false);
+      (this.conceptoSelect.facmes) === "1" ? this.form.controls['facmes'].reset(true) : this.form.controls['facmes'].reset(false);
+      (this.conceptoSelect.faccen) === "1" ? this.form.controls['faccen'].reset(true) : this.form.controls['faccen'].reset(false);
+      (this.conceptoSelect.topfac) === "1" ? this.form.controls['topfac'].reset(true) : this.form.controls['topfac'].reset(false);
       // Cantidad
-      (this.conceptoSelect && this.conceptoSelect.suecac) === "1" ? this.form.controls['suecac'].reset(true) : this.form.controls['suecac'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.bussuc) === "1" ? this.form.controls['bussuc'].reset(true) : this.form.controls['bussuc'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.salmic) === "1" ? this.form.controls['salmic'].reset(true) : this.form.controls['salmic'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.canmes) === "1" ? this.form.controls['canmes'].reset(true) : this.form.controls['canmes'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.topcan) === "1" ? this.form.controls['topcan'].reset(true) : this.form.controls['topcan'].reset(false);
+      (this.conceptoSelect.suecac) === "1" ? this.form.controls['suecac'].reset(true) : this.form.controls['suecac'].reset(false);
+      (this.conceptoSelect.bussuc) === "1" ? this.form.controls['bussuc'].reset(true) : this.form.controls['bussuc'].reset(false);
+      (this.conceptoSelect.salmic) === "1" ? this.form.controls['salmic'].reset(true) : this.form.controls['salmic'].reset(false);
+      (this.conceptoSelect.canmes) === "1" ? this.form.controls['canmes'].reset(true) : this.form.controls['canmes'].reset(false);
+      (this.conceptoSelect.topcan) === "1" ? this.form.controls['topcan'].reset(true) : this.form.controls['topcan'].reset(false);
       // Limite
-      (this.conceptoSelect && this.conceptoSelect.suelim) === "1" ? this.form.controls['suelim'].reset(true) : this.form.controls['suelim'].reset(false);
-      (this.conceptoSelect && this.conceptoSelect.salmil) === "1" ? this.form.controls['salmil'].reset(true) : this.form.controls['salmil'].reset(false);
+      (this.conceptoSelect.suelim) === "1" ? this.form.controls['suelim'].reset(true) : this.form.controls['suelim'].reset(false);
+      (this.conceptoSelect.salmil) === "1" ? this.form.controls['salmil'].reset(true) : this.form.controls['salmil'].reset(false);
+      // Procesar
+      (this.conceptoSelect.profij) === "1" ? this.form.controls['profij'].reset(true) : this.form.controls['profij'].reset(false);
+      (this.conceptoSelect.fijing) === "1" ? this.form.controls['fijing'].reset(true) : this.form.controls['fijing'].reset(false);
+      (this.conceptoSelect.prope1) === "1" ? this.form.controls['prope1'].reset(true) : this.form.controls['prope1'].reset(false);
+      (this.conceptoSelect.prope2) === "1" ? this.form.controls['prope2'].reset(true) : this.form.controls['prope2'].reset(false);
+      (this.conceptoSelect.prope3) === "1" ? this.form.controls['prope3'].reset(true) : this.form.controls['prope3'].reset(false);
+      (this.conceptoSelect.prope4) === "1" ? this.form.controls['prope4'].reset(true) : this.form.controls['prope4'].reset(false);
+      (this.conceptoSelect.prope5) === "1" ? this.form.controls['prope5'].reset(true) : this.form.controls['prope5'].reset(false);
+      (this.conceptoSelect.proani) === "1" ? this.form.controls['proani'].reset(true) : this.form.controls['proani'].reset(false);
+      (this.conceptoSelect.conexc) === "1" ? this.form.controls['conexc'].reset(true) : this.form.controls['conexc'].reset(false);
+      // Si el concepto se generó fijo no se puede editar o destildar.
+      if ( this.conceptoSelect.conexc == '1') {
+        this.form.controls['profij'].disable();
+      }
   }
 
   /**
@@ -279,6 +310,16 @@ export class ModalAddEditConceptoComponent implements OnInit {
     // Limite
     data.suelim    = data.suelim    ? '1' : '0';
     data.salmil    = data.salmil    ? '1' : '0';
+    // Procesar
+    data.profij    = data.profij    ? '1' : '0';
+    data.fijing    = data.fijing    ? '1' : '0';
+    data.prope1    = data.prope1    ? '1' : '0';
+    data.prope2    = data.prope2    ? '1' : '0';
+    data.prope3    = data.prope3    ? '1' : '0';
+    data.prope4    = data.prope4    ? '1' : '0';
+    data.prope5    = data.prope5    ? '1' : '0';
+    data.proani    = data.proani    ? '1' : '0';
+    data.conexc    = data.conexc    ? '1' : '0';
 
     // Validar si el campo (prioridad y factor) en BASICO esta en null, si esta en null colocarle un 0
     if ( data.prieje == null || data.prieje == '' ) {
@@ -519,6 +560,62 @@ export class ModalAddEditConceptoComponent implements OnInit {
     this.form.controls['promProlim'].enable();
     this.form.controls['suelim'].enable();
     this.form.controls['salmil'].enable();
+  }
+
+  /**
+   * En la sección Mov. Fijo, si el concepto es fijo colocarlo limitado. 
+   */
+  colocarLimitado(): void {
+    // Validar que cuando sea editar y ya tenga el valor si, no se pueda modificar el campo mov. fijo
+    if ( this.isEdit && this.conceptoSelect && this.conceptoSelect.conexc == '1' ) return; 
+    // Colocar la autorizacion en limitado 
+    this.form.controls['autpro'].reset(1);
+    // Quitar el check de generar al ingreso en movimiento fijo 
+    this.form.controls['fijing'].reset(false);
+    // Mostrar una advertencia para notificar al usuario que se cambio la autorizacion a limitado
+    if ( this.form.controls['profij'].value == true ) {
+      this.messageService.add({severity: 'info', summary: 'Info', detail: 'Ha seleccionado movimiento fijo, la autorización debe ser limitado.', life: 3000});
+    }
+  }
+
+  /**
+   * Resetear el segmento autorización si se selecciona ilimitado
+   */
+  quitarMovFijo(): void {
+    // Validar que cuando sea editar y ya tenga el valor si, no se pueda modificar el campo mov. fijo
+    if ( this.isEdit && this.conceptoSelect && this.conceptoSelect.conexc == '1' ) return;
+    // Quitar los checks de movimiento fijo 
+    this.form.controls['profij'].reset(false);
+    this.form.controls['fijing'].reset(false);
+  }
+
+  /**
+   * En la sección Mov. Fijo, para la selección generar al ingreso, es obligatorio estar en Si. 
+   */
+  generarIngreso(): void {
+    if ( this.form.controls['profij'].value == false ) {
+      this.form.controls['fijing'].reset(false);
+      this.messageService.add({severity: 'warn', summary: 'Alerta', detail: 'Para seleccionar el check de generar al ingreso debe tener el check de fijo seleccionado.', life: 3000});
+    }
+  }
+
+  /**
+   * Vaciar fecha cuando se destilda el check
+   */
+  vaciarFechaAniversario(): void {
+    if ( this.form.controls['proani'].value == false) {
+      this.form.controls['tipfea'].reset();
+    }
+  }
+
+  /**
+   * Para la sección aniversario y ubicar fecha debe estar tildado el Sí.
+   */
+  fechaAniversario(): void {
+    if ( this.form.controls['proani'].value == false ) {
+      this.messageService.add({severity: 'warn', summary: 'Alerta', detail: 'Para seleccionar una fecha debe estar tildado el Sí de aniversario.', life: 3000});
+      this.form.controls['tipfea'].reset();
+    }
   }
 
 }

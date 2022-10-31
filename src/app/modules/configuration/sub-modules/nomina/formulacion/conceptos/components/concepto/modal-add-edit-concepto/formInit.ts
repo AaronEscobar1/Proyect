@@ -53,4 +53,15 @@ export const FORM_INIT_CONCEPTO = {
         limsup: 0,
         suelim: false,
         salmil: false,
+    /** PROCESAR */
+        autpro: '2',
+        profij: false,
+        fijing: false,
+        prope1: false,
+        prope2: false,
+        prope3: false,
+        prope4: false,
+        prope5: false,
+        proani: false,
+        conexc: false
 };

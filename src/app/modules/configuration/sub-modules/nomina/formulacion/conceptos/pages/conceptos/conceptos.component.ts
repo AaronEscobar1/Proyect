@@ -7,7 +7,7 @@ import { ConceptosService } from '../../services/conceptos.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana } from '../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario } from '../../interfaces/tablas-tipos-concepto.interfaces';
 
 @Component({
   selector: 'app-conceptos',
@@ -66,6 +66,9 @@ export class ConceptosComponent implements OnInit {
 
   // Objeto de dias semanas
   diasSemanas: DiaSemana[] = [];
+
+  // Objeto de tipos fechas Aniversario
+  fechasAniversario: FechaAniversario[] = [];
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService,
@@ -80,6 +83,7 @@ export class ConceptosComponent implements OnInit {
     this.loadRutinasCalculos();
     this.loadManejoDecimales();
     this.loadDiasSemanas();
+    this.loadTiposFechasAniversario();
   }
 
   refresh(): void {
@@ -223,6 +227,19 @@ export class ConceptosComponent implements OnInit {
       .subscribe({
         next: (res: DiaSemana[]) => {
           this.diasSemanas = res;
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los días de semana, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /** Tipos fechas Aniversario */
+  loadTiposFechasAniversario(): void {
+    this.tablasTipoConceptoService.getAllTiposFechasAniversario()
+      .subscribe({
+        next: (res: FechaAniversario[]) => {
+          this.fechasAniversario = res;
         },
         error: (err) => {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los días de semana, error conexión con el servidor.', life: 3000});

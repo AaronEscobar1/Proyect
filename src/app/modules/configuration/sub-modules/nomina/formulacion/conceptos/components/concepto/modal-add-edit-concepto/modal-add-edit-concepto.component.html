@@ -1878,6 +1878,253 @@
                         /*        Procesar          *
                         /**************************** -->
                     <p-tabPanel header="Procesar">
+
+                        <div class="formgrid grid mt-2">
+
+                            <div class="col-12 md:col-3 mb-2">
+
+                                <p-panel header="Autorización">
+
+                                    <div class="formgrid grid mt-3">
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="limitado" 
+                                                            name="autpro" 
+                                                            value="1"
+                                                            formControlName="autpro">
+                                            </p-radioButton>
+                                            <label for="limitado">Limitado</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="ilimitado" 
+                                                            name="autpro"
+                                                            value="2"
+                                                            formControlName="autpro"
+                                                            (click)="quitarMovFijo()">
+                                            </p-radioButton>
+                                            <label for="ilimitado">Ilimitado</label>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-3 mb-2">
+
+                                <p-panel header="Movimiento fijo">
+
+                                    <div class="formgrid grid mt-3">
+    
+                                        <div class="field col-12">
+                                            <div class="field-checkbox">
+                                                <p-checkbox name="profij"
+                                                            formControlName="profij"
+                                                            (click)="colocarLimitado()"
+                                                            [value]="true"
+                                                            [binary]="true">
+                                                </p-checkbox>
+                                                <label>Sí</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="field col-12">
+                                            <div class="field-checkbox">
+                                                <p-checkbox name="fijing"
+                                                            formControlName="fijing"
+                                                            (click)="generarIngreso()"
+                                                            [value]="true"
+                                                            [binary]="true">
+                                                </p-checkbox>
+                                                <label>Generar al ingreso</label>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-6 mb-2">
+
+                                <p-panel header="Semanas o períodos">
+
+                                    <div class="formgrid grid">                            
+
+                                        <div class="col-6 md:col-6 lg:col-3">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="primera"
+                                                                name="prope1"
+                                                                formControlName="prope1"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="primera">1ra.</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-6 md:col-6 lg:col-3">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="segunda"
+                                                                name="prope2"
+                                                                formControlName="prope2"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="segunda">2da.</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-6 md:col-6 lg:col-3">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="tercera"
+                                                                name="prope3"
+                                                                formControlName="prope3"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="tercera">3ra.</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-6 md:col-6 lg:col-3">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="cuarta"
+                                                                name="prope4"
+                                                                formControlName="prope4"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="cuarta">4ta.</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-6 md:col-6 lg:col-3">
+    
+                                            <div class="field">
+                                                <div class="field-checkbox mt-3 pb-2">
+                                                    <p-checkbox inputId="ultima"
+                                                                name="prope5"
+                                                                formControlName="prope5"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="ultima">Última</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid mt-2">
+
+                            <div class="col-12 md:col-4 mb-2">
+
+                                <p-panel header="En aniversario">
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-12">
+                                            <div class="field-checkbox">
+                                                <p-checkbox inputId="sianiversario"
+                                                            name="proani"
+                                                            formControlName="proani"
+                                                            (click)="vaciarFechaAniversario()"
+                                                            [value]="true"
+                                                            [binary]="true">
+                                                </p-checkbox>
+                                                <label for="sianiversario">Sí</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid mb-1">
+
+                                        <label for="tipfea" class="col-4 md:col-4 lg:col-3 mt-2">Fecha:</label>
+                                        <div class="col-8 md:col-8 lg:col-9">
+                                            <p-dropdown [options]="fechasAniversario" 
+                                                        inputId="tipfea"
+                                                        appendTo="body"
+                                                        optionLabel="descripcion"
+                                                        optionValue="tipfea"
+                                                        formControlName="tipfea"
+                                                        #dropdownElement
+                                                        (onHide)="fechaAniversario()"
+                                                        placeholder="Seleccione la fecha">
+                                            </p-dropdown>
+                                        </div>
+    
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-4 mb-2">
+
+                                <div class="formgrid grid mt-3">
+
+                                    <div class="field col-12">
+                                        <div class="field-checkbox">
+                                            <p-checkbox inputId="excepcion"
+                                                        name="conexc"
+                                                        formControlName="conexc"
+                                                        [value]="true"
+                                                        [binary]="true">
+                                            </p-checkbox>
+                                            <label for="excepcion">Excepción</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="formgrid grid" *ngIf="isEdit">
+
+                                    <div class="flex">
+                                        <div class="field-checkbox mt-2 mr-5">
+                                            <label for="topmon">Procesos</label>
+                                        </div>
+                                        <div>
+                                            <button pButton 
+                                                    pRipple 
+                                                    label=""
+                                                    pTooltip="Conceptos a ejecutarse o no por procesos"
+                                                    icon="pi pi-external-link"
+                                                    class="p-button-raised p-button-secondary p-button-sm">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </p-tabPanel>
 
                     <!--/****************************

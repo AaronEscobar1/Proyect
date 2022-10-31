@@ -147,34 +147,34 @@ export interface Concepto {
         suelim:     string;
         // Cantidad de salarios miminos indicados en el rango limite (1=Si)
         salmil:     string;
+    /** PROCESAR  */
+        // Autorizacion de proceso (1= Limitado, 2= Ilimitado)
+        autpro:     string;
+        // Se considera solo en el Maestro de Conceptos Fijos (1=Si)
+        profij:     string;
+        // Generar al ingreso (1=Si)
+        fijing:     string;
+        // Se procesa en el periodo o semana 1 (1=Si)
+        prope1:     string;
+        // Se procesa en el periodo o semana 2 (1=Si)
+        prope2:     string;
+        // Se procesa en el periodo o semana 3 (1=Si)
+        prope3:     string;
+        // Se procesa en el periodo o semana 4 (1=Si)
+        prope4:     string;
+        // Se procesa en el ultimo periodo o semana (1=Si)
+        prope5:     string;
+        // Procesar solo en aniversario (1=Si)
+        proani:     string;
+        // Tipo de fecha, Desde, para verificar si el Trabajador cumple aniversario
+        tipfea:     number;
+        // Se puede considerar excepcion (1=Si)
+        conexc:     string;
 
-    /** TODO: PROCESAR  */
     /** TODO: VACACION */
     /** TODO: MISCELANEA */
     /** TODO: OTROS */
     
-    // Se procesa en el periodo o semana 1 (1=Si)
-    prope1:     string;
-    // Se procesa en el periodo o semana 2 (1=Si)
-    prope2:     string;
-    // Se procesa en el periodo o semana 3 (1=Si)
-    prope3:     string;
-    // Se procesa en el periodo o semana 4 (1=Si)
-    prope4:     string;
-    // Se procesa en el ultimo periodo o semana (1=Si)
-    prope5:     string;
-    // Autorizacion de proceso (1= Limitado, 2= Ilimitado)
-    autpro:     string;
-    // Se considera solo en el Maestro de Conceptos Fijos (1=Si)
-    profij:     string;
-    // Se puede considerar excepcion (1=Si)
-    conexc:     string;
-    // Procesar solo en aniversario (1=Si)
-    proani:     string;
-    // Tipo de fecha, Desde, para verificar si el Trabajador cumple aniversario
-    tipfea:     number;
-    // Generar al ingreso (1=Si)
-    fijing:     string;
     // Afecta fecha de regreso (1=Si)
     afereg:     string;
     // Calcular en Post Vacacion (1=Si)
