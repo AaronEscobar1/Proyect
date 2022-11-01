@@ -76,7 +76,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
   form!: FormGroup;
 
   // Variable para mover pestaña de la vista por si existe un error
-  tabIndex = 7;
+  tabIndex = 0;
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
@@ -188,6 +188,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
+      this.tabIndex = 0;      
       this.form.reset(FORM_INIT_CONCEPTO);
       this.form.controls['id'].enable();
       this.desactiveFieldCantidadSueldo();
@@ -205,15 +206,15 @@ export class ModalAddEditConceptoComponent implements OnInit {
     this.form.reset(this.conceptoSelect);
     // TODO: Quitar console log
     console.log(this.conceptoSelect);
-    // Si el campo tipo es diferente de 0 se habilitan los campos para editar
+    // Si el campo tipo en pestaña Límite es igual a 1 o 2, se habilitan los campos para editar
     if ( this.conceptoSelect.conlim == '1' || this.conceptoSelect.conlim == '2' ) {
       this.activeFieldCantidadSueldo();
     }
-    // Si el concepto se generó fijo no se puede editar o destildar.
+    // Si el concepto se registró con el parametro movimiento fijo en la pestaña Procesar, no se podrá editar o destildar.
     if ( this.conceptoSelect.conexc == '1' ) {
       this.form.controls['profij'].disable();
     }
-    // Si el campo abono de pestaña Vacación es 1 se habilitan los campos para editar
+    // Si el campo abono de pestaña Vacación esa 1 se habilitan los campos par editar
     if ( this.conceptoSelect.conabo == '1' ) { 
       this.activeFieldSalarioAbono();
     }
