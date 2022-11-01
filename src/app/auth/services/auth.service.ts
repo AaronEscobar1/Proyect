@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   closeSession(): void {
-    localStorage.clear();
+    localStorage.removeItem('auth');
     this.router.navigateByUrl('/login');
   }
 
