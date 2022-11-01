@@ -170,23 +170,23 @@ export interface Concepto {
         tipfea:     number;
         // Se puede considerar excepcion (1=Si)
         conexc:     string;
+    /** VACACION */
+        // Afecta fecha de regreso (1=Si)
+        afereg:     string;
+        // Se considera en Control de Vacacion (1=Si)
+        conabo:     string;
+        // Calcular en Post Vacacion (1=Si)
+        posvac:     string;
+        // Calculo Salario Abono (0=No, 1..4=Si)
+        calabo:     string;
+        // Considerar cuotas de salida y regreso (0=No, 1=Salida, 2=Regreso, 3=Ambas)
+        concuo:     string;
+        // Concepto para generar la provision de Vacacion
+        ctopro:     number | null;
 
-    /** TODO: VACACION */
     /** TODO: MISCELANEA */
     /** TODO: OTROS */
     
-    // Afecta fecha de regreso (1=Si)
-    afereg:     string;
-    // Calcular en Post Vacacion (1=Si)
-    posvac:     string;
-    // Se considera en Control de Vacacion (1=Si)
-    conabo:     string;
-    // Calculo Salario Abono (0=No, 1..4=Si)
-    calabo:     string;
-    // Considerar cuotas de salida y regreso (0=No, 1=Salida, 2=Regreso, 3=Ambas)
-    concuo:     string;
-    // Concepto para generar la provision de Vacacion
-    ctopro:     number | null;
     // Se considera en el Diferimiento Contable (1=Si)
     difcon:     string;
     // Considerar en la Distribucion  por Centro de Costo (1=Si)

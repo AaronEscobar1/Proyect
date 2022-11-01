@@ -2072,7 +2072,6 @@
                                                         optionLabel="descripcion"
                                                         optionValue="tipfea"
                                                         formControlName="tipfea"
-                                                        #dropdownElement
                                                         (onHide)="fechaAniversario()"
                                                         placeholder="Seleccione la fecha">
                                             </p-dropdown>
@@ -2131,6 +2130,187 @@
                         /*        Vacación          *
                         /**************************** -->
                     <p-tabPanel header="Vacación">
+
+                        <div class="formgrid grid">                            
+
+                            <div class="col-4 md:col-offset-2 md:col-4 lg:col-2">
+
+                                <div class="field">
+                                    <div class="field-checkbox mt-3 pb-2">
+                                        <p-checkbox inputId="diashabiles"
+                                                    name="afereg"
+                                                    formControlName="afereg"
+                                                    [value]="true"
+                                                    [binary]="true">
+                                        </p-checkbox>
+                                        <label for="diashabiles">Días hábiles</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-4 md:col-3 lg:col-2">
+
+                                <div class="field">
+                                    <div class="field-checkbox mt-3 pb-2">
+                                        <p-checkbox name="conabo"
+                                                    formControlName="conabo"
+                                                    (click)="onActiveFieldAbono()"
+                                                    [value]="true"
+                                                    [binary]="true">
+                                        </p-checkbox>
+                                        <label>Abono</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-4 md:col-3 lg:col-2">
+
+                                <div class="field">
+                                    <div class="field-checkbox mt-3 pb-2">
+                                        <p-checkbox inputId="posterior"
+                                                    name="posvac"
+                                                    formControlName="posvac"
+                                                    [value]="true"
+                                                    [binary]="true">
+                                        </p-checkbox>
+                                        <label for="posterior">Posterior</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="formgrid grid mt-2">
+
+                            <div class="col-12 md:col-offset-2 md:col-5 mb-2">
+
+                                <p-panel header="Salario abono">
+
+                                    <div class="formgrid grid mt-3">
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="noaplicaab" 
+                                                            name="calabo" 
+                                                            value="0"
+                                                            formControlName="calabo">
+                                            </p-radioButton>
+                                            <label for="noaplicaab">No aplica</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="ponderado" 
+                                                            name="calabo"
+                                                            value="1"
+                                                            formControlName="calabo">
+                                            </p-radioButton>
+                                            <label for="ponderado">Ponderado</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="mayor" 
+                                                            name="calabo"
+                                                            value="2"
+                                                            formControlName="calabo">
+                                            </p-radioButton>
+                                            <label for="mayor">El mayor</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="ponderadocontra" 
+                                                            name="calabo"
+                                                            value="3"
+                                                            formControlName="calabo">
+                                            </p-radioButton>
+                                            <label for="ponderadocontra">Ponderado contra salario actual</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="mayorcontra" 
+                                                            name="calabo"
+                                                            value="4"
+                                                            formControlName="calabo">
+                                            </p-radioButton>
+                                            <label for="mayorcontra">El mayor contra salario actual</label>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-4 mb-2">
+
+                                <p-panel header="Considerar cuotas">
+
+                                    <div class="formgrid grid mt-3">
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="noaplicacc" 
+                                                            name="concuo" 
+                                                            value="0"
+                                                            formControlName="concuo">
+                                            </p-radioButton>
+                                            <label for="noaplicacc">No aplica</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="salida" 
+                                                            name="concuo"
+                                                            value="1"
+                                                            formControlName="concuo">
+                                            </p-radioButton>
+                                            <label for="salida">Salida</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="regreso" 
+                                                            name="concuo"
+                                                            value="2"
+                                                            formControlName="concuo">
+                                            </p-radioButton>
+                                            <label for="regreso">Regreso</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-3">
+                                            <p-radioButton  inputId="salidaregreso" 
+                                                            name="concuo"
+                                                            value="3"
+                                                            formControlName="concuo">
+                                            </p-radioButton>
+                                            <label for="salidaregreso">Salida y regreso</label>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid mt-3">
+                            <div class="field col-12 md:col-offset-2 md:col-5">
+
+                                <label for="ctopro">Provisión:</label>
+                                <p-dropdown [options]="conceptos" 
+                                            inputId="ctopro"
+                                            appendTo="body"
+                                            [filter]="true"
+                                            filterBy="id"
+                                            optionLabel="descto"
+                                            optionValue="id"
+                                            filterPlaceholder="Buscar por código..."
+                                            formControlName="ctopro"
+                                            placeholder="Seleccione una provisión">
+                                    <ng-template let-option pTemplate="item" style="height: 50px;">
+                                        <table class="w-full">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 25%;">{{ option.id }}</td>
+                                                    <td style="width: 75%;">{{ option.descto }}</td>
+                                                </tr>
+                                            </tbody>  
+                                        </table> 
+                                    </ng-template>
+                                </p-dropdown>
+
+                            </div>
+                        </div>
+
+                        
+
                     </p-tabPanel>
 
                     <!--/****************************

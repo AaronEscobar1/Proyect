@@ -63,5 +63,11 @@ export const FORM_INIT_CONCEPTO = {
         prope4: false,
         prope5: false,
         proani: false,
-        conexc: false
+        conexc: false,
+    /** Vacación */
+        afereg: false,
+        conabo: false,
+        posvac: false,
+        calabo: '0',
+        concuo: '0',
 };
