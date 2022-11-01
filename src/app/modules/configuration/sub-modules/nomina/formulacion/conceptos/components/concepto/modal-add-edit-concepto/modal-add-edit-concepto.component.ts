@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
+import { transformObjectToCheck } from './validaciones-concepto';
 
 @Component({
   selector: 'app-modal-add-edit-concepto',
@@ -194,69 +195,28 @@ export class ModalAddEditConceptoComponent implements OnInit {
       this.desactiveFieldSalarioAbono();
       return;
     }
-    this.form.controls['id'].disable();
-    // Seteamos los valores del row seleccionado al formulario
-    console.log(this.conceptoSelect);
-    this.form.reset(this.conceptoSelect);
+    // Validar que exista el concepto seleccionado
     if (!this.conceptoSelect) return;
+    // Deshabilitar campos para editar
+    this.form.controls['id'].disable();
     // Validar si la propiedad es = 1, si es = 1 le asignamos true para marcar el check
-      // Básica
-      (this.conceptoSelect.noimpr) === '1' ? this.form.controls['noimpr'].reset(true) : this.form.controls['noimpr'].reset(false);
-      (this.conceptoSelect.noneto) === '1' ? this.form.controls['noneto'].reset(true) : this.form.controls['noneto'].reset(false);
-      (this.conceptoSelect.incdet) === '1' ? this.form.controls['incdet'].reset(true) : this.form.controls['incdet'].reset(false);
-      (this.conceptoSelect.abopre) === '1' ? this.form.controls['abopre'].reset(true) : this.form.controls['abopre'].reset(false);
-      (this.conceptoSelect.montocero) === '1' ? this.form.controls['montocero'].reset(true) : this.form.controls['montocero'].reset(false);
-      (this.conceptoSelect.topmon)    === '1' ? this.form.controls['topmon'].reset(true) : this.form.controls['topmon'].reset(false);
-      (this.conceptoSelect.inactivo)  === '1' ? this.form.controls['inactivo'].reset(true) : this.form.controls['inactivo'].reset(false);
-      // Salario
-      (this.conceptoSelect.topsue) === '1' ? this.form.controls['topsue'].reset(true) : this.form.controls['topsue'].reset(false);
-      // Valor
-      (this.conceptoSelect.suecav) === '1' ? this.form.controls['suecav'].reset(true) : this.form.controls['suecav'].reset(false);
-      (this.conceptoSelect.bussuv) === '1' ? this.form.controls['bussuv'].reset(true) : this.form.controls['bussuv'].reset(false);
-      (this.conceptoSelect.salmiv) === '1' ? this.form.controls['salmiv'].reset(true) : this.form.controls['salmiv'].reset(false);
-      (this.conceptoSelect.valmes) === '1' ? this.form.controls['valmes'].reset(true) : this.form.controls['valmes'].reset(false);
-      (this.conceptoSelect.topval) === '1' ? this.form.controls['topval'].reset(true) : this.form.controls['topval'].reset(false);
-      // Factor
-      (this.conceptoSelect.suecaf) === '1' ? this.form.controls['suecaf'].reset(true) : this.form.controls['suecaf'].reset(false);
-      (this.conceptoSelect.bussuf) === '1' ? this.form.controls['bussuf'].reset(true) : this.form.controls['bussuf'].reset(false);
-      (this.conceptoSelect.salmif) === '1' ? this.form.controls['salmif'].reset(true) : this.form.controls['salmif'].reset(false);
-      (this.conceptoSelect.facmes) === '1' ? this.form.controls['facmes'].reset(true) : this.form.controls['facmes'].reset(false);
-      (this.conceptoSelect.faccen) === '1' ? this.form.controls['faccen'].reset(true) : this.form.controls['faccen'].reset(false);
-      (this.conceptoSelect.topfac) === '1' ? this.form.controls['topfac'].reset(true) : this.form.controls['topfac'].reset(false);
-      // Cantidad
-      (this.conceptoSelect.suecac) === '1' ? this.form.controls['suecac'].reset(true) : this.form.controls['suecac'].reset(false);
-      (this.conceptoSelect.bussuc) === '1' ? this.form.controls['bussuc'].reset(true) : this.form.controls['bussuc'].reset(false);
-      (this.conceptoSelect.salmic) === '1' ? this.form.controls['salmic'].reset(true) : this.form.controls['salmic'].reset(false);
-      (this.conceptoSelect.canmes) === '1' ? this.form.controls['canmes'].reset(true) : this.form.controls['canmes'].reset(false);
-      (this.conceptoSelect.topcan) === '1' ? this.form.controls['topcan'].reset(true) : this.form.controls['topcan'].reset(false);
-      // Limite
-      (this.conceptoSelect.suelim) === '1' ? this.form.controls['suelim'].reset(true) : this.form.controls['suelim'].reset(false);
-      (this.conceptoSelect.salmil) === '1' ? this.form.controls['salmil'].reset(true) : this.form.controls['salmil'].reset(false);
-      // Si el tipo es diferente de 0 se habilitan los campos para editar
-      if ( this.conceptoSelect.conlim == '1' || this.conceptoSelect.conlim == '2' ) {
-        this.activeFieldCantidadSueldo();
-      }
-      // Procesar
-      (this.conceptoSelect.profij) === '1' ? this.form.controls['profij'].reset(true) : this.form.controls['profij'].reset(false);
-      (this.conceptoSelect.fijing) === '1' ? this.form.controls['fijing'].reset(true) : this.form.controls['fijing'].reset(false);
-      (this.conceptoSelect.prope1) === '1' ? this.form.controls['prope1'].reset(true) : this.form.controls['prope1'].reset(false);
-      (this.conceptoSelect.prope2) === '1' ? this.form.controls['prope2'].reset(true) : this.form.controls['prope2'].reset(false);
-      (this.conceptoSelect.prope3) === '1' ? this.form.controls['prope3'].reset(true) : this.form.controls['prope3'].reset(false);
-      (this.conceptoSelect.prope4) === '1' ? this.form.controls['prope4'].reset(true) : this.form.controls['prope4'].reset(false);
-      (this.conceptoSelect.prope5) === '1' ? this.form.controls['prope5'].reset(true) : this.form.controls['prope5'].reset(false);
-      (this.conceptoSelect.proani) === '1' ? this.form.controls['proani'].reset(true) : this.form.controls['proani'].reset(false);
-      (this.conceptoSelect.conexc) === '1' ? this.form.controls['conexc'].reset(true) : this.form.controls['conexc'].reset(false);
-      // Si el concepto se generó fijo no se puede editar o destildar.
-      if ( this.conceptoSelect.conexc == '1') {
-        this.form.controls['profij'].disable();
-      }
-      // Vacación
-      (this.conceptoSelect.afereg) === '1' ? this.form.controls['afereg'].reset(true) : this.form.controls['afereg'].reset(false);
-      (this.conceptoSelect.conabo) === '1' ? this.form.controls['conabo'].reset(true) : this.form.controls['conabo'].reset(false);
-      (this.conceptoSelect.posvac) === '1' ? this.form.controls['posvac'].reset(true) : this.form.controls['posvac'].reset(false);
-      if ( this.conceptoSelect.conabo == '1' ) { 
-        this.activeFieldSalarioAbono();
-      }
+    this.conceptoSelect = transformObjectToCheck(this.conceptoSelect);
+    // Seteamos los valores del row seleccionado al formulario
+    this.form.reset(this.conceptoSelect);
+    // TODO: Quitar console log
+    console.log(this.conceptoSelect);
+    // Si el campo tipo es diferente de 0 se habilitan los campos para editar
+    if ( this.conceptoSelect.conlim == '1' || this.conceptoSelect.conlim == '2' ) {
+      this.activeFieldCantidadSueldo();
+    }
+    // Si el concepto se generó fijo no se puede editar o destildar.
+    if ( this.conceptoSelect.conexc == '1' ) {
+      this.form.controls['profij'].disable();
+    }
+    // Si el campo abono de pestaña Vacación es 1 se habilitan los campos para editar
+    if ( this.conceptoSelect.conabo == '1' ) { 
+      this.activeFieldSalarioAbono();
+    }
   }
 
   /**

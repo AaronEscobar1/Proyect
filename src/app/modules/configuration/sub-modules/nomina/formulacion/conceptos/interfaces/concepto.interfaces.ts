@@ -25,17 +25,17 @@ export interface Concepto {
         // Gravable al Impuesto (1=Si)
         graimp:     string;
         // No debe cosiderarse en la impresion (1=Afirmativo)
-        noimpr:     string;
+        noimpr:     string | boolean;
         // No debe reflejarse en el neto (1=Afirmativo)
-        noneto:     string;
+        noneto:     string | boolean;
         // Incorporar el concepto en el listado, de nomina, detalle por concepto (1=Si)
-        incdet:     string;
+        incdet:     string | boolean;
         // Se actualiza en el maestro de prestaciones de antiguedad (1=Si)
-        abopre:     string;
+        abopre:     string | boolean;
         // Indicar si el concepto debe considerarse aun cuando el monto sea cero (1=Si)
-        montocero:  string;
+        montocero:  string | boolean;
         // Considerar tope en monto de calculo (1=Si)
-        topmon:     string;
+        topmon:     string | boolean;
         //*** Los decimales del monto calculado debe ser cero (0= NO, 1=Sin redondeo, 2=Con redondeo)
         sindec:     string;
         //*** Concepto al cual se le afecta el saldo
@@ -45,7 +45,7 @@ export interface Concepto {
         //*** Descripcion del concepto o expresion utilizada en el calculo del factor
         desfac:     string | null;
         //*** Indicar si el concepto esta activo (1=Si)
-        inactivo:   string;
+        inactivo:   string | boolean;
     /** SALARIO  */
         // Tipo de sueldo a considerar en el calculo (0=No, 1..6=Si)
         tipsue:     string;
@@ -62,7 +62,7 @@ export interface Concepto {
         // Rutina de calculo para condicionar la sustitucion de sueldo
         rutsus:     string | null;
         // Considerar sueldo tope (1=Si)
-        topsue:     string;
+        topsue:     string | boolean;
     /** VALOR  */
         // Valor o monto fijo a considerar en el calculo
         valcto:     number | string;
@@ -71,36 +71,36 @@ export interface Concepto {
         // Promedio, sueldo, para buscar el valor en escala de sueldos
         promProval: string | null;
         // Considerar sueldo de calculo para buscar, valor, por sueldo escala (1=Si)
-        suecav:     string;
+        suecav:     string | boolean;
         // Buscar valor, en sueldo escala, por limite superior (1=Si)
-        bussuv:     string;
+        bussuv:     string | boolean;
         // Cantidad de salarios miminos para buscar, valor, por escala de sueldo
-        salmiv:     string;
+        salmiv:     string | boolean;
         // El valor se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
         serval:     string;
         // Considerar el valor por mes (1=Si)
-        valmes:     string;
+        valmes:     string | boolean;
         // Considerar valor tope (1=Si)
-        topval:     string;
+        topval:     string | boolean;
     /** FACTOR */
         // Tipo de Sueldo para considerar el factor segun escala (0..6)
         suefac:     string;
         // Promedio, sueldo, para buscar el factor en escala de sueldo
         promProfac: null;
         // Considerar sueldo de calculo para buscar, factor, por sueldo escala (1=Si)
-        suecaf:     string;
+        suecaf:     string | boolean;
         // Buscar factor, en sueldo escala, por limite superior (1=Si)
-        bussuf:     string;
+        bussuf:     string | boolean;
         // Cantidad de salarios miminos para buscar, factor, por escala de sueldo
-        salmif:     string;
+        salmif:     string | boolean;
         // El factor se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
         serfac:     string;
         // Considerar el factor por mes (1=Si)
-        facmes:     string;
+        facmes:     string | boolean;
         // Determinar el factor por centro o puesto de trabajo (1=Si)
-        faccen:     string;
+        faccen:     string | boolean;
         // Considerar factor tope (1=Si)
-        topfac:     string;
+        topfac:     string | boolean;
     /** CANTIDAD  */
         // Cantidad a considerar en el calculo
         cancto:     number | string;
@@ -111,11 +111,11 @@ export interface Concepto {
         // Promedio, sueldo, para buscar la cantidada en escala de sueldos
         promProca1: string | null;
         // Considerar sueldo de calculo para buscar, cantidad, por sueldo escala (1=Si)
-        suecac:     string;
+        suecac:     string | boolean;
         // Buscar cantidad, en sueldo escala, por limite superior (1=Si)
-        bussuc:     string;
+        bussuc:     string | boolean;
         // Cantidad de salarios miminos para buscar, cantidad, por escala de sueldo
-        salmic:     string;
+        salmic:     string | boolean;
         // La cantidad se encuentra segun tiempo de servicio o grupo (0=No, 1=Tiempo, 2=Grupo)
         sercan:     string;
         // Factor de Impresion
@@ -123,9 +123,9 @@ export interface Concepto {
         // Cantidad segun los dias en el periodo (0=No, 1..7=Si)
         candia:     number;
         // Considerar la cantidad por mes (1=Si)
-        canmes:     string;
+        canmes:     string | boolean;
         // Considerar cantidad tope (1=Si)
-        topcan:     string;
+        topcan:     string | boolean;
     /** LIMITE */
         // Considerar limite (0=No, 1=Generar, 2=Suspender)
         conlim:     string;
@@ -144,39 +144,39 @@ export interface Concepto {
         // Promedio para considerar el sueldo limite
         promProlim: null;
         // Considerar sueldo de calculo para vericar el limte (1=Si)
-        suelim:     string;
+        suelim:     string | boolean;
         // Cantidad de salarios miminos indicados en el rango limite (1=Si)
-        salmil:     string;
+        salmil:     string | boolean;
     /** PROCESAR  */
         // Autorizacion de proceso (1= Limitado, 2= Ilimitado)
         autpro:     string;
         // Se considera solo en el Maestro de Conceptos Fijos (1=Si)
-        profij:     string;
+        profij:     string | boolean;
         // Generar al ingreso (1=Si)
-        fijing:     string;
+        fijing:     string | boolean;
         // Se procesa en el periodo o semana 1 (1=Si)
-        prope1:     string;
+        prope1:     string | boolean;
         // Se procesa en el periodo o semana 2 (1=Si)
-        prope2:     string;
+        prope2:     string | boolean; 
         // Se procesa en el periodo o semana 3 (1=Si)
-        prope3:     string;
+        prope3:     string | boolean;
         // Se procesa en el periodo o semana 4 (1=Si)
-        prope4:     string;
+        prope4:     string | boolean;
         // Se procesa en el ultimo periodo o semana (1=Si)
-        prope5:     string;
+        prope5:     string | boolean;
         // Procesar solo en aniversario (1=Si)
-        proani:     string;
+        proani:     string | boolean;
         // Tipo de fecha, Desde, para verificar si el Trabajador cumple aniversario
         tipfea:     number;
         // Se puede considerar excepcion (1=Si)
-        conexc:     string;
+        conexc:     string | boolean;
     /** VACACION */
         // Afecta fecha de regreso (1=Si)
-        afereg:     string;
+        afereg:     string | boolean;
         // Se considera en Control de Vacacion (1=Si)
-        conabo:     string;
+        conabo:     string | boolean;
         // Calcular en Post Vacacion (1=Si)
-        posvac:     string;
+        posvac:     string | boolean;
         // Calculo Salario Abono (0=No, 1..4=Si)
         calabo:     string;
         // Considerar cuotas de salida y regreso (0=No, 1=Salida, 2=Regreso, 3=Ambas)
