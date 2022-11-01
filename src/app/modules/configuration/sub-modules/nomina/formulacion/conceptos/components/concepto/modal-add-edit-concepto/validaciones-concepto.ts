@@ -53,6 +53,10 @@ export const transformObjectToCheck = (data: Concepto): Concepto => {
     (data.afereg === '1' || data.afereg == true) ? data.afereg = true : data.afereg = false;
     (data.conabo === '1' || data.conabo == true) ? data.conabo = true : data.conabo = false;
     (data.posvac === '1' || data.posvac == true) ? data.posvac = true : data.posvac = false;
+    // Miscelánea
+    (data.suscuota === '1' || data.suscuota == true) ? data.suscuota = true : data.suscuota = false;
+    (data.manins   === '1' || data.manins == true)   ? data.manins   = true : data.manins   = false;
+    (data.unasup   === '1' || data.unasup == true)   ? data.unasup   = true : data.unasup   = false;
 
     return data;
 }

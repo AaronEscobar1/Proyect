@@ -180,6 +180,16 @@ export class ModalAddEditConceptoComponent implements OnInit {
         calabo:     [ ],
         concuo:     [ ],
         ctopro:     [ ],
+      /** Miscelanea */
+        ctofij:     [ ],
+        facfij:     [  , [ this.validateFactor.bind(this)]],
+        ctoint:     [ ],
+        suscuota:   [ ],
+        manins:     [ ],
+        facaho:     [  , [ this.validateFactor.bind(this)]],
+        ctoaho:     [ ],
+        unasup:     [ ],
+        ctosup:     [ ],
     });
   }
 
@@ -188,7 +198,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
-      this.tabIndex = 0;      
+      this.tabIndex = 9;  
       this.form.reset(FORM_INIT_CONCEPTO);
       this.form.controls['id'].enable();
       this.desactiveFieldCantidadSueldo();
@@ -214,7 +224,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
     if ( this.conceptoSelect.conexc == '1' ) {
       this.form.controls['profij'].disable();
     }
-    // Si el campo abono de pestaña Vacación esa 1 se habilitan los campos par editar
+    // Si el campo abono de pestaña Vacación es igual a 1 se habilitan los campos par editar
     if ( this.conceptoSelect.conabo == '1' ) { 
       this.activeFieldSalarioAbono();
     }
@@ -249,6 +259,10 @@ export class ModalAddEditConceptoComponent implements OnInit {
       // Validar errores de pestaña Limite
       else if ( this.form.controls['canlid'].errors || this.form.controls['canlih'].errors || this.form.controls['limsue'].errors || this.form.controls['liminf'].errors || this.form.controls['limsup'].errors ) {
         this.tabIndex = 5;
+      }
+      // Validar errores de pestaña Miscelanea
+      else if ( this.form.controls['facfij'].errors || this.form.controls['facaho'].errors ) {
+        this.tabIndex = 8;
       }
       this.form.markAllAsTouched();
       return;
@@ -303,6 +317,10 @@ export class ModalAddEditConceptoComponent implements OnInit {
     data.afereg    = data.afereg    ? '1' : '0';
     data.conabo    = data.conabo    ? '1' : '0';
     data.posvac    = data.posvac    ? '1' : '0';
+    // Miscelanea
+    data.suscuota  = data.suscuota  ? '1' : '0';
+    data.manins    = data.manins    ? '1' : '0';
+    data.unasup    = data.unasup    ? '1' : '0';
 
     // Validar si el campo (prioridad y factor) en BASICO esta en null, si esta en null colocarle un 0
     if ( data.prieje == null || data.prieje == '' ) {
@@ -341,6 +359,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
     // Validar si el campo (sueldo hasta) en LIMITE esta en null, si esta en null colocarle un 0
     if ( data.limsup == null || data.limsup == '' ) {
       data.limsup = 0;
+    }
+    // Validar si el campo (factor generar) en MISCELANEA esta en null, si esta en null colocarle un 0
+    if ( data.facfij == null || data.facfij == '' ) {
+      data.facfij = 0;
+    }
+    // Validar si el campo (factor deposito) en MISCELANEA esta en null, si esta en null colocarle un 0
+    if ( data.facaho == null || data.facaho == '' ) {
+      data.facaho = 0;
     }
     
     // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto. En pestaña SALARIO

@@ -2317,6 +2317,279 @@
                         /*        Miscelánea        *
                         /**************************** -->
                     <p-tabPanel header="Miscelánea">
+
+                        <div class="formgrid grid">
+                            
+                            <div class="col-12">
+
+                                <p-panel header="Generar">
+                                    
+                                    <div class="formgrid grid mb-2">
+
+                                        <div class="col-12 md:col-7">
+                                            
+                                            <div class="formgrid grid mb-2">
+                                                <label for="ctofij" class="col-5 md:col-5 lg:col-4 text-right mt-2">Concepto fijo:</label>
+                                                <div class="col-7 md:col-7 lg:col-8">
+                                                    <p-dropdown [options]="conceptos" 
+                                                                inputId="ctofij"
+                                                                appendTo="body"
+                                                                [filter]="true"
+                                                                filterBy="id"
+                                                                optionLabel="descto"
+                                                                optionValue="id"
+                                                                filterPlaceholder="Buscar por código..."
+                                                                formControlName="ctofij"
+                                                                placeholder="Seleccione un concepto">
+                                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                            <table class="w-full">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 25%;">{{ option.id }}</td>
+                                                                        <td style="width: 75%;">{{ option.descto }}</td>
+                                                                    </tr>
+                                                                </tbody>  
+                                                            </table> 
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 md:col-5">
+                                            
+                                            <div class="formgrid grid">
+                                                <label for="facfij" class="col-5 md:col-5 lg:col-4 text-right mt-2">Factor:</label>
+                                                <div class="col-7 md:col-7 lg:col-8">
+                                                    <input type="text"
+                                                           id="facfij"
+                                                           pInputText
+                                                           pKeyFilter="num"
+                                                           formControlName="facfij"
+                                                           class="p-inputtext-sm"/>
+                                                    <span class="form-text text-danger text-center"
+                                                          *ngIf="campoInvalid('facfij')">
+                                                        El factor es de longitud de 3 dígitos enteros y 9 decimales, formato numérico.
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid">
+
+                                        <div class="col-12 md:col-7">
+                                            
+                                            <div class="formgrid grid mb-2">
+                                                <label for="ctoint" class="col-5 md:col-5 lg:col-4 text-right mt-2">Concepto de intereses:</label>
+                                                <div class="col-7 md:col-7 lg:col-8">
+                                                    <p-dropdown [options]="conceptos" 
+                                                                inputId="ctoint"
+                                                                appendTo="body"
+                                                                [filter]="true"
+                                                                filterBy="id"
+                                                                optionLabel="descto"
+                                                                optionValue="id"
+                                                                filterPlaceholder="Buscar por código..."
+                                                                formControlName="ctoint"
+                                                                placeholder="Seleccione un concepto">
+                                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                            <table class="w-full">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 25%;">{{ option.id }}</td>
+                                                                        <td style="width: 75%;">{{ option.descto }}</td>
+                                                                    </tr>
+                                                                </tbody>  
+                                                            </table> 
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 md:col-5">
+                                            
+                                            <div class="field col-12 mt-2 flex justify-content-end md:justify-content-start">
+
+                                                <div class="field-checkbox ml-3">
+                                                    <p-checkbox inputId="suscuota"
+                                                                name="suscuota"
+                                                                formControlName="suscuota"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="suscuota">Sustituye cuota</label>
+                                                </div>
+                
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid mt-3">
+                            
+                            <div class="col-12 md:col-7">
+
+                                <p-panel header="Depósito">
+
+                                    <div class="formgrid grid mb-2">
+
+                                        <div class="col-5 md:col-5 lg:col-3">
+
+                                            <div class="field col-12 mt-2">
+                                                <div class="field-checkbox">
+                                                    <p-checkbox inputId="sianiversario"
+                                                                name="manins"
+                                                                formControlName="manins"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="manins">Sí</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-7 md:col-7 lg:col-7">
+                                            
+                                            <div class="formgrid grid">
+
+                                                <label for="facaho" class="col-4 md:col-4 lg:col-3 text-right md:text-left mt-2">Factor:</label>
+                                                <div class="col-8 md:col-8 lg:col-7">
+                                                    <input type="text"
+                                                           id="facaho"
+                                                           pInputText
+                                                           pKeyFilter="num"
+                                                           formControlName="facaho"
+                                                           class="p-inputtext-sm"/>
+                                                </div>
+            
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid">
+
+                                        <div class="col-12">
+                                            
+                                            <div class="formgrid grid mb-2">
+                                                <label for="ctoaho" class="col-3 md:col-4 lg:col-3 lg:text-right mt-2">Concepto:</label>
+                                                <div class="col-9 md:col-8 lg:col-9">
+                                                    <p-dropdown [options]="conceptos" 
+                                                                inputId="ctoaho"
+                                                                appendTo="body"
+                                                                [filter]="true"
+                                                                filterBy="id"
+                                                                optionLabel="descto"
+                                                                optionValue="id"
+                                                                filterPlaceholder="Buscar por código..."
+                                                                formControlName="ctoaho"
+                                                                placeholder="Seleccione un concepto">
+                                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                            <table class="w-full">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 25%;">{{ option.id }}</td>
+                                                                        <td style="width: 75%;">{{ option.descto }}</td>
+                                                                    </tr>
+                                                                </tbody>  
+                                                            </table> 
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+                                
+                        </div>
+
+                        <div class="formgrid grid mt-3">
+                            
+                            <div class="col-12 md:col-7">
+
+                                <p-panel header="Suplencia">
+
+                                    <div class="formgrid grid mb-2">
+
+                                        <div class="col-5 md:col-5 lg:col-3">
+
+                                            <div class="field col-12 mt-2">
+                                                <div class="field-checkbox">
+                                                    <p-checkbox inputId="sianiversario"
+                                                                name="unasup"
+                                                                formControlName="unasup"
+                                                                [value]="true"
+                                                                [binary]="true">
+                                                    </p-checkbox>
+                                                    <label for="unasup">Sí</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid">
+
+                                        <div class="col-12">
+                                            
+                                            <div class="formgrid grid mb-2">
+                                                <label for="ctosup" class="col-3 md:col-4 lg:col-3 lg:text-right mt-2">Concepto:</label>
+                                                <div class="col-9 md:col-8 lg:col-9">
+                                                    <p-dropdown [options]="conceptos" 
+                                                                inputId="ctosup"
+                                                                appendTo="body"
+                                                                [filter]="true"
+                                                                filterBy="id"
+                                                                optionLabel="descto"
+                                                                optionValue="id"
+                                                                filterPlaceholder="Buscar por código..."
+                                                                formControlName="ctosup"
+                                                                placeholder="Seleccione un concepto">
+                                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                            <table class="w-full">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td style="width: 25%;">{{ option.id }}</td>
+                                                                        <td style="width: 75%;">{{ option.descto }}</td>
+                                                                    </tr>
+                                                                </tbody>  
+                                                            </table> 
+                                                        </ng-template>
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+                                
+                        </div>
+
                     </p-tabPanel>
 
                     <!--/****************************

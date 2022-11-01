@@ -183,56 +183,54 @@ export interface Concepto {
         concuo:     string;
         // Concepto para generar la provision de Vacacion
         ctopro:     number | null;
-
-    /** TODO: MISCELANEA */
-    /** TODO: OTROS */
-    
-    // Se considera en el Diferimiento Contable (1=Si)
-    difcon:     string;
-    // Considerar en la Distribucion  por Centro de Costo (1=Si)
-    discen:     string;
-    // TODO: Falta ---> Distribucion contable por Tabla (0=No, 1=Departamento, 2=Cargo, 3=No contabilizar)
-
-    // Cuenta Contable
-    ctaco1:     null;
-    // Posiciones relativas
-    posre1:     null;
-    // Cuenta Contable (Contra Partida)
-    ctaco2:     string | null;
-    // Posiciones relativas para la cuenta contable (Contra Partida)
-    posre2:     string | null;
-    // Concepto a generar fijo
-    ctofij:     number | null;
-    // Concepto para generar los intereses
-    ctoint:     number | null;
-    // Maneja institucion para deposito (1=Si)
-    manins:     string;
-    // Factor para considerar el monto a depositar o si el mismo se resta o suma
-    facaho:     number;
-    // Codigo del Concepto para realizar el ahorro o deposito (particular) bancario
-    ctoaho:     number | null;
-    // Control de suplencia (1=Si)
-    unasup:     string;
-    // Concepto a generar en caso de suplencia
-    ctosup:     number | null;
-    // Concepto de intereses de prestaciones al cual se le afecta el saldo
-    ctoIntpre:  null;
-    // Capitalizar o Pagar Intereses/Prestaciones prestaciones (Capitalizar: 0=No, 1=Anual, 2=Mensual; Pagar: 3=No, 4= Anual, 5=Mensual)
-    capint:     string;
-    // Se acumula para cheques por trabajador concepto(0=No, 1=Incrementa, 2=Decrementa)
-    acuche:     string;
-    // Se considera en el proceso retroactivo(0=No, 1=Con recalculo, 2=Sin recalculo)
-    cretro:     string;
-    // Generar monto en el proceso retroactivo(0=No, 1=Mayor a cero, 2=Diferente a cero)
-    gretro:     string;
-    // Codigo beneficiario (*FICHA=Trabajador)
-    codben:     string | null;
-    // Factor que indica en que propocion se afecta el saldo de otro concepto
-    facafe:     number;
-    // Factor que indica en que propocion se afecta la cuota del concepto a generar fijo
-    facfij:     number;
-    // Sustituye cuota de prestamos sobre prestaciones(0=No, 1=Si)
-    suscuota:   string;
+    /** MISCELANEA */
+        // Concepto a generar fijo
+        ctofij:     number | null;
+        // Factor que indica en que propocion se afecta la cuota del concepto a generar fijo
+        facfij:     number | string;
+        // Concepto para generar los intereses
+        ctoint:     number | null;
+        // Sustituye cuota de prestamos sobre prestaciones(0=No, 1=Si)
+        suscuota:   string | boolean;
+        // Maneja institucion para deposito (1=Si)
+        manins:     string | boolean;
+        // Factor para considerar el monto a depositar o si el mismo se resta o suma
+        facaho:     number | string;
+        // Codigo del Concepto para realizar el ahorro o deposito (particular) bancario
+        ctoaho:     number | null;
+        // Control de suplencia (1=Si)
+        unasup:     string | boolean;
+        // Concepto a generar en caso de suplencia
+        ctosup:     number | null;
+    /** OTROS */
+        // Capitalizar o Pagar Intereses/Prestaciones prestaciones (Capitalizar: 0=No, 1=Anual, 2=Mensual; Pagar: 3=No, 4= Anual, 5=Mensual)
+        capint:     string;
+        // Concepto de intereses de prestaciones al cual se le afecta el saldo
+        ctoIntpre:  null;
+        // Se considera en el proceso retroactivo(0=No, 1=Con recalculo, 2=Sin recalculo)
+        cretro:     string;
+        // Se acumula para cheques por trabajador concepto(0=No, 1=Incrementa, 2=Decrementa)
+        acuche:     string;
+        // Codigo beneficiario (*FICHA=Trabajador)
+        codben:     string | null;
+        // Generar monto en el proceso retroactivo(0=No, 1=Mayor a cero, 2=Diferente a cero)
+        gretro:     string;
+    /** Campos sobrantes */
+        // Se considera en el Diferimiento Contable (1=Si)
+        difcon:     string;
+        // Considerar en la Distribucion por Centro de Costo (1=Si)
+        discen:     string;
+        // TODO: Falta ---> Distribucion contable por Tabla (0=No, 1=Departamento, 2=Cargo, 3=No contabilizar)
+        // Cuenta Contable
+        ctaco1:     null;
+        // Posiciones relativas
+        posre1:     null;
+        // Cuenta Contable (Contra Partida)
+        ctaco2:     string | null;
+        // Posiciones relativas para la cuenta contable (Contra Partida)
+        posre2:     string | null;
+        // Factor que indica en que propocion se afecta el saldo de otro concepto
+        facafe:     number;
 }
 
 // Interfaces para actualizar registros

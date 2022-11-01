@@ -70,4 +70,10 @@ export const FORM_INIT_CONCEPTO = {
         posvac: false,
         calabo: '0',
         concuo: '0',
+    /** Miscelanea */
+        facfij: 0,
+        suscuota: false,
+        manins: false,
+        facaho: 0,
+        unasup: false
 };
