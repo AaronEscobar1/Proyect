@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario, PagoInteres } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
-import { transformObjectToCheck } from './validaciones-concepto';
+import { fieldsNoNullsWithValueCero, transformObjectToCheck, trasnformCheckboxTrueOrFalseToString } from './validaciones-concepto';
 
 @Component({
   selector: 'app-modal-add-edit-concepto',
@@ -246,35 +246,35 @@ export class ModalAddEditConceptoComponent implements OnInit {
    */
   save(): void {
     if ( this.form.invalid ) {
-      // Validar errores de pestaña basico
+      // Validar errores y redirigir a pestaña basico
       if ( this.form.controls['id'].errors || this.form.controls['descto'].errors || this.form.controls['prieje'].errors || this.form.controls['clausu'].errors || this.form.controls['tipcal'].errors || this.form.controls['sindec'].errors || this.form.controls['faccto'].errors || this.form.controls['desfac'].errors ) {
         this.tabIndex = 0;
       } 
-      // Validar errores de pestaña Salario
+      // Validar errores y redirigir a pestaña Salario
       else if ( this.form.controls['tipsue'].errors || this.form.controls['salmin'].errors || this.form.controls['sussue'].errors || this.form.controls['salmis'].errors || this.form.controls['rutsus'].errors ) {
         this.tabIndex = 1;
       } 
-      // Validar errores de pestaña Valor
+      // Validar errores y redirigir a pestaña Valor
       else if ( this.form.controls['valcto'].errors || this.form.controls['sueval'].errors) {
         this.tabIndex = 2;
       }  
-      // Validar errores de pestaña Factor 
+      // Validar errores y redirigir a pestaña Factor 
       else if ( this.form.controls['faccto'].errors || this.form.controls['suefac'].errors ) {
         this.tabIndex = 3;
       }
-      // Validar errores de pestaña Cantidad
+      // Validar errores y redirigir a pestaña Cantidad
       else if ( this.form.controls['cancto'].errors || this.form.controls['suecan'].errors || this.form.controls['facimp'].errors ) {
         this.tabIndex = 4;
       }
-      // Validar errores de pestaña Limite
+      // Validar errores y redirigir a pestaña Limite
       else if ( this.form.controls['canlid'].errors || this.form.controls['canlih'].errors || this.form.controls['limsue'].errors || this.form.controls['liminf'].errors || this.form.controls['limsup'].errors ) {
         this.tabIndex = 5;
       }
-      // Validar errores de pestaña Miscelanea
+      // Validar errores y redirigir a pestaña Miscelanea
       else if ( this.form.controls['facfij'].errors || this.form.controls['facaho'].errors ) {
         this.tabIndex = 8;
       }
-      // Validar errores de pestaña Otros
+      // Validar errores y redirigir a pestaña Otros
       else if ( this.form.controls['capint'].errors ) {
         this.tabIndex = 9;
       }
@@ -284,104 +284,11 @@ export class ModalAddEditConceptoComponent implements OnInit {
     // Obtener formulario
     let data: Concepto = this.form.getRawValue();
 
-    // Si el check de estos campos esta seleccionado se coloca el valor 1, de lo contrario 0
-    // Basico
-    data.noimpr    = data.noimpr    ? '1' : '0';
-    data.noneto    = data.noneto    ? '1' : '0';
-    data.incdet    = data.incdet    ? '1' : '0';
-    data.abopre    = data.abopre    ? '1' : '0';
-    data.montocero = data.montocero ? '1' : '0';
-    data.topmon    = data.topmon    ? '1' : '0';
-    data.inactivo  = data.inactivo  ? '1' : '0';
-    // Salario
-    data.topsue    = data.topsue    ? '1' : '0';
-    // Valor
-    data.suecav    = data.suecav    ? '1' : '0';
-    data.bussuv    = data.bussuv    ? '1' : '0';
-    data.salmiv    = data.salmiv    ? '1' : '0';
-    data.valmes    = data.valmes    ? '1' : '0';
-    data.topval    = data.topval    ? '1' : '0';
-    // Factor
-    data.suecaf    = data.suecaf    ? '1' : '0';
-    data.bussuf    = data.bussuf    ? '1' : '0';
-    data.salmif    = data.salmif    ? '1' : '0';
-    data.facmes    = data.facmes    ? '1' : '0';
-    data.faccen    = data.faccen    ? '1' : '0';
-    data.topfac    = data.topfac    ? '1' : '0';
-    // Cantidad
-    data.suecac    = data.suecac    ? '1' : '0';
-    data.bussuc    = data.bussuc    ? '1' : '0';
-    data.salmic    = data.salmic    ? '1' : '0';
-    data.canmes    = data.canmes    ? '1' : '0';
-    data.topcan    = data.topcan    ? '1' : '0';
-    // Limite
-    data.suelim    = data.suelim    ? '1' : '0';
-    data.salmil    = data.salmil    ? '1' : '0';
-    // Procesar
-    data.profij    = data.profij    ? '1' : '0';
-    data.fijing    = data.fijing    ? '1' : '0';
-    data.prope1    = data.prope1    ? '1' : '0';
-    data.prope2    = data.prope2    ? '1' : '0';
-    data.prope3    = data.prope3    ? '1' : '0';
-    data.prope4    = data.prope4    ? '1' : '0';
-    data.prope5    = data.prope5    ? '1' : '0';
-    data.proani    = data.proani    ? '1' : '0';
-    data.conexc    = data.conexc    ? '1' : '0';
-    // Vacación
-    data.afereg    = data.afereg    ? '1' : '0';
-    data.conabo    = data.conabo    ? '1' : '0';
-    data.posvac    = data.posvac    ? '1' : '0';
-    // Miscelanea
-    data.suscuota  = data.suscuota  ? '1' : '0';
-    data.manins    = data.manins    ? '1' : '0';
-    data.unasup    = data.unasup    ? '1' : '0';
+    // Si los campos tipo checkbox estan seleccionados, es decir estan en true se coloca el valor 1, de lo contrario 0
+    data = trasnformCheckboxTrueOrFalseToString(data);
 
-    // Validar si el campo (prioridad y factor) en BASICO esta en null, si esta en null colocarle un 0
-    if ( data.prieje == null || data.prieje == '' ) {
-      data.prieje = 0;
-    }
-    if ( data.faccto == null || data.faccto == '' ) {
-      data.faccto = 0;
-    }
-    // Validar si los campos (minimos) en SALARIO esta en null, si esta en null colocarle un 0
-    if ( data.salmin == null ) {
-      data.salmin = 0;
-    }
-    if ( data.salmis == null) {
-      data.salmis = 0;
-    }
-    // Validar si el campo (valor) en VALOR esta en null, si esta en null colocarle un 0
-    if ( data.valcto == null || data.valcto == '' ) {
-      data.valcto = 0;
-    }
-    // Validar si el campo (cantidad) en CANTIDAD esta en null, si esta en null colocarle un 0
-    if ( data.cancto == null || data.cancto == '' ) {
-      data.cancto = 0;
-    }
-    // Validar si el campo (cantidad desde) en LIMITE esta en null, si esta en null colocarle un 0
-    if ( data.canlid == null || data.canlid == '' ) {
-      data.canlid = 0;
-    }
-    // Validar si el campo (cantidad hasta) en LIMITE esta en null, si esta en null colocarle un 0
-    if ( data.canlih == null || data.canlih == '' ) {
-      data.canlih = 0;
-    }
-    // Validar si el campo (sueldo desde) en LIMITE esta en null, si esta en null colocarle un 0
-    if ( data.liminf == null || data.liminf == '' ) {
-      data.liminf = 0;
-    }
-    // Validar si el campo (sueldo hasta) en LIMITE esta en null, si esta en null colocarle un 0
-    if ( data.limsup == null || data.limsup == '' ) {
-      data.limsup = 0;
-    }
-    // Validar si el campo (factor generar) en MISCELANEA esta en null, si esta en null colocarle un 0
-    if ( data.facfij == null || data.facfij == '' ) {
-      data.facfij = 0;
-    }
-    // Validar si el campo (factor deposito) en MISCELANEA esta en null, si esta en null colocarle un 0
-    if ( data.facaho == null || data.facaho == '' ) {
-      data.facaho = 0;
-    }
+    // Validar que los campos que no permiten nulos, si en el formulario se dejan vacios se envien con valor 0 por defecto
+    data = fieldsNoNullsWithValueCero(data);
     
     // Es obligatorio colocar un sueldo de cálculo si voy a colocar un sueldo sustituto. En pestaña SALARIO
     if ( data.sussue && !data.tipsue ) {
@@ -414,7 +321,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
       return;
     }
 
-    console.log(data);
+    console.log('SAVE >>> ', data);
     return;
     this.spinner.show();
 

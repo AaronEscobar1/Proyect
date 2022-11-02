@@ -257,7 +257,6 @@ export class ConceptosComponent implements OnInit {
       .subscribe({
         next: (res: PagoInteres[]) => {
           this.indicadoresPagos = res;
-          console.log(this.indicadoresPagos);
         },
         error: (err) => {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener pagos intereses , error conexión con el servidor.', life: 3000});
