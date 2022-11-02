@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 // Components
 import { ButtonsComponent } from './components/buttons/buttons.component';
@@ -35,6 +36,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    LazyLoadImageModule,
     NgxSpinnerModule
   ],
   exports: [
@@ -42,6 +44,7 @@ import { TopbarComponent } from './components/topbar/topbar.component';
     PrimeNgModule,
     FormsModule,
     ReactiveFormsModule,
+    LazyLoadImageModule,
     NgxSpinnerModule,
 
     // Components
