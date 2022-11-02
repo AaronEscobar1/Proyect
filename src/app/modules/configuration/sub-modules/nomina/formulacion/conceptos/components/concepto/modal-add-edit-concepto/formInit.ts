@@ -75,5 +75,10 @@ export const FORM_INIT_CONCEPTO = {
         suscuota: false,
         manins: false,
         facaho: 0,
-        unasup: false
+        unasup: false,
+    /** Otros */
+        capint: '0',
+        cretro: '0',
+        acuche: '0',
+        gretro: '0'
 };

@@ -2474,6 +2474,10 @@
                                                            pKeyFilter="num"
                                                            formControlName="facaho"
                                                            class="p-inputtext-sm"/>
+                                                    <span class="form-text text-danger text-center"
+                                                          *ngIf="campoInvalid('facaho')">
+                                                        El factor es de longitud de 3 dígitos enteros y 9 decimales, formato numérico.
+                                                    </span>
                                                 </div>
             
                                             </div>
@@ -2596,6 +2600,216 @@
                         /*          Otros           *
                         /**************************** -->
                     <p-tabPanel header="Otros">
+
+                        <div class="formgrid grid">
+                            
+                            <div class="col-12 md:col-7 mb-2">
+
+                                <p-panel header="Prestaciones">
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-12 md:col-6">
+                                            <p-dropdown [options]="indicadoresPagos" 
+                                                        inputId="capint"
+                                                        appendTo="body"
+                                                        optionLabel="descripcion"
+                                                        optionValue="capint"
+                                                        formControlName="capint"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        placeholder="Seleccione una prestación">
+                                            </p-dropdown>
+                                            <span class="form-text text-danger text-center"
+                                                  *ngIf="campoInvalid('capint')">
+                                                La prestación es obligatoria
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-12">
+                                            <label for="ctoIntpre">Concepto:</label>
+                                            <p-dropdown [options]="conceptos" 
+                                                        inputId="ctoIntpre"
+                                                        appendTo="body"
+                                                        [filter]="true"
+                                                        filterBy="id"
+                                                        optionLabel="descto"
+                                                        optionValue="id"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        formControlName="ctoIntpre"
+                                                        placeholder="Seleccione un concepto">
+                                                <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                    <table class="w-full">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">{{ option.id }}</td>
+                                                                <td style="width: 75%;">{{ option.descto }}</td>
+                                                            </tr>
+                                                        </tbody>  
+                                                    </table> 
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                        
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-5 mb-2">
+
+                                <p-panel header="Considerar en proceso retroactivo">
+
+                                    <div class="formgrid grid mt-3">
+                                        <div class="field-radiobutton col-12 pb-2">
+                                            <p-radioButton  inputId="noaplicacpr" 
+                                                            name="cretro" 
+                                                            value="0"
+                                                            formControlName="cretro">
+                                            </p-radioButton>
+                                            <label for="noaplicacpr">No aplica</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-2">
+                                            <p-radioButton  inputId="recalculo" 
+                                                            name="cretro"
+                                                            value="1"
+                                                            formControlName="cretro">
+                                            </p-radioButton>
+                                            <label for="recalculo">Con recálculo</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-2">
+                                            <p-radioButton  inputId="sinrecalculo" 
+                                                            name="cretro"
+                                                            value="2"
+                                                            formControlName="cretro">
+                                            </p-radioButton>
+                                            <label for="sinrecalculo">Sin recálculo</label>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                        </div>
+
+                        <div class="formgrid grid">
+
+                            <div class="col-12 md:col-7 mb-2">
+
+                                <p-panel header="Afecta cheque">
+
+                                    <div class="formgrid grid mt-3">                            
+
+                                        <div class="col-12 md:col-6 lg:col-4">
+    
+                                            <div class="field">
+                                                <div class="field-radiobutton pb-2">
+                                                    <p-radioButton  inputId="noaplicaac" 
+                                                                    name="acuche"
+                                                                    value="0"
+                                                                    formControlName="acuche">
+                                                    </p-radioButton>
+                                                    <label for="noaplicaac">No aplica</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-12 md:col-6 lg:col-4">
+    
+                                            <div class="field">
+                                                <div class="field-radiobutton pb-2">
+                                                    <p-radioButton  inputId="incrementarac" 
+                                                                    name="acuche"
+                                                                    value="1"
+                                                                    formControlName="acuche">
+                                                    </p-radioButton>
+                                                    <label for="incrementarac">Incrementar</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                        <div class="col-12 md:col-6 lg:col-4">
+    
+                                            <div class="field">
+                                                <div class="field-radiobutton pb-2">
+                                                    <p-radioButton  inputId="decrementarac" 
+                                                                    name="acuche"
+                                                                    value="2"
+                                                                    formControlName="acuche">
+                                                    </p-radioButton>
+                                                    <label for="decrementarac">Decrementar</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+
+                                    </div>
+
+                                    <div class="formgrid grid">
+
+                                        <div class="field col-12">
+                                            <label for="ctoIntpre">Beneficiario:</label>
+                                            <p-dropdown [options]="conceptos" 
+                                                        inputId="ctoIntpre"
+                                                        appendTo="body"
+                                                        optionLabel="descto"
+                                                        optionValue="id"
+                                                        filterPlaceholder="Buscar por código..."
+                                                        formControlName="ctoIntpre"
+                                                        placeholder="Seleccione un beneficiario">
+                                            </p-dropdown>
+                                        </div>
+                                        
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                            <div class="col-12 md:col-5 mb-2">
+
+                                <p-panel header="Generar en proceso retroactivo">
+
+                                    <div class="formgrid grid mt-3">
+                                        <div class="field-radiobutton col-12 pb-2">
+                                            <p-radioButton  inputId="noaplicacgpr" 
+                                                            name="gretro" 
+                                                            value="0"
+                                                            formControlName="gretro">
+                                            </p-radioButton>
+                                            <label for="noaplicacgpr">No aplica</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-2">
+                                            <p-radioButton  inputId="mayorcero" 
+                                                            name="gretro"
+                                                            value="1"
+                                                            formControlName="gretro">
+                                            </p-radioButton>
+                                            <label for="mayorcero">Mayor que cero</label>
+                                        </div>
+                                        <div class="field-radiobutton col-12 pb-2">
+                                            <p-radioButton  inputId="diferentecero" 
+                                                            name="gretro"
+                                                            value="2"
+                                                            formControlName="gretro">
+                                            </p-radioButton>
+                                            <label for="diferentecero">Diferente a cero</label>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+
+                            </div>
+
+                        </div>
+
                     </p-tabPanel>
 
                 </p-tabView>

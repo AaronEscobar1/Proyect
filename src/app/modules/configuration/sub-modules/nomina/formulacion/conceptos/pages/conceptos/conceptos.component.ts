@@ -7,7 +7,7 @@ import { ConceptosService } from '../../services/conceptos.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario } from '../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario, PagoInteres } from '../../interfaces/tablas-tipos-concepto.interfaces';
 
 @Component({
   selector: 'app-conceptos',
@@ -69,6 +69,9 @@ export class ConceptosComponent implements OnInit {
 
   // Objeto de tipos fechas Aniversario
   fechasAniversario: FechaAniversario[] = [];
+
+  // Objeto de Indicadores Pagos de Intereses
+  indicadoresPagos: PagoInteres[] = [];
   
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService,
@@ -84,6 +87,7 @@ export class ConceptosComponent implements OnInit {
     this.loadManejoDecimales();
     this.loadDiasSemanas();
     this.loadTiposFechasAniversario();
+    this.loadIndicadoresPagosIntereses();
   }
 
   refresh(): void {
@@ -242,7 +246,21 @@ export class ConceptosComponent implements OnInit {
           this.fechasAniversario = res;
         },
         error: (err) => {
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los días de semana, error conexión con el servidor.', life: 3000});
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener las fechas aniversario, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /** Indicadores Pagos de Intereses */
+  loadIndicadoresPagosIntereses(): void {
+    this.tablasTipoConceptoService.getAllIndicadoresPagosIntereses()
+      .subscribe({
+        next: (res: PagoInteres[]) => {
+          this.indicadoresPagos = res;
+          console.log(this.indicadoresPagos);
+        },
+        error: (err) => {
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener pagos intereses , error conexión con el servidor.', life: 3000});
         }
       });
   }

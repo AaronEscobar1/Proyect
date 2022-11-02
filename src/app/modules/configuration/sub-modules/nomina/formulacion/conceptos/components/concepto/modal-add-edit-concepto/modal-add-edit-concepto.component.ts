@@ -7,7 +7,7 @@ import { CompanyNominaService } from '../../../../../empresa/shared-empresa/serv
 import { ConceptosService } from '../../../services/conceptos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario } from '../../../interfaces/tablas-tipos-concepto.interfaces';
+import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario, PagoInteres } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
 import { transformObjectToCheck } from './validaciones-concepto';
 
@@ -71,6 +71,9 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   // Objeto de tipos fechas Aniversario
   @Input() fechasAniversario: FechaAniversario[] = [];
+
+  // Objeto de Indicadores Pagos de Intereses
+  @Input() indicadoresPagos: PagoInteres[] = [];
 
   // Formulario reactivo
   form!: FormGroup;
@@ -190,6 +193,13 @@ export class ModalAddEditConceptoComponent implements OnInit {
         ctoaho:     [ ],
         unasup:     [ ],
         ctosup:     [ ],
+      /** Otros */
+        capint:     [  , [ Validators.required ]],
+        ctoIntpre:  [ ],
+        cretro:     [ ],
+        acuche:     [ ],
+        codben:     [ ],
+        gretro:     [ ],
     });
   }
 
@@ -198,7 +208,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   ngOnChanges() {
     if( !this.isEdit ) {
-      this.tabIndex = 9;  
+      this.tabIndex = 0;  
       this.form.reset(FORM_INIT_CONCEPTO);
       this.form.controls['id'].enable();
       this.desactiveFieldCantidadSueldo();
@@ -263,6 +273,10 @@ export class ModalAddEditConceptoComponent implements OnInit {
       // Validar errores de pestaña Miscelanea
       else if ( this.form.controls['facfij'].errors || this.form.controls['facaho'].errors ) {
         this.tabIndex = 8;
+      }
+      // Validar errores de pestaña Otros
+      else if ( this.form.controls['capint'].errors ) {
+        this.tabIndex = 9;
       }
       this.form.markAllAsTouched();
       return;
