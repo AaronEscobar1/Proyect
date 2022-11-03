@@ -11,6 +11,7 @@ import { AumentoEvaluacionService } from '../../services/aumento-evaluacion.serv
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PuntajeEvaluacionComponent } from '../puntaje-evaluacion/puntaje-evaluacion.component';
+import { Concepto } from '../../../../formulacion/conceptos/interfaces/concepto.interfaces';
 
 @Component({
   selector: 'app-puntaje-evaluacion-home',
@@ -30,6 +31,9 @@ export class PuntajeEvaluacionHomeComponent implements OnInit {
 
   // Objeto para consultar al endpoint para obtener los aumentos por evaluación
   puntajeEvaluacionSelectRow!: PuntajeEvaluacion;
+
+  // Objeto para mostrar lista de conceptos
+  conceptos: Concepto[] = [];
   
   // Variable para habilitar y deshabilitar pestaña aumento por evaluación
   isEnableAumentoTab: boolean = false;
@@ -65,7 +69,7 @@ export class PuntajeEvaluacionHomeComponent implements OnInit {
    * Cargar puntajes de evaluacion
    */
   refresh(): void {
-    this.tipoNominaComponent.loadPuntajesEvaluacion();
+    this.tipoNominaComponent.loadPuntajesEvaluacion(true);
   }
 
   /**
@@ -74,6 +78,14 @@ export class PuntajeEvaluacionHomeComponent implements OnInit {
    */
   getDataPuntajes(puntajesEvaluacionEvent: PuntajeEvaluacion[]): void {
     this.puntajesEvaluacion = puntajesEvaluacionEvent;
+  }
+
+  /**
+   * Obtener todos los conceptos por empresa y tipo de nomina
+   * @param conceptosEvent: Conceptos[] lista de conceptos
+   */
+  getDataConceptos(conceptosEvent: Concepto[]): void {
+    this.conceptos = conceptosEvent;
   }
   
   /************************************

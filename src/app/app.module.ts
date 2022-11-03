@@ -14,6 +14,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Components
 import { AppComponent } from './app.component';
+import { ToastModule } from 'primeng/toast';
 
 // Cambiar el locale de la app
 import localeEsVe from '@angular/common/locales/es-VE';
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     HttpInterceptorModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ToastModule,
     // Lenguaje por defecto para la aplicación
     TranslateModule.forRoot({
       defaultLanguage: 'es',

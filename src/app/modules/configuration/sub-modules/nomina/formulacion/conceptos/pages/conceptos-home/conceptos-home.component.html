@@ -1,0 +1,55 @@
+<!-- Spinner -->
+<app-spinner></app-spinner>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="header-card bg-gray-600 text-white p-2">Definición de Conceptos </div>
+        <div class="card-table">
+
+            <!-- Pestañas -->
+            <p-tabView>
+
+                <!--/***********************
+                /*   Consultar empresas    *
+                /*************************** -->
+                <p-tabPanel header="Consultar empresas">
+
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <app-empresas></app-empresas>
+                        </div>
+                    
+                        <div class="col-12 md:col-6">
+                            <app-tipo-nomina [empresaRow]="empresaRow"
+                                             (onGetDataConceptos)="getDataConceptos($event)"
+                                             (onGetDataPromedios)="getDataPromedios($event)">
+                            </app-tipo-nomina>
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+
+                <!--/*****************************
+                /*          Conceptos            *
+                /********************************* -->
+                <p-tabPanel header="Conceptos" [disabled]="empresaRow == null || nominaRow == null">
+
+                    <app-conceptos [empresaRow]="empresaRow"
+                                   [nominaRow]="nominaRow"
+                                   [conceptos]="conceptos"
+                                   [conceptosFilters]="conceptosFilters"
+                                   [tiposSalarios]="tiposSalarios"
+                                   [relacionesLaborales]="relacionesLaborales"
+                                   [promedios]="promedios"
+                                   (onRefresh)="refresh()">
+                    </app-conceptos>
+
+                </p-tabPanel>
+
+            </p-tabView>
+   
+        </div>
+
+    </div>
+</div>

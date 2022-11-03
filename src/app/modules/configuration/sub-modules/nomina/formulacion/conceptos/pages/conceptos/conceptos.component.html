@@ -1,0 +1,99 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+<div class="grid">
+    <div class="col-12">
+
+        <div class="grid">
+
+            <div class="col-12 md:col-6">
+
+                <!-- Componente de botones -->
+                <app-buttons-three-table (onRefresh)="refresh()"
+                                         (onOpenModalPrint)="openModalPrint()"
+                                         (onOpenModalCreate)="openModalCreate()"
+                                         (onEditRow)="editRow($event)"
+                                         (onDeleteRow)="deleteRow($event)">
+                </app-buttons-three-table>
+
+            </div>
+
+            <div class="col-12 md:col-6">
+
+                <!-- Inputs de nombre de empresa y nomina  -->
+                <div class="formgrid grid">
+                                
+                    <div class="field col-3 md:col-3 lg:col-2 text-right mt-2">
+                        <label for="id">Nómina:</label>
+                    </div>
+                    <div class="field col-2 md:col-2 lg:col-2">
+                        <input  type="text"
+                                id="id" 
+                                class="w-full"
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+                    
+                    <div class="field col-2 md:col-2 lg:col-2">
+                        <input  type="text"
+                                id="tipnom" 
+                                class="w-full"
+                                pInputText
+                                [value]="nominaRow ? nominaRow.tipnom : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-4 md:col-4 lg:col-6">
+                        <input  type="text"
+                                id="desnom" 
+                                class="w-full"
+                                pInputText
+                                [value]="nominaRow ? (nominaRow.desnom | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Componente table -->
+        <app-data-table-concepto [conceptos]="conceptos"></app-data-table-concepto> 
+
+    </div>
+</div>
+
+
+<!-- Modal Imprimir -->
+<app-modal-print-concepto
+    [printModal]="printModal"
+    (onCloseModalPrint)="closeModalPrintDialog()">
+</app-modal-print-concepto>
+
+<!-- Modal Agregar Editar-->
+<app-modal-add-edit-concepto
+    [empresaRow]="empresaRow"
+    [nominaRow]="nominaRow"
+    [conceptos]="conceptos"
+    [conceptosFilters]="conceptosFilters"
+    [conceptoSelect]="conceptoSelect"
+    
+    [tiposCalculos]="tiposCalculos"
+    [metodosFiscales]="metodosFiscales"
+    [rutinasCalculos]="rutinasCalculos"
+    [manejosDecimales]="manejosDecimales"
+    [tiposSalarios]="tiposSalarios"
+    [promedios]="promedios"
+    [diasSemanas]="diasSemanas"
+    [fechasAniversario]="fechasAniversario"
+    [indicadoresPagos]="indicadoresPagos"
+    [relacionesLaborales]="relacionesLaborales"
+
+    [createModal]="createModal" 
+    [isEdit]="isEdit" 
+    (onCloseModal)="closeModal()"
+    (onLoadData)="refresh()"
+    [titleForm]="titleForm">
+</app-modal-add-edit-concepto>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Concepto } from '../../../../formulacion/conceptos/interfaces/concepto.interfaces';
 import { AumentoEvaluacion } from '../../interfaces/aumento-evaluacion.interfaces';
 import { PuntajeEvaluacion } from '../../interfaces/puntaje-evaluacion.interfaces';
 import { AumentoEvaluacionService } from '../../services/aumento-evaluacion.service';
@@ -17,6 +18,9 @@ export class AumentoEvaluacionComponent implements OnInit {
 
   // Objeto de aumento por evaluación
   @Input() aumentoEvaluacion: AumentoEvaluacion[] = [];
+
+  // Objeto para mostrar lista de conceptos
+  @Input() conceptos: Concepto[] = [];
 
   // Objeto seleccionado para editar
   aumentoEvaluacionSelect!: AumentoEvaluacion | undefined;

@@ -3,6 +3,7 @@ import Swal, { SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { Message } from 'primeng/api';
 import { environment } from '../../../environments/environment';
 import { SortEventOrder } from '../interfaces/tableHead.interfaces';
+import { detectIncognito } from "detectincognitojs";
 
 @Injectable({
     providedIn: 'root'
@@ -124,6 +125,42 @@ export class Helpers {
           result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
         return (event.order * result);
       })
+    }
+
+    /*
+     * Método para saber si la aplicación se encuentra en modo incognito
+     */
+    detectPrivateMode(): Promise<boolean> {
+      let resultValue = detectIncognito().then((res) => {
+        return res.isPrivate;
+      });
+
+      return resultValue;
+    }
+
+    /*
+     * Método para obtener un hash para el TabId
+     */
+    getTabId(): string {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+
+    /*
+     * Método para saber si la aplicación tiene varias pestañas y asignar un hash o TabId
+     */
+    detectMultiTabs(): boolean {
+      if (sessionStorage['TabId'] == null) sessionStorage['TabId'] = this.getTabId();
+
+      if (localStorage['TabId'] == null) localStorage['TabId'] = sessionStorage['TabId'];
+
+      if (localStorage['TabId'] != sessionStorage['TabId']) return true;
+
+      return false;
     }
 
 }
