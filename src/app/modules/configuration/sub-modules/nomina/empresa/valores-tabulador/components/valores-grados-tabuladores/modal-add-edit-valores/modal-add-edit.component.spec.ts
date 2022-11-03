@@ -80,6 +80,22 @@ describe('ModalAddEditComponent', () => {
       }
     ];
 
+    app.valorGradoSelect = {
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
+        },
+    }
+
     app.gradoTabuladorSelect = {
       "descrip": "hola",
       "codOficial": "12",
@@ -146,6 +162,90 @@ describe('ModalAddEditComponent', () => {
     app.closeModal()
     // Reset hecho por la funcion
     expect(app.gradoTabuladorSelect).toEqual(undefined);
+  });
+
+  it('Probando el Guardado de Datos (Caso Verdadero)', () => {
+    const fixture = TestBed.createComponent(ModalAddEditValoresComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    // Variables de los inputs
+    app.isEdit = false;
+    app.valoresGrados = [
+      {
+        'idEmpresa':  '93',
+        'tabuCodtab': '1',
+        'fecefe':     '18-01-2001',
+        'pastab':     12,
+        'valtab':     1,
+        'eoGradoTb':  {
+          'eoGradoTbId': {
+            'idEmpresa': 'string',
+            'id':        'string',
+          },
+          'descrip':     'string',
+          'codOficial':  'string',
+        },
+      }
+    ];
+    
+    // datos del formulario
+    const data = {
+      'idEmpresa':  '93',
+      'tabuCodtab': '1',
+      'fecefe':     new Date(),
+      'pastab':     12,
+      'valtab':     1,
+      'eoGradoTb':  {
+        'eoGradoTbId': {
+          'idEmpresa': 'string',
+          'id':        'string',
+        },
+      },
+    }
+
+    app.empresaRow = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "1",
+      "capitalPag": 12,
+      "capitalSub": 12,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "null",
+      "paginaWeb": "null",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "null",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+          {
+              "rel": "datosadicionales",
+              "href": "/configuraciones/nominas/empresas/93/datosadicionales"
+          }
+      ]
+    }
+
+    const resp = {"message":"Forma de pago creado."}
+
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.setValue(data)
+    expect(app.form.valid).toEqual(true)
+    app.pastabMsgError
+    app.valtabMsgError
+    
+    // Llamamos a la funcion de Guardado
+    app.save()
   });
 
   it('Probando el Guardado de Datos (Caso Verdadero)', () => {
