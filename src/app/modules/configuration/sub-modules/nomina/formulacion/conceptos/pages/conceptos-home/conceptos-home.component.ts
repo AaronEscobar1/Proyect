@@ -8,6 +8,9 @@ import { SelectRowService } from 'src/app/shared/services/select-row/select-row.
 import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Promedio, TipoSalario } from '../../interfaces/tablas-tipos-concepto.interfaces';
+import { spinnerLight } from 'src/app/shared/components/spinner/spinner.interfaces';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RelacionLaboral } from '../../interfaces/relacion-laboral.interfaces';
 
 @Component({
   selector: 'app-conceptos-home',
@@ -34,6 +37,9 @@ export class ConceptosHomeComponent implements OnInit {
   // Objeto de promedios
   promedios: Promedio[] = [];
 
+  // Objeto de relación laboral
+  relacionesLaborales: RelacionLaboral[] = [];
+
   // Emisión de evento de padre a hijo (cargar data de conceptos)
   @ViewChild(TipoNominaComponent) tipoNominaComponent!: TipoNominaComponent;
 
@@ -42,12 +48,13 @@ export class ConceptosHomeComponent implements OnInit {
 
   constructor(private tablasTipoConceptoService: TablasTipoConceptoService,
               private messageService: MessageService,
+              private spinner: NgxSpinnerService,
               private selectRowServices: SelectRowService) { }
 
   ngOnInit(): void {
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable empresa
     this.subscriber = this.selectRowServices.selectRow$.subscribe( (row: Company) => {
-      this.empresaRow = row 
+      this.empresaRow = row;
       this.loadTiposSalarios(this.empresaRow);
     });
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable tipo nomina
@@ -56,7 +63,7 @@ export class ConceptosHomeComponent implements OnInit {
 
   /**
    * Cargar tipos de salarios por empresa
-   * @param idEmpresa: string
+   * @param empresa: Company
    */
   loadTiposSalarios(empresa: Company): void {
     if ( !empresa ) return;
@@ -64,9 +71,33 @@ export class ConceptosHomeComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.tiposSalarios = res;
+          /**
+           * Cargar relaciones relaborales 
+           */
+          this.loadRelacionesLaborales(empresa);
         },
         error: (err) => {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener los tipos de salarios, error conexión con el servidor.', life: 3000});
+        }
+      });
+  }
+
+  /**
+   * Cargar relaciones relaborales por empresa
+   * @param empresa: Company
+   */
+  loadRelacionesLaborales(empresa: Company): void { 
+    if ( !empresa ) return;
+    this.spinner.show(undefined, spinnerLight);
+    this.tablasTipoConceptoService.getAllRelacionesLaboralesByEmpresa(empresa.id)
+      .subscribe({
+        next: (res) => {
+          this.relacionesLaborales = res;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener las relaciones laborales, error conexión con el servidor.', life: 3000});
         }
       });
   }

@@ -8,6 +8,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TablasTipoConceptoService } from '../../services/tablas-tipo-concepto.service';
 import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario, PagoInteres } from '../../interfaces/tablas-tipos-concepto.interfaces';
+import { RelacionLaboral } from '../../interfaces/relacion-laboral.interfaces';
 
 @Component({
   selector: 'app-conceptos',
@@ -36,6 +37,9 @@ export class ConceptosComponent implements OnInit {
 
   // Objeto de promedios
   @Input() promedios: Promedio[] = [];
+
+  // Objeto de relación laboral
+  @Input() relacionesLaborales: RelacionLaboral[] = [];
 
   // Emisión de evento (cargar data de conceptos)
   @Output() onRefresh = new EventEmitter();

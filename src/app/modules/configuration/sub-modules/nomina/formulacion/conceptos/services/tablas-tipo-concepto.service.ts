@@ -98,4 +98,9 @@ export class TablasTipoConceptoService {
     return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/promedios/empresas/${idEmpresa}/nominas/${idNomina}`));
   }
 
+  /** Relaciones laborales */
+  getAllRelacionesLaboralesByEmpresa(idEmpresa: string): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`/configuraciones/talentos/empresas/${idEmpresa}/relacioneslaborales`));
+  }
+
 }

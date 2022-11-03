@@ -93,7 +93,7 @@
                                                pKeyFilter="num"
                                                formControlName="id"/>
                                     </div>
-                                    <span class="form-text text-danger text-center"
+                                    <span class="col-offset-4 col-8 md:col-offset-4 md:col-8 lg:col-offset-4 lg:col-8 form-text text-danger"
                                           *ngIf="campoInvalid('id')">
                                         {{ idMsgError }}
                                     </span>
@@ -167,7 +167,7 @@
                                                 <div class="field-radiobutton col-12 pb-3">
                                                     <p-radioButton  inputId="asignacion" 
                                                                     name="functo" 
-                                                                    value="0" 
+                                                                    value="1" 
                                                                     formControlName="functo">
                                                     </p-radioButton>
                                                     <label for="asignacion">Asignación</label>
@@ -175,7 +175,7 @@
                                                 <div class="field-radiobutton col-12 pb-3">
                                                     <p-radioButton  inputId="deduccion" 
                                                                     name="functo" 
-                                                                    value="1" 
+                                                                    value="2" 
                                                                     formControlName="functo">
                                                     </p-radioButton>
                                                     <label for="deduccion">Deducción</label>
@@ -183,7 +183,7 @@
                                                 <div class="field-radiobutton col-12 pb-3">
                                                     <p-radioButton  inputId="reserva" 
                                                                     name="functo" 
-                                                                    value="2" 
+                                                                    value="3" 
                                                                     formControlName="functo">
                                                     </p-radioButton>
                                                     <label for="reserva">Reserva</label>
@@ -222,6 +222,7 @@
                                                                 appendTo="body"
                                                                 optionLabel="descripcion"
                                                                 optionValue="tipfis"
+                                                                [showClear]="true"
                                                                 formControlName="tipfis"
                                                                 placeholder="Seleccione el fiscal">
                                                     </p-dropdown>
@@ -236,6 +237,7 @@
                                                                 appendTo="body"
                                                                 optionLabel="descripcion"
                                                                 optionValue="rutcal"
+                                                                [showClear]="true"
                                                                 formControlName="rutcal"
                                                                 placeholder="Seleccione el rutcal">
                                                     </p-dropdown>
@@ -455,6 +457,7 @@
                                                                 optionLabel="descto"
                                                                 optionValue="id"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
                                                                 formControlName="ctoafe"
                                                                 placeholder="Seleccione un concepto">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -476,16 +479,16 @@
                                         <div class="col-12 md:col-5">
                                             
                                             <div class="formgrid grid">
-                                                <label for="faccto" class="col-4 md:col-4 lg:col-3 text-right mt-2">Factor:</label>
+                                                <label for="facafe" class="col-4 md:col-4 lg:col-3 text-right mt-2">Factor:</label>
                                                 <div class="col-8 md:col-8 lg:col-7">
                                                     <input type="text"
-                                                           id="faccto"
+                                                           id="facafe"
                                                            pInputText
                                                            pKeyFilter="num"
-                                                           formControlName="faccto"
+                                                           formControlName="facafe"
                                                            class="p-inputtext-sm"/>
                                                     <span class="form-text text-danger text-center"
-                                                          *ngIf="campoInvalid('faccto')">
+                                                          *ngIf="campoInvalid('facafe')">
                                                         El factor es de longitud de 3 dígitos enteros y 9 decimales, formato numérico.
                                                     </span>
                                                 </div>
@@ -506,9 +509,9 @@
 
                                 <label for="desfac">Descripción: </label>
                                 <textarea id="desfac" 
-                                            pInputTextarea
-                                            formControlName="desfac"
-                                            rows="2">
+                                          pInputTextarea
+                                          formControlName="desfac"
+                                          rows="2">
                                 </textarea>
                                 <span class="form-text text-danger text-center"
                                       *ngIf="campoInvalid('desfac')">
@@ -572,15 +575,16 @@
 
                                         <label for="promCodpro" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
                                         <div class="col-8 md:col-9 lg:col-10">
-                                            <p-dropdown [options]="promedios" 
+                                            <p-dropdown [options]="promediosPrueba" 
                                                         inputId="promCodpro"
                                                         appendTo="body"
                                                         [filter]="true"
                                                         filterBy="codpro"
                                                         optionLabel="despro"
                                                         optionValue="codpro"
-                                                        formControlName="promCodpro"
                                                         filterPlaceholder="Buscar por código..."
+                                                        [showClear]="true"
+                                                        formControlName="promCodpro"
                                                         placeholder="Seleccione un promedio">
                                                 <ng-template let-option pTemplate="item" style="height: 50px;">
                                                     <table class="w-full">
@@ -651,15 +655,16 @@
 
                                         <label for="promProsus" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
                                         <div class="col-8 md:col-9 lg:col-10">
-                                            <p-dropdown [options]="promedios" 
+                                            <p-dropdown [options]="promediosPrueba" 
                                                         inputId="promProsus"
                                                         appendTo="body"
                                                         [filter]="true"
                                                         filterBy="codpro"
                                                         optionLabel="despro"
                                                         optionValue="codpro"
-                                                        formControlName="promProsus"
                                                         filterPlaceholder="Buscar por código..."
+                                                        [showClear]="true"
+                                                        formControlName="promProsus"
                                                         placeholder="Seleccione un promedio">
                                                 <ng-template let-option pTemplate="item" style="height: 50px;">
                                                     <table class="w-full">
@@ -820,15 +825,16 @@
     
                                         <label for="promProval" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
                                         <div class="col-8 md:col-9 lg:col-10">
-                                            <p-dropdown [options]="promedios" 
+                                            <p-dropdown [options]="promediosPrueba" 
                                                         inputId="promProval"
                                                         appendTo="body"
                                                         [filter]="true"
                                                         filterBy="codpro"
                                                         optionLabel="despro"
                                                         optionValue="codpro"
-                                                        formControlName="promProval"
                                                         filterPlaceholder="Buscar por código..."
+                                                        [showClear]="true"
+                                                        formControlName="promProval"
                                                         placeholder="Seleccione un promedio">
                                                 <ng-template let-option pTemplate="item" style="height: 50px;">
                                                     <table class="w-full">
@@ -1014,11 +1020,11 @@
 
                             <div class="col-12">
                                 <div class="formgrid grid mb-3">
-                                    <label for="faccto1" class="col-4 md:col-2 lg:col-1 text-right mt-2">Factor:</label>
+                                    <label for="faccto" class="col-4 md:col-2 lg:col-1 text-right mt-2">Factor:</label>
                                     <div class="col-8 md:col-4 lg:col-2">
                                         <input type="text"
                                                pInputText
-                                               id="faccto1"
+                                               id="faccto"
                                                class="p-inputtext-sm"
                                                pKeyFilter="num"
                                                formControlName="faccto"/>
@@ -1074,15 +1080,16 @@
     
                                         <label for="promProfac" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
                                         <div class="col-8 md:col-9 lg:col-10">
-                                            <p-dropdown [options]="promedios" 
+                                            <p-dropdown [options]="promediosPrueba" 
                                                         inputId="promProfac"
                                                         appendTo="body"
                                                         [filter]="true"
                                                         filterBy="codpro"
                                                         optionLabel="despro"
                                                         optionValue="codpro"
-                                                        formControlName="promProfac"
                                                         filterPlaceholder="Buscar por código..."
+                                                        [showClear]="true"
+                                                        formControlName="promProfac"
                                                         placeholder="Seleccione un promedio">
                                                 <ng-template let-option pTemplate="item" style="height: 50px;">
                                                     <table class="w-full">
@@ -1308,15 +1315,16 @@
                                 <div class="formgrid grid mb-3">
                                     <label for="promProcan" class="col-4 md:col-4 lg:col-3 text-right mt-2">Promedio:</label>
                                     <div class="col-8 md:col-8 lg:col-9">
-                                        <p-dropdown [options]="promedios" 
+                                        <p-dropdown [options]="promediosPrueba" 
                                                     inputId="promProcan"
                                                     appendTo="body"
                                                     [filter]="true"
                                                     filterBy="codpro"
                                                     optionLabel="despro"
                                                     optionValue="codpro"
-                                                    formControlName="promProcan"
                                                     filterPlaceholder="Buscar por código..."
+                                                    [showClear]="true"
+                                                    formControlName="promProcan"
                                                     placeholder="Seleccione un promedio">
                                             <ng-template let-option pTemplate="item" style="height: 50px;">
                                                 <table class="w-full">
@@ -1377,15 +1385,16 @@
     
                                         <label for="promProca1" class="col-4 md:col-3 lg:col-2 mt-2">Promedio:</label>
                                         <div class="col-8 md:col-9 lg:col-10">
-                                            <p-dropdown [options]="promedios" 
+                                            <p-dropdown [options]="promediosPrueba" 
                                                         inputId="promProca1"
                                                         appendTo="body"
                                                         [filter]="true"
                                                         filterBy="codpro"
                                                         optionLabel="despro"
                                                         optionValue="codpro"
-                                                        formControlName="promProca1"
                                                         filterPlaceholder="Buscar por código..."
+                                                        [showClear]="true"
+                                                        formControlName="promProca1"
                                                         placeholder="Seleccione un promedio">
                                                 <ng-template let-option pTemplate="item" style="height: 50px;">
                                                     <table class="w-full">
@@ -1693,15 +1702,16 @@
 
                                                 <div class="field col-12">
                                                     <label for="promProli1">Promedio:</label>
-                                                    <p-dropdown [options]="promedios" 
+                                                    <p-dropdown [options]="promediosPrueba" 
                                                                 inputId="promProli1"
                                                                 appendTo="body"
                                                                 [filter]="true"
                                                                 filterBy="codpro"
                                                                 optionLabel="despro"
                                                                 optionValue="codpro"
-                                                                formControlName="promProli1"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
+                                                                formControlName="promProli1"
                                                                 placeholder="Seleccione un promedio">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
                                                             <table class="w-full">
@@ -1782,15 +1792,16 @@
 
                                                 <div class="field col-12">
                                                     <label for="promProlim">Promedio:</label>
-                                                    <p-dropdown [options]="promedios" 
+                                                    <p-dropdown [options]="promediosPrueba" 
                                                                 inputId="promProlim"
                                                                 appendTo="body"
                                                                 [filter]="true"
                                                                 filterBy="codpro"
                                                                 optionLabel="despro"
                                                                 optionValue="codpro"
-                                                                formControlName="promProlim"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
+                                                                formControlName="promProlim"
                                                                 placeholder="Seleccione un promedio">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
                                                             <table class="w-full">
@@ -2071,8 +2082,9 @@
                                                         appendTo="body"
                                                         optionLabel="descripcion"
                                                         optionValue="tipfea"
-                                                        formControlName="tipfea"
                                                         (onHide)="fechaAniversario()"
+                                                        [showClear]="true"
+                                                        formControlName="tipfea"
                                                         placeholder="Seleccione la fecha">
                                             </p-dropdown>
                                         </div>
@@ -2292,6 +2304,7 @@
                                             optionLabel="descto"
                                             optionValue="id"
                                             filterPlaceholder="Buscar por código..."
+                                            [showClear]="true"
                                             formControlName="ctopro"
                                             placeholder="Seleccione una provisión">
                                     <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -2339,6 +2352,7 @@
                                                                 optionLabel="descto"
                                                                 optionValue="id"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
                                                                 formControlName="ctofij"
                                                                 placeholder="Seleccione un concepto">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -2394,6 +2408,7 @@
                                                                 optionLabel="descto"
                                                                 optionValue="id"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
                                                                 formControlName="ctoint"
                                                                 placeholder="Seleccione un concepto">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -2501,6 +2516,7 @@
                                                                 optionLabel="descto"
                                                                 optionValue="id"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
                                                                 formControlName="ctoaho"
                                                                 placeholder="Seleccione un concepto">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -2568,6 +2584,7 @@
                                                                 optionLabel="descto"
                                                                 optionValue="id"
                                                                 filterPlaceholder="Buscar por código..."
+                                                                [showClear]="true"
                                                                 formControlName="ctosup"
                                                                 placeholder="Seleccione un concepto">
                                                         <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -2639,6 +2656,7 @@
                                                         optionLabel="descto"
                                                         optionValue="id"
                                                         filterPlaceholder="Buscar por código..."
+                                                        [showClear]="true"
                                                         formControlName="ctoIntpre"
                                                         placeholder="Seleccione un concepto">
                                                 <ng-template let-option pTemplate="item" style="height: 50px;">
@@ -2755,15 +2773,28 @@
                                     <div class="formgrid grid">
 
                                         <div class="field col-12">
-                                            <label for="ctoIntpre">Beneficiario:</label>
-                                            <p-dropdown [options]="conceptos" 
-                                                        inputId="ctoIntpre"
+                                            <label for="codben">Beneficiario:</label>
+                                            <p-dropdown [options]="relacionesLaborales"
+                                                        inputId="codben"
                                                         appendTo="body"
-                                                        optionLabel="descto"
-                                                        optionValue="id"
-                                                        filterPlaceholder="Buscar por código..."
-                                                        formControlName="ctoIntpre"
+                                                        [filter]="true"
+                                                        filterBy="ficha"
+                                                        optionLabel="ficha"
+                                                        optionValue="ficha"
+                                                        filterPlaceholder="Buscar por ficha..."
+                                                        [showClear]="true"
+                                                        formControlName="codben"
                                                         placeholder="Seleccione un beneficiario">
+                                                <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                    <table class="w-full">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="width: 25%;">{{ option.ficha }}</td>
+                                                                <td style="width: 75%;">{{ option.persona.nombre1 }} {{ option.persona.apellido1 }} </td>
+                                                            </tr>
+                                                        </tbody>  
+                                                    </table> 
+                                                </ng-template>
                                             </p-dropdown>
                                         </div>
                                         

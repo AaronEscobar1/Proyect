@@ -33,15 +33,14 @@
                 <!--/*****************************
                 /*          Conceptos            *
                 /********************************* -->
-                <!--  TODO: Agregar al tabPanel cuando se termine el desarrollo
-                    [disabled]="empresaRow == null || nominaRow == null" -->
-                <p-tabPanel header="Conceptos">
+                <p-tabPanel header="Conceptos" [disabled]="empresaRow == null || nominaRow == null">
 
                     <app-conceptos [empresaRow]="empresaRow"
                                    [nominaRow]="nominaRow"
                                    [conceptos]="conceptos"
                                    [conceptosFilters]="conceptosFilters"
                                    [tiposSalarios]="tiposSalarios"
+                                   [relacionesLaborales]="relacionesLaborales"
                                    [promedios]="promedios"
                                    (onRefresh)="refresh()">
                     </app-conceptos>

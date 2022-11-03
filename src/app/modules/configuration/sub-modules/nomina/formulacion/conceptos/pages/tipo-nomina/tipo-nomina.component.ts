@@ -44,13 +44,9 @@ export class TipoNominaComponent implements OnInit {
               private selectRowServices: SelectRowService) { }
 
   ngOnInit(): void {
-    // TODO: Quitar cuando se termine el desarrollo
-    this.loadConceptos();
     // Se suscribe a los cambios que ocurran al cambiar de row en el datatable tipo nomina
     this.subscriber = this.selectRowServices.selectRowAlterno$.subscribe( (row: TipoNomina) => {
       this.tipoNominaRow = row;
-      // TODO: Quitar esta condicional cuando se termine el desarrollo
-      if (!row) return;
       this.loadConceptos();
     });
   }
@@ -89,14 +85,11 @@ export class TipoNominaComponent implements OnInit {
    * Obtener los conceptos relacionadas con una empresa y un tipo de nomina
    */
   loadConceptos(isRefresh: boolean = false): void {
-    // TODO: Descomentar cuando se termine el desarrollo
-    // if ( !this.tipoNominaRow ) {
-    //   return;
-    // }
+    if ( !this.tipoNominaRow ) {
+      return;
+    }
     this.spinner.show(undefined, spinnerLight);
-    // TODO: Reemplazar linea 88 por la 87 cuando se termine el desarrollo
-    // this.conceptosService.getAllConceptosByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
-    this.conceptosService.getAllConceptosByEmpresaNomina("93", "0001")
+    this.conceptosService.getAllConceptosByEmpresaNomina(this.empresaRow.id, this.tipoNominaRow.tipnom)
       .subscribe({
         next: (res: Concepto[]) => {
           this.onGetDataConceptos.emit(res);

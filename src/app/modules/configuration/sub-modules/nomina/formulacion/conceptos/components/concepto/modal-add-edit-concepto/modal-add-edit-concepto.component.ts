@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, Promedio, DiaSemana, FechaAniversario, PagoInteres } from '../../../interfaces/tablas-tipos-concepto.interfaces';
 import { FORM_INIT_CONCEPTO } from './formInit';
 import { fieldsNoNullsWithValueCero, transformObjectToCheck, trasnformCheckboxTrueOrFalseToString } from './validaciones-concepto';
+import { RelacionLaboral } from '../../../interfaces/relacion-laboral.interfaces';
 
 @Component({
   selector: 'app-modal-add-edit-concepto',
@@ -65,6 +66,8 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   // Objeto de promedios
   @Input() promedios: Promedio[] = [];
+  // TODO: Colocar el tipo de datos cuando el endpoint funcione correctamente
+  promediosPrueba: any[] = [];
 
   // Objeto de dias semanas
   @Input() diasSemanas: DiaSemana[] = [];
@@ -74,6 +77,9 @@ export class ModalAddEditConceptoComponent implements OnInit {
 
   // Objeto de Indicadores Pagos de Intereses
   @Input() indicadoresPagos: PagoInteres[] = [];
+
+  // Objeto de relación laboral
+  @Input() relacionesLaborales: RelacionLaboral[] = [];
 
   // Formulario reactivo
   form!: FormGroup;
@@ -108,7 +114,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
         topmon:    [  ],
         sindec:    [  , [ Validators.required ]],
         ctoafe:    [  ],
-        faccto:    [  , [ this.validateFactor.bind(this)]],
+        facafe:    [  , [ this.validateFactor.bind(this)]],
         desfac:    [  , [ Validators.maxLength(256)]],
         inactivo:  [  ],
       /** Salario */
@@ -131,6 +137,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
         valmes:     [ ],
         topval:     [ ],
       /** Factor */
+        faccto:    [  , [ this.validateFactor.bind(this)]],
         suefac:     [ , [ Validators.required ]],
         promProfac: [ ],
         suecaf:     [ ],
@@ -204,6 +211,11 @@ export class ModalAddEditConceptoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // TODO: Quitar data cableada cuando el endpoint promedio funcione correctamente
+    this.promediosPrueba = [
+      { codpro: '3030', despro: 'SUSPENDE CTO 3030 EN TRIMESTRE' },
+      { codpro: '3040',  despro: 'PROV. GARANTIA ABONO PREST.'  }
+    ]
   }
 
   ngOnChanges() {
@@ -224,8 +236,6 @@ export class ModalAddEditConceptoComponent implements OnInit {
     this.conceptoSelect = transformObjectToCheck(this.conceptoSelect);
     // Seteamos los valores del row seleccionado al formulario
     this.form.reset(this.conceptoSelect);
-    // TODO: Quitar console log
-    console.log(this.conceptoSelect);
     // Si el campo tipo en pestaña Límite es igual a 1 o 2, se habilitan los campos para editar
     if ( this.conceptoSelect.conlim == '1' || this.conceptoSelect.conlim == '2' ) {
       this.activeFieldCantidadSueldo();
@@ -247,7 +257,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
   save(): void {
     if ( this.form.invalid ) {
       // Validar errores y redirigir a pestaña basico
-      if ( this.form.controls['id'].errors || this.form.controls['descto'].errors || this.form.controls['prieje'].errors || this.form.controls['clausu'].errors || this.form.controls['tipcal'].errors || this.form.controls['sindec'].errors || this.form.controls['faccto'].errors || this.form.controls['desfac'].errors ) {
+      if ( this.form.controls['id'].errors || this.form.controls['descto'].errors || this.form.controls['prieje'].errors || this.form.controls['clausu'].errors || this.form.controls['tipcal'].errors || this.form.controls['sindec'].errors || this.form.controls['facafe'].errors || this.form.controls['desfac'].errors ) {
         this.tabIndex = 0;
       } 
       // Validar errores y redirigir a pestaña Salario
@@ -297,32 +307,30 @@ export class ModalAddEditConceptoComponent implements OnInit {
       return;
     }
     // Validar que cantidad desde no sea mayor que cantidad hasta
-    if ( data.canlid > data.canlih ) {
+    if ( Number(data.canlid) > Number(data.canlih) ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'La cantidad desde no puede ser mayor que cantidad hasta.', life: 5000});
       this.tabIndex = 5;
       return;
     }
     // Validar que el promedio de cantidad sea obligatorio si se llenan los campos desde y hasta 
-    if ( data.canlid && data.canlih ) {
+    if ( (Number(data.canlid) != 0 || Number(data.canlih) != 0) && data.promProli1 == null ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'El promedio de cantidad es obligatorio si se llenan los campos desde y hasta.', life: 5000});
       this.tabIndex = 5;
       return;
     }
     // Validar que sueldo desde no sea mayor que sueldo hasta
-    if ( data.liminf > data.limsup ) {
+    if ( Number(data.liminf) > Number(data.limsup) ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'El sueldo desde no puede ser mayor que sueldo hasta.', life: 5000});
       this.tabIndex = 5;
       return;
     }
     // Validar que el promedio de sueldo sea obligatorio si se llenan los campos desde y hasta 
-    if ( data.liminf && data.limsup ) {
+    if ( (Number(data.liminf) != 0 || Number(data.limsup) != 0) && data.promProlim == null ) {
       this.messageService.add({severity: 'error', summary: 'Error', detail: 'El promedio de sueldo es obligatorio si se llenan los campos desde y hasta.', life: 5000});
       this.tabIndex = 5;
       return;
     }
 
-    console.log('SAVE >>> ', data);
-    return;
     this.spinner.show();
 
     // Editar
@@ -339,8 +347,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
           this.onLoadData.emit();
         },
         error: (err) => {
+          if (err.error.message.includes('Error en solicitud.') ) {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: err.error.detail, life: 3000});
+            this.spinner.hide();
+            return false;
+          }
           this.spinner.hide();
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo actualizar el concepto.', life: 3000});
+          return false;
         }
       });
       return;
@@ -361,8 +375,14 @@ export class ModalAddEditConceptoComponent implements OnInit {
           this.onLoadData.emit();
         },
         error: (err) => {
+          if (err.error.message.includes('Error en solicitud.') ) {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: err.error.detail, life: 3000});
+            this.spinner.hide();
+            return false;
+          }
           this.spinner.hide();
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo crear el concepto.', life: 3000});
+          return false;
         }
       });
   }
@@ -470,7 +490,7 @@ export class ModalAddEditConceptoComponent implements OnInit {
     this.form.controls['promProli1'].disable();       this.form.controls['promProli1'].reset();  
     this.form.controls['liminf'].disable();           this.form.controls['liminf'].reset(0);
     this.form.controls['limsup'].disable();           this.form.controls['limsup'].reset(0);
-    this.form.controls['limsue'].disable();           this.form.controls['limsue'].reset();
+    this.form.controls['limsue'].disable();           this.form.controls['limsue'].reset('0');
     this.form.controls['promProlim'].disable();       this.form.controls['promProlim'].reset();
     this.form.controls['suelim'].disable();           this.form.controls['suelim'].reset(false);
     this.form.controls['salmil'].disable();           this.form.controls['salmil'].reset(false);

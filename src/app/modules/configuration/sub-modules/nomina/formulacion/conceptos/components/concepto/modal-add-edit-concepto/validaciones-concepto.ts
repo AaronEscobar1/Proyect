@@ -130,23 +130,29 @@ export const trasnformCheckboxTrueOrFalseToString = (data: Concepto): Concepto =
 export const fieldsNoNullsWithValueCero = (data: Concepto): Concepto => {
 
   /** BASICO */
-    if ( data.prieje == null || data.prieje == '' ) data.prieje = 0; // Validar si el campo (prioridad) esta en null colocarle un 0
-    if ( data.faccto == null || data.faccto == '' ) data.faccto = 0; // Validar si el campo (factor) estan en null colocarle un 0
-  /** SALARIO */
-    if ( data.salmin == null ) data.salmin = 0;                      // Validar si el campo (minimo) estan en null colocarle un 0
-    if ( data.salmis == null ) data.salmis = 0;                      // Validar si el campo (minimo) estan en null colocarle un 0
-  /** VALOR */
-    if ( data.valcto == null || data.valcto == '' ) data.valcto = 0; // Validar si el campo (valor) esta en null colocarle un 0
-  /** CANTIDAD */
-    if ( data.cancto == null || data.cancto == '' ) data.cancto = 0; // Validar si el campo (cantidad) esta en null colocarle un 0
+    if ( data.prieje == null || data.prieje == '' ) data.prieje = 0;   // Validar si el campo (prioridad) esta en null colocarle un 0
+    if ( data.facafe == null || data.facafe == '' ) data.facafe = 0;   // Validar si el campo (factor) esta en null colocarle un 0
+    /** SALARIO */
+    if ( data.salmin == null ) data.salmin = 0;                        // Validar si el campo (minimo) estan en null colocarle un 0
+    if ( data.salmis == null ) data.salmis = 0;                        // Validar si el campo (minimo) estan en null colocarle un 0
+    /** VALOR */
+    if ( data.valcto == null || data.valcto == '' ) data.valcto = 0;   // Validar si el campo (valor) esta en null colocarle un 0
+    /** FACTOR */
+    if ( data.faccto == null || data.faccto == '' ) data.faccto = 0;   // Validar si el campo (factor) estan en null colocarle un 0
+    /** CANTIDAD */
+    if ( data.cancto == null || data.cancto == '' ) data.cancto = 0;   // Validar si el campo (cantidad) esta en null colocarle un 0
   /** LIMITE */
-    if ( data.canlid == null || data.canlid == '' ) data.canlid = 0; // Validar si el campo (cantidad desde) esta en null colocarle un 0
-    if ( data.canlih == null || data.canlih == '' ) data.canlih = 0; // Validar si el campo (cantidad hasta) esta en null colocarle un 0
-    if ( data.liminf == null || data.liminf == '' ) data.liminf = 0; // Validar si el campo (sueldo desde) esta en null colocarle un 0
-    if ( data.limsup == null || data.limsup == '' ) data.limsup = 0; // Validar si el campo (sueldo hasta) esta en null colocarle un 0
+    if ( data.canlid == null || data.canlid == '' ) data.canlid = 0;   // Validar si el campo (cantidad desde) esta en null colocarle un 0
+    if ( data.canlih == null || data.canlih == '' ) data.canlih = 0;   // Validar si el campo (cantidad hasta) esta en null colocarle un 0
+    if ( data.liminf == null || data.liminf == '' ) data.liminf = 0;   // Validar si el campo (sueldo desde) esta en null colocarle un 0
+    if ( data.limsup == null || data.limsup == '' ) data.limsup = 0;   // Validar si el campo (sueldo hasta) esta en null colocarle un 0
+    if ( data.limsue == null || data.limsue == '' ) data.limsue = '0'; // Validar que el campo no quede null
   /** MISCELANEA */
-    if ( data.facfij == null || data.facfij == '' ) data.facfij = 0; // Validar si el campo (factor generar) esta en null colocarle un 0
-    if ( data.facaho == null || data.facaho == '' ) data.facaho = 0; // Validar si el campo (factor deposito) esta en null colocarle un 0
+    if ( data.facfij == null || data.facfij == '' ) data.facfij = 0;   // Validar si el campo (factor generar) esta en null colocarle un 0
+    if ( data.facaho == null || data.facaho == '' ) data.facaho = 0;   // Validar si el campo (factor deposito) esta en null colocarle un 0
+  /** CAMPOS SOBRANTES */
+    if ( data.difcon == null || data.difcon == '') data.difcon = '0';  // Colocar por defecto el valor 0
+    if ( data.discen == null || data.discen == '') data.discen = '0';  // Colocar por defecto el valor 0
 
   return data;
 }

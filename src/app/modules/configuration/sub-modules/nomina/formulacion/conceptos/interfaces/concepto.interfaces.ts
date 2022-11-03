@@ -40,8 +40,8 @@ export interface Concepto {
         sindec:     string;
         //*** Concepto al cual se le afecta el saldo
         ctoafe:     number | null;
-        //*** Factor de calculo
-        faccto:     number | string;
+        // Factor que indica en que propocion se afecta el saldo de otro concepto
+        facafe:     number | string;
         //*** Descripcion del concepto o expresion utilizada en el calculo del factor
         desfac:     string | null;
         //*** Indicar si el concepto esta activo (1=Si)
@@ -83,6 +83,8 @@ export interface Concepto {
         // Considerar valor tope (1=Si)
         topval:     string | boolean;
     /** FACTOR */
+        //*** Factor de calculo
+        faccto:     number | string;
         // Tipo de Sueldo para considerar el factor segun escala (0..6)
         suefac:     string;
         // Promedio, sueldo, para buscar el factor en escala de sueldo
@@ -220,17 +222,16 @@ export interface Concepto {
         difcon:     string;
         // Considerar en la Distribucion por Centro de Costo (1=Si)
         discen:     string;
-        // TODO: Falta ---> Distribucion contable por Tabla (0=No, 1=Departamento, 2=Cargo, 3=No contabilizar)
+        // Falta ---> Distribucion contable por Tabla (0=No, 1=Departamento, 2=Cargo, 3=No contabilizar)
+
         // Cuenta Contable
-        ctaco1:     null;
+        ctaco1:     string | null;
         // Posiciones relativas
-        posre1:     null;
+        posre1:     string | null;
         // Cuenta Contable (Contra Partida)
         ctaco2:     string | null;
         // Posiciones relativas para la cuenta contable (Contra Partida)
         posre2:     string | null;
-        // Factor que indica en que propocion se afecta el saldo de otro concepto
-        facafe:     number;
 }
 
 // Interfaces para actualizar registros

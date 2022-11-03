@@ -4,7 +4,7 @@
 export const FORM_INIT_CONCEPTO = { 
     /** Basico */
         prieje: 0, 
-        functo: '0', 
+        functo: '1', 
         mansal: '0', 
         graimp: '0', 
         noimpr: false, 
@@ -12,15 +12,18 @@ export const FORM_INIT_CONCEPTO = {
         incdet: false, 
         abopre: false, 
         montocero: false, 
-        topmon: false, 
-        faccto: '0', 
+        topmon: false,
+        facafe: 0,
         inactivo: false, 
     /** Salario */
+        tipsue: '0',
         salmin: 0,
+        sussue: '0',
         salmis: 0,
         topsue: false,
     /** Valor */
         valcto: 0,
+        sueval: '0',
         suecav: false,
         bussuv: false,
         salmiv: false,
@@ -28,6 +31,8 @@ export const FORM_INIT_CONCEPTO = {
         valmes: false,
         topval: false,
     /** Factor */
+        faccto: 0,
+        suefac: '0',
         suecaf: false,
         bussuf: false,
         salmif: false,
@@ -37,6 +42,7 @@ export const FORM_INIT_CONCEPTO = {
         topfac: false,
     /** Cantidad */
         cancto: 0,
+        suecan: '0',
         suecac: false,
         bussuc: false,
         salmic: false,
@@ -51,6 +57,7 @@ export const FORM_INIT_CONCEPTO = {
         canlih: 0,
         liminf: 0,
         limsup: 0,
+        limsue: '0',
         suelim: false,
         salmil: false,
     /** PROCESAR */
