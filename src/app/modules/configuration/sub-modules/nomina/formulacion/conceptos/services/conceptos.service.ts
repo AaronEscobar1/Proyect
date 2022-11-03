@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
-import { Concepto } from '../interfaces/concepto.interfaces'
+import { Concepto, ConceptoUpdate } from '../interfaces/concepto.interfaces'
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +34,11 @@ export class ConceptosService {
     return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/empresas/${idEmpresa}/nominas/${idNomina}/conceptos/${idConcepto}`));
   }
 
-  create(idEmpresa: string, idNomina: string, concepto: Concepto): Observable<any> {
-    return this.http.post(this.helpers.getBasicEndPoint(`${this.url}/empresas/${idEmpresa}/nominas/${idNomina}/conceptos/${concepto.id}`), concepto);
+  create(concepto: Concepto): Observable<any> {
+    return this.http.post(this.helpers.getBasicEndPoint(`${this.url}/empresas/${concepto.idEmpresa}/nominas/${concepto.idNomina}/conceptos/${concepto.id}`), concepto);
   }
 
-  update(concepto: Concepto, conceptoUpdate: Concepto): Observable<any> {
+  update(concepto: Concepto, conceptoUpdate: ConceptoUpdate): Observable<any> {
     return this.http.put(this.helpers.getBasicEndPoint(`${this.url}/empresas/${concepto.idEmpresa}/nominas/${concepto.idNomina}/conceptos/${concepto.id}`), conceptoUpdate);
   }
 
