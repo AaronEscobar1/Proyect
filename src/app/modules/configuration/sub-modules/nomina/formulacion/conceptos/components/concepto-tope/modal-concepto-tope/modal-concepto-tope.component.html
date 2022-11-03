@@ -1,0 +1,38 @@
+<!-- Modal agregar -->
+<p-dialog [(visible)]="modalConceptoTope" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '85vw', '640px': '90vw'}" [style]="{width: '85vw'}" [transitionOptions]="'400ms'"
+          [draggable]="false" [resizable]="false">
+
+            <ng-template pTemplate="content">
+
+                <div class="flex justify-content-between align-items-center my-4">
+                    <h5>{{titleModal}}</h5>
+                    <div class="p-dialog-header-icons">
+                        <button pButton pRipple type="button" icon="pi pi-times"
+                                class="p-button-rounded p-button-secondary p-button-text"
+                                (click)="closeModal()">
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+                <div class="mt-2">
+                    <button pButton 
+                            pRipple 
+                            label="Cancelar"
+                            class="p-button-secondary my-1"
+                            (click)="closeModal()">
+                    </button>
+                    <button pButton 
+                            pRipple 
+                            type="submit" 
+                            label="Guardar" 
+                            icon="pi pi-save"
+                            class="btn-infocent my-1"
+                            (click)="save()">
+                    </button>
+                </div>
+            </ng-template>
+          
+</p-dialog>

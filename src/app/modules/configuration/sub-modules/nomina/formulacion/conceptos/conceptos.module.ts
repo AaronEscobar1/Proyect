@@ -13,6 +13,9 @@ import { ModalAddEditConceptoComponent } from './components/concepto/modal-add-e
 import { ModalPrintConceptoComponent } from './components/concepto/modal-print-concepto/modal-print-concepto.component';
 import { TipoNominaComponent } from './pages/tipo-nomina/tipo-nomina.component';
 
+// Components Concepto Tope
+import { ModalConceptoTopeComponent } from './components/concepto-tope/modal-concepto-tope/modal-concepto-tope.component';
+
 @NgModule({
   declarations: [
     ConceptosComponent,
@@ -20,7 +23,10 @@ import { TipoNominaComponent } from './pages/tipo-nomina/tipo-nomina.component';
     DataTableConceptoComponent,
     ModalAddEditConceptoComponent,
     ModalPrintConceptoComponent,
-    TipoNominaComponent
+    TipoNominaComponent,
+
+    // Components Tope
+    ModalConceptoTopeComponent
   ],
   imports: [
     SharedModule,

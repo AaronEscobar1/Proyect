@@ -87,6 +87,16 @@ export class ModalAddEditConceptoComponent implements OnInit {
   // Variable para mover pestaña de la vista por si existe un error
   tabIndex = 0;
   
+  /****************************************
+   *        MODALES ADICIONALES           *
+   ****************************************/
+  
+  // Variable para comprobar que se ha abierto una ventana modal adicional
+  isOpenModalAditional: boolean = false;
+
+  // Modal concepto tope
+  modalConceptoTope: boolean = false;
+
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
               private spinner: NgxSpinnerService,
@@ -605,6 +615,28 @@ export class ModalAddEditConceptoComponent implements OnInit {
   activeFieldSalarioAbono(): void {
     // Habilitar
     this.form.controls['calabo'].enable();
+  }
+
+  /**********************
+   *   CONCEPTOS TOPE   *
+   **********************/
+
+  /**
+   * Abrir modal Concepto - tope
+   */
+  openModalTope(): void {
+    // Variable para ocultar ventana modal de Concepto
+    this.modalConceptoTope = true;
+    this.isOpenModalAditional = true;
+  }
+
+  /**
+   * Cerrar modal Concepto - tope
+   */
+  closeModalTope(): void {
+    // Variable para mostrar ventana modal de Concepto
+    this.modalConceptoTope = false;
+    this.isOpenModalAditional = false;
   }
 
 }
