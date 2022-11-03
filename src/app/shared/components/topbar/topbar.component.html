@@ -1,6 +1,6 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo">
-        <img routerLink="/main" class="cursor-pointer" src="assets/logos/infocent_logo_fondo_oscuro.svg">
+        <img routerLink="/main" class="cursor-pointer" [lazyLoad]="'assets/logos/infocent_logo_fondo_oscuro.svg'">
     </a>
 
     <a class="p-link layout-menu-button layout-topbar-button" (click)="toggleMenu($event)">
