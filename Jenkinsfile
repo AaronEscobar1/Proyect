@@ -27,6 +27,7 @@ pipeline {
                 branch "develop"
             } 
             steps {
+                sh 'pm2 delete nomina-frontend'
                 sh 'pm2 start "npm run start:prod" --name nomina-frontend' 
             }
         }
