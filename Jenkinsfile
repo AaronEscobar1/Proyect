@@ -7,16 +7,25 @@ pipeline {
     }
     stages {
         stage('Build') { 
+            when {
+                branch "develop"
+            }
             steps {
                 sh 'npm install' 
             }
         }
-        stage('Test') { 
+        stage('Test') {
+            when {
+                branch "develop"
+            } 
             steps {
                 sh 'ng test' 
             }
         }
-        stage('Deploy') { 
+        stage('Deploy') {
+            when {
+                branch "develop"
+            } 
             steps {
                 sh 'pm2 start "npm run start:prod" --name nomina-frontend' 
             }
