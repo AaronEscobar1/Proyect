@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConceptosRoutingModule } from './conceptos-routing.module';
+import { SharedEmpresaModule } from '../../empresa/shared-empresa/shared-empresa.module';
 
 // Components Concepto
 import { ConceptosComponent } from './pages/conceptos/conceptos.component';
@@ -23,7 +24,8 @@ import { TipoNominaComponent } from './pages/tipo-nomina/tipo-nomina.component';
   ],
   imports: [
     SharedModule,
-    ConceptosRoutingModule
+    ConceptosRoutingModule,
+    SharedEmpresaModule
   ]
 })
 export class ConceptosModule { }
