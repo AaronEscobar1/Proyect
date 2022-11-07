@@ -1,6 +1,7 @@
 <!-- Modal agregar -->
 <p-dialog [(visible)]="createModal" [modal]="true" [showHeader]="false" [closable]="false" 
           class="p-fluid" [breakpoints]="{'960px': '85vw', '640px': '90vw'}" [style]="{width: '85vw'}"
+          [ngClass]="{'opacidadCero': isOpenModalAditional, 'opacidadOne': !isOpenModalAditional}"
           [draggable]="false" [resizable]="false">
 
           <ng-template pTemplate="content">
@@ -409,6 +410,7 @@
                                             label=""
                                             pTooltip="Información adicional Tope"
                                             icon="pi pi-external-link"
+                                            (click)="openModalTope(0)"
                                             class="p-button-raised p-button-secondary p-button-sm">
                                     </button>
                                 </div>
@@ -741,6 +743,7 @@
                                                         label=""
                                                         pTooltip="Información adicional Tope"
                                                         icon="pi pi-external-link"
+                                                        (click)="openModalTope(1)"
                                                         class="p-button-raised p-button-secondary p-button-sm">
                                                 </button>
                                             </div>
@@ -998,6 +1001,7 @@
                                                     label=""
                                                     pTooltip="Información adicional Tope"
                                                     icon="pi pi-external-link"
+                                                    (click)="openModalTope(2)"
                                                     class="p-button-raised p-button-secondary p-button-sm">
                                             </button>
                                         </div>
@@ -1273,6 +1277,7 @@
                                                     label=""
                                                     pTooltip="Información adicional Tope"
                                                     icon="pi pi-external-link"
+                                                    (click)="openModalTope(3)"
                                                     class="p-button-raised p-button-secondary p-button-sm">
                                             </button>
                                         </div>
@@ -1600,6 +1605,7 @@
                                                     label=""
                                                     pTooltip="Información adicional Tope"
                                                     icon="pi pi-external-link"
+                                                    (click)="openModalTope(4)"
                                                     class="p-button-raised p-button-secondary p-button-sm">
                                             </button>
                                         </div>
@@ -2868,3 +2874,25 @@
             </div>
         </ng-template>
 </p-dialog>
+
+
+<!--*****************************************************  
+    *              Modales Adicionales                  *
+    ***************************************************** -->
+
+<!-- Modal concepto tope -->
+<app-modal-concepto-tope
+    [empresaRow]="empresaRow"
+    [nominaRow]="nominaRow"
+    [conceptoSelect]="conceptoSelect"
+    [conceptoTope]="conceptoTope"
+    [hasDataConceptoTope]="hasDataConceptoTope"
+
+    [tiposSalarios]="tiposSalarios"
+    [promediosPrueba]="promediosPrueba"
+
+    [modalConceptoTope]="modalConceptoTope"
+    [titleModal]="'Concepto - Tope'"
+    (onCloseModalTope)="closeModalTope()"
+    (onLoadData)="loadConceptoTope()">
+</app-modal-concepto-tope>

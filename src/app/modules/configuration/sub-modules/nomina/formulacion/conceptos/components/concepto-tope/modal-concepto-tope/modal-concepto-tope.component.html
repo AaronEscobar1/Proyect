@@ -1,0 +1,424 @@
+<!-- Mensajes de alertas para usuarios -->
+<p-toast></p-toast>
+<p-confirmDialog ></p-confirmDialog>
+
+
+<!-- Modal agregar -->
+<p-dialog [(visible)]="modalConceptoTope" [modal]="true" [showHeader]="false" [closable]="false" 
+          class="p-fluid" [breakpoints]="{'960px': '85vw', '640px': '90vw'}" [style]="{width: '85vw'}"
+          [draggable]="false" [resizable]="false">
+
+            <ng-template pTemplate="content">
+
+                <div class="flex justify-content-between align-items-center my-4">
+                    <h5>{{titleModal}}</h5>
+                    <div class="p-dialog-header-icons">
+                        <button pButton pRipple type="button" icon="pi pi-times"
+                                class="p-button-rounded p-button-secondary p-button-text"
+                                (click)="closeModal()">
+                        </button>
+                    </div>
+                </div>
+        
+                <!-- Descripción de la Nómina -->
+                <div class="formgrid grid">
+                        
+                    <div class="field col-3 md:col-2 md:col-offset-1 text-right mt-2">
+                        <label for="id">Nómina:</label>
+                    </div>
+                    <div class="field col-3 md:col-2 lg:col-1">
+                        <input  type="text"
+                                id="id" 
+                                pInputText
+                                [value]="empresaRow ? empresaRow.id : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-3 md:col-2 lg:col-1">
+                        <input  type="text"
+                                id="tipnom" 
+                                pInputText
+                                [value]="nominaRow ? nominaRow.tipnom : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-9 col-offset-3 md:col-4 md:col-offset-0 lg:col-6">
+                        <input  type="text"
+                                id="desnom" 
+                                pInputText
+                                [value]="comboEmpresaNominaString"
+                                disabled/>
+                    </div>
+
+                </div>
+
+                <!-- Descripción del concepto -->
+                <div class="formgrid grid">
+                    
+                    <div class="field col-3 md:col-2 md:col-offset-1 text-right mt-2">
+                        <label for="id">Concepto:</label>
+                    </div>
+                    <div class="field col-9 md:col-2">
+                        <input  type="text"
+                                id="id" 
+                                pInputText
+                                [value]="conceptoSelect ? conceptoSelect.id : '' "
+                                disabled/>
+                    </div>
+
+                    <div class="field col-9 col-offset-3 md:col-6 md:col-offset-0">
+                        <input  type="text"
+                                id="descto" 
+                                pInputText
+                                [value]="conceptoSelect ? (conceptoSelect.descto | titlecase) : '' "
+                                disabled/>
+                    </div>
+
+                </div>
+
+                <form [formGroup]="form" autocomplete="off">
+
+                    <div class="formgrid grid mt-3">
+
+                        <div class="col-12 md:col-4 lg:col-3 mb-2">
+                            <p-panel header="Fijar por">
+
+                                <div class="formgrid grid mt-3">
+                                    <div class="field-radiobutton col-12 pb-3">
+                                        <p-radioButton  inputId="major" 
+                                                        name="tiptop" 
+                                                        value="1" 
+                                                        formControlName="tiptop">
+                                        </p-radioButton>
+                                        <label for="major">Mayor</label>
+                                    </div>
+                                    <div class="field-radiobutton col-12 pb-3">
+                                        <p-radioButton  inputId="difcia" 
+                                                        name="tiptop" 
+                                                        value="2" 
+                                                        formControlName="tiptop">
+                                        </p-radioButton>
+                                        <label for="difcia">Diferencia</label>
+                                    </div>
+                                    <div class="field-radiobutton col-12 pb-3">
+                                        <p-radioButton  inputId="difciamas" 
+                                                        name="tiptop" 
+                                                        value="3" 
+                                                        formControlName="tiptop">
+                                        </p-radioButton>
+                                        <label for="difciamas">Diferencia +</label>
+                                    </div>
+                                    <div class="field-radiobutton col-12 pb-3">
+                                        <p-radioButton  inputId="menor" 
+                                                        name="tiptop" 
+                                                        value="4" 
+                                                        formControlName="tiptop">
+                                        </p-radioButton>
+                                        <label for="menor">Menor</label>
+                                    </div>
+                                </div>
+
+                            </p-panel>
+                        </div>
+
+                        <div class="col-12 md:col-8 lg:col-9 mb-2">
+
+                            <div class="formgrid grid">
+
+                                <div class="col-12 mb-2">
+                                
+                                    <p-panel header="Monto">
+
+                                        <div class="formgrid grid">
+
+                                            <div class="field col-12 md:col-4 lg:col-3">
+                                                <label for="valtop">Monto a fijar: </label>
+                                                <input type="text"
+                                                        pInputText
+                                                        id="valtop"
+                                                        class="p-inputtext-sm text-right"
+                                                        pKeyFilter="num"
+                                                        formControlName="valtop"/>
+                                                    <span class="form-text text-danger text-center"
+                                                        *ngIf="campoInvalid('valtop')">
+                                                    El monto a fijar es de longitud de 23 dígitos enteros, formato numérico.
+                                                </span>
+                                            </div>
+
+                                            <div class="field col-12 md:col-4 lg:col-4">
+
+                                                <label for="tipsue">Tipo de sueldo: </label>
+                                                <p-dropdown [options]="tiposSalarios"
+                                                            inputId="tipsue"
+                                                            class="p-inputtext-sm"
+                                                            appendTo="body"
+                                                            optionLabel="nombre"
+                                                            optionValue="id"
+                                                            formControlName="tipsue"
+                                                            placeholder="Seleccione el tipo">
+                                                </p-dropdown>
+                
+                                            </div>
+
+                                            <div class="field col-12 md:col-4 lg:col-3">
+                                                <label for="canmin">Sueldos mínimos: </label>
+                                                <input type="text"
+                                                        pInputText
+                                                        id="canmin"
+                                                        class="p-inputtext-sm text-right"
+                                                        pKeyFilter="num"
+                                                        formControlName="canmin"/>
+                                                <span class="form-text text-danger text-center"
+                                                        *ngIf="campoInvalid('canmin')">
+                                                    El sueldo mínimo es de longitud de 4 dígitos enteros y 3 decimales, formato numérico.
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                    </p-panel>
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <p-panel header="Escala de sueldo">
+
+                                        <ng-template pTemplate="icons">
+                                            <button pButton 
+                                                    pRipple 
+                                                    label=""
+                                                    pTooltip="Información adicional Escala Sueldo"
+                                                    icon="pi pi-external-link"
+                                                    class="p-button-raised p-button-secondary p-button-sm">
+                                            </button>
+                                        </ng-template>
+
+                                        <div class="formgrid grid">  
+                                            
+                                            <div class="field col-12 md:col-12 lg:col-5">
+                                                
+                                                <div class="formgrid grid">
+                                                    
+                                                    <label for="sueesc" class="col-4 md:col-3 lg:col-3 xl:col-2 text-right lg:text-left mt-2">Tipo:</label>
+                                                    <div class="col-8 md:col-6 lg:col-9 xl:col-10">
+                                                        <p-dropdown [options]="tiposSalarios"
+                                                                    inputId="sueesc"
+                                                                    appendTo="body"
+                                                                    optionLabel="nombre"
+                                                                    optionValue="id"
+                                                                    formControlName="sueesc"
+                                                                    placeholder="Seleccione el tipo">
+                                                        </p-dropdown>
+                                                    </div>
+
+                                                </div>
+                                                
+                                            </div>
+
+                                            <div class="field col-12 md:col-12 lg:col-7">
+
+                                                <div class="formgrid grid">
+                                                    
+                                                    <label for="promCodEsc" class="col-4 md:col-3 lg:col-3 xl:col-2 text-right lg:text-left mt-2">Promedio:</label>
+                                                    <div class="col-8 md:col-9 lg:col-9 xl:col-10">
+                                                        <p-dropdown [options]="promediosPrueba" 
+                                                                    inputId="promCodEsc"
+                                                                    appendTo="body"
+                                                                    [filter]="true"
+                                                                    filterBy="codpro"
+                                                                    optionLabel="despro"
+                                                                    optionValue="codpro"
+                                                                    filterPlaceholder="Buscar por código..."
+                                                                    [showClear]="true"
+                                                                    formControlName="promCodEsc"
+                                                                    placeholder="Seleccione un promedio">
+                                                            <ng-template let-option pTemplate="item" style="height: 50px;">
+                                                                <table class="w-full">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td style="width: 25%;">{{ option.codpro }}</td>
+                                                                            <td style="width: 75%;">{{ option.despro }}</td>
+                                                                        </tr>
+                                                                    </tbody>  
+                                                                </table> 
+                                                            </ng-template>
+                                                        </p-dropdown>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                                
+                                        </div>
+
+                                        <div class="formgrid grid">                            
+
+                                            <div class="col-4 md:col-4 lg:col-2">
+        
+                                                <div class="field">
+                                                    <div class="field-checkbox mt-3 pb-2">
+                                                        <p-checkbox inputId="minesc"
+                                                                    name="minesc"
+                                                                    formControlName="minesc"
+                                                                    [value]="true"
+                                                                    [binary]="true">
+                                                        </p-checkbox>
+                                                        <label for="minesc">Mínimo</label>
+                                                    </div>
+                                                </div>
+        
+                                            </div>
+
+                                            <div class="col-8 md:col-8 lg:col-8">
+        
+                                                <div class="field">
+                                                    <div class="field-checkbox mt-3 pb-2">
+                                                        <p-checkbox inputId="busesc"
+                                                                    name="busesc"
+                                                                    formControlName="busesc"
+                                                                    [value]="true"
+                                                                    [binary]="true">
+                                                        </p-checkbox>
+                                                        <label for="busesc">Búsqueda superior</label>
+                                                    </div>
+                                                </div>
+        
+                                            </div>
+
+                                        </div>
+
+                                    </p-panel>
+
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                    </div> <!-- Fin formgrid-->
+
+                    <div class="formgrid grid mt-2">
+
+                        <div class="col-12 md:col-7 mb-3">
+
+                            <div class="formgrid grid">
+                                                    
+                                <label for="promCodTop" class="col-4 md:col-3 lg:col-3 xl:col-2 text-right lg:text-left mt-2">Promedio:</label>
+                                <div class="col-8 md:col-9 lg:col-9 xl:col-10">
+                                    <p-dropdown [options]="promediosPrueba" 
+                                                inputId="promCodTop"
+                                                class="p-inputtext-sm"
+                                                appendTo="body"
+                                                [filter]="true"
+                                                filterBy="codpro"
+                                                optionLabel="despro"
+                                                optionValue="codpro"
+                                                filterPlaceholder="Buscar por código..."
+                                                [showClear]="true"
+                                                formControlName="promCodTop"
+                                                placeholder="Seleccione un promedio">
+                                        <ng-template let-option pTemplate="item" style="height: 50px;">
+                                            <table class="w-full">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 25%;">{{ option.codpro }}</td>
+                                                        <td style="width: 75%;">{{ option.despro }}</td>
+                                                    </tr>
+                                                </tbody>  
+                                            </table> 
+                                        </ng-template>
+                                    </p-dropdown>
+    
+                                </div>
+    
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 md:col-5">
+
+                            <div class="formgrid grid">
+                                <label for="factop" class="col-4 md:col-3 lg:col-3 xl:col-2 text-right lg:text-left mt-2">Factor:</label>
+                                <div class="col-8 md:col-9 lg:col-9 xl:col-6">
+                                    <input type="text"
+                                           pInputText
+                                           id="factop"
+                                           class="p-inputtext-sm text-right"
+                                           pKeyFilter="num"
+                                           formControlName="factop"/>
+                                    <span class="form-text text-danger text-center"
+                                          *ngIf="campoInvalid('factop')">
+                                        El factor es de longitud de 3 dígitos enteros y 10 decimales, formato numérico.
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    
+                    <div class="formgrid grid mt-2">
+
+                        <div class="field col-5 md:col-4 lg:col-3 xl:col-2 flex justify-content-between">
+                            <div class="field-checkbox mt-2">
+                                <p-checkbox inputId="tieser"
+                                            name="tieser"
+                                            formControlName="tieser"
+                                            [value]="true"
+                                            [binary]="true">
+                                </p-checkbox>
+                                <label for="tieser">Tiempo</label>
+                            </div>
+                            <div>
+                                <button pButton
+                                        pRipple
+                                        label=""
+                                        pTooltip="Información adicional tiempo"
+                                        icon="pi pi-external-link"
+                                        class="p-button-raised p-button-secondary p-button-sm">
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </ng-template>
+
+            <!-- Guardar y eliminar -->
+            <ng-template pTemplate="footer">
+                <div class="mt-2">
+
+                    <button pButton 
+                            pRipple 
+                            label="Cancelar"
+                            class="p-button-secondary my-1"
+                            (click)="closeModal()">
+                    </button>
+                    
+                    <button pButton 
+                            pRipple 
+                            type="submit" 
+                            [label]="hasDataConceptoTope ? 'Actualizar' : 'Guardar'" 
+                            icon="pi pi-save"
+                            class="btn-infocent my-1"
+                            (click)="save()">
+                    </button>
+
+                    <button *ngIf="hasDataConceptoTope"
+                            pButton 
+                            pRipple 
+                            type="submit" 
+                            label="Eliminar" 
+                            icon="pi pi-trash" 
+                            class="p-button-danger my-1" 
+                            (click)="delete(conceptoTope)">
+                    </button>
+                    
+                </div>
+            </ng-template>
+          
+</p-dialog>

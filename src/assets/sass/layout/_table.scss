@@ -50,3 +50,26 @@
     line-height: 2.375rem;
     color: #5D7CAB;
 }
+// responsive para distintas resoluciones y el tamaños de las letras
+@media(max-width: 1024px) {
+    .p-inputtext {
+        font-size: 0.8rem;
+    }
+}
+@media(max-width: 860px) {
+    :host ::ng-deep .p-datatable .p-sortable-column .p-sortable-column-icon {
+        font-size: 0.7rem;
+    }
+    :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+        font-size: 0.7rem;
+    }
+}
+@media(max-width: 810px) {
+    :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+        font-size: 0.7rem;
+    }
+    .p-inputtext {
+        font-size: 0.6rem;
+    }
+}
+
