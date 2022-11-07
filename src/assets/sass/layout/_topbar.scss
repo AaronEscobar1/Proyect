@@ -103,7 +103,7 @@
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 792px) {
     .layout-topbar {
         .layout-menu-button {
             display: none;
@@ -111,7 +111,7 @@
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 791px) {
     .layout-topbar {
         justify-content: space-between;
         

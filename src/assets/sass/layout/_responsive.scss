@@ -1,4 +1,4 @@
-@media (min-width: 992px) {
+@media (min-width: 792px) {
     .layout-wrapper {
         &.layout-overlay {
             .layout-main-container {
@@ -44,9 +44,18 @@
             display: none;
         }
     }
+    .p-menuitem-text {
+        font-size: 0.6rem !important;
+    }
 }
 
-@media (max-width: 991px) {
+@media (min-width: 992px) {
+    .p-menuitem-text {
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 791px) {
     .layout-wrapper {
         .layout-main-container {
             margin-left: 0;
