@@ -32,15 +32,6 @@ export class ConceptosComponent implements OnInit {
   // Objeto seleccionado para editar
   conceptoSelect!: Concepto | undefined;
 
-  // Objeto de tipos de salarios
-  @Input() tiposSalarios: TipoSalario[] = [];
-
-  // Objeto de promedios
-  @Input() promedios: Promedio[] = [];
-
-  // Objeto de relación laboral
-  @Input() relacionesLaborales: RelacionLaboral[] = [];
-
   // Emisión de evento (cargar data de conceptos)
   @Output() onRefresh = new EventEmitter();
 
@@ -55,6 +46,15 @@ export class ConceptosComponent implements OnInit {
   /****************************
    *  Objetos de tablas tipos *
    ****************************/
+
+  // Objeto de tipos de salarios
+  @Input() tiposSalarios: TipoSalario[] = [];
+
+  // Objeto de promedios
+  @Input() promedios: Promedio[] = [];
+
+  // Objeto de relación laboral
+  @Input() relacionesLaborales: RelacionLaboral[] = [];
 
   // Objeto de tipo de cálculos
   tiposCalculos: TipoCalculo[] = [];
@@ -127,7 +127,7 @@ export class ConceptosComponent implements OnInit {
    * @param concepto row de la tabla
    * @returns void
    */
-   editRow(concepto: Concepto): void {
+  editRow(concepto: Concepto): void {
     this.isEdit = true;
     this.titleForm = 'Editar concepto';
     this.conceptoSelect = concepto;

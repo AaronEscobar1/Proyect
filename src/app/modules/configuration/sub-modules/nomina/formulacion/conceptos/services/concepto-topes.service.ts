@@ -3,6 +3,7 @@ import { Helpers } from 'src/app/shared/helpers/helpers';
 import { HttpService } from 'src/app/shared/services/http/http.service';
 import { Observable } from 'rxjs';
 import { ConceptoTope, ConceptoTopeUpdate } from '../interfaces/concepto-topes.interfaces';
+import { Concepto } from '../interfaces/concepto.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +34,8 @@ export class ConceptoTopesService {
    * @param tipeles: string, Tipo de elemento a considerar como tope
    * @returns Observable<any>
    */
-  getConceptosTopeByEmpresaNomina(idEmpresa: string, idNomina: string, idConcepto: string, tipeles: string): Observable<any> {
-    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/empresas/${idEmpresa}/nominas/${idNomina}/conceptos/${idConcepto}/topesparametros/${tipeles}`));
+  getConceptoTopeByEmpresaNominaConceptoTipele(concepto: Concepto, tipeles: number): Observable<any> {
+    return this.http.get(this.helpers.getBasicEndPoint(`${this.url}/empresas/${concepto.idEmpresa}/nominas/${concepto.idNomina}/conceptos/${concepto.id}/topesparametros/${tipeles}`));
   }
 
   /**

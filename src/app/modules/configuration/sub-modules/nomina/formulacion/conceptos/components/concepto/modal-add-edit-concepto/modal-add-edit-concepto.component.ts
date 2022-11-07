@@ -11,6 +11,9 @@ import { MetodoFiscal, RutinaCalculo, TipoCalculo, ManejoDecimal, TipoSalario, P
 import { FORM_INIT_CONCEPTO } from './formInit';
 import { fieldsNoNullsWithValueCero, transformObjectToCheck, trasnformCheckboxTrueOrFalseToString } from './validaciones-concepto';
 import { RelacionLaboral } from '../../../interfaces/relacion-laboral.interfaces';
+import { ConceptoTope } from '../../../interfaces/concepto-topes.interfaces';
+import { ConceptoTopesService } from '../../../services/concepto-topes.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-modal-add-edit-concepto',
@@ -94,11 +97,23 @@ export class ModalAddEditConceptoComponent implements OnInit {
   // Variable para comprobar que se ha abierto una ventana modal adicional
   isOpenModalAditional: boolean = false;
 
+  /****************************************
+   *        MODAL ADICIONAL TOPE          *
+   ****************************************/
+
   // Modal concepto tope
   modalConceptoTope: boolean = false;
 
+  // Objeto para concepto tope
+  conceptoTope!: ConceptoTope | undefined;
+
+  // Variable para verificar si tiene data el concepto tope
+  hasDataConceptoTope: boolean = false;
+
   constructor(private companyNominaService: CompanyNominaService,
               private conceptosService: ConceptosService, 
+              private conceptoTopesService: ConceptoTopesService,
+              private storageService: StorageService,
               private spinner: NgxSpinnerService,
               private messageService: MessageService,
               private fb: FormBuilder) {
@@ -624,19 +639,56 @@ export class ModalAddEditConceptoComponent implements OnInit {
   /**
    * Abrir modal Concepto - tope
    */
-  openModalTope(): void {
+  openModalTope(tipele: number): void {
+    this.conceptoTope = undefined;
+    // Enviar dato tipele al local storage
+    this.storageService.set('tipele', tipele);
+    // Cargar concepto tope
+    this.loadConceptoTope();
     // Variable para ocultar ventana modal de Concepto
-    this.modalConceptoTope = true;
     this.isOpenModalAditional = true;
+    // Abrir modal de concepto Tope
+    this.modalConceptoTope = true;
+  }
+
+  /**
+   * Cargar concepto tope
+   */
+  loadConceptoTope(): void {
+    this.hasDataConceptoTope = false;
+    if ( !this.conceptoSelect ) return;
+    const tipele = this.storageService.get('tipele');
+    this.spinner.show();
+    this.conceptoTopesService.getConceptoTopeByEmpresaNominaConceptoTipele(this.conceptoSelect, tipele)
+      .subscribe({
+        next: (resp) => {
+          this.conceptoTope = resp;
+          this.hasDataConceptoTope = true;
+          this.spinner.hide();
+        },
+        error: (err) => {
+          if( err.error.message.includes('Recurso no encontrado')) {
+            this.spinner.hide();
+            this.messageService.add({severity: 'info', summary: '', detail: err.error.detail, life: 3000});
+            return false;
+          }
+          this.spinner.hide();
+          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'No se pudo obtener conexión con el servidor.', life: 3000});
+          return false;
+        }
+      });
   }
 
   /**
    * Cerrar modal Concepto - tope
    */
   closeModalTope(): void {
+    // Vaciar variable del local storage
+    this.storageService.remove('tipele');
     // Variable para mostrar ventana modal de Concepto
-    this.modalConceptoTope = false;
     this.isOpenModalAditional = false;
+    // Cerrar modal concepto tope;
+    this.modalConceptoTope = false;
   }
 
 }

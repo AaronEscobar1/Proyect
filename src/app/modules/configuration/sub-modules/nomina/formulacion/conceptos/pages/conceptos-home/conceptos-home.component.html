@@ -35,7 +35,7 @@
                 /********************************* -->
                 <!-- TODO: Colocar esta linea de codigo en el tabPanel cuando se termine el desarrollo
                     [disabled]="empresaRow == null || nominaRow == null" -->
-                <p-tabPanel header="Conceptos" >
+                <p-tabPanel header="Conceptos" [disabled]="empresaRow == null || nominaRow == null">
 
                     <app-conceptos [empresaRow]="empresaRow"
                                    [nominaRow]="nominaRow"

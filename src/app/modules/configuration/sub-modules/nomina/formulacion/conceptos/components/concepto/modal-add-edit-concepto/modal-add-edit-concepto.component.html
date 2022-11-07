@@ -410,7 +410,7 @@
                                             label=""
                                             pTooltip="Información adicional Tope"
                                             icon="pi pi-external-link"
-                                            (click)="openModalTope()"
+                                            (click)="openModalTope(0)"
                                             class="p-button-raised p-button-secondary p-button-sm">
                                     </button>
                                 </div>
@@ -743,7 +743,7 @@
                                                         label=""
                                                         pTooltip="Información adicional Tope"
                                                         icon="pi pi-external-link"
-                                                        (click)="openModalTope()"
+                                                        (click)="openModalTope(1)"
                                                         class="p-button-raised p-button-secondary p-button-sm">
                                                 </button>
                                             </div>
@@ -1001,7 +1001,7 @@
                                                     label=""
                                                     pTooltip="Información adicional Tope"
                                                     icon="pi pi-external-link"
-                                                    (click)="openModalTope()"
+                                                    (click)="openModalTope(2)"
                                                     class="p-button-raised p-button-secondary p-button-sm">
                                             </button>
                                         </div>
@@ -1277,7 +1277,7 @@
                                                     label=""
                                                     pTooltip="Información adicional Tope"
                                                     icon="pi pi-external-link"
-                                                    (click)="openModalTope()"
+                                                    (click)="openModalTope(3)"
                                                     class="p-button-raised p-button-secondary p-button-sm">
                                             </button>
                                         </div>
@@ -1605,7 +1605,7 @@
                                                     label=""
                                                     pTooltip="Información adicional Tope"
                                                     icon="pi pi-external-link"
-                                                    (click)="openModalTope()"
+                                                    (click)="openModalTope(4)"
                                                     class="p-button-raised p-button-secondary p-button-sm">
                                             </button>
                                         </div>
@@ -2882,7 +2882,17 @@
 
 <!-- Modal concepto tope -->
 <app-modal-concepto-tope
+    [empresaRow]="empresaRow"
+    [nominaRow]="nominaRow"
+    [conceptoSelect]="conceptoSelect"
+    [conceptoTope]="conceptoTope"
+    [hasDataConceptoTope]="hasDataConceptoTope"
+
+    [tiposSalarios]="tiposSalarios"
+    [promediosPrueba]="promediosPrueba"
+
     [modalConceptoTope]="modalConceptoTope"
     [titleModal]="'Concepto - Tope'"
-    (onCloseModalTope)="closeModalTope()">
+    (onCloseModalTope)="closeModalTope()"
+    (onLoadData)="loadConceptoTope()">
 </app-modal-concepto-tope>
