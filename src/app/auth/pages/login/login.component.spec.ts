@@ -135,6 +135,7 @@ describe('LoginComponen', () => {
     expect(fakeBackend.request.method).toBe('POST');
   });
 
+  
   it('Validar login sin conexión al servidor, (error 500)', () => {
     const fixture = TestBed.createComponent(LoginComponent);
     const app = fixture.componentInstance;
@@ -166,7 +167,16 @@ describe('LoginComponen', () => {
     fakeBackend.error(error);
     // Verificar si la petición se hizo correcta
     expect(fakeBackend.request.method).toBe('POST');
+  
+    app.getDetectPrivateMode()
   });
 
+  it('Validar login sin conexión al servidor, (error 500)', () => {
+    const fixture = TestBed.createComponent(LoginComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+
+    app.getDetectPrivateMode()
+  });
 
 });

@@ -179,9 +179,46 @@ describe('ModalAddEditComponent', () => {
         "mest10": 2,
         "mest11": 2,
         "mest12": 2,  
-      };
+    };
+
     app.cargosTabulador.push(data)
     app.cargoTabuladorSelect = data
+    // Se simula que hubo un cambio en los inputs
+    app.ngOnChanges();
+
+    app.cargoTabuladorSelect = {
+      "idEmpresa":   "93",
+      "id":          "1",
+        "nmCargoTabuladorTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+        },
+        "tabu01": null,    
+        "tabu02": null,    
+        "tabu03": null,    
+        "tabu04": null,    
+        "tabu05": null,    
+        "tabu06": null,    
+        "tabu07": null,    
+        "tabu08": null,    
+        "tabu09": null,    
+        "tabu10": null,    
+        "tabu11": null,    
+        "tabu12": null,    
+        "mest01": 2,
+        "mest02": 2,
+        "mest03": 2,
+        "mest04": 2,
+        "mest05": 2,
+        "mest06": 2,
+        "mest07": 2,
+        "mest08": 2,
+        "mest09": 2,
+        "mest10": 2,
+        "mest11": 2,
+        "mest12": 2,  
+    };
+    
     // Se simula que hubo un cambio en los inputs
     app.ngOnChanges();
 
@@ -1267,6 +1304,298 @@ describe('ModalAddEditComponent', () => {
 
     // Reset hecho por la funcion
     expect(app.cargoTabuladorSelect).toEqual(undefined);
+  });
+
+  it('Probando el Editado de Datos (Caso Falso)', () => {
+    const fixture = TestBed.createComponent(ModalAddEditCargoComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    // Variables de los inputs
+    app.isEdit = true;
+    app.cargosTabulador = [
+      {
+        "idEmpresa":   "93",
+        "id":          "1",
+        "nmCargoTabuladorTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+        },
+        "tabu01": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu02": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu03": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu04": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu05": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu06": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu07": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu08": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu09": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu10": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu11": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "tabu12": {
+          "eoGradoTbId": {
+          "idEmpresa": "93",
+          "id":       "1"
+          },
+          "descrip":     "hola",
+          "codOficial":  "01",
+        },    
+        "mest01": 2,
+        "mest02": 2,
+        "mest03": 2,
+        "mest04": 2,
+        "mest05": 2,
+        "mest06": 2,
+        "mest07": 2,
+        "mest08": 2,
+        "mest09": 2,
+        "mest10": 2,
+        "mest11": 2,
+        "mest12": 2,  
+      }
+    ];
+
+    // datos del formulario
+    const data = {
+      "idEmpresa":   "93",
+      "id":          "2",
+      "nmCargoTabuladorTbId": {
+        "idEmpresa": "93",
+        "id":       "1"
+      },
+      "tabu01": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu02": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu03": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu04": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu05": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu06": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu07": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu08": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu09": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu10": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu11": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "tabu12": {
+        "eoGradoTbId": {
+        "idEmpresa": "93",
+        "id":       null
+        },
+        "descrip":     "hola",
+        "codOficial":  "01",
+      },    
+      "mest01": 2,
+      "mest02": 2,
+      "mest03": 2,
+      "mest04": 2,
+      "mest05": 2,
+      "mest06": 2,
+      "mest07": 2,
+      "mest08": 2,
+      "mest09": 2,
+      "mest10": 2,
+      "mest11": 2,
+      "mest12": 2,  
+    };
+
+    app.empresaRow = {
+      "nombre": "FEDERAL EXPRESS CORPORATION, S.A.",
+      "clave": "F195J9FDN520AJ0SC953",
+      "nombreAbrev": "FEDEX CORPORATION",
+      "sectorEmp": "11",
+      "publica": "1",
+      "capitalPag": 12,
+      "capitalSub": 12,
+      "rif1": "J-00301656-0",
+      "rif2": null,
+      "direccion": "CARACAS",
+      "ciudad": "CARACAS",
+      "idEntfe": "DC",
+      "idPais": "VEN",
+      "codPostal": "1070",
+      "telefono1": "582122053152",
+      "telefono2": null,
+      "fax": "null",
+      "paginaWeb": "null",
+      "eMail": "correo@gmail.com",
+      "feFunda": new Date(),
+      "feInicio": new Date(),
+      "filemail": "null",
+      "subprocesoRnet": 175993,
+      "id": "93",
+      "links": [
+          {
+              "rel": "datosadicionales",
+              "href": "/configuraciones/nominas/empresas/93/datosadicionales"
+          }
+      ]
+    }
+
+    const error = new ErrorEvent('', {
+      error : new Error('Error en los datos de entrada.'),
+      filename : '',
+      lineno: 404,
+      message: "Error en solicitud.",   
+    });
+
+    // Guardamos los datos en el formulario y lo comprobamos
+    app.form.controls['id'].disable();
+    app.form.reset(data)
+    expect(app.form.valid).toEqual(true)
+
+    // Llamamos a la funcion de Guardado
+    app.save()
   });
 
   it('Probando el Editado de Datos (Caso Falso)', () => {

@@ -2,13 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorComponent } from './error.component';
 
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ErrorComponent ]
+      declarations: [ ErrorComponent ],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+      ]
     })
     .compileComponents();
   });
@@ -21,5 +26,10 @@ describe('ErrorComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    
+    var load_event = document.createEvent('Event');  
+    load_event.initEvent('load', false, false);  
+    window.dispatchEvent(load_event);
+
   });
 });
